@@ -61,6 +61,9 @@ type AllowedPreferences = Record<
   Preference<keyof Preferences>
 >;
 
+type Tool = "screen-size" | "theme-preference"; // Add new tools here to enforce typing
+type Tools = Record<Tool, boolean>;
+
 const defaultPreferences = {
   position: {
     key: "position",
@@ -103,9 +106,6 @@ const defaultPreferences = {
     ],
   } as Preference<"cssUnit">,
 } satisfies AllowedPreferences;
-
-type Tool = "screen-size" | "theme-preference"; // Add new tools here to enforce typing
-type Tools = Record<Tool, boolean>;
 
 const defaultTools: Tools = {
   "screen-size": true,
@@ -452,37 +452,59 @@ function SettingsProvider({ children }: { children: ReactNode }) {
 }
 
 function useProviderSettings() {
-  const [preferences, setPreferences] = useState(defaultPreferences);
-  const [tools, setTools] = useState(defaultTools);
+  const [preferences, setPreferences] = useState(() => {
+    const storedPreferences = localStorage.getItem(
+      "themux_devtools_preferences",
+    );
+    return storedPreferences
+      ? (JSON.parse(storedPreferences) as typeof defaultPreferences)
+      : defaultPreferences;
+  });
+
+  const [tools, setTools] = useState(() => {
+    const storedTools = localStorage.getItem("themux_devtools_tools");
+    return storedTools ? (JSON.parse(storedTools) as Tools) : defaultTools;
+  });
 
   const setDevToolsPosition = (position: Position) => {
-    setPreferences((prev) => ({
-      ...prev,
-      position: { ...prev.position, currentValue: position },
-    }));
-  };
+    setPreferences((prev) => {
+      const currentPreferences = {
+        ...prev,
+        position: { ...prev.position, currentValue: position },
+      };
 
-  const setCssUnit = (cssUnit: Unit) => {
-    setPreferences((prev) => ({
-      ...prev,
-      cssUnit: { ...prev.cssUnit, currentValue: cssUnit },
-    }));
-  };
+      localStorage.setItem(
+        "themux_devtools_preferences",
+        JSON.stringify(currentPreferences),
+      );
 
-  const setAciveTool = (tool: Tool, isActive: boolean) => {
-    console.log(tool, isActive);
-    setTools((prev) => ({ ...prev, [tool]: isActive }));
-  };
-
-  const activateTools = (tools: Tool[]) => {
-    tools.forEach((tool) => {
-      setTools((prev) => ({ ...prev, tool: true }));
+      return currentPreferences;
     });
   };
 
-  const deactivateTools = (tools: Tool[]) => {
-    tools.forEach((tool) => {
-      setTools((prev) => ({ ...prev, tool: false }));
+  const setCssUnit = (cssUnit: Unit) => {
+    setPreferences((prev) => {
+      const currentPreferences = {
+        ...prev,
+        cssUnit: { ...prev.cssUnit, currentValue: cssUnit },
+      };
+
+      localStorage.setItem(
+        "themux_devtools_preferences",
+        JSON.stringify(currentPreferences),
+      );
+
+      return currentPreferences;
+    });
+  };
+
+  const setAciveTool = (tool: Tool, isActive: boolean) => {
+    setTools((prev) => {
+      const currentTools = { ...prev, [tool]: isActive };
+
+      localStorage.setItem("themux_devtools_tools", JSON.stringify(tools));
+
+      return currentTools;
     });
   };
 
@@ -492,8 +514,6 @@ function useProviderSettings() {
     setCssUnit,
     tools,
     setAciveTool,
-    activateTools,
-    deactivateTools,
   };
 }
 
