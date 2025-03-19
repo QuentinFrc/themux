@@ -451,10 +451,15 @@ function SettingsProvider({ children }: { children: ReactNode }) {
   return <SettingContext value={settings}>{children}</SettingContext>;
 }
 
+const DEVTOOLS_LS_KEYS = {
+  PREFERENCES: "themux_devtools_preferences",
+  ACTIVE_TOOLS: "themux_devtools_tools",
+};
+
 function useProviderSettings() {
   const [preferences, setPreferences] = useState(() => {
     const storedPreferences = localStorage.getItem(
-      "themux_devtools_preferences",
+      DEVTOOLS_LS_KEYS.PREFERENCES,
     );
     return storedPreferences
       ? (JSON.parse(storedPreferences) as typeof defaultPreferences)
@@ -462,7 +467,7 @@ function useProviderSettings() {
   });
 
   const [tools, setTools] = useState(() => {
-    const storedTools = localStorage.getItem("themux_devtools_tools");
+    const storedTools = localStorage.getItem(DEVTOOLS_LS_KEYS.ACTIVE_TOOLS);
     return storedTools ? (JSON.parse(storedTools) as Tools) : defaultTools;
   });
 
@@ -474,7 +479,7 @@ function useProviderSettings() {
       };
 
       localStorage.setItem(
-        "themux_devtools_preferences",
+        DEVTOOLS_LS_KEYS.PREFERENCES,
         JSON.stringify(currentPreferences),
       );
 
@@ -490,7 +495,7 @@ function useProviderSettings() {
       };
 
       localStorage.setItem(
-        "themux_devtools_preferences",
+        DEVTOOLS_LS_KEYS.PREFERENCES,
         JSON.stringify(currentPreferences),
       );
 
@@ -502,7 +507,10 @@ function useProviderSettings() {
     setTools((prev) => {
       const currentTools = { ...prev, [tool]: isActive };
 
-      localStorage.setItem("themux_devtools_tools", JSON.stringify(tools));
+      localStorage.setItem(
+        DEVTOOLS_LS_KEYS.ACTIVE_TOOLS,
+        JSON.stringify(currentTools),
+      );
 
       return currentTools;
     });
