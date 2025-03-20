@@ -113,6 +113,9 @@ const defaultTools: Tools = {
 };
 
 function ScreenDevtoolsWrapper() {
+  // Won't ship to your production build (Enabled for now, uncomment to disable)
+  // if (process.env.NODE_ENV === "production") return null;
+
   return (
     <SettingsProvider>
       <InternalScreenDevTools />
@@ -121,9 +124,6 @@ function ScreenDevtoolsWrapper() {
 }
 
 function InternalScreenDevTools() {
-  // Won't ship to your production build
-  if (process.env.NODE_ENV === "production") return null;
-
   const [isShown, setIsShown] = useState(true);
   const { preferences, tools } = useSettings();
 

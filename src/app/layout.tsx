@@ -4,22 +4,12 @@ import { ReactScan } from "@/components/devtools/react-scan";
 import { ScreenDevTools } from "@/components/devtools/screen-devtools";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { fontVariables } from "@/lib/fonts";
 import { ThemeValue } from "@/lib/themes";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "themux",
@@ -42,9 +32,10 @@ export default async function RootLayout({
 
       <body
         className={cn(
-          `${geistSans.variable} ${geistMono.variable} font-sans antialiased`,
+          `font-sans antialiased`,
           activeThemeValue ? `theme-${activeThemeValue}` : "",
           isScaled ? "theme-scaled" : "",
+          fontVariables,
         )}
       >
         <ThemeProvider

@@ -17,8 +17,8 @@ import { Label } from "@/components/ui/label";
 
 export function CardDemo() {
   return (
-    <div className="flex flex-col items-start gap-4">
-      <Card className="w-full max-w-sm">
+    <div className="flex w-full flex-col items-start gap-4">
+      <Card className="w-full max-w-1/2">
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>
@@ -67,7 +67,7 @@ export function CardDemo() {
           </div>
         </CardFooter>
       </Card>
-      <Card>
+      <Card className="w-full max-w-1/2">
         <CardHeader>
           <CardTitle>Meeting Notes</CardTitle>
           <CardDescription>
@@ -107,7 +107,7 @@ export function CardDemo() {
           </div>
         </CardFooter>
       </Card>
-      <Card>
+      <Card className="w-full max-w-1/2">
         <CardHeader>
           <CardTitle>Is this an image?</CardTitle>
           <CardDescription>This is a card with an image.</CardDescription>
@@ -134,7 +134,7 @@ export function CardDemo() {
           <div className="ml-auto font-medium tabular-nums">$135,000</div>
         </CardFooter>
       </Card>
-      <div className="flex w-full flex-wrap items-start gap-8 md:*:data-[slot=card]:basis-1/4">
+      <div className="grid w-full grid-cols-1 items-start gap-4 md:grid-cols-2">
         <Card>
           <CardContent className="text-sm">Content Only</CardContent>
         </Card>

@@ -50,6 +50,8 @@ import { TooltipDemo } from "@/components/demo/tooltip-demo";
 import { ComponentWrapper } from "@/components/demo/component-wrapper";
 import { Separator } from "@/components/ui/separator";
 
+export const dynamic = "force-static";
+
 export default function ComponentsPage() {
   return (
     <SectionWrapper className="space-y-8">
