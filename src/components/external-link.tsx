@@ -20,14 +20,20 @@ export function ExternalLink({
     <a
       title={title}
       href={href}
-      className={cn("group flex w-fit items-center justify-between", className)}
+      className={cn(
+        "group/link inline-flex w-fit items-center justify-between",
+        className,
+      )}
       rel="noopener noreferrer"
       target="_blank"
       {...rest}
     >
-      <span className="group-hover:underline">{children}</span>
+      <span className="group-hover/link:underline">{children}</span>
       {showIcon && (
-        <ArrowUpRight size={12} className="transition group-hover:rotate-45" />
+        <ArrowUpRight
+          size={12}
+          className="transition group-hover/link:rotate-45"
+        />
       )}
     </a>
   );
