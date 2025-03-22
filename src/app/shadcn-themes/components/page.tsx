@@ -63,8 +63,23 @@ export default function ComponentsPage() {
 
       <ContainerWrapper className="space-y-4">
         <div className="@container grid flex-1 gap-4 space-y-8">
+          <ComponentWrapper name="button">
+            <ButtonDemo />
+          </ComponentWrapper>
+          <ComponentWrapper name="calendar">
+            <CalendarDemo />
+          </ComponentWrapper>
           <ComponentWrapper name="chart" className="w-full">
             <ChartDemo />
+          </ComponentWrapper>
+          <ComponentWrapper name="input">
+            <InputDemo />
+          </ComponentWrapper>
+          <ComponentWrapper name="input-otp">
+            <InputOTPDemo />
+          </ComponentWrapper>
+          <ComponentWrapper name="label">
+            <LabelDemo />
           </ComponentWrapper>
           <ComponentWrapper name="accordion">
             <AccordionDemo />
@@ -86,12 +101,6 @@ export default function ComponentsPage() {
           </ComponentWrapper>
           <ComponentWrapper name="breadcrumb">
             <BreadcrumbDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="button">
-            <ButtonDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="calendar">
-            <CalendarDemo />
           </ComponentWrapper>
           <ComponentWrapper name="card">
             <CardDemo />
@@ -131,15 +140,6 @@ export default function ComponentsPage() {
           </ComponentWrapper>
           <ComponentWrapper name="hover-card">
             <HoverCardDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="input">
-            <InputDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="input-otp">
-            <InputOTPDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="label">
-            <LabelDemo />
           </ComponentWrapper>
           <ComponentWrapper name="menubar">
             <MenubarDemo />

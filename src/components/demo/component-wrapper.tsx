@@ -2,19 +2,11 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import {
-  Check,
-  Clipboard,
-  ClipboardCheckIcon,
-  Globe,
-  Terminal,
-  TerminalSquare,
-} from "lucide-react";
+import { Check, Clipboard, Globe, Terminal } from "lucide-react";
 import * as React from "react";
 import { ExternalLink } from "../external-link";
 import { Alert, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
-import { Tooltip, TooltipProvider } from "../ui/tooltip";
 
 export function ComponentWrapper({
   className,
@@ -36,7 +28,7 @@ export function ComponentWrapper({
         id={name}
         data-name={name.toLowerCase()}
         className={cn(
-          "@container flex w-full scroll-mt-16 flex-col rounded-lg border",
+          "@container flex w-full scroll-mt-16 flex-col overflow-clip rounded-lg border",
           className,
         )}
         {...props}
@@ -51,7 +43,7 @@ export function ComponentWrapper({
                 <Terminal className="size-4" />
               </div>
 
-              <AlertTitle className="text-muted-foreground w-full font-mono text-pretty">
+              <AlertTitle className="w-full font-mono text-pretty">
                 {`pnpm dlx shadcn@latest add `}
                 <span className="text-foreground">{name}</span>
               </AlertTitle>

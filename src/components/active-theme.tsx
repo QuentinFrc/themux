@@ -1,7 +1,8 @@
 // pulled from https://github.com/shadcn-ui/ui/blob/main/apps/v4/components/active-theme.tsx
+// I removed this implementation that uses cookies, but I plan on adding it back in the future
 "use client";
 
-import { ThemeValue } from "@/lib/themes";
+import { ACTIVE_THEME_NAME_COOKIE } from "@/lib/constants";
 import {
   ReactNode,
   createContext,
@@ -10,18 +11,18 @@ import {
   useState,
 } from "react";
 
-const COOKIE_NAME = "active_theme";
 const DEFAULT_THEME = "default";
 
-function setThemeCookie(theme: ThemeValue) {
+// TODO: Type theme
+function setThemeCookie(theme: string) {
   if (typeof window === "undefined") return;
 
-  document.cookie = `${COOKIE_NAME}=${theme}; path=/; max-age=31536000; SameSite=Lax; ${window.location.protocol === "https:" ? "Secure;" : ""}`;
+  document.cookie = `${ACTIVE_THEME_NAME_COOKIE}=${theme}; path=/; max-age=31536000; SameSite=Lax; ${window.location.protocol === "https:" ? "Secure;" : ""}`;
 }
 
 type ThemeContextType = {
-  activeTheme: ThemeValue;
-  setActiveTheme: (theme: ThemeValue) => void;
+  activeTheme: string;
+  setActiveTheme: (theme: string) => void;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -31,9 +32,9 @@ export function ActiveThemeProvider({
   initialTheme,
 }: {
   children: ReactNode;
-  initialTheme?: ThemeValue;
+  initialTheme?: string;
 }) {
-  const [activeTheme, setActiveTheme] = useState<ThemeValue>(
+  const [activeTheme, setActiveTheme] = useState(
     () => initialTheme || DEFAULT_THEME,
   );
 

@@ -22,7 +22,7 @@ export function ModeSwitcher() {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="icon"
       className="group/toggle size-8"
       onClick={toggleTheme}

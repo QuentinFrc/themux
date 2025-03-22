@@ -1,12 +1,14 @@
 // pulled from https://github.com/shadcn-ui/ui/blob/main/apps/v4/components/theme-selector.tsx
 "use client";
 
-import { THEMES } from "@/lib/themes";
+import { BASE_THEMES, COLORFUL_THEMES } from "@/lib/themes";
 import { useThemeConfig } from "@/components/active-theme";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
@@ -20,11 +22,22 @@ export function ThemeSelector() {
         <SelectValue placeholder="Select a theme" />
       </SelectTrigger>
       <SelectContent align="end">
-        {THEMES.map((theme) => (
-          <SelectItem key={theme.name} value={theme.value}>
-            {theme.name}
-          </SelectItem>
-        ))}
+        <SelectGroup>
+          <SelectLabel>Base</SelectLabel>
+          {BASE_THEMES.map((theme) => (
+            <SelectItem key={theme.name} value={theme.value}>
+              {theme.name}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+        <SelectGroup>
+          <SelectLabel>Colorful</SelectLabel>
+          {COLORFUL_THEMES.map((theme) => (
+            <SelectItem key={theme.name} value={theme.value}>
+              {theme.name}
+            </SelectItem>
+          ))}
+        </SelectGroup>
       </SelectContent>
     </Select>
   );

@@ -5,6 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @import "./../styles/themes.css";
+@import "./../styles/my-themes.css";
 
 :root {
   --radius: 1rem;
@@ -122,4 +123,30 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@utility code-inline {
+  @apply text-primary bg-muted relative isolate inline-flex px-1 font-mono;
+}
+
+@utility scaled {
+  --text-lg: 1.05rem;
+  --text-base: 0.85rem;
+  --text-sm: 0.8rem;
+  --spacing: 0.222222rem;
+
+  [data-slot="card"] {
+    --spacing: 0.16rem;
+  }
+
+  [data-slot="card-header"] *,
+  [data-slot="card-content"] *,
+  [data-slot="card-footer"] * {
+    --spacing: 0.222222rem;
+  }
+}
+
+@utility grid-cols-fluid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
