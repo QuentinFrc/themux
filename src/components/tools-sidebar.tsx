@@ -25,7 +25,7 @@ export function ToolsSidebar({
         variant="floating"
         collapsible="none"
         className={cn(
-          "sticky h-svh transition lg:grid",
+          "sticky hidden h-svh transition lg:grid",
           isOpen ? "visible w-64" : "invisible w-0",
         )}
         {...props}
