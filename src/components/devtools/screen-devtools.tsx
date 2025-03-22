@@ -139,22 +139,25 @@ function InternalScreenDevTools() {
 
   if (!isShown) {
     return (
-      <Card
+      <div
         className={cn(
-          "bg-background pointer-events-auto fixed isolate z-50 flex flex-col gap-0 border-transparent p-0 text-sm shadow-md transition-all",
+          "pointer-events-auto fixed isolate z-50 flex flex-col border border-transparent text-sm transition-all",
           positionClassNames,
         )}
       >
-        <div className="absolute inset-1.5 z-[-1] animate-pulse rounded-full bg-conic/decreasing from-violet-700 via-lime-300 to-violet-700 blur-sm" />
-        <Button
-          size={"icon"}
-          variant={"secondary"}
-          onClick={() => setIsShown(true)}
-          className="bg-background rounded-full"
-        >
-          <Eye />
-        </Button>
-      </Card>
+        <div className="relative overflow-hidden rounded-full">
+          <div className="absolute inset-0 size-full animate-spin bg-conic/decreasing from-violet-700 via-lime-300 to-violet-700 blur-lg" />
+          <Button
+            size={"icon"}
+            variant={"ghost"}
+            onClick={() => setIsShown(true)}
+            className="relative isolate cursor-pointer"
+          >
+            <div className="bg-background absolute inset-0.5 z-[-1] rounded-full shadow" />
+            <Eye />
+          </Button>
+        </div>
+      </div>
     );
   }
   return (
