@@ -49,14 +49,30 @@ import { ToggleGroupDemo } from "@/components/components-demo/toggle-group-demo"
 import { TooltipDemo } from "@/components/components-demo/tooltip-demo";
 import { ComponentWrapper } from "@/components/components-demo/component-wrapper";
 import { Separator } from "@/components/ui/separator";
+import { PageHeader } from "@/components/page-header";
+import { ExternalLink } from "@/components/external-link";
 
 export const dynamic = "force-static";
 
 export default function ComponentsPage() {
   return (
     <SectionWrapper className="space-y-8">
-      <ContainerWrapper>
-        <h1 className="text-4xl font-bold">Components page</h1>
+      <ContainerWrapper className="@container">
+        <PageHeader
+          heading={"Components dump"}
+          description={
+            <>
+              The <span className="italic">totality</span> of{" "}
+              <ExternalLink
+                href="https://ui.shadcn.com/docs/components/accordion"
+                showIcon
+              >
+                shadcn/ui
+              </ExternalLink>{" "}
+              components.
+            </>
+          }
+        />
       </ContainerWrapper>
 
       <Separator />

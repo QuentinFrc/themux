@@ -159,7 +159,7 @@
 
 .grid-background-effect {
   --bg-height: 100vh;
-  --bg-size: 12px;
+  --bg-size: 32px;
 
   position: absolute;
   height: var(--bg-height);
