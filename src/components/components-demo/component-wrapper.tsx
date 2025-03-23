@@ -81,7 +81,9 @@ export function ComponentWrapper({
             </Alert>
           </div>
         </div>
-        <div className="flex flex-1 items-center gap-2 p-4">{children}</div>
+        <div className="flex flex-1 flex-col items-center justify-center gap-8 p-4 @5xl:flex-row @5xl:items-start">
+          {children}
+        </div>
       </div>
     </ComponentErrorBoundary>
   );

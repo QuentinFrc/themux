@@ -16,12 +16,14 @@ import { CheckboxDemo } from "@/components/components-demo/checkbox-demo";
 import { CollapsibleDemo } from "@/components/components-demo/collapsible-demo";
 import { ComboboxDemo } from "@/components/components-demo/combobox-demo";
 import { CommandDemo } from "@/components/components-demo/command-demo";
+import { ComponentWrapper } from "@/components/components-demo/component-wrapper";
 import { ContextMenuDemo } from "@/components/components-demo/context-menu-demo";
 import { DatePickerDemo } from "@/components/components-demo/date-picker-demo";
 import { DialogDemo } from "@/components/components-demo/dialog-demo";
 import { DrawerDemo } from "@/components/components-demo/drawer-demo";
 import { DropdownMenuDemo } from "@/components/components-demo/dropdown-menu-demo";
 import { FormDemo } from "@/components/components-demo/form-demo";
+import { FormsDemo } from "@/components/components-demo/forms-demo";
 import { HoverCardDemo } from "@/components/components-demo/hover-card-demo";
 import { InputDemo } from "@/components/components-demo/input-demo";
 import { InputOTPDemo } from "@/components/components-demo/input-otp-demo";
@@ -47,10 +49,9 @@ import { TextareaDemo } from "@/components/components-demo/textarea-demo";
 import { ToggleDemo } from "@/components/components-demo/toggle-demo";
 import { ToggleGroupDemo } from "@/components/components-demo/toggle-group-demo";
 import { TooltipDemo } from "@/components/components-demo/tooltip-demo";
-import { ComponentWrapper } from "@/components/components-demo/component-wrapper";
-import { Separator } from "@/components/ui/separator";
-import { PageHeader } from "@/components/page-header";
 import { ExternalLink } from "@/components/external-link";
+import { PageHeader } from "@/components/page-header";
+import { Separator } from "@/components/ui/separator";
 
 export const dynamic = "force-static";
 
@@ -81,6 +82,9 @@ export default function ComponentsPage() {
         <div className="@container grid flex-1 gap-4 space-y-8">
           <ComponentWrapper name="button">
             <ButtonDemo />
+          </ComponentWrapper>
+          <ComponentWrapper name="form">
+            <FormsDemo />
           </ComponentWrapper>
           <ComponentWrapper name="calendar">
             <CalendarDemo />
@@ -152,6 +156,7 @@ export default function ComponentsPage() {
             <DropdownMenuDemo />
           </ComponentWrapper>
           <ComponentWrapper name="form">
+            <FormsDemo />
             <FormDemo />
           </ComponentWrapper>
           <ComponentWrapper name="hover-card">

@@ -6,7 +6,7 @@ import {
 
 export function ResizableDemo() {
   return (
-    <div className="flex w-full flex-col gap-6">
+    <div className="flex w-full flex-col items-center gap-6">
       <ResizablePanelGroup
         direction="horizontal"
         className="max-w-md rounded-lg border md:min-w-[450px]"

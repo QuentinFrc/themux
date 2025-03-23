@@ -37,7 +37,7 @@ export default async function ShadcnThemesLayout({
         <ScrollArea className="overflow-hidden">{children}</ScrollArea>
       </SidebarInset>
 
-      <ToolsSidebar />
+      <ToolsSidebar className="peer-data-[variant=floating]:h-svh peer-data-[variant=floating]:border-l peer-data-[variant=sidebar]:h-svh peer-data-[variant=sidebar]:border-l" />
     </SidebarProvider>
   );
 }

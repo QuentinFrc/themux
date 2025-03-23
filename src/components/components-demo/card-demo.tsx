@@ -17,8 +17,8 @@ import { Label } from "@/components/ui/label";
 
 export function CardDemo() {
   return (
-    <div className="flex w-full flex-col items-start gap-4">
-      <Card className="w-full max-w-1/2">
+    <div className="flex w-full flex-col items-start justify-center gap-4">
+      <Card className="mx-auto w-full @3xl:max-w-1/2">
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>
@@ -67,7 +67,7 @@ export function CardDemo() {
           </div>
         </CardFooter>
       </Card>
-      <Card className="w-full max-w-1/2">
+      <Card className="mx-auto w-full @3xl:max-w-1/2">
         <CardHeader>
           <CardTitle>Meeting Notes</CardTitle>
           <CardDescription>
@@ -107,7 +107,7 @@ export function CardDemo() {
           </div>
         </CardFooter>
       </Card>
-      <Card className="w-full max-w-1/2">
+      <Card className="mx-auto w-full @3xl:max-w-1/2">
         <CardHeader>
           <CardTitle>Is this an image?</CardTitle>
           <CardDescription>This is a card with an image.</CardDescription>
@@ -116,7 +116,7 @@ export function CardDemo() {
           <Image
             src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
             alt="Photo by Drew Beamer"
-            className="aspect-video object-cover"
+            className="aspect-video size-full object-cover"
             width={500}
             height={500}
           />

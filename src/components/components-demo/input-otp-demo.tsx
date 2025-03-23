@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 
 export function InputOTPDemo() {
   return (
-    <div className="flex flex-col flex-wrap gap-6 md:flex-row">
+    <div className="flex flex-col flex-wrap justify-center gap-6 md:flex-row">
       <InputOTPSimple />
       <InputOTPPattern />
       <InputOTPWithSeparator />

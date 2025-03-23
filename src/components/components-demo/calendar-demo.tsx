@@ -18,7 +18,7 @@ export function CalendarDemo() {
   });
 
   return (
-    <div className="flex flex-col flex-wrap items-start gap-2 @md:flex-row">
+    <div className="flex flex-col flex-wrap items-start justify-center gap-2 @md:flex-row">
       <Calendar
         mode="single"
         selected={date}

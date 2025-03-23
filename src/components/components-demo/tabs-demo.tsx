@@ -15,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function TabsDemo() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col items-center gap-6 @3xl:flex-row @3xl:items-start">
       <Tabs defaultValue="account" className="max-w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="account">Account</TabsTrigger>
@@ -70,32 +70,34 @@ export function TabsDemo() {
           </Card>
         </TabsContent>
       </Tabs>
-      <Tabs defaultValue="home">
-        <TabsList>
-          <TabsTrigger value="home">Home</TabsTrigger>
-          <TabsTrigger value="settings">Settings</TabsTrigger>
-        </TabsList>
-      </Tabs>
-      <Tabs defaultValue="home">
-        <TabsList>
-          <TabsTrigger value="home">Home</TabsTrigger>
-          <TabsTrigger value="settings" disabled>
-            Disabled
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
-      <Tabs defaultValue="preview">
-        <TabsList>
-          <TabsTrigger value="preview">
-            <AppWindowIcon />
-            Preview
-          </TabsTrigger>
-          <TabsTrigger value="code">
-            <CodeIcon />
-            Code
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
+      <div className="flex flex-col items-start gap-6 @max-3xl:w-full @3xl:justify-start">
+        <Tabs defaultValue="home" className="@max-3xl:w-full">
+          <TabsList className="@max-3xl:w-full">
+            <TabsTrigger value="home">Home</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
+          </TabsList>
+        </Tabs>
+        <Tabs defaultValue="home" className="@max-3xl:w-full">
+          <TabsList className="@max-3xl:w-full">
+            <TabsTrigger value="home">Home</TabsTrigger>
+            <TabsTrigger value="settings" disabled>
+              Disabled
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+        <Tabs defaultValue="preview" className="@max-3xl:w-full">
+          <TabsList className="@max-3xl:w-full">
+            <TabsTrigger value="preview">
+              <AppWindowIcon />
+              Preview
+            </TabsTrigger>
+            <TabsTrigger value="code">
+              <CodeIcon />
+              Code
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </div>
     </div>
   );
 }

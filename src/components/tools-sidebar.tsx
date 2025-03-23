@@ -13,6 +13,7 @@ import {
 } from "./ui/sidebar";
 
 export function ToolsSidebar({
+  className,
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   const [isOpen, setIsOpen] = useState(true);
@@ -30,6 +31,7 @@ export function ToolsSidebar({
         className={cn(
           "sticky hidden h-svh transition lg:grid",
           isOpen ? "visible w-64" : "invisible w-0",
+          className,
         )}
         {...props}
       >

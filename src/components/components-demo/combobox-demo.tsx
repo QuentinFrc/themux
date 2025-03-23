@@ -108,7 +108,7 @@ type Timezone = (typeof timezones)[number];
 
 export function ComboboxDemo() {
   return (
-    <div className="flex w-full flex-wrap items-start gap-4">
+    <div className="flex w-full flex-wrap items-start justify-center gap-4 @max-3xl:justify-start">
       <FrameworkCombobox frameworks={[...frameworks]} />
       <UserCombobox users={[...users]} selectedUserId={users[0].id} />
       <TimezoneCombobox
