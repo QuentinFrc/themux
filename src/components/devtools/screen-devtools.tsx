@@ -113,8 +113,8 @@ const defaultTools: Tools = {
 };
 
 function ScreenDevtoolsWrapper() {
-  // Won't ship to your production build (Enabled for now, uncomment to disable)
-  // if (process.env.NODE_ENV === "production") return null;
+  // Won't ship to your production build
+  if (process.env.NODE_ENV === "production") return null;
 
   return (
     <SettingsProvider>
