@@ -31,7 +31,10 @@ export function CardsPaymentMethod() {
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">
-        <RadioGroup defaultValue="card" className="grid grid-cols-3 gap-4">
+        <RadioGroup
+          defaultValue="card"
+          className="pointer-events-none grid grid-cols-3 gap-4"
+        >
           <div>
             <RadioGroupItem
               value="card"
@@ -65,6 +68,7 @@ export function CardsPaymentMethod() {
               id="paypal"
               className="peer sr-only"
               aria-label="Paypal"
+              disabled
             />
             <Label
               htmlFor="paypal"
@@ -80,6 +84,7 @@ export function CardsPaymentMethod() {
               id="apple"
               className="peer sr-only"
               aria-label="Apple"
+              disabled
             />
             <Label
               htmlFor="apple"
