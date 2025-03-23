@@ -1,7 +1,7 @@
-import { ChartAreaDemo } from "@/components/demo/chart-area-demo";
-import { ChartBarDemo } from "@/components/demo/chart-bar-demo";
-import { ChartLineDemo } from "@/components/demo/chart-line-demo";
-import { ChartBarMixed } from "@/components/demo/chart-bar-mixed";
+import { ChartAreaDemo } from "@/components/components-demo/chart-area-demo";
+import { ChartBarDemo } from "@/components/components-demo/chart-bar-demo";
+import { ChartLineDemo } from "@/components/components-demo/chart-line-demo";
+import { ChartBarMixed } from "@/components/components-demo/chart-bar-mixed";
 
 export function ChartDemo() {
   return (
