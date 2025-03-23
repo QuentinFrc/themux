@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import { ChevronUp } from "lucide-react";
 import React from "react";
 import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
 
 export function CollapsibleThemeCustomizerWrapper({
   children,
