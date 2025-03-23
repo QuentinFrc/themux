@@ -189,8 +189,8 @@ export function getThemeSylesCodeWithVariablesV4({
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
-  --primary-foreground: var(--primary-foreground);
-  --primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
