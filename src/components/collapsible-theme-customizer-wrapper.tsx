@@ -1,10 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { ChevronUp } from "lucide-react";
 import React from "react";
 import { Button } from "./ui/button";
-import { ContainerWrapper } from "./ui/wrappers";
-import { ChevronUp } from "lucide-react";
+import { Badge } from "./ui/badge";
 
 export function CollapsibleThemeCustomizerWrapper({
   children,
@@ -16,7 +16,9 @@ export function CollapsibleThemeCustomizerWrapper({
     <div className="w-full">
       <div className="flex items-center justify-between">
         <header>
-          <h1 className="text-4xl font-bold">Theme customizer</h1>
+          <h1 className="flex items-center gap-4 text-4xl font-bold">
+            Tailwind CSS v4 shadcn/ui theme customizer
+          </h1>
         </header>
 
         <Button

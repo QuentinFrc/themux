@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Settings2 } from "lucide-react";
+import { Settings2, X } from "lucide-react";
 import { useState } from "react";
 import { CopyCodeButtonDialog, Customizer } from "./theme-customizer";
 import { Button } from "./ui/button";
@@ -20,7 +20,10 @@ export function ToolsSidebar({
 
   return (
     <>
-      <ToolSidebarToggle toggleToolsSidebar={toggleToolsSidebar} />
+      <ToolSidebarToggle
+        toggleToolsSidebar={toggleToolsSidebar}
+        isOpen={isOpen}
+      />
       <Sidebar
         variant="floating"
         collapsible="none"
@@ -51,10 +54,12 @@ export function ToolsSidebar({
 
 interface ToolsSidebarProps extends React.ComponentProps<typeof Button> {
   toggleToolsSidebar: () => void;
+  isOpen: boolean;
 }
 
 function ToolSidebarToggle({
   toggleToolsSidebar,
+  isOpen,
   className,
   ...props
 }: ToolsSidebarProps) {
@@ -66,7 +71,18 @@ function ToolSidebarToggle({
       onClick={toggleToolsSidebar}
       {...props}
     >
-      <Settings2 />
+      <Settings2
+        className={cn(
+          "transition duration-200",
+          isOpen ? "absolute scale-0" : "scale-100",
+        )}
+      />
+      <X
+        className={cn(
+          "transition duration-200",
+          !isOpen ? "absolute scale-0" : "scale-100",
+        )}
+      />
     </Button>
   );
 }
