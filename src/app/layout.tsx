@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { fontVariables } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -37,6 +38,7 @@ export default async function RootLayout({
           <Toaster />
           <ScreenDevTools />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
