@@ -62,7 +62,7 @@ function ToolSidebarToggle({
     <Button
       variant={"ghost"}
       size={"icon"}
-      className={cn("fixed top-4 right-4 z-10", className)}
+      className={cn("fixed top-4 right-4 z-10 max-lg:hidden", className)}
       onClick={toggleToolsSidebar}
       {...props}
     >
