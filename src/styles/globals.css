@@ -126,6 +126,11 @@
   }
 }
 
+:root {
+  /* Tailwind CSS Candy cane */
+  --pattern-fg: color-mix(in oklab, var(--color-foreground) 10%, transparent);
+}
+
 @utility code-inline {
   @apply text-primary bg-muted relative isolate inline-flex px-1 font-mono;
 }

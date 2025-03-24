@@ -2,29 +2,30 @@ import { CardsDemo } from "@/components/cards-demo";
 import { CollapsibleThemeCustomizerWrapper } from "@/components/collapsible-theme-customizer-wrapper";
 import { ThemeCustomizer } from "@/components/theme-customizer";
 import { Separator } from "@/components/ui/separator";
-import { ContainerWrapper, SectionWrapper } from "@/components/ui/wrappers";
+import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
 
 export const dynamic = "force-static";
 
 export default function ShadcnThemesPage() {
   return (
     <>
-      <SectionWrapper>
-        <ContainerWrapper className="border-x">
+      <ContainerWrapper withCane>
+        <SectionWrapper>
           <CollapsibleThemeCustomizerWrapper>
             <div className="pt-4">
               <ThemeCustomizer />
             </div>
           </CollapsibleThemeCustomizerWrapper>
-        </ContainerWrapper>
-      </SectionWrapper>
+        </SectionWrapper>
+      </ContainerWrapper>
 
       <Separator />
-      <SectionWrapper>
-        <ContainerWrapper>
+
+      <ContainerWrapper withCane>
+        <SectionWrapper>
           <CardsDemo />
-        </ContainerWrapper>
-      </SectionWrapper>
+        </SectionWrapper>
+      </ContainerWrapper>
     </>
   );
 }

@@ -1,12 +1,12 @@
 import { CurrentDate } from "./current-date";
 import { ExternalLink } from "./external-link";
 import GitHub from "./icons/github";
-import { ContainerWrapper } from "./ui/wrappers";
+import { ContainerWrapper } from "./wrappers";
 
 export function Footer() {
   return (
     <footer className="bg-background py-12 font-mono">
-      <ContainerWrapper className="grid gap-2">
+      <div className="grid gap-2">
         <div className="flex justify-between">
           <div className="flex items-center gap-2">
             <CurrentDate />
@@ -36,7 +36,7 @@ export function Footer() {
             shadcn/ui
           </ExternalLink>
         </span>
-      </ContainerWrapper>
+      </div>
     </footer>
   );
 }

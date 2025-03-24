@@ -1,4 +1,4 @@
-import { ContainerWrapper, SectionWrapper } from "@/components/ui/wrappers";
+import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
 
 import { AccordionDemo } from "@/components/components-demo/accordion-demo";
 import { AlertDemo } from "@/components/components-demo/alert-demo";
@@ -61,176 +61,180 @@ export const dynamic = "force-static";
 
 export default function ComponentsPage() {
   return (
-    <SectionWrapper className="space-y-8">
-      <ContainerWrapper className="@container">
-        <PageHeader>
-          <PageHeaderHeading>Components dump</PageHeaderHeading>
-          <PageHeaderDescription>
-            <span>
-              The <span className="italic">totality</span> of{" "}
-              <ExternalLink
-                href="https://ui.shadcn.com/docs/components/accordion"
-                showIcon
-              >
-                shadcn/ui
-              </ExternalLink>{" "}
-              components.
-            </span>
-          </PageHeaderDescription>
-        </PageHeader>
+    <>
+      <ContainerWrapper className="@container" withCane>
+        <SectionWrapper>
+          <PageHeader>
+            <PageHeaderHeading>Components dump</PageHeaderHeading>
+            <PageHeaderDescription>
+              <span>
+                The <span className="italic">totality</span> of{" "}
+                <ExternalLink
+                  href="https://ui.shadcn.com/docs/components/accordion"
+                  showIcon
+                >
+                  shadcn/ui
+                </ExternalLink>{" "}
+                components.
+              </span>
+            </PageHeaderDescription>
+          </PageHeader>
+        </SectionWrapper>
       </ContainerWrapper>
 
       <Separator />
 
-      <ContainerWrapper className="space-y-4">
-        <div className="@container grid flex-1 gap-4 space-y-8">
-          <ComponentWrapper name="button">
-            <ButtonDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="form">
-            <FormsDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="calendar">
-            <CalendarDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="chart" className="w-full">
-            <ChartDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="input">
-            <InputDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="input-otp">
-            <InputOTPDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="label">
-            <LabelDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="accordion">
-            <AccordionDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="alert">
-            <AlertDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="alert-dialog">
-            <AlertDialogDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="aspect-ratio">
-            <AspectRatioDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="avatar">
-            <AvatarDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="badge">
-            <BadgeDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="breadcrumb">
-            <BreadcrumbDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="card">
-            <CardDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="carousel">
-            <CarouselDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="checkbox">
-            <CheckboxDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="collapsible">
-            <CollapsibleDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="combobox">
-            <ComboboxDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="command">
-            <CommandDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="context-menu">
-            <ContextMenuDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="date-picker">
-            <DatePickerDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="dialog">
-            <DialogDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="drawer">
-            <DrawerDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="dropdown-menu">
-            <DropdownMenuDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="form">
-            <FormsDemo />
-            <FormDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="hover-card">
-            <HoverCardDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="menubar">
-            <MenubarDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="navigation-menu">
-            <NavigationMenuDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="pagination">
-            <PaginationDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="popover">
-            <PopoverDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="progress">
-            <ProgressDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="radio-group">
-            <RadioGroupDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="resizable">
-            <ResizableDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="scroll-area">
-            <ScrollAreaDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="select">
-            <SelectDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="separator">
-            <SeparatorDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="sheet">
-            <SheetDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="skeleton">
-            <SkeletonDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="slider">
-            <SliderDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="sonner">
-            <SonnerDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="switch">
-            <SwitchDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="table">
-            <TableDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="tabs">
-            <TabsDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="textarea">
-            <TextareaDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="toggle">
-            <ToggleDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="toggle-group">
-            <ToggleGroupDemo />
-          </ComponentWrapper>
-          <ComponentWrapper name="tooltip">
-            <TooltipDemo />
-          </ComponentWrapper>
-        </div>
+      <ContainerWrapper withCane>
+        <SectionWrapper>
+          <div className="@container grid flex-1 gap-4 space-y-8">
+            <ComponentWrapper name="button">
+              <ButtonDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="form">
+              <FormsDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="calendar">
+              <CalendarDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="chart" className="w-full">
+              <ChartDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="input">
+              <InputDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="input-otp">
+              <InputOTPDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="label">
+              <LabelDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="accordion">
+              <AccordionDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="alert">
+              <AlertDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="alert-dialog">
+              <AlertDialogDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="aspect-ratio">
+              <AspectRatioDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="avatar">
+              <AvatarDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="badge">
+              <BadgeDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="breadcrumb">
+              <BreadcrumbDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="card">
+              <CardDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="carousel">
+              <CarouselDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="checkbox">
+              <CheckboxDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="collapsible">
+              <CollapsibleDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="combobox">
+              <ComboboxDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="command">
+              <CommandDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="context-menu">
+              <ContextMenuDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="date-picker">
+              <DatePickerDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="dialog">
+              <DialogDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="drawer">
+              <DrawerDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="dropdown-menu">
+              <DropdownMenuDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="form">
+              <FormsDemo />
+              <FormDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="hover-card">
+              <HoverCardDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="menubar">
+              <MenubarDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="navigation-menu">
+              <NavigationMenuDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="pagination">
+              <PaginationDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="popover">
+              <PopoverDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="progress">
+              <ProgressDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="radio-group">
+              <RadioGroupDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="resizable">
+              <ResizableDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="scroll-area">
+              <ScrollAreaDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="select">
+              <SelectDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="separator">
+              <SeparatorDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="sheet">
+              <SheetDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="skeleton">
+              <SkeletonDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="slider">
+              <SliderDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="sonner">
+              <SonnerDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="switch">
+              <SwitchDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="table">
+              <TableDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="tabs">
+              <TabsDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="textarea">
+              <TextareaDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="toggle">
+              <ToggleDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="toggle-group">
+              <ToggleGroupDemo />
+            </ComponentWrapper>
+            <ComponentWrapper name="tooltip">
+              <TooltipDemo />
+            </ComponentWrapper>
+          </div>
+        </SectionWrapper>
       </ContainerWrapper>
-    </SectionWrapper>
+    </>
   );
 }
