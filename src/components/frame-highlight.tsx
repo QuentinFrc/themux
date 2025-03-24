@@ -7,20 +7,20 @@ export function FrameHighlight({
   ...props
 }: ComponentProps<"span">) {
   return (
-    <span
-      className={cn(
-        "border-primary-300/60 bg-primary/15 group-hover:bg-primary/20 dark:border-primary/40 absolute inset-0 border border-dashed",
-        className,
-      )}
-      {...props}
-    >
-      {children}
-
-      <Corner className="fill-primary dark:fill-primary/50 absolute top-[-2px] left-[-2px]" />
-      <Corner className="fill-primary dark:fill-primary/50 absolute top-[-2px] right-[-2px]" />
-      <Corner className="fill-primary dark:fill-primary/50 absolute bottom-[-2px] left-[-2px]" />
-      <Corner className="fill-primary dark:fill-primary/50 absolute right-[-2px] bottom-[-2px]" />
-    </span>
+    <>
+      {" "}
+      <span className="relative h-fit px-1 text-nowrap">
+        <span className={cn("w-full", className)} {...props}>
+          {children}
+        </span>
+        <span className="border-primary-300/60 bg-primary/15 group-hover:bg-primary/20 z dark:border-primary/40 absolute inset-0 h-full border border-dashed px-1.5">
+          <Corner className="fill-primary dark:fill-primary/70 absolute top-[-2px] left-[-2px]" />
+          <Corner className="fill-primary dark:fill-primary/70 absolute top-[-2px] right-[-2px]" />
+          <Corner className="fill-primary dark:fill-primary/70 absolute bottom-[-2px] left-[-2px]" />
+          <Corner className="fill-primary dark:fill-primary/70 absolute right-[-2px] bottom-[-2px]" />
+        </span>
+      </span>{" "}
+    </>
   );
 }
 

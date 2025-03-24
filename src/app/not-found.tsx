@@ -1,6 +1,6 @@
 import { Footer } from "@/components/footer";
+import { FrameHighlight } from "@/components/frame-highlight";
 import { GoBackLink } from "@/components/go-back-link";
-import { Separator } from "@/components/ui/separator";
 import { ContainerWrapper, SectionWrapper } from "@/components/ui/wrappers";
 import { MoveLeft } from "lucide-react";
 
@@ -14,10 +14,10 @@ export default function RootNotFound() {
         <ContainerWrapper className="relative">
           <div className="grid size-full place-content-center gap-4 font-mono max-sm:place-items-start sm:text-center">
             <p className="text-2xl font-bold sm:text-4xl">
-              404 - Page Not Found
+              <FrameHighlight>Not Found</FrameHighlight>
             </p>
             <p className="text-muted-foreground">
-              That thing you're looking for does not exist.
+              The page you're looking for does not exist.
             </p>
 
             <GoBackLink

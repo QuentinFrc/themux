@@ -4,7 +4,11 @@ import { cn } from "@/lib/utils";
 import { ChevronUp } from "lucide-react";
 import React from "react";
 import { FrameHighlight } from "./frame-highlight";
-import { PageHeader } from "./page-header";
+import {
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+} from "./page-header";
 import { Button } from "./ui/button";
 
 export function CollapsibleThemeCustomizerWrapper({
@@ -15,27 +19,22 @@ export function CollapsibleThemeCustomizerWrapper({
   const [isExpanded, setIsExpanded] = React.useState(false);
   return (
     <div className="@container w-full">
-      <div className="flex flex-col items-center justify-between gap-4 @5xl:flex-row">
-        <PageHeader
-          heading={
-            <>
-              shadcn/ui customizer with
-              <br className="@4xl:hidden" />
-              <span className="relative h-fit px-1.5">
-                Tailwind v4
-                <FrameHighlight />
-              </span>
-            </>
-          }
-          description={
-            "Generate a theme for your app and copy-paste the generated css variables, ready for Tailwind CSS v4."
-          }
-        />
+      <div className="flex justify-between gap-4 @max-4xl:flex-col">
+        <PageHeader>
+          <PageHeaderHeading>
+            shadcn/ui customizer with
+            <FrameHighlight>Tailwind v4</FrameHighlight>
+          </PageHeaderHeading>
+          <PageHeaderDescription>
+            Generate a theme for your app and copy-paste the generated css
+            variables, ready for Tailwind CSS v4.
+          </PageHeaderDescription>
+        </PageHeader>
 
         <Button
           onClick={() => setIsExpanded(!isExpanded)}
           variant={"ghost"}
-          className="relative flex items-center justify-between gap-2"
+          className="relative flex w-fit cursor-pointer items-center justify-between gap-2"
         >
           {isExpanded ? "Collapse customizer" : "Expand customizer"}
           <ChevronUp

@@ -1,4 +1,8 @@
-import { PageHeader } from "@/components/page-header";
+import {
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+} from "@/components/page-header";
 import { Separator } from "@/components/ui/separator";
 import { ContainerWrapper, SectionWrapper } from "@/components/ui/wrappers";
 
@@ -6,10 +10,12 @@ export default function FontsPage() {
   return (
     <SectionWrapper className="space-y-8">
       <ContainerWrapper className="@container">
-        <PageHeader
-          heading={"Fonts page"}
-          description={"This will be inspired on Google Fonts"}
-        />
+        <PageHeader>
+          <PageHeaderHeading>Fonts page</PageHeaderHeading>
+          <PageHeaderDescription>
+            This will be inspired on Google Fonts.
+          </PageHeaderDescription>
+        </PageHeader>
       </ContainerWrapper>
 
       <Separator />

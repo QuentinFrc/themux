@@ -1,37 +1,52 @@
 import { cn } from "@/lib/utils";
 import { ComponentProps } from "react";
 
-interface PageHeaderProps extends ComponentProps<"header"> {
-  heading: React.ReactNode;
-  description: React.ReactNode;
-}
-
-export function PageHeader({
-  heading,
-  description,
-  children,
+function PageHeader({
   className,
+  children,
   ...props
-}: PageHeaderProps) {
-  if (children) {
-    return (
-      <header
-        className={cn("space-y-2 p-2 text-center @4xl:text-left", className)}
-        {...props}
-      >
-        {children}
-      </header>
-    );
-  }
-
+}: ComponentProps<"section">) {
   return (
-    <header className="space-y-2 p-2 text-center @4xl:text-left">
-      <h1 className="flex h-fit flex-col items-center gap-x-2 text-4xl font-bold @3xl:flex-row">
-        {heading}
-      </h1>
-      <p className="text-muted-foreground mx-auto text-sm text-balance">
-        {description}
-      </p>
-    </header>
+    <section className={cn("", className)} {...props}>
+      <div className="flex flex-col items-start gap-1">{children}</div>
+    </section>
   );
 }
+
+function PageHeaderHeading({ className, ...props }: ComponentProps<"h1">) {
+  return (
+    <h1
+      className={cn(
+        "text-2xl leading-tight font-bold tracking-tighter sm:text-3xl md:text-4xl lg:leading-[1.1]",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function PageHeaderDescription({ className, ...props }: ComponentProps<"p">) {
+  return (
+    <p
+      className={cn(
+        "text-muted-foreground max-w-3xl text-sm font-light text-balance sm:text-base",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function PageActions({ className, ...props }: ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "flex w-full items-center justify-start gap-2 pt-2",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export { PageActions, PageHeader, PageHeaderDescription, PageHeaderHeading };

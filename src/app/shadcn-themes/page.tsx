@@ -8,20 +8,23 @@ export const dynamic = "force-static";
 
 export default function ShadcnThemesPage() {
   return (
-    <SectionWrapper className="space-y-8">
-      <ContainerWrapper>
-        <CollapsibleThemeCustomizerWrapper>
-          <div className="pt-4">
-            <ThemeCustomizer />
-          </div>
-        </CollapsibleThemeCustomizerWrapper>
-      </ContainerWrapper>
+    <>
+      <SectionWrapper>
+        <ContainerWrapper className="border-x">
+          <CollapsibleThemeCustomizerWrapper>
+            <div className="pt-4">
+              <ThemeCustomizer />
+            </div>
+          </CollapsibleThemeCustomizerWrapper>
+        </ContainerWrapper>
+      </SectionWrapper>
 
       <Separator />
-
-      <ContainerWrapper>
-        <CardsDemo />
-      </ContainerWrapper>
-    </SectionWrapper>
+      <SectionWrapper>
+        <ContainerWrapper>
+          <CardsDemo />
+        </ContainerWrapper>
+      </SectionWrapper>
+    </>
   );
 }

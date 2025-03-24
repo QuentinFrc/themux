@@ -31,8 +31,7 @@ function NavLink({ href, title }: { href: string; title: string }) {
         isActive && "text-foreground hover:text-foreground",
       )}
     >
-      {isActive && <FrameHighlight />}
-      {title}
+      {isActive ? <FrameHighlight>{title}</FrameHighlight> : title}
     </Link>
   );
 }

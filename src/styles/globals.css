@@ -152,11 +152,6 @@
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
 
-.dark {
-  --foreground-base: 0.985 0 0;
-  --color-foreground-base: var(--foreground-base);
-}
-
 .grid-background-effect {
   --bg-height: 100vh;
   --bg-size: 32px;
