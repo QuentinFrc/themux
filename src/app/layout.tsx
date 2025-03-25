@@ -13,8 +13,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "themux",
-  description:
-    "themux is a shadcn/ui theme generator supporting TailwindCSS v4.",
+  description: "A shadcn/ui theme generator that supports TailwindCSS v4.",
 };
 
 export default async function RootLayout({
