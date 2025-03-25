@@ -6,6 +6,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
 
+export const dynamic = "force-static";
+
 export default function FontsPage() {
   return (
     <>
