@@ -10,7 +10,7 @@ export type ThemeConfig = {
 };
 
 export const initialThemeConfig: ThemeConfig = {
-  radius: 0.5,
+  radius: 0.625,
   theme: "neutral",
   themeObject: basePresetsV4["neutral"] as ThemeObject,
 };

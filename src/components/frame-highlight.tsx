@@ -13,7 +13,7 @@ export function FrameHighlight({
         <span className={cn("w-full", className)} {...props}>
           {children}
         </span>
-        <span className="border-primary-300/60 bg-primary/15 group-hover:bg-primary/20 z dark:border-primary/40 absolute inset-0 h-full border border-dashed px-1.5">
+        <span className="border-primary/60 bg-primary/15 group-hover:bg-primary/20 z dark:border-primary/40 absolute inset-0 h-full border border-dashed px-1.5">
           <Corner className="fill-primary dark:fill-primary/70 absolute top-[-2px] left-[-2px]" />
           <Corner className="fill-primary dark:fill-primary/70 absolute top-[-2px] right-[-2px]" />
           <Corner className="fill-primary dark:fill-primary/70 absolute bottom-[-2px] left-[-2px]" />

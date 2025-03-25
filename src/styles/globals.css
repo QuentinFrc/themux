@@ -8,7 +8,7 @@
 @import "./../styles/my-themes.css";
 
 :root {
-  --radius: 1rem;
+  --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -154,7 +154,7 @@
 
 @utility grid-cols-fluid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
 }
 
 .grid-background-effect {

@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Settings2, X } from "lucide-react";
+import { Palette, X } from "lucide-react";
 import { useState } from "react";
 import { CopyCodeButtonDialog, Customizer } from "./theme-customizer";
 import { Button } from "./ui/button";
@@ -16,7 +16,7 @@ export function ToolsSidebar({
   className,
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const toggleToolsSidebar = () => setIsOpen(!isOpen);
 
   return (
@@ -30,7 +30,7 @@ export function ToolsSidebar({
         collapsible="none"
         className={cn(
           "sticky hidden h-svh transition lg:grid",
-          isOpen ? "visible w-64" : "invisible w-0",
+          isOpen ? "visible w-70" : "invisible w-0",
           className,
         )}
         {...props}
@@ -42,7 +42,7 @@ export function ToolsSidebar({
 
               <div className="px-2 py-4">
                 <CopyCodeButtonDialog
-                  className="[&_svg]:hidden"
+                  className="w-full"
                   variant={"secondary"}
                 />
               </div>
@@ -73,7 +73,7 @@ function ToolSidebarToggle({
       onClick={toggleToolsSidebar}
       {...props}
     >
-      <Settings2
+      <Palette
         className={cn(
           "transition duration-200",
           isOpen ? "absolute scale-0" : "scale-100",
