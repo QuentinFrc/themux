@@ -1,5 +1,6 @@
 "use client";
 
+import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 import { Palette, X } from "lucide-react";
 import { useState } from "react";
@@ -16,8 +17,13 @@ export function ToolsSidebar({
   className,
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const isMounted = useMounted();
   const [isOpen, setIsOpen] = useState(false);
   const toggleToolsSidebar = () => setIsOpen(!isOpen);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <>

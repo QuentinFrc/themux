@@ -1,5 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
-import { ModeSwitcher } from "@/components/mode-switcher";
+import { ToolsSidebar } from "@/components/tools-sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -7,10 +7,10 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { MainNavigation } from "./navigation";
-import { ToolsSidebar } from "@/components/tools-sidebar";
-import { Metadata } from "next";
+import { ModeSwitcher } from "@/components/mode-switcher";
 
 export const metadata: Metadata = {
   title: {
@@ -40,6 +40,10 @@ export default async function ShadcnThemesLayout({
               className="mr-2 data-[orientation=vertical]:h-4"
             />
             <MainNavigation />
+          </div>
+
+          <div className="flex items-center justify-center pr-2 md:hidden">
+            <ModeSwitcher />
           </div>
         </header>
         <ScrollArea className="overflow-hidden">{children}</ScrollArea>

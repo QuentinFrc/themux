@@ -2,8 +2,7 @@ import { ReactScan } from "@/components/devtools/react-scan";
 
 import { ScreenDevTools } from "@/components/devtools/screen-devtools";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { ThemeWrapper } from "@/components/theme-wrapper";
+import { ThemeSync } from "@/components/theme-sync";
 import { Toaster } from "@/components/ui/sonner";
 import { fontVariables } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
@@ -60,8 +59,9 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ThemeWrapper>{children}</ThemeWrapper>
-          <ThemeSwitcher />
+          {children}
+
+          <ThemeSync />
           <Toaster />
           <ScreenDevTools />
         </ThemeProvider>

@@ -1,4 +1,5 @@
 // pulled from https://github.com/shadcn-ui/ui/blob/main/apps/v4/components/theme-selector.tsx
+// I removed this implementation for now, I plan on using it differently in the future
 "use client";
 
 import { BASE_THEMES, COLORFUL_THEMES } from "@/lib/themes";

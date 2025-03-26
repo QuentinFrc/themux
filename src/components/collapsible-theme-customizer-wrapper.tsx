@@ -17,6 +17,7 @@ export function CollapsibleThemeCustomizerWrapper({
   children: React.ReactNode;
 }) {
   const [isExpanded, setIsExpanded] = React.useState(false);
+
   return (
     <div className="@container w-full">
       <div className="flex justify-between gap-4 @max-4xl:flex-col">

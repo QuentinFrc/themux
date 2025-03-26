@@ -1,18 +1,16 @@
 import { basePresetsV4 } from "@/lib/colors";
-import { ColorfulPreset, PresetV4, ThemeObject } from "@/lib/themes";
+import { RemValue, ThemeObject } from "@/types/theme";
 import { useAtom } from "jotai/react";
 import { atomWithStorage } from "jotai/utils";
 
 export type ThemeConfig = {
-  radius: number;
-  theme: PresetV4 | ColorfulPreset;
+  radius: RemValue;
   themeObject: ThemeObject;
 };
 
 export const initialThemeConfig: ThemeConfig = {
-  radius: 0.625,
-  theme: "neutral",
-  themeObject: basePresetsV4["neutral"] as ThemeObject,
+  radius: "0.625rem",
+  themeObject: basePresetsV4.neutral,
 };
 
 const initialConfigAtom = atomWithStorage<ThemeConfig>(

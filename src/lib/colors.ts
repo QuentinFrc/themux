@@ -1,4 +1,4 @@
-import { ColorfulPreset, PresetV4, ThemeObject } from "./themes";
+import { ColorfulPreset, PresetV4, ThemeObject } from "../types/theme";
 
 // ===> Tailwind V4
 export const basePresetsV4: Record<PresetV4, ThemeObject> = {
@@ -360,7 +360,6 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
 } as const;
 
 export const basePresetsV4Array = Object.values(basePresetsV4);
-export type BasePresetV4 = typeof basePresetsV4;
 
 // ===> Presets based on Shadcn website for TailwindCSS V3 (✅Red, ✅Rose, ✅Orange, ✅Green, ✅Blue, ✅Yellow, ✅Violet, ✅Teal, ✅Pink)
 export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
@@ -1006,7 +1005,6 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
 } as const;
 
 export const colorfulPresetsArray = Object.values(colorfulPresets);
-export type ColorfulPresets = typeof colorfulPresets;
 
 // Combination of base and colorful presets
 export const allPresets = { ...basePresetsV4, ...colorfulPresets };

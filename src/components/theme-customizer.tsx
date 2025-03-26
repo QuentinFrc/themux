@@ -1,15 +1,13 @@
 // pulled from/inspired by https://github.com/shadcn-ui/ui/blob/main/apps/www/components/theme-customizer.tsx
 "use client";
 
-import { useConfig } from "@/hooks/use-config";
-import {
-  allPresetsArray,
-  basePresetsV4Array,
-  colorfulPresetsArray,
-} from "@/lib/colors";
-import { getThemeSylesCodeWithVariablesV4, ThemeObject } from "@/lib/themes";
+import { initialThemeConfig, useConfig } from "@/hooks/use-config";
+import { useMounted } from "@/hooks/use-mounted";
+import { basePresetsV4Array, colorfulPresetsArray } from "@/lib/colors";
+import { getCopyableThemeCSSVariablesV4 } from "@/lib/themes";
 import { cn, copyToClipboard } from "@/lib/utils";
-import { Check, Clipboard, Computer, Moon, Repeat, Sun } from "lucide-react";
+import { RemValue, ThemeObject } from "@/types/theme";
+import { Check, Clipboard, Moon, Repeat, Sun, SunMoon } from "lucide-react";
 import { useTheme } from "next-themes";
 import React, { useEffect, useMemo } from "react";
 import { Button } from "./ui/button";
@@ -19,15 +17,26 @@ import { Label } from "./ui/label";
 import { ScrollArea } from "./ui/scroll-area";
 import { Separator } from "./ui/separator";
 
-const RADIUS_VALUES = [0, 0.25, 0.5, 0.625, 0.75, 1];
+const RADIUS_VALUES: RemValue[] = [
+  "0rem",
+  "0.25rem",
+  "0.5rem",
+  "0.625rem",
+  "0.75rem",
+  "1rem",
+];
 
 export function ThemeCustomizer() {
-  const [config, setConfig] = useConfig();
+  const isMounted = useMounted();
+  const [_, setConfig] = useConfig();
 
-  useEffect(() => {
-    const bodyElement = document.querySelector("body");
-    bodyElement?.classList.add(`theme-${config.theme}`);
-  }, [config.radius]);
+  const resetThemeConfig = () => {
+    setConfig(initialThemeConfig);
+  };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className="flex items-center gap-2">
@@ -45,16 +54,7 @@ export function ThemeCustomizer() {
             </div>
 
             <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  setConfig({
-                    ...config,
-                    theme: "neutral",
-                    radius: 0.625,
-                  });
-                }}
-              >
+              <Button variant="ghost" onClick={resetThemeConfig}>
                 <span className="hidden @md:inline-flex">Reset</span> <Repeat />
                 <span className="sr-only">Reset</span>
               </Button>
@@ -72,15 +72,8 @@ export function ThemeCustomizer() {
 }
 
 export function Customizer({ className }: React.ComponentProps<"div">) {
-  const [mounted, setMounted] = React.useState(false);
   const { setTheme: setMode, theme: mode } = useTheme();
   const [config, setConfig] = useConfig();
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) "Not mounted...";
 
   return (
     <div
@@ -100,17 +93,18 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
               Base shadcn/ui presets
             </Label>
             <div className="@max-md:grid-cols-fluid items-center gap-2 @md:flex @md:flex-wrap">
-              {basePresetsV4Array.map((theme) => {
-                const isActive = config.theme === theme.name;
+              {basePresetsV4Array.map((themeObject) => {
+                const isActive = config.themeObject.name === themeObject.name;
+
                 return (
                   <PresetButton
                     showLabel
                     isActive={isActive}
-                    theme={theme}
-                    key={theme.name}
+                    themeObject={themeObject}
+                    key={themeObject.name}
                     className="@md:w-full @md:pr-1.5"
                   >
-                    {theme.label}
+                    {themeObject.label}
                   </PresetButton>
                 );
               })}
@@ -123,16 +117,17 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
               Colorful presets
             </Label>
             <div className="flex flex-wrap items-center gap-2">
-              {colorfulPresetsArray.map((theme) => {
-                const isActive = config.theme === theme.name;
+              {colorfulPresetsArray.map((themeObject) => {
+                const isActive = config.themeObject.name === themeObject.name;
+
                 return (
                   <PresetButton
                     isActive={isActive}
-                    theme={theme}
-                    key={theme.name}
+                    themeObject={themeObject}
+                    key={themeObject.name}
                     className="@md:w-full @md:pr-1.5"
                   >
-                    {theme.label}
+                    {themeObject.label}
                   </PresetButton>
                 );
               })}
@@ -164,7 +159,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
                     config.radius === value && "inset-ring-primary inset-ring",
                   )}
                   style={{
-                    "--radius": `${value}rem`,
+                    "--radius": `${value}`,
                   }}
                 >
                   {value}
@@ -216,8 +211,8 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
                 mode === "system" && "inset-ring-primary inset-ring",
               )}
             >
-              <Computer />
-              <span className={cn("hidden @md:inline-flex")}>System</span>
+              <SunMoon />
+              <span className={cn("hidden @md:inline-flex")}>Auto</span>
             </Button>
           </div>
         </div>
@@ -260,15 +255,11 @@ export function CopyCodeButtonDialog({
 
 function CustomizerCode({ className }: React.ComponentProps<"div">) {
   const [config] = useConfig();
-  const activeTheme = useMemo(
-    () => allPresetsArray.find((theme) => theme.name === config.theme),
-    [config.theme],
-  );
   const [copied, setCopied] = React.useState(false);
 
   const handleCopyThemeStylesCode = () => {
-    const themeStyleCodeString = getThemeSylesCodeWithVariablesV4({
-      themeObject: activeTheme!,
+    const themeStyleCodeString = getCopyableThemeCSSVariablesV4({
+      themeObject: config.themeObject,
       radius: config.radius,
     });
 
@@ -280,11 +271,11 @@ function CustomizerCode({ className }: React.ComponentProps<"div">) {
 
   const themeCode = useMemo(
     () =>
-      getThemeSylesCodeWithVariablesV4({
-        themeObject: activeTheme!,
+      getCopyableThemeCSSVariablesV4({
+        themeObject: config.themeObject,
         radius: config.radius,
       }),
-    [activeTheme, config.radius],
+    [config],
   );
 
   return (
@@ -338,30 +329,38 @@ const BUTTON_CLASSES = cn(
 );
 
 function PresetButton({
-  theme,
+  themeObject,
   isActive,
   className,
   children,
   showLabel = false,
   ...props
 }: {
-  theme: ThemeObject;
+  themeObject: ThemeObject;
   isActive: boolean;
   showLabel?: boolean;
 } & React.ComponentProps<typeof Button>) {
   const [config, setConfig] = useConfig();
   const { resolvedTheme: mode } = useTheme();
 
+  const setThemeConfig = () => {
+    setConfig((prev) => ({
+      ...prev,
+      themeObject,
+    }));
+  };
+
+  useEffect(() => {
+    console.log(
+      "PresetButton: " + config.themeObject.dark.primary + " " + config.radius,
+    );
+  }, [config.themeObject]);
+
   return (
     <Button
       variant={"ghost"}
-      key={theme.name}
-      onClick={() => {
-        setConfig({
-          ...config,
-          theme: theme.name,
-        });
-      }}
+      key={themeObject.name}
+      onClick={setThemeConfig}
       className={cn(
         BUTTON_CLASSES,
         "flex max-w-[80px] items-center justify-start gap-1",
@@ -369,29 +368,22 @@ function PresetButton({
         showLabel && "min-w-[75px]",
         className,
       )}
+      style={
+        {
+          "--primary": `${mode === "dark" ? themeObject.dark.primary : themeObject.light.primary}`,
+          "--secondary": `${mode === "dark" ? themeObject.dark.secondary : themeObject.light.secondary}`,
+          "--background": `${mode === "dark" ? themeObject.dark.background : themeObject.light.background}`,
+        } as React.CSSProperties
+      }
       {...props}
     >
       <span
         className={cn(
-          "bg-primary from-primary to-background ring-border/70 flex size-5 shrink-0 items-center justify-center overflow-hidden rounded-lg from-50% to-50% ring",
-          "bg-linear-45",
-          isActive && "bg-foreground",
+          "ring-border flex size-5 shrink-0 items-center justify-center overflow-hidden rounded-lg ring",
+          "from-primary to-secondary bg-linear-0 from-50% to-50%",
+          isActive && "rotate-180",
         )}
-        style={
-          {
-            "--primary": `${mode === "dark" ? theme.dark.primary : theme.light.primary}`,
-            "--background": `${mode === "dark" ? theme.dark.background : theme.light.background}`,
-            "--foreground": `${mode === "dark" ? theme.dark.foreground : theme.light.foreground}`,
-          } as React.CSSProperties
-        }
-      >
-        <Check
-          className={cn(
-            "text-foreground size-6 transition duration-200",
-            isActive ? "scale-100" : "scale-0",
-          )}
-        />
-      </span>
+      />
       <span
         className={cn("leading-tight", !showLabel && "hidden @md:inline-flex")}
       >
