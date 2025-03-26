@@ -13,7 +13,10 @@ import { ToolsSidebar } from "@/components/tools-sidebar";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "shadcn/ui Themes",
+  title: {
+    default: "shadcn/ui themes",
+    template: "%s | themux",
+  },
 };
 
 export default async function ShadcnThemesLayout({

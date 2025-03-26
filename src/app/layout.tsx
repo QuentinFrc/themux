@@ -13,7 +13,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    default: "themux - shadcn/ui customizer",
+    default: "themux | shadcn/ui customizer",
     template: "%s | themux",
   },
   description: "A shadcn/ui theme generator that supports TailwindCSS v4.",
