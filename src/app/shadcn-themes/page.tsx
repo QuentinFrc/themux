@@ -3,6 +3,11 @@ import { CollapsibleThemeCustomizerWrapper } from "@/components/collapsible-them
 import { ThemeCustomizer } from "@/components/theme-customizer";
 import { Separator } from "@/components/ui/separator";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Theme Customizer",
+};
 
 export const dynamic = "force-static";
 

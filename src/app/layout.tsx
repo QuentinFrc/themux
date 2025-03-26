@@ -12,8 +12,36 @@ import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "themux",
+  title: {
+    default: "themux - shadcn/ui customizer",
+    template: "%s | themux",
+  },
   description: "A shadcn/ui theme generator that supports TailwindCSS v4.",
+  keywords: [
+    "themux",
+    "themux shadcn",
+    "shadcn",
+    "shadcn/ui",
+    "Tailwind",
+    "Tailwind v4",
+    "TailwindCSS",
+    "Theme generator",
+    "Next.js",
+    "llanesluis",
+  ],
+  authors: [
+    {
+      name: "llanesluis",
+      url: "https://www.llanesluis.xyz/",
+    },
+  ],
+  creator: "llanesluis",
+  metadataBase: new URL("https://themux.vercel.app"),
+  openGraph: {
+    title: "themux | shadcn/ui theme generator with TailwindCSS v4",
+    description: "A shadcn/ui theme generator that supports TailwindCSS v4.",
+  },
+  generator: "Next.js",
 };
 
 export default async function RootLayout({

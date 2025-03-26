@@ -56,6 +56,12 @@ import {
   PageHeaderHeading,
 } from "@/components/page-header";
 import { Separator } from "@/components/ui/separator";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Components",
+  description: "A collection of components built with shadcn/ui.",
+};
 
 export const dynamic = "force-static";
 

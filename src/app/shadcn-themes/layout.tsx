@@ -10,6 +10,11 @@ import {
 import { cookies } from "next/headers";
 import { MainNavigation } from "./navigation";
 import { ToolsSidebar } from "@/components/tools-sidebar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "shadcn/ui Themes",
+};
 
 export default async function ShadcnThemesLayout({
   children,

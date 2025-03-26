@@ -5,6 +5,11 @@ import {
 } from "@/components/page-header";
 import { Separator } from "@/components/ui/separator";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Fonts",
+};
 
 export const dynamic = "force-static";
 
