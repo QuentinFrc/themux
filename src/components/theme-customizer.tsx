@@ -7,15 +7,25 @@ import { basePresetsV4Array, colorfulPresetsArray } from "@/lib/colors";
 import { getCopyableThemeCSSVariablesV4 } from "@/lib/themes";
 import { cn, copyToClipboard } from "@/lib/utils";
 import { RemValue, ThemeObject } from "@/types/theme";
-import { Check, Clipboard, Moon, Repeat, Sun, SunMoon } from "lucide-react";
+import {
+  Check,
+  Clipboard,
+  Laptop,
+  Moon,
+  Repeat,
+  SquareRoundCorner,
+  Sun,
+  SunMoon,
+} from "lucide-react";
 import { useTheme } from "next-themes";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
+import { ColorTokens } from "./color-tokens";
+import { Shadcn } from "./icons/shadcn";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Label } from "./ui/label";
 import { ScrollArea } from "./ui/scroll-area";
-import { Separator } from "./ui/separator";
 
 const RADIUS_VALUES: RemValue[] = [
   "0rem",
@@ -28,7 +38,7 @@ const RADIUS_VALUES: RemValue[] = [
 
 export function ThemeCustomizer() {
   const isMounted = useMounted();
-  const [_, setConfig] = useConfig();
+  const [config, setConfig] = useConfig();
 
   const resetThemeConfig = () => {
     setConfig(initialThemeConfig);
@@ -49,7 +59,7 @@ export function ThemeCustomizer() {
               </div>
               <div className="text-muted-foreground text-xs">
                 Customize your components colors, then simply copy and paste the
-                generated CSS code to your proyect.
+                generated CSS code to your project.
               </div>
             </div>
 
@@ -63,8 +73,10 @@ export function ThemeCustomizer() {
           </div>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className="grid grid-cols-1 gap-4 @2xl:grid-cols-2 @4xl:grid-cols-[6fr_4fr] @5xl:grid-cols-[7fr_3fr]">
           <Customizer />
+
+          <ColorTokens />
         </CardContent>
       </Card>
     </div>
@@ -82,10 +94,12 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
         className,
       )}
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-8">
         {/* Presets */}
         <div className="space-y-1.5">
-          <Label className="pb-2">Presets</Label>
+          <Label className="flex items-center gap-1 pb-2">
+            <Shadcn className="size-4" /> Presets
+          </Label>
 
           {/* Base shadcn/ui presets */}
           <div className="pb-2">
@@ -135,11 +149,11 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
           </div>
         </div>
 
-        <Separator />
-
         {/* Radius */}
         <div className="space-y-1.5">
-          <Label className="pb-2">Radius</Label>
+          <Label className="flex items-center gap-1 pb-2">
+            <SquareRoundCorner className="size-4" /> Radius
+          </Label>
           <div className="@max-md:grid-cols-fluid items-center gap-2 @md:flex @md:flex-wrap">
             {RADIUS_VALUES.map((value) => {
               return (
@@ -169,11 +183,11 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
           </div>
         </div>
 
-        <Separator />
-
         {/* Modes */}
         <div className="space-y-1.5">
-          <Label className="pb-2">Mode</Label>
+          <Label className="flex items-center gap-1 pb-2">
+            <SunMoon className="size-4" /> Mode
+          </Label>
           <div className="@max-md:grid-cols-fluid items-center gap-2 @md:flex @md:flex-wrap">
             <Button
               variant={"ghost"}
@@ -211,7 +225,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
                 mode === "system" && "inset-ring-primary inset-ring",
               )}
             >
-              <SunMoon />
+              <Laptop />
               <span className={cn("hidden @md:inline-flex")}>Auto</span>
             </Button>
           </div>
@@ -340,7 +354,7 @@ function PresetButton({
   isActive: boolean;
   showLabel?: boolean;
 } & React.ComponentProps<typeof Button>) {
-  const [config, setConfig] = useConfig();
+  const [_, setConfig] = useConfig();
   const { resolvedTheme: mode } = useTheme();
 
   const setThemeConfig = () => {
@@ -349,12 +363,6 @@ function PresetButton({
       themeObject,
     }));
   };
-
-  useEffect(() => {
-    console.log(
-      "PresetButton: " + config.themeObject.dark.primary + " " + config.radius,
-    );
-  }, [config.themeObject]);
 
   return (
     <Button

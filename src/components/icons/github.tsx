@@ -1,4 +1,4 @@
-export default function GitHub({ className }: { className?: string }) {
+export function GitHub({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 256 250"

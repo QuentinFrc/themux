@@ -8,6 +8,8 @@ export type RadiusProperty = {
   radius: RemValue;
 };
 
+export type HexValue = `#${string}`;
+
 export type ColorProperties = {
   background: OklchValue;
   foreground: OklchValue;
@@ -42,6 +44,8 @@ export type ColorProperties = {
   "sidebar-ring": OklchValue;
 };
 
+export type ColorProperty = keyof ColorProperties;
+
 export type CssThemeProperties = RadiusProperty & ColorProperties;
 
 export type PresetV4 = "stone" | "zinc" | "neutral" | "gray" | "slate";
@@ -54,12 +58,16 @@ export type ColorfulPreset =
   | "blue"
   | "yellow"
   | "violet"
-  | "teal"
   | "pink";
 
+export type CssThemePropertiesWithoutRadius = Omit<
+  CssThemeProperties,
+  "radius"
+>;
+
 export type ThemeObject = {
-  name: PresetV4 | ColorfulPreset;
+  name: PresetV4 | ColorfulPreset | "custom";
   label: string;
   light: CssThemeProperties;
-  dark: Omit<CssThemeProperties, "radius">;
+  dark: CssThemePropertiesWithoutRadius;
 };

@@ -1,7 +1,6 @@
 import { CurrentDate } from "./current-date";
 import { ExternalLink } from "./external-link";
-import GitHub from "./icons/github";
-import { ContainerWrapper } from "./wrappers";
+import { GitHub } from "./icons/github";
 
 export function Footer() {
   return (

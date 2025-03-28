@@ -9,8 +9,10 @@ import {
 } from "lucide-react";
 import * as React from "react";
 
+import { NAV_LINKS } from "@/lib/constants";
+import Link from "next/link";
 import { ExternalLink } from "./external-link";
-import GitHub from "./icons/github";
+import { GitHub } from "./icons/github";
 import { ModeSwitcher } from "./mode-switcher";
 import { Button } from "./ui/button";
 import {
@@ -30,13 +32,10 @@ import {
   SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
 } from "./ui/sidebar";
-import { NAV_LINKS } from "@/lib/constants";
-import Link from "next/link";
 
 const data = {
   teams: [

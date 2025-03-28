@@ -4,8 +4,10 @@ import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 import { Palette, X } from "lucide-react";
 import { useState } from "react";
+import { ColorTokens } from "./color-tokens";
 import { CopyCodeButtonDialog, Customizer } from "./theme-customizer";
 import { Button } from "./ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import {
   Sidebar,
   SidebarContent,
@@ -46,7 +48,18 @@ export function ToolsSidebar({
             <SidebarGroupContent className="scaled">
               <Customizer className="max-h-fit px-2 py-4" />
 
-              <div className="px-2 py-4">
+              <div className="space-y-2 px-2 py-4">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button className="w-full px-2 py-4" variant={"outline"}>
+                      See tokens
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="h-90 p-0">
+                    <ColorTokens />
+                  </PopoverContent>
+                </Popover>
+
                 <CopyCodeButtonDialog
                   className="w-full"
                   variant={"secondary"}
