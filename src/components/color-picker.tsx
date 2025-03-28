@@ -3,60 +3,28 @@
 import { ColorProperty, OklchValue } from "@/types/theme";
 import { hexToOklch, oklchToHex } from "@/utils/colors";
 import { Pipette } from "lucide-react";
-import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { TokenDisplay, TokenInfo } from "./token";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
-interface OklchColorPickerProps {
+interface TokenColorPickerProps {
   colorProperty: ColorProperty;
-  label: string;
   oklchColor: OklchValue;
   setColorTokens: (color: OklchValue) => void;
 }
 
-export function OklchColorPicker({
+export function TokenColorPicker({
   colorProperty,
-  label,
   oklchColor,
   setColorTokens,
-}: OklchColorPickerProps) {
-  const [hexColor, setHexColor] = useState(() => oklchToHex(oklchColor));
+}: TokenColorPickerProps) {
+  const hexColor = oklchToHex(oklchColor);
 
   const handleColorChange = (newHexColor: string) => {
-    setHexColor(newHexColor);
-
     const newOklchColor = hexToOklch(newHexColor);
     setColorTokens(newOklchColor);
   };
 
-  return (
-    <div>
-      <div>
-        <TokenColorPicker
-          label={label}
-          colorProperty={colorProperty}
-          oklchColor={oklchColor}
-          hexColor={hexColor}
-          handleColorChange={handleColorChange}
-        />
-      </div>
-    </div>
-  );
-}
-
-function TokenColorPicker({
-  colorProperty,
-  oklchColor,
-  hexColor,
-  handleColorChange,
-}: {
-  colorProperty: ColorProperty;
-  label: string;
-  oklchColor: OklchValue;
-  hexColor: string;
-  handleColorChange: (newHexColor: string) => void;
-}) {
   return (
     <Popover>
       <div className="flex items-center gap-2">

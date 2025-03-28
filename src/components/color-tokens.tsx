@@ -8,13 +8,14 @@ import {
 } from "@/types/theme";
 import { getOptimalForegroundColor } from "@/utils/colors";
 import { useTheme } from "next-themes";
-import { OklchColorPicker } from "./color-picker";
+import { useCallback } from "react";
+import { TokenColorPicker } from "./color-picker";
 import { Token } from "./token";
 import { ScrollArea } from "./ui/scroll-area";
 
 export function ColorTokens() {
   return (
-    <div className="bg-muted h-full max-h-90 overflow-hidden rounded-lg">
+    <div className="bg-muted h-full max-h-96 overflow-hidden rounded-lg border">
       <ScrollArea className="relative size-full overflow-hidden">
         <div className="bg-muted sticky top-0 isolate z-1 flex h-10 w-full items-center justify-between gap-2 border-b p-4">
           <span className="text-muted-foreground text-sm font-semibold">
@@ -33,15 +34,12 @@ function Tokens() {
   const mode = resolvedTheme === "dark" ? "dark" : "light";
   const [config, setConfig] = useConfig();
 
-  const getColorFromThemeObject = ({
-    property,
-    mode,
-  }: {
-    property: ColorProperty;
-    mode: "light" | "dark";
-  }) => {
-    return config.themeObject[mode][property];
-  };
+  const getColorFromThemeObject = useCallback(
+    ({ property }: { property: ColorProperty }) => {
+      return config.themeObject[mode][property];
+    },
+    [mode, config.themeObject[mode]],
+  );
 
   const setPrimaryColorTokens = (primaryColor: OklchValue) => {
     const foregroundColor = getOptimalForegroundColor(primaryColor);
@@ -101,12 +99,10 @@ function Tokens() {
 
   return (
     <div className="space-y-4 p-4">
-      <OklchColorPicker
+      <TokenColorPicker
         colorProperty="primary"
-        label="Primary"
         oklchColor={getColorFromThemeObject({
           property: "primary",
-          mode: resolvedTheme as "light" | "dark",
         })}
         setColorTokens={setPrimaryColorTokens}
       />
@@ -114,7 +110,6 @@ function Tokens() {
         colorProperty="primary-foreground"
         oklchColor={getColorFromThemeObject({
           property: "primary-foreground",
-          mode: resolvedTheme as "light" | "dark",
         })}
       />
 

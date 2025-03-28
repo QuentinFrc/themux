@@ -58,8 +58,8 @@ export function ThemeCustomizer() {
                 Theme Customizer
               </div>
               <div className="text-muted-foreground text-xs">
-                Customize your components colors, then simply copy and paste the
-                generated CSS code to your project.
+                Customize your colors, then copy and paste the generated CSS
+                code to your project.
               </div>
             </div>
 
@@ -73,7 +73,7 @@ export function ThemeCustomizer() {
           </div>
         </CardHeader>
 
-        <CardContent className="grid grid-cols-1 gap-4 @2xl:grid-cols-2 @4xl:grid-cols-[6fr_4fr] @5xl:grid-cols-[7fr_3fr]">
+        <CardContent className="grid grid-cols-1 gap-6 @2xl:grid-cols-2 @5xl:grid-cols-[7fr_3fr]">
           <Customizer />
 
           <ColorTokens />

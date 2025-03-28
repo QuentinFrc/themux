@@ -52,10 +52,10 @@ export function ToolsSidebar({
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button className="w-full px-2 py-4" variant={"outline"}>
-                      See tokens
+                      Color tokens
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="h-90 p-0">
+                  <PopoverContent className="h-90 p-0" side="left" align="end">
                     <ColorTokens />
                   </PopoverContent>
                 </Popover>
