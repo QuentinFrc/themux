@@ -3,7 +3,7 @@
 import { cn, copyToClipboard } from "@/lib/utils";
 import { ColorProperty, OklchValue } from "@/types/theme";
 import { Check, Clipboard } from "lucide-react";
-import { useState } from "react";
+import { ComponentProps, useState } from "react";
 
 export function Token({
   colorProperty,
@@ -20,10 +20,16 @@ export function Token({
   );
 }
 
-export function TokenDisplay({ oklchColor }: { oklchColor: OklchValue }) {
+export function TokenDisplay({
+  oklchColor,
+  className,
+}: ComponentProps<"div"> & { oklchColor: OklchValue }) {
   return (
     <div
-      className="outline-border aspect-square size-8 rounded-full shadow outline-2"
+      className={cn(
+        "outline-border aspect-square size-8 rounded-full shadow outline-2",
+        className,
+      )}
       style={{
         backgroundColor: oklchColor,
       }}
