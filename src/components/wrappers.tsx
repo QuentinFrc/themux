@@ -38,7 +38,7 @@ interface ContainerWrapperProps extends ComponentProps<"div"> {
   withCane?: boolean;
 }
 
-// My implementarion with cane
+// My implementation with cane
 function ContainerWrapper({
   children,
   className,

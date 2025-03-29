@@ -101,10 +101,10 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
             <Shadcn className="size-4" /> Presets
           </Label>
 
-          {/* Base shadcn/ui presets */}
+          {/* Default shadcn/ui presets */}
           <div className="pb-2">
             <Label className="text-muted-foreground pb-2 text-xs font-semibold">
-              Base shadcn/ui presets
+              Default shadcn/ui
             </Label>
             <div className="@max-md:grid-cols-fluid items-center gap-2 @md:flex @md:flex-wrap">
               {basePresetsV4Array.map((themeObject) => {
@@ -128,7 +128,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
           {/* Custom presets */}
           <div>
             <Label className="text-muted-foreground pb-2 text-xs font-semibold">
-              Colorful presets
+              Custom
             </Label>
             <div className="flex flex-wrap items-center gap-2">
               {colorfulPresetsArray.map((themeObject) => {
@@ -230,7 +230,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
             </Button>
           </div>
         </div>
-      </div>{" "}
+      </div>
     </div>
   );
 }
