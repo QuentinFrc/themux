@@ -4,6 +4,7 @@
 import { cn } from "@/lib/utils";
 import { Check, Clipboard, Globe, Terminal } from "lucide-react";
 import * as React from "react";
+import { ComponentErrorBoundary } from "../error-boundary";
 import { ExternalLink } from "../external-link";
 import { Alert, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
@@ -87,36 +88,6 @@ export function ComponentWrapper({
       </div>
     </ComponentErrorBoundary>
   );
-}
-
-class ComponentErrorBoundary extends React.Component<
-  { children: React.ReactNode; name: string },
-  { hasError: boolean }
-> {
-  constructor(props: { children: React.ReactNode; name: string }) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error(`Error in component ${this.props.name}:`, error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="p-4 text-red-500">
-          Something went wrong in component: {this.props.name}
-        </div>
-      );
-    }
-
-    return this.props.children;
-  }
 }
 
 function getComponentName(name: string) {
