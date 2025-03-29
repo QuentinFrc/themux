@@ -2,10 +2,14 @@
 
 import { useConfig } from "@/hooks/use-config";
 import { ColorProperty, OklchValue } from "@/types/theme";
-import { hexToOklch, oklchToHex } from "@/utils/colors";
+import {
+  getOptimalForegroundColor,
+  hexToOklch,
+  oklchToHex,
+} from "@/utils/colors";
 import { CircleAlert, Pipette } from "lucide-react";
 import { useTheme } from "next-themes";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { ComponentErrorBoundary } from "./error-boundary";
 import { TokenDisplay, TokenInfo } from "./token";
@@ -30,8 +34,8 @@ export function TokenColorPicker({
   oklchColor,
   setColorTokens,
 }: TokenColorPickerProps) {
-  const hexColor = oklchToHex(oklchColor);
   const [currentColor, setCurrentColor] = useState(oklchColor);
+  const hexColor = oklchToHex(oklchColor);
 
   useEffect(() => {
     if (currentColor !== oklchColor) setCurrentColor(oklchColor);
@@ -85,15 +89,21 @@ export function TokenColorPicker({
 
 const MemoizedPreviewComponents = React.memo(PreviewComponents);
 function PreviewComponents({ currentColor }: { currentColor: OklchValue }) {
+  const foregroundColor = useMemo(
+    () => getOptimalForegroundColor(currentColor),
+    [currentColor],
+  );
+
   return (
     <div
       className="flex w-fit flex-col gap-3 text-sm"
       style={{
         "--primary": currentColor,
+        "--primary-foreground": foregroundColor,
       }}
     >
       <Label className="text-muted-foreground">Preview</Label>
-      <Button className="max-w-24">Button</Button>
+      <Button className="size-fit px-4 py-1.5">Button</Button>
 
       <div className="flex items-center gap-1">
         <Checkbox value="default" id="c1" defaultChecked />
@@ -122,7 +132,7 @@ function PreviewComponents({ currentColor }: { currentColor: OklchValue }) {
   );
 }
 
-// Error fallback for the moment
+// Error fallback to prevent *shittier* experiences, for the moment
 function ColorPickerErrorFallback() {
   const [config] = useConfig();
   const { resolvedTheme } = useTheme();
