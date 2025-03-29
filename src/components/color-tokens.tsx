@@ -17,7 +17,7 @@ export function ColorTokens() {
   return (
     <div className="bg-muted h-full max-h-96 overflow-hidden rounded-lg border">
       <ScrollArea className="relative size-full overflow-hidden">
-        <div className="bg-muted sticky top-0 isolate z-1 flex h-10 w-full items-center justify-between gap-2 border-b p-4">
+        <div className="bg-muted sticky -top-px isolate z-1 flex h-10 w-full items-center justify-between gap-2 border-t border-b p-4">
           <span className="text-muted-foreground text-sm font-semibold">
             Color tokens
           </span>

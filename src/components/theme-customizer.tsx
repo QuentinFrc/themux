@@ -73,7 +73,7 @@ export function ThemeCustomizer() {
           </div>
         </CardHeader>
 
-        <CardContent className="grid grid-cols-1 gap-6 @2xl:grid-cols-2 @5xl:grid-cols-[7fr_3fr]">
+        <CardContent className="grid grid-cols-1 gap-6 @2xl:grid-cols-2 @5xl:grid-cols-[6fr_4fr]">
           <Customizer />
 
           <ColorTokens />
@@ -106,7 +106,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
             <Label className="text-muted-foreground pb-2 text-xs font-semibold">
               Default shadcn/ui
             </Label>
-            <div className="@max-md:grid-cols-fluid items-center gap-2 @md:flex @md:flex-wrap">
+            <div className="flex flex-wrap gap-2 @max-md:grid @max-md:grid-cols-3">
               {basePresetsV4Array.map((themeObject) => {
                 const isActive = config.themeObject.name === themeObject.name;
 
@@ -116,7 +116,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
                     isActive={isActive}
                     themeObject={themeObject}
                     key={themeObject.name}
-                    className="@md:w-full @md:pr-1.5"
+                    className="w-full max-w-[75px] pr-1.5 @max-md:max-w-full"
                   >
                     {themeObject.label}
                   </PresetButton>
@@ -130,16 +130,17 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
             <Label className="text-muted-foreground pb-2 text-xs font-semibold">
               Custom
             </Label>
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="grid grid-cols-3 gap-2 @sm:grid-cols-4 @md:flex @md:flex-wrap">
               {colorfulPresetsArray.map((themeObject) => {
                 const isActive = config.themeObject.name === themeObject.name;
 
                 return (
                   <PresetButton
+                    showLabel
                     isActive={isActive}
                     themeObject={themeObject}
                     key={themeObject.name}
-                    className="@md:w-full @md:pr-1.5"
+                    className="w-full max-w-full @md:max-w-[75px] @md:pr-1.5"
                   >
                     {themeObject.label}
                   </PresetButton>
@@ -154,7 +155,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
           <Label className="flex items-center gap-1 pb-2">
             <SquareRoundCorner className="size-4" /> Radius
           </Label>
-          <div className="@max-md:grid-cols-fluid items-center gap-2 @md:flex @md:flex-wrap">
+          <div className="text-muted-foreground flex flex-wrap gap-2 @max-md:grid @max-md:grid-cols-3">
             {RADIUS_VALUES.map((value) => {
               return (
                 <Button
@@ -169,8 +170,10 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
                   }}
                   className={cn(
                     BUTTON_CLASSES,
-                    "w-full @md:max-w-[80px]",
-                    config.radius === value && "inset-ring-primary inset-ring",
+                    (className =
+                      "w-full max-w-[75px] pr-1.5 @max-md:max-w-full"),
+                    config.radius === value &&
+                      "inset-ring-primary text-foreground inset-ring",
                   )}
                   style={{
                     "--radius": `${value}`,
@@ -188,15 +191,15 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
           <Label className="flex items-center gap-1 pb-2">
             <SunMoon className="size-4" /> Mode
           </Label>
-          <div className="@max-md:grid-cols-fluid items-center gap-2 @md:flex @md:flex-wrap">
+          <div className="text-muted-foreground flex flex-wrap gap-2 @max-md:grid @max-md:grid-cols-3">
             <Button
               variant={"ghost"}
               size="sm"
               onClick={() => setMode("light")}
               className={cn(
                 BUTTON_CLASSES,
-                "w-full @md:max-w-[80px]",
-                mode === "light" && "border-primary border-2",
+                (className = "w-full max-w-[75px] pr-1.5 @max-md:max-w-full"),
+                mode === "light" && "border-primary text-foreground border-2",
               )}
             >
               <Sun />
@@ -208,8 +211,9 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
               onClick={() => setMode("dark")}
               className={cn(
                 BUTTON_CLASSES,
-                "w-full @md:max-w-[80px]",
-                mode === "dark" && "inset-ring-primary inset-ring",
+                (className = "w-full max-w-[75px] pr-1.5 @max-md:max-w-full"),
+                mode === "dark" &&
+                  "inset-ring-primary text-foreground inset-ring",
               )}
             >
               <Moon />
@@ -221,8 +225,9 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
               onClick={() => setMode("system")}
               className={cn(
                 BUTTON_CLASSES,
-                "w-full @md:max-w-[80px]",
-                mode === "system" && "inset-ring-primary inset-ring",
+                (className = "w-full max-w-[75px] pr-1.5 @max-md:max-w-full"),
+                mode === "system" &&
+                  "inset-ring-primary text-foreground inset-ring",
               )}
             >
               <Laptop />
@@ -371,8 +376,8 @@ function PresetButton({
       onClick={setThemeConfig}
       className={cn(
         BUTTON_CLASSES,
-        "flex max-w-[80px] items-center justify-start gap-1",
-        isActive && "inset-ring-primary inset-ring",
+        "text-muted-foreground flex max-w-[75px] items-center justify-start gap-1",
+        isActive && "inset-ring-primary text-foreground inset-ring",
         showLabel && "min-w-[75px]",
         className,
       )}
@@ -388,8 +393,7 @@ function PresetButton({
       <span
         className={cn(
           "ring-border flex size-5 shrink-0 items-center justify-center overflow-hidden rounded-lg ring",
-          "from-primary to-secondary bg-linear-0 from-50% to-50%",
-          isActive && "rotate-180",
+          "from-primary to-secondary -bg-linear-45 from-50% to-50%",
         )}
       />
       <span

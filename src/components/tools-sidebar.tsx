@@ -60,10 +60,7 @@ export function ToolsSidebar({
                   </PopoverContent>
                 </Popover>
 
-                <CopyCodeButtonDialog
-                  className="w-full"
-                  variant={"secondary"}
-                />
+                <CopyCodeButtonDialog className="w-full" />
               </div>
             </SidebarGroupContent>
           </SidebarGroup>
