@@ -24,12 +24,11 @@ export function ToolsSidebar({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const isMounted = useMounted();
   const [isOpen, setIsOpen] = useState(false);
   const toggleToolsSidebar = () => setIsOpen(!isOpen);
 
   return (
-    <Sheet>
+    <Sheet modal={false}>
       <SheetTrigger asChild>
         <ToolSidebarToggle
           toggleToolsSidebar={toggleToolsSidebar}
