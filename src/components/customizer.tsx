@@ -134,7 +134,8 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
               className={cn(
                 BUTTON_CLASSES,
                 (className = "w-full max-w-[75px] pr-1.5 @max-md:max-w-full"),
-                mode === "light" && "border-primary text-foreground border-2",
+                mode === "light" &&
+                  "inset-ring-primary text-foreground inset-ring",
               )}
             >
               <Sun />

@@ -38,7 +38,7 @@ export function ToolsSidebar({
 
       <SheetContent
         className={cn(
-          "scaled bg-sidebar @container py-2 sm:max-w-90 [&>button]:hidden",
+          "scaled bg-sidebar @container py-2 sm:max-w-82 [&>button]:hidden",
           className,
         )}
       >
@@ -68,11 +68,14 @@ export function ToolsSidebar({
               <Customizer className="max-h-fit py-4" />
             </TabsContent>
 
-            <TabsContent value="tokens" className="space-y-1.5 py-4">
+            <TabsContent
+              value="tokens"
+              className="flex h-fit flex-col space-y-1.5 py-4"
+            >
               <Label className="flex items-center gap-1 pb-2">
                 <Palette className="size-4" /> Tokens
               </Label>
-              <ScrollArea className="relative size-full h-142 overflow-hidden pr-2">
+              <ScrollArea className="relative max-h-130 overflow-hidden">
                 <TokensList />
               </ScrollArea>
             </TabsContent>

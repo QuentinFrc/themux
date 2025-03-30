@@ -123,11 +123,18 @@
     @apply bg-background text-foreground;
     content-visibility: auto;
   }
+  button {
+    @apply cursor-pointer;
+  }
 }
 
 :root {
   /* Tailwind CSS Candy cane */
   --pattern-fg: color-mix(in oklab, var(--color-foreground) 10%, transparent);
+}
+
+@utility wrapper {
+  @apply relative mx-auto w-full max-w-screen-xl;
 }
 
 @utility code-inline {
