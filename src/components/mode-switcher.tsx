@@ -21,14 +21,9 @@ export function ModeSwitcher() {
   }, [resolvedTheme, setTheme, setMetaColor]);
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="size-8"
-      onClick={toggleTheme}
-    >
-      <SunIcon className="hidden size-5 [html.dark_&]:block" />
-      <MoonIcon className="hidden size-5 [html.light_&]:block" />
+    <Button variant="ghost" size="icon" onClick={toggleTheme}>
+      <SunIcon className="hidden size-4 [html.dark_&]:block" />
+      <MoonIcon className="hidden size-4 [html.light_&]:block" />
       <span className="sr-only">Toggle theme</span>
     </Button>
   );

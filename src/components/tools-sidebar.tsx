@@ -2,71 +2,89 @@
 
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
-import { Palette, X } from "lucide-react";
+import { Paintbrush2, Palette, X } from "lucide-react";
 import { useState } from "react";
-import { ColorTokens } from "./color-tokens";
-import { CopyCodeButtonDialog, Customizer } from "./theme-customizer";
+import { TokensList } from "./color-tokens";
+import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
+import { Customizer } from "./customizer";
 import { Button } from "./ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Label } from "./ui/label";
+import { ScrollArea } from "./ui/scroll-area";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-} from "./ui/sidebar";
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 export function ToolsSidebar({
   className,
   ...props
-}: React.ComponentProps<typeof Sidebar>) {
+}: React.ComponentProps<"div">) {
   const isMounted = useMounted();
   const [isOpen, setIsOpen] = useState(false);
   const toggleToolsSidebar = () => setIsOpen(!isOpen);
 
-  if (!isMounted) {
-    return null;
-  }
-
   return (
-    <>
-      <ToolSidebarToggle
-        toggleToolsSidebar={toggleToolsSidebar}
-        isOpen={isOpen}
-      />
-      <Sidebar
-        variant="floating"
-        collapsible="none"
+    <Sheet>
+      <SheetTrigger asChild>
+        <ToolSidebarToggle
+          toggleToolsSidebar={toggleToolsSidebar}
+          isOpen={isOpen}
+        />
+      </SheetTrigger>
+
+      <SheetContent
         className={cn(
-          "sticky hidden h-svh transition lg:grid",
-          isOpen ? "visible w-70" : "invisible w-0",
+          "scaled bg-sidebar @container py-2 sm:max-w-90 [&>button]:hidden",
           className,
         )}
-        {...props}
       >
-        <SidebarContent className="py-8">
-          <SidebarGroup>
-            <SidebarGroupContent className="scaled">
-              <Customizer className="max-h-fit px-2 py-4" />
+        <SheetHeader className="px-4">
+          <SheetTitle className="flex items-center gap-2">
+            <Paintbrush2 className="size-5" /> Theme customizer
+          </SheetTitle>
+          <SheetClose asChild>
+            <Button
+              variant={"ghost"}
+              size={"icon"}
+              className="fixed top-4 right-4 z-10 size-10"
+            >
+              <X className="size-5" />
+            </Button>
+          </SheetClose>
+        </SheetHeader>
 
-              <div className="space-y-2 px-2 py-4">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button className="w-full px-2 py-4" variant={"outline"}>
-                      Color tokens
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="h-90 p-0" side="left" align="end">
-                    <ColorTokens />
-                  </PopoverContent>
-                </Popover>
+        <section className="h-fit px-4">
+          <Tabs className="h-full max-h-fit" defaultValue="theme">
+            <TabsList className="bg grid w-full grid-cols-2 p-[2px]">
+              <TabsTrigger value="theme">Theme</TabsTrigger>
+              <TabsTrigger value="tokens">Tokens</TabsTrigger>
+            </TabsList>
 
-                <CopyCodeButtonDialog className="w-full" />
-              </div>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-      </Sidebar>
-    </>
+            <TabsContent value="theme" className="max-h-fit">
+              <Customizer className="max-h-fit py-4" />
+            </TabsContent>
+
+            <TabsContent value="tokens" className="space-y-1.5 py-4">
+              <Label className="flex items-center gap-1 pb-2">
+                <Palette className="size-4" /> Tokens
+              </Label>
+              <ScrollArea className="relative size-full h-142 overflow-hidden pr-2">
+                <TokensList />
+              </ScrollArea>
+            </TabsContent>
+          </Tabs>
+
+          <div className="py-4">
+            <CopyCodeButtonDialog className="w-full" />
+          </div>
+        </section>
+      </SheetContent>
+    </Sheet>
   );
 }
 
@@ -85,11 +103,10 @@ function ToolSidebarToggle({
     <Button
       variant={"ghost"}
       size={"icon"}
-      className={cn("fixed top-4 right-4 z-10 max-lg:hidden", className)}
       onClick={toggleToolsSidebar}
       {...props}
     >
-      <Palette
+      <Paintbrush2
         className={cn(
           "transition duration-200",
           isOpen ? "absolute scale-0" : "scale-100",

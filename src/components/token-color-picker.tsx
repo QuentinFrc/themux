@@ -1,6 +1,7 @@
 "use client";
 
 import { useConfig } from "@/hooks/use-config";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { ColorProperty, OklchValue } from "@/types/theme";
 import {
   getOptimalForegroundColor,
@@ -19,9 +20,11 @@ import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Slider } from "./ui/slider";
 import { Switch } from "./ui/switch";
 import { useDebouncedCallback } from "./use-debounced-callback";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 interface TokenColorPickerProps {
   colorProperty: ColorProperty;
@@ -36,6 +39,7 @@ export function TokenColorPicker({
 }: TokenColorPickerProps) {
   const [currentColor, setCurrentColor] = useState(oklchColor);
   const hexColor = oklchToHex(oklchColor);
+  const isMobile = useMediaQuery("(max-width: 500px)");
 
   useEffect(() => {
     if (currentColor !== oklchColor) setCurrentColor(oklchColor);
@@ -48,6 +52,40 @@ export function TokenColorPicker({
     setCurrentColor(newOklchColor);
     debouncedSetColorTokens(newOklchColor);
   }, []);
+
+  if (isMobile) {
+    return (
+      <ComponentErrorBoundary
+        name="TokenColorPicker"
+        fallback={<ColorPickerErrorFallback />}
+      >
+        <Sheet>
+          <div className="flex items-center gap-2">
+            <SheetTrigger className="relative cursor-pointer">
+              <TokenDisplay oklchColor={oklchColor} />
+              <Pipette className="text-primary-foreground fill-primary-foreground absolute inset-0 m-auto size-4" />
+            </SheetTrigger>
+            <TokenInfo colorProperty={colorProperty} oklchColor={oklchColor} />
+          </div>
+
+          <SheetContent className="flex w-full gap-6 p-6 pb-12" side="bottom">
+            <SheetTitle className="sr-only">Color picker</SheetTitle>
+
+            <div className="flex justify-between gap-4 pt-4 pb-6">
+              <div className="space-y-2">
+                <HexColorPicker color={hexColor} onChange={handleColorChange} />
+                <ColorOklchValue currentColor={currentColor} />
+              </div>
+
+              <div className="w-full">
+                <MemoizedPreviewComponents currentColor={currentColor} />
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </ComponentErrorBoundary>
+    );
+  }
 
   return (
     <ComponentErrorBoundary
@@ -63,27 +101,30 @@ export function TokenColorPicker({
           <TokenInfo colorProperty={colorProperty} oklchColor={oklchColor} />
         </div>
 
-        <PopoverContent className="flex size-fit gap-6 p-6">
+        <PopoverContent className="bg-background flex size-fit gap-6 p-6">
           <div className="space-y-2">
             <HexColorPicker color={hexColor} onChange={handleColorChange} />
-
-            <div className="flex items-center gap-1">
-              <div
-                className="bg-primary size-2 rounded-full"
-                style={{
-                  "--primary": currentColor,
-                }}
-              />
-              <p className="text-muted-foreground font-mono text-xs">
-                {currentColor}
-              </p>
-            </div>
+            <ColorOklchValue currentColor={currentColor} />
           </div>
 
           <MemoizedPreviewComponents currentColor={currentColor} />
         </PopoverContent>
       </Popover>
     </ComponentErrorBoundary>
+  );
+}
+
+function ColorOklchValue({ currentColor }: { currentColor: OklchValue }) {
+  return (
+    <div className="flex items-center gap-1">
+      <div
+        className="bg-primary size-2 rounded-full"
+        style={{
+          "--primary": currentColor,
+        }}
+      />
+      <p className="text-muted-foreground font-mono text-xs">{currentColor}</p>
+    </div>
   );
 }
 
@@ -96,14 +137,14 @@ function PreviewComponents({ currentColor }: { currentColor: OklchValue }) {
 
   return (
     <div
-      className="flex w-fit flex-col gap-3 text-sm"
+      className="flex flex-col gap-3 text-sm"
       style={{
         "--primary": currentColor,
         "--primary-foreground": foregroundColor,
       }}
     >
       <Label className="text-muted-foreground">Preview</Label>
-      <Button className="size-fit px-4 py-1.5">Button</Button>
+      <Button>Button</Button>
 
       <div className="flex items-center gap-1">
         <Checkbox value="default" id="c1" defaultChecked />

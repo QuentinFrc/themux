@@ -75,8 +75,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
 
       <SidebarFooter>
-        <ModeSwitcher />
-
         <Button
           asChild
           variant="ghost"

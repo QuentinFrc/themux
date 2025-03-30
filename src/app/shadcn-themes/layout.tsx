@@ -42,16 +42,16 @@ export default async function ShadcnThemesLayout({
             <MainNavigation />
           </div>
 
-          <div className="flex items-center justify-center pr-2 md:hidden">
+          <div className="flex items-center justify-center pr-2">
             <ModeSwitcher />
+            <ToolsSidebar />
           </div>
         </header>
+
         <ScrollArea className="relative flex h-full flex-col overflow-hidden">
           {children}
         </ScrollArea>
       </SidebarInset>
-
-      <ToolsSidebar className="peer-data-[variant=floating]:h-svh peer-data-[variant=floating]:border-l peer-data-[variant=sidebar]:h-svh peer-data-[variant=sidebar]:border-l" />
     </SidebarProvider>
   );
 }
