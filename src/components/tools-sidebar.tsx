@@ -57,9 +57,9 @@ export function ToolsSidebar({
           </SheetClose>
         </SheetHeader>
 
-        <section className="h-fit px-4">
+        <section className="h-fit">
           <Tabs className="h-full max-h-fit" defaultValue="theme">
-            <TabsList className="bg grid w-full grid-cols-2 p-[2px]">
+            <TabsList className="grid w-full grid-cols-2 px-4">
               <TabsTrigger value="theme">Theme</TabsTrigger>
               <TabsTrigger value="tokens">Tokens</TabsTrigger>
             </TabsList>
@@ -72,16 +72,16 @@ export function ToolsSidebar({
               value="tokens"
               className="flex h-fit flex-col space-y-1.5 py-4"
             >
-              <Label className="flex items-center gap-1 pb-2">
+              <Label className="flex items-center gap-1 px-4 pb-2">
                 <Palette className="size-4" /> Tokens
               </Label>
-              <ScrollArea className="relative max-h-130 overflow-hidden">
+              <ScrollArea className="relative max-h-130 overflow-hidden px-2">
                 <TokensList />
               </ScrollArea>
             </TabsContent>
           </Tabs>
 
-          <div className="py-4">
+          <div className="px-4 py-4">
             <CopyCodeButtonDialog className="w-full" />
           </div>
         </section>

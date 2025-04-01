@@ -47,7 +47,7 @@ export function ThemeCustomizer() {
           </div>
         </CardHeader>
 
-        <CardContent className="grid grid-cols-1 gap-6 @2xl:grid-cols-2 @5xl:grid-cols-[6fr_4fr]">
+        <CardContent className="grid grid-cols-1 gap-6 px-2 @2xl:grid-cols-2 @5xl:grid-cols-[6fr_4fr]">
           <Customizer />
 
           <ColorTokens className="max-h-52 @2xl:max-h-108 @4xl:max-h-90 @6xl:max-h-75" />

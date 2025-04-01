@@ -1,7 +1,7 @@
 "use client";
 
 import { useConfig } from "@/hooks/use-config";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useMediaQuery } from "@/hooks/use-media-query";
 import { ColorProperty, OklchValue } from "@/types/theme";
 import {
   getOptimalForegroundColor,
@@ -24,7 +24,6 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Slider } from "./ui/slider";
 import { Switch } from "./ui/switch";
 import { useDebouncedCallback } from "./use-debounced-callback";
-import { useMediaQuery } from "@/hooks/use-media-query";
 
 interface TokenColorPickerProps {
   colorProperty: ColorProperty;

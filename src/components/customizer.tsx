@@ -25,7 +25,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "@container relative h-full w-full space-y-4 overflow-hidden",
+        "@container relative h-full w-full space-y-4 overflow-hidden p-4",
         className,
       )}
     >
@@ -63,7 +63,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
           {/* Custom presets */}
           <div>
             <Label className="text-muted-foreground pb-2 text-xs font-semibold">
-              Custom
+              Colorful
             </Label>
             <div className="grid grid-cols-3 gap-2 @sm:grid-cols-4 @md:flex @md:flex-wrap">
               {colorfulPresetsArray.map((themeObject) => {
@@ -108,7 +108,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
                     (className =
                       "w-full max-w-[75px] pr-1.5 @max-md:max-w-full"),
                     config.radius === value &&
-                      "inset-ring-primary text-foreground inset-ring",
+                      "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
                   )}
                   style={{
                     "--radius": `${value}`,
@@ -135,7 +135,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
                 BUTTON_CLASSES,
                 (className = "w-full max-w-[75px] pr-1.5 @max-md:max-w-full"),
                 mode === "light" &&
-                  "inset-ring-primary text-foreground inset-ring",
+                  "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
               )}
             >
               <Sun />
@@ -149,7 +149,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
                 BUTTON_CLASSES,
                 (className = "w-full max-w-[75px] pr-1.5 @max-md:max-w-full"),
                 mode === "dark" &&
-                  "inset-ring-primary text-foreground inset-ring",
+                  "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
               )}
             >
               <Moon />
@@ -163,7 +163,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
                 BUTTON_CLASSES,
                 (className = "w-full max-w-[75px] pr-1.5 @max-md:max-w-full"),
                 mode === "system" &&
-                  "inset-ring-primary text-foreground inset-ring",
+                  "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
               )}
             >
               <Laptop />
@@ -211,7 +211,8 @@ function PresetButton({
       className={cn(
         BUTTON_CLASSES,
         "text-muted-foreground flex max-w-[75px] items-center justify-start gap-1",
-        isActive && "inset-ring-primary text-foreground inset-ring",
+        isActive &&
+          "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
         showLabel && "min-w-[75px]",
         className,
       )}
