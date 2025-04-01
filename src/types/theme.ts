@@ -68,6 +68,6 @@ export type CssThemePropertiesWithoutRadius = Omit<
 export type ThemeObject = {
   name: PresetV4 | ColorfulPreset | "custom";
   label: string;
-  light: CssThemeProperties;
+  light: CssThemePropertiesWithoutRadius;
   dark: CssThemePropertiesWithoutRadius;
 };

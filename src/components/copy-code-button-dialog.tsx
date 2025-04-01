@@ -4,7 +4,22 @@ import { cn, copyToClipboard } from "@/lib/utils";
 import { Check, Clipboard } from "lucide-react";
 import React, { useMemo } from "react";
 import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "./ui/drawer";
 import { ScrollArea } from "./ui/scroll-area";
 
 export function CopyCodeButtonDialog({
@@ -12,30 +27,58 @@ export function CopyCodeButtonDialog({
   ...props
 }: React.ComponentProps<typeof Button>) {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className={cn("flex cursor-pointer", className)} {...props}>
-          <span>
-            Copy <span className="hidden sm:inline">code</span>
-          </span>
-        </Button>
-      </DialogTrigger>
+    <>
+      {/* A Drawer trigger for smaller screens */}
+      <Drawer>
+        <DrawerTrigger asChild>
+          <Button
+            className={cn("flex cursor-pointer sm:hidden", className)}
+            {...props}
+          >
+            Copy
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle className="leading-none font-semibold tracking-tight">
+              Generated theme
+            </DrawerTitle>
 
-      <DialogContent className="bg-background min-h-[300px] space-y-2 overflow-hidden rounded-lg outline-none sm:max-w-xl lg:max-w-2xl">
-        <DialogTitle className="sr-only">Copy generated theme</DialogTitle>
-        <div className="space-y-1">
-          <div className="leading-none font-semibold tracking-tight">
-            Generated theme
-          </div>
-          <div className="text-muted-foreground text-xs">
-            Copy and paste the following code into your CSS file to apply the
-            theme to your project.
-          </div>
-        </div>
+            <DrawerDescription className="text-muted-foreground text-xs">
+              Copy and paste the following code into your CSS file.
+            </DrawerDescription>
+          </DrawerHeader>
 
-        <CustomizerCode />
-      </DialogContent>
-    </Dialog>
+          <CustomizerCode />
+        </DrawerContent>
+      </Drawer>
+
+      {/* A Dialog trigger for larger screens */}
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button
+            className={cn("hidden cursor-pointer sm:flex", className)}
+            {...props}
+          >
+            Copy code
+          </Button>
+        </DialogTrigger>
+
+        <DialogContent className="bg-background min-h-[300px] space-y-2 overflow-hidden rounded-lg outline-none sm:max-w-xl lg:max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="leading-none font-semibold tracking-tight">
+              Generated theme
+            </DialogTitle>
+
+            <DialogDescription className="text-muted-foreground text-xs">
+              Copy and paste the following code into your CSS file.
+            </DialogDescription>
+          </DialogHeader>
+
+          <CustomizerCode />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
