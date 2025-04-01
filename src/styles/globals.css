@@ -215,3 +215,39 @@
   filter: blur(150px);
   opacity: 0.5;
 }
+
+@property --hue {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.bg-rotating-gradient {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background-image: conic-gradient(
+    oklch(70% 0.25 calc(var(--hue) + 0deg)) 0deg,
+    oklch(90% 0.25 calc(var(--hue) + 60deg)) 60deg,
+    oklch(70% 0.25 calc(var(--hue) + 120deg)) 120deg,
+    oklch(70% 0.25 calc(var(--hue) + 180deg)) 180deg,
+    oklch(60% 0.25 calc(var(--hue) + 240deg)) 240deg,
+    oklch(70% 0.25 calc(var(--hue) + 300deg)) 300deg,
+    oklch(70% 0.25 calc(var(--hue) + 0deg)) 360deg
+  );
+
+  animation-name: spin_gradient;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes spin_gradient {
+  from {
+    --hue: 0deg;
+  }
+  to {
+    --hue: 360deg;
+  }
+}

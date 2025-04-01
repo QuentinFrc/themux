@@ -1,15 +1,9 @@
 "use client";
 
-import {
-  AudioWaveform,
-  ChevronsUpDown,
-  Command,
-  LucideIcon,
-  Plus,
-} from "lucide-react";
+import { AudioWaveform, ChevronsUpDown, Command, Plus } from "lucide-react";
 import * as React from "react";
 
-import { NAV_LINKS } from "@/lib/constants";
+import { NAV_LINKS, NavLink } from "@/lib/constants";
 import Link from "next/link";
 import { ExternalLink } from "./external-link";
 import { GitHub } from "./icons/github";
@@ -39,6 +33,7 @@ import {
   SidebarRail,
   useSidebar,
 } from "./ui/sidebar";
+import { Badge } from "./ui/badge";
 
 const data = {
   teams: [
@@ -73,7 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="overflow-hidden">
         <NavMain items={data.navMain} />
       </SidebarContent>
 
@@ -165,20 +160,17 @@ export function TeamSwitcher({
   );
 }
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    href: string;
-    icon?: LucideIcon;
+type NavMainProps = {
+  items: (NavLink & {
     isActive?: boolean;
     items?: {
       title: string;
       href: string;
     }[];
-  }[];
-}) {
+  })[];
+};
+
+export function NavMain({ items }: NavMainProps) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Navigation</SidebarGroupLabel>
@@ -187,8 +179,17 @@ export function NavMain({
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton tooltip={item.title}>
               {item.icon && <item.icon />}
-              <Link href={item.href}>
-                <span>{item.title}</span>
+              <Link href={item.href} className="w-full text-nowrap">
+                <div className="isolate flex w-full items-center gap-2">
+                  <span>{item.title}</span>
+
+                  {item.badge && (
+                    <span className="ring-border bg-primary text-primary-foreground relative overflow-hidden rounded-lg px-1 font-mono text-xs ring">
+                      <span className="blur-xs" />
+                      {item.badge}
+                    </span>
+                  )}
+                </div>
               </Link>
             </SidebarMenuButton>
             <SidebarMenuSub>

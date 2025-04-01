@@ -80,14 +80,14 @@ function CustomizerCode({ className }: React.ComponentProps<"div">) {
       </ScrollArea>
 
       {/* Copy code button */}
-      <div className="absolute top-3 right-3">
+      <div className="absolute top-3 right-3 isolate">
         <div className="relative overflow-hidden rounded-lg p-[2px]">
-          <div className="absolute inset-0 size-full animate-spin bg-conic/decreasing from-violet-700 via-lime-300 to-violet-700 blur-xl" />
+          <div className="bg-rotating-gradient opacity-40" />
           <Button
             size="sm"
             variant={"ghost"}
             onClick={handleCopyThemeStylesCode}
-            className="bg-muted/90 relative isolate flex cursor-pointer items-center justify-start overflow-hidden"
+            className="bg-muted/80 relative isolate flex cursor-pointer items-center justify-start overflow-hidden"
           >
             <Clipboard
               className={cn(

@@ -8,13 +8,15 @@ import { usePathname } from "next/navigation";
 
 export function MainNavigation() {
   return (
-    <nav className="flex items-center gap-4 max-md:hidden">
+    <nav className="flex items-center gap-4">
       <Link href={"/"} className="font-base pr-4 font-bold">
         themux
       </Link>
-      {NAV_LINKS.map(({ href, title }) => (
-        <NavLink href={href} title={title} key={href} />
-      ))}
+      <div className="contents max-md:hidden">
+        {NAV_LINKS.map(({ href, title }) => (
+          <NavLink href={href} title={title} key={href} />
+        ))}
+      </div>
     </nav>
   );
 }
