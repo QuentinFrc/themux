@@ -59,7 +59,7 @@ export function ToolsSidebar({
 
         <section className="h-fit">
           <Tabs className="h-full max-h-fit" defaultValue="theme">
-            <TabsList className="grid w-full grid-cols-2 px-4">
+            <TabsList className="grid w-full grid-cols-2 rounded-none px-4">
               <TabsTrigger value="theme">Theme</TabsTrigger>
               <TabsTrigger value="tokens">Tokens</TabsTrigger>
             </TabsList>
