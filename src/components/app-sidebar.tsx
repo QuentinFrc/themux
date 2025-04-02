@@ -33,7 +33,6 @@ import {
   SidebarRail,
   useSidebar,
 } from "./ui/sidebar";
-import { Badge } from "./ui/badge";
 
 const data = {
   teams: [

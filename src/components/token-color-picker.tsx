@@ -2,7 +2,7 @@
 
 import { useConfig } from "@/hooks/use-config";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { ColorProperty, OklchValue } from "@/types/theme";
+import { ColorProperty, OklchValue, ThemeMode } from "@/types/theme";
 import {
   getOptimalForegroundColor,
   hexToOklch,
@@ -182,7 +182,7 @@ function ColorPickerErrorFallback() {
       <div className="relative cursor-pointer">
         <TokenDisplay
           oklchColor={
-            config.themeObject[resolvedTheme as "light" | "dark"].destructive
+            config.themeObject[resolvedTheme as ThemeMode].destructive
           }
         />
         <CircleAlert className="absolute inset-0 m-auto size-4 text-neutral-50" />

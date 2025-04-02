@@ -2,11 +2,7 @@
 
 import { useConfig } from "@/hooks/use-config";
 import { cn } from "@/lib/utils";
-import {
-  ColorProperty,
-  CssThemePropertiesWithoutRadius,
-  OklchValue,
-} from "@/types/theme";
+import { ColorProperty, OklchValue } from "@/types/theme";
 import { getOptimalForegroundColor } from "@/utils/colors";
 import { Palette } from "lucide-react";
 import { useTheme } from "next-themes";

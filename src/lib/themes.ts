@@ -20,7 +20,7 @@ export const COLORFUL_THEMES = Object.values(colorfulPresets).map((theme) => ({
   value: theme.name,
 }));
 
-export function getCopyableThemeCSSVariablesV4({
+function getCopyableThemeCSSVariablesV4({
   themeObject,
   radius,
 }: {

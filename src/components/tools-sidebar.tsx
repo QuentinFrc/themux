@@ -1,6 +1,5 @@
 "use client";
 
-import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 import { Paintbrush2, Palette, X } from "lucide-react";
 import { useState } from "react";
