@@ -2,12 +2,21 @@
 
 import { useConfig } from "@/hooks/use-config";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { TAILWIND_PALETTE_V4 } from "@/lib/palettes";
+import { cn } from "@/lib/utils";
+import { TailwindShadeKey } from "@/types/palette";
 import { ColorProperty, OklchValue, ThemeMode } from "@/types/theme";
 import { convertToHex, convertToOklch } from "@/utils/color-converter";
 import { getOptimalForegroundColor } from "@/utils/colors";
 import { CircleAlert, Pipette } from "lucide-react";
 import { useTheme } from "next-themes";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  ComponentProps,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { HexColorPicker } from "react-colorful";
 import { ComponentErrorBoundary } from "./error-boundary";
 import { TokenDisplay, TokenInfo } from "./token";
@@ -43,8 +52,8 @@ export function TokenColorPicker({
 
   const debouncedSetColorTokens = useDebouncedCallback(setColorTokens, 200);
 
-  const handleColorChange = useCallback((newHexColor: string) => {
-    const newOklchColor = convertToOklch(newHexColor);
+  const handleColorChange = useCallback((color: string) => {
+    const newOklchColor = convertToOklch(color);
     setCurrentColor(newOklchColor);
     debouncedSetColorTokens(newOklchColor);
   }, []);
@@ -67,14 +76,28 @@ export function TokenColorPicker({
           <SheetContent className="flex w-full gap-6 p-6 pb-12" side="bottom">
             <SheetTitle className="sr-only">Color picker</SheetTitle>
 
-            <div className="flex justify-between gap-4 pt-4 pb-6">
-              <div className="space-y-2">
-                <HexColorPicker color={hexColor} onChange={handleColorChange} />
-                <ColorOklchValue currentColor={currentColor} />
+            <div className="flex flex-col gap-4 pt-4 pb-6">
+              <div className="flex gap-6">
+                <div className="space-y-2">
+                  <HexColorPicker
+                    color={hexColor}
+                    onChange={handleColorChange}
+                  />
+                  <ColorOklchValue currentColor={currentColor} />
+                </div>
+
+                <div className="w-full">
+                  <MemoizedPreviewComponents currentColor={currentColor} />
+                </div>
               </div>
 
-              <div className="w-full">
-                <MemoizedPreviewComponents currentColor={currentColor} />
+              <div className="flex flex-col gap-3 text-sm">
+                <Label className="text-muted-foreground">Tailwind colors</Label>
+                <MemoizedTailwindV4ColorPalette
+                  currentColor={currentColor}
+                  shade={500}
+                  handleColorChange={handleColorChange}
+                />
               </div>
             </div>
           </SheetContent>
@@ -103,6 +126,14 @@ export function TokenColorPicker({
             <ColorOklchValue currentColor={currentColor} />
           </div>
 
+          <div className="flex max-w-26 flex-col gap-3 text-sm">
+            <Label className="text-muted-foreground">Tailwind colors</Label>
+            <MemoizedTailwindV4ColorPalette
+              currentColor={currentColor}
+              shade={500}
+              handleColorChange={handleColorChange}
+            />
+          </div>
           <MemoizedPreviewComponents currentColor={currentColor} />
         </PopoverContent>
       </Popover>
@@ -124,6 +155,52 @@ function ColorOklchValue({ currentColor }: { currentColor: OklchValue }) {
   );
 }
 
+const MemoizedTailwindV4ColorPalette = React.memo(TailwindV4ColorPalette);
+function TailwindV4ColorPalette({
+  currentColor,
+  shade,
+  handleColorChange,
+  className,
+  ...props
+}: {
+  currentColor: OklchValue;
+  shade: TailwindShadeKey;
+  handleColorChange: (color: string) => void;
+} & ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "flex flex-wrap content-start items-start gap-2",
+        className,
+      )}
+      {...props}
+    >
+      {Object.entries(TAILWIND_PALETTE_V4).map(([key, colors]) => {
+        const color = colors[shade];
+        const isActive = currentColor === color;
+        return (
+          <button
+            className={cn(
+              "bg-primary outline-border hover:bg-primary/80 relative size-5 rounded-lg border outline-2 outline-offset-2",
+              isActive && "outline-primary/70",
+            )}
+            key={key}
+            style={{ "--primary": color }}
+            onClick={() => handleColorChange(color)}
+          >
+            <div
+              className={cn(
+                "bg-background absolute inset-0 m-auto size-3 rounded-lg transition",
+                isActive ? "scale-100" : "scale-0",
+              )}
+            />
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 const MemoizedPreviewComponents = React.memo(PreviewComponents);
 function PreviewComponents({ currentColor }: { currentColor: OklchValue }) {
   const foregroundColor = useMemo(
@@ -140,7 +217,10 @@ function PreviewComponents({ currentColor }: { currentColor: OklchValue }) {
       }}
     >
       <Label className="text-muted-foreground">Preview</Label>
-      <Button>Button</Button>
+      <div className="flex w-full flex-wrap items-center gap-2">
+        <Button>Button</Button>
+        <Button variant={"link"}>Link</Button>
+      </div>
 
       <div className="flex items-center gap-1">
         <Checkbox value="default" id="c1" defaultChecked />
