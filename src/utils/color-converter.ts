@@ -1,10 +1,9 @@
-import { ColorFormat, TailwindVersion } from "@/types/theme";
+import { ColorFormat, OklchValue, TailwindVersion } from "@/types/theme";
 import * as culori from "culori";
-import { Hsl } from "culori";
 
-const formatNumber = (num?: number): string => {
-  if (!num) return "0";
-  return num % 1 === 0 ? num.toString() : num.toFixed(2);
+const formatNumber = (num?: number): number => {
+  if (!num) return 0;
+  return num % 1 === 0 ? num : Number(num.toFixed(3));
 };
 
 // Helper to format the alpha value if it exists and is not 1
@@ -17,9 +16,9 @@ const formatAlphaForCss = (alpha: number | undefined): string | null => {
   return `/ ${formatNumber(alpha * 100)}%`;
 };
 
-const formatAlphaForHex = (alpha: number | undefined): string => {
+const formatAlphaForHex = (alpha: number | undefined): string | null => {
   if (alpha === undefined || alpha === 1) {
-    return ""; // Not needed if opaque or undefined
+    return null; // Not needed if opaque or undefined
   }
   // Convert alpha to a two-digit hexadecimal value (00-ff)
   const alphaHex = Math.round(alpha * 255)
@@ -34,8 +33,8 @@ export const colorFormatter = (
   tailwindVersion: TailwindVersion = "3",
 ): string => {
   try {
-    const color = culori.parse(colorValue);
-    if (!color) throw new Error("Invalid color input");
+    const parsedColor = culori.parse(colorValue);
+    if (!parsedColor) throw new Error("Invalid color input");
 
     switch (format) {
       case "oklch": {
@@ -44,16 +43,14 @@ export const colorFormatter = (
       }
       case "hsl": {
         // Transform to hex first to avoid weird conversion issues from oklch to hsl
-        const colorInHex = culori.formatHex(color);
-        const hsl = culori.converter("hsl")(colorInHex) as Hsl & {
-          alpha?: number;
-        };
+        const colorInHex = culori.formatHex(parsedColor);
+        const hsl = culori.hsl(colorInHex);
         if (!hsl) throw new Error("Invalid color input");
 
         const h = formatNumber(hsl.h);
         const s = formatNumber(hsl.s * 100);
         const l = formatNumber(hsl.l * 100);
-        const alphaPart = formatAlphaForCss(color.alpha); // Extract alpha from the original color
+        const alphaPart = formatAlphaForCss(parsedColor.alpha); // Extract alpha from the original color
 
         if (tailwindVersion === "4") {
           // Tailwind v4 uses modern CSS syntax hsl(H S% L% / A)
@@ -70,22 +67,18 @@ export const colorFormatter = (
       }
       case "rgb": {
         // Convert the 'color' object (parsed from oklch) to RGB
-        const rgb = culori.converter("rgb")(color);
+        const rgb = culori.converter("rgb")(parsedColor);
         if (!rgb) throw new Error("Invalid color input");
 
         // culori.formatRgb handles alpha, returning rgb(R G B / A)
         return culori.formatRgb(rgb); // e.g., "rgb(64 128 192)" or "rgb(64 128 192 / 0.5)"
       }
       case "hex": {
-        // First transform in rbg to have access to the alpha channel
-        const rgb = culori.converter("rgb")(color);
-        if (!rgb) throw new Error("Invalid color input");
-
-        const hex = culori.formatHex(rgb);
+        const hex = culori.formatHex(parsedColor);
 
         // Add the alpha channel if necessary
-        const alphaHex = formatAlphaForHex(color.alpha);
-        return `${hex}${alphaHex}`;
+        const alphaHex = formatAlphaForHex(parsedColor.alpha);
+        return alphaHex ? `${hex}${alphaHex}` : hex;
       }
       default:
         return colorValue;
@@ -95,3 +88,41 @@ export const colorFormatter = (
     return colorValue;
   }
 };
+
+export const convertToOklch = (colorToConvert: string): OklchValue => {
+  const parsedColor = culori.parse(colorToConvert);
+  if (!parsedColor) throw new Error("Invalid color input");
+
+  const colorInOklch = culori.oklch(parsedColor);
+
+  if (!colorInOklch) {
+    throw new Error("Color not found");
+  }
+
+  const l = formatNumber(colorInOklch.l);
+  const c = formatNumber(colorInOklch.c);
+  const h = formatNumber(colorInOklch.h ? colorInOklch.h : 0);
+  const alpha = colorInOklch.alpha
+    ? formatNumber(colorInOklch.alpha * 100)
+    : null;
+
+  if (alpha) {
+    return `oklch(${l} ${c} ${h} / ${alpha}%)`;
+  }
+
+  return `oklch(${l} ${c} ${h})`;
+};
+
+export function convertToHex(colorToConvert: OklchValue | string): string {
+  const parsedColor = culori.parse(colorToConvert);
+  if (!parsedColor) throw new Error("Invalid color input");
+
+  const hex = culori.formatHex(parsedColor);
+
+  if (parsedColor.alpha) {
+    const alphaHex = formatAlphaForHex(parsedColor.alpha);
+    return `${hex}${alphaHex}`;
+  }
+
+  return hex;
+}

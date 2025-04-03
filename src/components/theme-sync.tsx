@@ -5,6 +5,7 @@ import * as React from "react";
 import { useConfig } from "@/hooks/use-config";
 import { getCssVarsFromThemeObject } from "@/lib/themes";
 import { CssThemeProperties, ThemeMode } from "@/types/theme";
+import { setStyleProperty } from "@/utils/set-attribute-to-element";
 import { useTheme } from "next-themes";
 
 const DATA_KEYS = {
@@ -29,13 +30,6 @@ export function ThemeSync() {
     root.setAttribute(DATA_KEYS.preset, preset);
     root.setAttribute(DATA_KEYS.primary, primary);
 
-    // root.classList.forEach((className) => {
-    //   if (className.match(/^theme.*/)) {
-    //     root.classList.remove(className);
-    //   }
-    // });
-    // root.classList.add(`theme-${theme}`);
-
     const themeProperties: CssThemeProperties = {
       ...config.themeObject[mode],
       radius: config.radius,
@@ -44,7 +38,7 @@ export function ThemeSync() {
     const cssVars = getCssVarsFromThemeObject(themeProperties);
 
     for (const [key, value] of Object.entries(cssVars)) {
-      root.style.setProperty(key, value as string);
+      setStyleProperty({ element: root, key, value });
     }
   }, [config, mode]);
 

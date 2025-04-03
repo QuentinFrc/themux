@@ -3,11 +3,8 @@
 import { useConfig } from "@/hooks/use-config";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { ColorProperty, OklchValue, ThemeMode } from "@/types/theme";
-import {
-  getOptimalForegroundColor,
-  hexToOklch,
-  oklchToHex,
-} from "@/utils/colors";
+import { convertToHex, convertToOklch } from "@/utils/color-converter";
+import { getOptimalForegroundColor } from "@/utils/colors";
 import { CircleAlert, Pipette } from "lucide-react";
 import { useTheme } from "next-themes";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -37,7 +34,7 @@ export function TokenColorPicker({
   setColorTokens,
 }: TokenColorPickerProps) {
   const [currentColor, setCurrentColor] = useState(oklchColor);
-  const hexColor = oklchToHex(oklchColor);
+  const hexColor = convertToHex(oklchColor);
   const isMobile = useMediaQuery("(max-width: 500px)");
 
   useEffect(() => {
@@ -47,7 +44,7 @@ export function TokenColorPicker({
   const debouncedSetColorTokens = useDebouncedCallback(setColorTokens, 200);
 
   const handleColorChange = useCallback((newHexColor: string) => {
-    const newOklchColor = hexToOklch(newHexColor);
+    const newOklchColor = convertToOklch(newHexColor);
     setCurrentColor(newOklchColor);
     debouncedSetColorTokens(newOklchColor);
   }, []);
