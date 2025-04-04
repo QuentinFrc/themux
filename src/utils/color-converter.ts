@@ -54,7 +54,7 @@ export const colorFormatter = (
 
         if (tailwindVersion === "4") {
           // Tailwind v4 uses modern CSS syntax hsl(H S% L% / A)
-          return `hsl(${h} ${s}% ${l}%${alphaPart ?? ""})`;
+          return `hsl(${h} ${s}% ${l}% ${alphaPart ?? ""})`;
         } else {
           // Tailwind v3 expects direct values "H S% L%" (alpha is omitted)
           if (alphaPart) {

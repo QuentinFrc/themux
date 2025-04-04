@@ -32,7 +32,7 @@ export default async function ShadcnThemesLayout({
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
 
-      <SidebarInset className="relative max-h-screen overflow-hidden peer-data-[variant=inset]:max-h-[calc(100vh-1rem)]">
+      <SidebarInset className="relative max-h-svh overflow-hidden peer-data-[variant=inset]:max-h-[calc(100svh-1rem)]">
         <header className="isolate z-10 flex shrink-0 items-center gap-2 border-b px-2">
           <ContainerWrapper className="flex items-center justify-between">
             <div className="flex h-14 w-full items-center gap-2">
