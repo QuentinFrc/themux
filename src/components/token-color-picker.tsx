@@ -2,33 +2,32 @@
 
 import { useConfig } from "@/hooks/use-config";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { TAILWIND_PALETTE_V4 } from "@/lib/palettes";
+import {
+  TAILWIND_PALETTE_V4,
+  TAILWIND_SHADES,
+  TailwindShadeKey,
+} from "@/lib/palettes";
 import { cn } from "@/lib/utils";
-import { TailwindShadeKey } from "@/types/palette";
 import { ColorProperty, OklchValue, ThemeMode } from "@/types/theme";
 import { convertToHex, convertToOklch } from "@/utils/color-converter";
-import { getOptimalForegroundColor } from "@/utils/colors";
 import { CircleAlert, Pipette } from "lucide-react";
 import { useTheme } from "next-themes";
-import React, {
-  ComponentProps,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ComponentProps, useCallback, useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { ComponentErrorBoundary } from "./error-boundary";
 import { TokenDisplay, TokenInfo } from "./token";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
-import { Slider } from "./ui/slider";
-import { Switch } from "./ui/switch";
 import { useDebouncedCallback } from "./use-debounced-callback";
 
 interface TokenColorPickerProps {
@@ -45,6 +44,7 @@ export function TokenColorPicker({
   const [currentColor, setCurrentColor] = useState(oklchColor);
   const hexColor = convertToHex(oklchColor);
   const isMobile = useMediaQuery("(max-width: 500px)");
+  const [shade, setShade] = useState<TailwindShadeKey>("500");
 
   useEffect(() => {
     if (currentColor !== oklchColor) setCurrentColor(oklchColor);
@@ -73,32 +73,49 @@ export function TokenColorPicker({
             <TokenInfo colorProperty={colorProperty} oklchColor={oklchColor} />
           </div>
 
-          <SheetContent className="flex w-full gap-6 p-6 pb-12" side="bottom">
+          <SheetContent
+            className="flex w-full flex-row gap-6 p-4 py-12"
+            side="bottom"
+          >
             <SheetTitle className="sr-only">Color picker</SheetTitle>
 
-            <div className="flex flex-col gap-4 pt-4 pb-6">
-              <div className="flex gap-6">
-                <div className="space-y-2">
-                  <HexColorPicker
-                    color={hexColor}
-                    onChange={handleColorChange}
-                  />
-                  <ColorOklchValue currentColor={currentColor} />
-                </div>
+            <div className="space-y-2">
+              <HexColorPicker color={hexColor} onChange={handleColorChange} />
+              <ColorOklchValue currentColor={currentColor} />
+            </div>
 
-                <div className="w-full">
-                  <MemoizedPreviewComponents currentColor={currentColor} />
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-3 text-sm">
+            <div className="max-w-34flex-col flex gap-3 text-sm">
+              <div className="flex items-center gap-2">
                 <Label className="text-muted-foreground">Tailwind colors</Label>
-                <MemoizedTailwindV4ColorPalette
-                  currentColor={currentColor}
-                  shade={500}
-                  handleColorChange={handleColorChange}
-                />
               </div>
+
+              <MemoizedTailwindV4ColorPalette
+                currentColor={currentColor}
+                shade={shade}
+                handleColorChange={handleColorChange}
+              />
+
+              <Label className="text-muted-foreground">
+                Shade
+                <Select
+                  value={shade}
+                  onValueChange={(v: TailwindShadeKey) => setShade(v)}
+                >
+                  <SelectTrigger size="sm" className="px-2">
+                    <SelectValue defaultValue={shade} />
+                  </SelectTrigger>
+                  <SelectContent className="w-fit min-w-0">
+                    <SelectGroup>
+                      <SelectLabel>Shade</SelectLabel>
+                      {TAILWIND_SHADES.map((shade) => (
+                        <SelectItem value={shade} key={shade}>
+                          {shade}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </Label>
             </div>
           </SheetContent>
         </Sheet>
@@ -126,15 +143,39 @@ export function TokenColorPicker({
             <ColorOklchValue currentColor={currentColor} />
           </div>
 
-          <div className="flex max-w-26 flex-col gap-3 text-sm">
-            <Label className="text-muted-foreground">Tailwind colors</Label>
+          <div className="flex max-w-34 flex-col gap-3 text-sm">
+            <div className="flex items-center gap-1">
+              <Label className="text-muted-foreground">Tailwind colors</Label>
+            </div>
+
             <MemoizedTailwindV4ColorPalette
               currentColor={currentColor}
-              shade={500}
+              shade={shade}
               handleColorChange={handleColorChange}
             />
+
+            <Label className="text-muted-foreground">
+              Shade
+              <Select
+                value={shade}
+                onValueChange={(v: TailwindShadeKey) => setShade(v)}
+              >
+                <SelectTrigger size="sm" className="px-2">
+                  <SelectValue defaultValue={shade} />
+                </SelectTrigger>
+                <SelectContent className="w-fit min-w-0">
+                  <SelectGroup>
+                    <SelectLabel>Shade</SelectLabel>
+                    {TAILWIND_SHADES.map((shade) => (
+                      <SelectItem value={shade} key={shade}>
+                        {shade}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </Label>
           </div>
-          <MemoizedPreviewComponents currentColor={currentColor} />
         </PopoverContent>
       </Popover>
     </ComponentErrorBoundary>
@@ -181,7 +222,7 @@ function TailwindV4ColorPalette({
         return (
           <button
             className={cn(
-              "bg-primary outline-border hover:bg-primary/80 relative size-5 rounded-lg border outline-2 outline-offset-2",
+              "bg-primary outline-border hover:bg-primary/80 relative size-5 rounded-lg border outline-1 outline-offset-2 sm:outline-2",
               isActive && "outline-primary/70",
             )}
             key={key}
@@ -197,54 +238,6 @@ function TailwindV4ColorPalette({
           </button>
         );
       })}
-    </div>
-  );
-}
-
-const MemoizedPreviewComponents = React.memo(PreviewComponents);
-function PreviewComponents({ currentColor }: { currentColor: OklchValue }) {
-  const foregroundColor = useMemo(
-    () => getOptimalForegroundColor(currentColor),
-    [currentColor],
-  );
-
-  return (
-    <div
-      className="flex flex-col gap-3 text-sm"
-      style={{
-        "--primary": currentColor,
-        "--primary-foreground": foregroundColor,
-      }}
-    >
-      <Label className="text-muted-foreground">Preview</Label>
-      <div className="flex w-full flex-wrap items-center gap-2">
-        <Button>Button</Button>
-        <Button variant={"link"}>Link</Button>
-      </div>
-
-      <div className="flex items-center gap-1">
-        <Checkbox value="default" id="c1" defaultChecked />
-        <Checkbox value="default_2" id="c1" />
-        <Label htmlFor="c1" className="text-muted-foreground">
-          Checkbox
-        </Label>
-      </div>
-
-      <RadioGroup defaultValue="default">
-        <div className="flex items-center gap-1">
-          <RadioGroupItem value="default" id="r1" defaultChecked />
-          <RadioGroupItem value="default_2" id="r2" />
-          <Label htmlFor="r1" className="text-muted-foreground">
-            Radio group
-          </Label>
-        </div>
-      </RadioGroup>
-
-      <Badge>Badge</Badge>
-
-      <Switch defaultChecked />
-
-      <Slider defaultValue={[50]} />
     </div>
   );
 }
