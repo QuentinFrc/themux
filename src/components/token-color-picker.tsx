@@ -74,7 +74,7 @@ export function TokenColorPicker({
           </div>
 
           <SheetContent
-            className="flex w-full flex-row gap-6 p-4 py-12"
+            className="flex w-full flex-row gap-6 p-4 py-10"
             side="bottom"
           >
             <SheetTitle className="sr-only">Color picker</SheetTitle>
@@ -84,7 +84,7 @@ export function TokenColorPicker({
               <ColorOklchValue currentColor={currentColor} />
             </div>
 
-            <div className="max-w-34flex-col flex gap-3 text-sm">
+            <div className="flex max-w-34 flex-col gap-3 text-sm">
               <div className="flex items-center gap-2">
                 <Label className="text-muted-foreground">Tailwind colors</Label>
               </div>

@@ -63,8 +63,6 @@ export const metadata: Metadata = {
   description: "A collection of components built with shadcn/ui.",
 };
 
-export const dynamic = "force-static";
-
 export default function ComponentsPage() {
   return (
     <>

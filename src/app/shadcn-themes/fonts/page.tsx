@@ -11,8 +11,6 @@ export const metadata: Metadata = {
   title: "Fonts",
 };
 
-export const dynamic = "force-static";
-
 export default function FontsPage() {
   return (
     <>

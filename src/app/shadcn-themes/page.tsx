@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   title: "Theme Customizer",
 };
 
-export const dynamic = "force-static";
-
 export default function ShadcnThemesPage() {
   return (
     <>
