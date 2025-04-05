@@ -18,7 +18,7 @@ export function useColorTokens() {
 
   const setPrimaryColorTokens = ({
     primaryColor,
-    bothModes = true,
+    bothModes = false,
   }: {
     primaryColor: OklchValue;
     bothModes?: boolean;
