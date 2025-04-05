@@ -6,8 +6,7 @@ import { convertToHex } from "./color-converter";
 
 export function getOptimalForegroundColor(colorInOklch: OklchValue) {
   if (!isValidColor(colorInOklch)) {
-    console.log("Invalid color format:", colorInOklch);
-    return;
+    throw new Error(`Invalid color format: ${colorInOklch}`);
   }
 
   const colorInHex = convertToHex(colorInOklch);

@@ -8,7 +8,8 @@ export type RemValue = `${number}rem`; // For rem values, i.e. "0.625rem"
 
 export type OklchValue =
   | `oklch(${number} ${number} ${number})` // For oklch values without an alpha channel, i.e., 'oklch(0.145 0 0)'
-  | `oklch(${number} ${number} ${number} / ${number}%)`; // For oklch values with with the alpha channel, i.e., 'oklch(1 0 0 / 15%)'
+  | `oklch(${number} ${number} ${number} / ${number}%)` // For oklch values with with the alpha channel in %, i.e., 'oklch(1 0 0 / 15%)'
+  | `oklch(${number} ${number} ${number} / ${number})`; // For oklch values with with the alpha channel in decimal, i.e., 'oklch(1 0 0 / 0.15)'
 
 export type RadiusProperty = {
   radius: RemValue;
@@ -116,4 +117,9 @@ export type ThemeObject = {
   label: string;
   light: OklchColorProperties;
   dark: OklchColorProperties;
+};
+
+export type ThemeConfig = {
+  radius: RemValue;
+  themeObject: ThemeObject;
 };

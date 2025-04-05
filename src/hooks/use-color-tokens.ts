@@ -1,14 +1,8 @@
-import {
-  ColorProperty,
-  OklchColorProperties,
-  OklchValue,
-  ThemeObject,
-} from "@/types/theme";
+import { ColorProperty, OklchValue } from "@/types/theme";
 import { getOptimalForegroundColor } from "@/utils/colors";
 import { useTheme } from "next-themes";
 import { useCallback } from "react";
 import { useConfig } from "./use-config";
-import { access } from "fs";
 
 export function useColorTokens() {
   const { resolvedTheme } = useTheme();

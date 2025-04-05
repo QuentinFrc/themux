@@ -79,8 +79,8 @@ export const colorFormatter = (
         const hex = culori.formatHex(parsedColor);
 
         // Add the alpha channel if necessary
-        const alphaHex = formatAlphaForHex(parsedColor.alpha);
-        return alphaHex ? `${hex}${alphaHex}` : hex;
+        const alphaPart = formatAlphaForHex(parsedColor.alpha);
+        return alphaPart ? `${hex}${alphaPart}` : hex;
       }
       default:
         return colorValue;
@@ -104,12 +104,10 @@ export const convertToOklch = (colorToConvert: string): OklchValue => {
   const l = formatNumber(colorInOklch.l);
   const c = formatNumber(colorInOklch.c);
   const h = formatNumber(colorInOklch.h ? colorInOklch.h : 0);
-  const alpha = colorInOklch.alpha
-    ? formatNumber(colorInOklch.alpha * 100)
-    : null;
+  const alphaPart = formatAlphaForCss(parsedColor.alpha); // Extract alpha from the original color
 
-  if (alpha) {
-    return `oklch(${l} ${c} ${h} / ${alpha}%)`;
+  if (alphaPart) {
+    return `oklch(${l} ${c} ${h} ${alphaPart})` as OklchValue;
   }
 
   return `oklch(${l} ${c} ${h})`;
