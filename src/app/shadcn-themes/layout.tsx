@@ -26,6 +26,7 @@ export default async function ShadcnThemesLayout({
 }) {
   return (
     <SidebarProvider
+      defaultOpen={false}
       style={{
         "--sidebar-width": SIDEBAR_WIDTH,
         "--sidebar-width-mobile": SIDEBAR_WIDTH_MOBILE,

@@ -1,9 +1,9 @@
 "use client";
 
+import { useColorTokens } from "@/hooks/use-color-tokens";
 import { useConfig } from "@/hooks/use-config";
 import { cn } from "@/lib/utils";
 import { ColorProperty, OklchValue } from "@/types/theme";
-import { getOptimalForegroundColor } from "@/utils/colors";
 import { Palette } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useCallback } from "react";
@@ -32,50 +32,11 @@ export function ColorTokens({ className }: React.ComponentProps<"div">) {
 export function TokensList() {
   const { resolvedTheme } = useTheme();
   const mode = resolvedTheme === "dark" ? "dark" : "light";
-  const [config, setConfig] = useConfig();
+  const [config] = useConfig();
+  const { getColorToken, setPrimaryColorTokens } = useColorTokens();
 
-  const getColorFromThemeObject = useCallback(
-    ({ property }: { property: ColorProperty }) => {
-      return config.themeObject[mode][property];
-    },
-    [mode, config.themeObject[mode]],
-  );
-
-  const setPrimaryColorTokens = (primaryColor: OklchValue) => {
-    const foregroundColor = getOptimalForegroundColor(primaryColor);
-
-    setConfig((prev) => {
-      return {
-        ...prev,
-        themeObject: {
-          ...prev.themeObject,
-          label: "Custom",
-          name: "custom",
-          light: {
-            ...prev.themeObject.light,
-            primary: primaryColor,
-            "primary-foreground": foregroundColor,
-            ring: primaryColor,
-            "sidebar-primary": primaryColor,
-            "sidebar-primary-foreground": foregroundColor,
-            "sidebar-ring": primaryColor,
-          },
-          dark: {
-            ...prev.themeObject.dark,
-            primary: primaryColor,
-            "primary-foreground": foregroundColor,
-            ring: primaryColor,
-            "sidebar-primary": primaryColor,
-            "sidebar-primary-foreground": foregroundColor,
-            "sidebar-ring": primaryColor,
-          },
-        },
-      };
-    });
-  };
-
-  const getStaticTokens = () => {
-    let currentThemeObject = config.themeObject[mode];
+  const getStaticTokens = useCallback(() => {
+    const currentThemeObject = config.themeObject[mode];
 
     const staticTokens = Object.entries(currentThemeObject).map(
       ([property, value]) => ({
@@ -88,20 +49,20 @@ export function TokensList() {
       (token) =>
         token.property !== "primary-foreground" && token.property !== "primary",
     );
-  };
+  }, [mode]);
 
   return (
     <div className="[&>*:hover]:bg-accent/70 grid [&>*]:rounded-lg [&>*]:p-2">
       <TokenColorPicker
         colorProperty="primary"
-        oklchColor={getColorFromThemeObject({
+        oklchColor={getColorToken({
           property: "primary",
         })}
         setColorTokens={setPrimaryColorTokens}
       />
       <Token
         colorProperty="primary-foreground"
-        oklchColor={getColorFromThemeObject({
+        oklchColor={getColorToken({
           property: "primary-foreground",
         })}
       />

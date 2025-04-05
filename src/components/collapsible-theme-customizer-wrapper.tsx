@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { ChevronUp } from "lucide-react";
 import React from "react";
+import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
 import { FrameHighlight } from "./frame-highlight";
 import {
   PageHeader,
@@ -32,25 +33,28 @@ export function CollapsibleThemeCustomizerWrapper({
           </PageHeaderDescription>
         </PageHeader>
 
-        <Button
-          onClick={() => setIsExpanded(!isExpanded)}
-          variant={"ghost"}
-          className="relative flex w-fit cursor-pointer items-center justify-between gap-2"
-        >
-          {isExpanded ? "Collapse customizer" : "Expand customizer"}
-          <ChevronUp
-            className={cn(
-              "size-6 transition",
-              isExpanded ? "rotate-0" : "rotate-180",
-            )}
-          />
-          <div
-            className={cn(
-              "bg-primary absolute top-0 right-0 size-2 rounded-full transition-opacity duration-300 ease-in-out",
-              isExpanded ? "opacity-0" : "animate-bounce opacity-100",
-            )}
-          />
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={() => setIsExpanded(!isExpanded)}
+            variant={"ghost"}
+            className="relative flex w-48 cursor-pointer items-center justify-between gap-2"
+          >
+            {isExpanded ? "Collapse customizer" : "Expand customizer"}
+            <ChevronUp
+              className={cn(
+                "size-6 transition",
+                isExpanded ? "rotate-0" : "rotate-180",
+              )}
+            />
+            <div
+              className={cn(
+                "bg-primary absolute top-0 right-0 size-2 rounded-full transition-opacity duration-300 ease-in-out",
+                isExpanded ? "opacity-0" : "animate-bounce opacity-100",
+              )}
+            />
+          </Button>
+          <CopyCodeButtonDialog />
+        </div>
       </div>
 
       <div

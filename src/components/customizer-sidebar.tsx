@@ -95,7 +95,7 @@ export function CustomizerSidebar({
             <Label className="flex items-center gap-1 px-4 pb-2">
               <Palette className="size-4" /> Tokens
             </Label>
-            <ScrollArea className="relative max-h-118 overflow-hidden px-2">
+            <ScrollArea className="relative max-h-100 overflow-hidden px-2">
               <TokensList />
             </ScrollArea>
           </TabsContent>

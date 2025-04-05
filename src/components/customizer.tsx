@@ -177,7 +177,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
 }
 
 const BUTTON_CLASSES = cn(
-  "inset-ring-border h-fit cursor-pointer p-1 text-xs inset-ring rounded-lg",
+  "ring-border h-fit cursor-pointer p-1 text-xs ring rounded-lg",
   "@3xl:max-w-[85px] @3xl:text-sm",
 );
 
@@ -227,7 +227,7 @@ function PresetButton({
     >
       <span
         className={cn(
-          "ring-border flex size-5 shrink-0 items-center justify-center overflow-hidden rounded-lg ring",
+          "bg-primary ring-border flex size-4 shrink-0 items-center justify-center overflow-hidden rounded-lg ring",
           "from-primary to-secondary -bg-linear-45 from-50% to-50%",
         )}
       />

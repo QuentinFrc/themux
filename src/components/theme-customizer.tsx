@@ -5,7 +5,6 @@ import { initialThemeConfig, useConfig } from "@/hooks/use-config";
 import { useMounted } from "@/hooks/use-mounted";
 import { Repeat } from "lucide-react";
 import { ColorTokens } from "./color-tokens";
-import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
 import { Customizer } from "./customizer";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader } from "./ui/card";
@@ -42,7 +41,6 @@ export function ThemeCustomizer() {
                 <span className="hidden @md:inline-flex">Reset</span> <Repeat />
                 <span className="sr-only">Reset</span>
               </Button>
-              <CopyCodeButtonDialog />
             </div>
           </div>
         </CardHeader>

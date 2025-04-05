@@ -2,19 +2,15 @@
 
 import { useConfig } from "@/hooks/use-config";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import {
-  TAILWIND_PALETTE_V4,
-  TAILWIND_SHADES,
-  TailwindShadeKey,
-} from "@/lib/palettes";
-import { cn } from "@/lib/utils";
+import { TAILWIND_SHADES, TailwindShadeKey } from "@/lib/palettes";
 import { ColorProperty, OklchValue, ThemeMode } from "@/types/theme";
 import { convertToHex, convertToOklch } from "@/utils/color-converter";
 import { CircleAlert, Pipette } from "lucide-react";
 import { useTheme } from "next-themes";
-import React, { ComponentProps, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { ComponentErrorBoundary } from "./error-boundary";
+import { MemoizedTailwindV4ColorPalette } from "./tailwind-v4-palette";
 import { TokenDisplay, TokenInfo } from "./token";
 import { Label } from "./ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
@@ -33,7 +29,10 @@ import { useDebouncedCallback } from "./use-debounced-callback";
 interface TokenColorPickerProps {
   colorProperty: ColorProperty;
   oklchColor: OklchValue;
-  setColorTokens: (color: OklchValue) => void;
+  setColorTokens: (obj: {
+    primaryColor: OklchValue;
+    bothModes?: boolean;
+  }) => void;
 }
 
 export function TokenColorPicker({
@@ -55,7 +54,7 @@ export function TokenColorPicker({
   const handleColorChange = useCallback((color: string) => {
     const newOklchColor = convertToOklch(color);
     setCurrentColor(newOklchColor);
-    debouncedSetColorTokens(newOklchColor);
+    debouncedSetColorTokens({ primaryColor: newOklchColor, bothModes: true });
   }, []);
 
   if (isMobile) {
@@ -92,7 +91,6 @@ export function TokenColorPicker({
               <MemoizedTailwindV4ColorPalette
                 currentColor={currentColor}
                 shade={shade}
-                handleColorChange={handleColorChange}
               />
 
               <Label className="text-muted-foreground">
@@ -143,7 +141,7 @@ export function TokenColorPicker({
             <ColorOklchValue currentColor={currentColor} />
           </div>
 
-          <div className="flex max-w-34 flex-col gap-3 text-sm">
+          <div className="flex max-w-38 flex-col gap-3 text-sm">
             <div className="flex items-center gap-1">
               <Label className="text-muted-foreground">Tailwind colors</Label>
             </div>
@@ -151,7 +149,6 @@ export function TokenColorPicker({
             <MemoizedTailwindV4ColorPalette
               currentColor={currentColor}
               shade={shade}
-              handleColorChange={handleColorChange}
             />
 
             <Label className="text-muted-foreground">
@@ -192,52 +189,6 @@ function ColorOklchValue({ currentColor }: { currentColor: OklchValue }) {
         }}
       />
       <p className="text-muted-foreground font-mono text-xs">{currentColor}</p>
-    </div>
-  );
-}
-
-const MemoizedTailwindV4ColorPalette = React.memo(TailwindV4ColorPalette);
-function TailwindV4ColorPalette({
-  currentColor,
-  shade,
-  handleColorChange,
-  className,
-  ...props
-}: {
-  currentColor: OklchValue;
-  shade: TailwindShadeKey;
-  handleColorChange: (color: string) => void;
-} & ComponentProps<"div">) {
-  return (
-    <div
-      className={cn(
-        "flex flex-wrap content-start items-start gap-2",
-        className,
-      )}
-      {...props}
-    >
-      {Object.entries(TAILWIND_PALETTE_V4).map(([key, colors]) => {
-        const color = colors[shade];
-        const isActive = currentColor === color;
-        return (
-          <button
-            className={cn(
-              "bg-primary outline-border hover:bg-primary/80 relative size-5 rounded-lg border outline-1 outline-offset-2 sm:outline-2",
-              isActive && "outline-primary/70",
-            )}
-            key={key}
-            style={{ "--primary": color }}
-            onClick={() => handleColorChange(color)}
-          >
-            <div
-              className={cn(
-                "bg-background absolute inset-0 m-auto size-3 rounded-lg transition",
-                isActive ? "scale-100" : "scale-0",
-              )}
-            />
-          </button>
-        );
-      })}
     </div>
   );
 }
