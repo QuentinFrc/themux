@@ -1,7 +1,7 @@
-import { ThemeConfig } from "@/hooks/use-config";
 import {
   ColorFormat,
   TailwindVersion,
+  ThemeConfig,
   ThemeMode,
   ThemeObject,
 } from "@/types/theme";
