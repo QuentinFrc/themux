@@ -32,13 +32,13 @@ export default async function ShadcnThemesLayout({
         "--sidebar-width-mobile": SIDEBAR_WIDTH_MOBILE,
       }}
     >
-      <CustomizerSidebar variant="inset" collapsible="icon" />
+      <CustomizerSidebar variant="inset" collapsible="offcanvas" />
 
       <SidebarInset className="relative max-h-svh overflow-hidden peer-data-[variant=inset]:max-h-[calc(100svh-1rem)]">
         <header className="isolate z-10 flex shrink-0 items-center gap-2 border-b">
           <ContainerWrapper className="flex items-center justify-between">
             <div className="flex h-14 w-full items-center gap-2">
-              <div className="inline-flex md:hidden">
+              <div className="inline-flex">
                 <CustomizerSidebarToggle />
               </div>
 

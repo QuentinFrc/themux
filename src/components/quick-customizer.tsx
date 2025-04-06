@@ -1,16 +1,16 @@
 "use client";
 
 import { useColorTokens } from "@/hooks/use-color-tokens";
+import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 import { convertToOklch } from "@/utils/color-converter";
 import { getOptimalForegroundColor, isValidColor } from "@/utils/colors";
 import {
-  Check,
   ClipboardPaste,
   Droplet,
   Moon,
-  Send,
   SendHorizontal,
+  SquareRoundCorner,
   Sun,
   SunMoon,
 } from "lucide-react";
@@ -21,7 +21,9 @@ import { MemoizedTailwindV4ColorPalette } from "./tailwind-v4-palette";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { Skeleton } from "./ui/skeleton";
 import { Switch } from "./ui/switch";
+import { RadiusControls } from "./customizer";
 
 const PLACEHOLDERS = [
   "oklch(0.685 0.169 237.323)",
@@ -36,7 +38,8 @@ export function QuickCustomizer() {
   const [placeholder, setPlaceholder] = useState(PLACEHOLDERS[0]);
   const [pastedColor, setPastedColor] = useState("");
   const isValidPastedColor = isValidColor(pastedColor);
-  const [bothModes, setBothModes] = useState(true);
+  const [bothModes, setBothModes] = useState(false);
+  const isMounted = useMounted();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -69,17 +72,18 @@ export function QuickCustomizer() {
     setPastedColor(event.target.value);
   };
 
-  const isLightOnly = resolvedTheme === "light" && !bothModes;
-  const isDarkOnly = resolvedTheme === "dark" && !bothModes;
+  const isLightOnly = isMounted && resolvedTheme === "light" && !bothModes;
+  const isDarkOnly = isMounted && resolvedTheme === "dark" && !bothModes;
 
   return (
-    <div className="flex h-full flex-col items-start gap-6 py-4 sm:flex-row">
-      <section className="flex flex-col items-start gap-4">
+    <div className="flex h-full flex-wrap items-start gap-6 sm:flex-row">
+      <section className="flex flex-col items-start gap-2">
         <div className="flex w-full items-center justify-between gap-4">
-          <Label className="text-muted-foreground flex items-center gap-1">
+          <Label className="flex items-center gap-1">
             <Droplet className="size-4" /> Primary color
           </Label>
-          <Label className="text-muted-foreground flex items-center gap-1">
+          <Label className="flex items-center gap-1">
+            {!isMounted && <Skeleton className="h-3 w-30" />}
             {bothModes && (
               <>
                 Both modes
@@ -91,7 +95,6 @@ export function QuickCustomizer() {
                 />
               </>
             )}
-
             {isLightOnly && (
               <>
                 Light mode only
@@ -103,7 +106,6 @@ export function QuickCustomizer() {
                 />
               </>
             )}
-
             {isDarkOnly && (
               <>
                 Dark mode only
@@ -115,7 +117,6 @@ export function QuickCustomizer() {
                 />
               </>
             )}
-
             <Switch checked={bothModes} onCheckedChange={setBothModes} />
           </Label>
         </div>
@@ -131,46 +132,58 @@ export function QuickCustomizer() {
         </div>
       </section>
 
-      <section className="flex flex-col items-start gap-4">
-        <Label className="text-muted-foreground flex items-center gap-1">
+      <section className="flex flex-col items-start gap-2">
+        <Label className="flex items-center gap-1">
           <ClipboardPaste className="size-4" /> Paste your primary color
         </Label>
-        <form
-          className="relative flex shrink-0 items-center gap-1 overflow-hidden rounded-lg border p-1"
-          onSubmit={handleSubmitColorPaste}
-        >
-          <Input
-            type="text"
-            id="pasted-color"
-            onChange={handleInputChange}
-            className={cn(
-              "w-40 shrink-0 font-mono lowercase outline transition",
-              !isValidColor && "outline-destructive",
-            )}
-            placeholder={placeholder}
-            value={pastedColor}
-          />
-          <Button
-            variant="ghost"
-            className={cn(
-              "transition",
-              isValidPastedColor
-                ? "bg-(--pasted-color) text-(--pasted-color-foreground) inset-ring-2 inset-ring-(--pasted-color)"
-                : "",
-            )}
-            style={{
-              "--pasted-color": isValidPastedColor
-                ? convertToOklch(pastedColor)
-                : "",
-              "--pasted-color-foreground": isValidPastedColor
-                ? getOptimalForegroundColor(convertToOklch(pastedColor))
-                : "",
-            }}
+        <div className="relative flex flex-col gap-1">
+          <form
+            className="relative flex shrink-0 items-center gap-1 overflow-hidden rounded-lg border px-1"
+            onSubmit={handleSubmitColorPaste}
           >
-            <SendHorizontal />
-          </Button>
-        </form>
+            <Input
+              type="text"
+              id="pasted-color"
+              onChange={handleInputChange}
+              className={cn(
+                "h-fit w-40 shrink-0 font-mono lowercase outline transition",
+                !isValidColor && "outline-destructive",
+              )}
+              placeholder={placeholder}
+              value={pastedColor}
+            />
+            <Button
+              variant="ghost"
+              className={cn(
+                "transition",
+                isValidPastedColor
+                  ? "bg-(--pasted-color) text-(--pasted-color-foreground) inset-ring-2 inset-ring-(--pasted-color)"
+                  : "",
+              )}
+              style={{
+                "--pasted-color": isValidPastedColor
+                  ? convertToOklch(pastedColor)
+                  : "",
+                "--pasted-color-foreground": isValidPastedColor
+                  ? getOptimalForegroundColor(convertToOklch(pastedColor))
+                  : "",
+              }}
+            >
+              <SendHorizontal />
+            </Button>
+          </form>
+          <span className="text-muted-foreground text-xs">
+            {`oklch(), hsl(), rbg() and #hex`}
+          </span>
+        </div>
       </section>
+
+      {/* <section className="flex flex-col items-start gap-2">
+        <Label className="flex items-center gap-1">
+          <SquareRoundCorner className="size-4" /> Radius
+        </Label>
+        <RadiusControls className="grid grid-cols-6 gap-2 @5xl:grid-cols-3" />
+      </section> */}
     </div>
   );
 }

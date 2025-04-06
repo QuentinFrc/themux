@@ -1,3 +1,5 @@
+"use client";
+
 import { useConfig } from "@/hooks/use-config";
 import { cn, copyToClipboard } from "@/lib/utils";
 import { ColorFormat, TailwindVersion } from "@/types/theme";

@@ -14,14 +14,12 @@ import { ScrollArea } from "./ui/scroll-area";
 
 export function ColorTokens({ className }: React.ComponentProps<"div">) {
   return (
-    <div className="h-full space-y-1.5 p-4">
+    <div className="h-full space-y-1.5">
       <Label className="flex items-center gap-1 pb-2">
         <Palette className="size-4" /> Tokens
       </Label>
-      <div
-        className={cn("h-full overflow-hidden rounded-lg border", className)}
-      >
-        <ScrollArea className="relative size-full overflow-hidden p-2">
+      <div className={cn("h-full rounded-lg", className)}>
+        <ScrollArea className="relative size-full">
           <TokensList />
         </ScrollArea>
       </div>
@@ -52,7 +50,7 @@ export function TokensList() {
   }, [mode]);
 
   return (
-    <div className="[&>*:hover]:bg-accent/70 grid [&>*]:rounded-lg [&>*]:p-2">
+    <div className="grid space-y-2">
       <TokenColorPicker
         colorProperty="primary"
         oklchColor={getColorToken({
