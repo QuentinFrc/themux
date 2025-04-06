@@ -109,8 +109,7 @@ export type ColorfulPreset =
   | "green"
   | "blue"
   | "yellow"
-  | "violet"
-  | "pink";
+  | "violet";
 
 export type ThemeObject = {
   name: PresetV4 | ColorfulPreset | "custom";

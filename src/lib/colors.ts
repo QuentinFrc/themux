@@ -356,7 +356,7 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
 
 export const basePresetsV4Array = Object.values(basePresetsV4);
 
-// ===> Presets based on Shadcn website for TailwindCSS V4 (✅Red, ✅Rose, ✅Orange, ✅Green, ✅Blue, ✅Yellow, ✅Violet, Pink)
+// ===> Presets based on Shadcn website for TailwindCSS V4 (✅Red, ✅Rose, ✅Orange, ✅Green, ✅Blue, ✅Yellow, ✅Violet)
 export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
   red: {
     name: "red",
@@ -846,76 +846,6 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
       "sidebar-border": "oklch(1 0 0 / 10%)", // --color-white (from zinc)
       "sidebar-ring": "oklch(0.541 0.281 293.009)", // --color-violet-600 (approx HSL 263.4 70% 50.4%)
-    },
-  },
-  pink: {
-    name: "pink",
-    label: "Pink",
-    light: {
-      background: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
-      foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      card: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
-      "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      popover: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
-      "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      primary: "oklch(0.656 0.241 354.308)", // --color-pink-500 (approx HSL 330.4 81.2% 60.4%)
-      "primary-foreground": "oklch(0.969 0.015 12.422)", // --color-rose-50 (approx HSL 355.7 100% 97.3%)
-      secondary: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
-      "secondary-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
-      muted: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
-      "muted-foreground": "oklch(0.552 0.016 285.938)", // --color-zinc-500 (from zinc)
-      accent: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
-      "accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
-      destructive: "oklch(0.577 0.245 27.325)", // --color-red-600 (from zinc)
-      border: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
-      input: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
-      ring: "oklch(0.656 0.241 354.308)", // --color-pink-500 (approx HSL 330.4 81.2% 60.4%)
-      "chart-1": "oklch(0.646 0.222 41.116)", // --color-orange-600 (from zinc)
-      "chart-2": "oklch(0.6 0.118 184.704)", // --color-teal-600 (from zinc)
-      "chart-3": "oklch(0.398 0.07 227.392)", // --color-cyan-900 (from zinc)
-      "chart-4": "oklch(0.828 0.189 84.429)", // --color-amber-400 (from zinc)
-      "chart-5": "oklch(0.769 0.188 70.08)", // --color-amber-500 (from zinc)
-      sidebar: "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
-      "sidebar-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      "sidebar-primary": "oklch(0.656 0.241 354.308)", // --color-pink-500 (approx HSL 330.4 81.2% 60.4%)
-      "sidebar-primary-foreground": "oklch(0.969 0.015 12.422)", // --color-rose-50 (approx HSL 355.7 100% 97.3%)
-      "sidebar-accent": "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
-      "sidebar-accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
-      "sidebar-border": "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
-      "sidebar-ring": "oklch(0.656 0.241 354.308)", // --color-pink-500 (approx HSL 330.4 81.2% 60.4%)
-    },
-    dark: {
-      background: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      foreground: "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
-      card: "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
-      "card-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
-      popover: "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
-      "popover-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
-      primary: "oklch(0.718 0.202 349.761)", // --color-pink-400 (approx HSL 328.6 85.5% 70.2%)
-      "primary-foreground": "oklch(0.293 0.136 325.661)", // --color-fuchsia-950 (approx HSL 296.8 90.2% 16.1%)
-      secondary: "oklch(0.274 0.006 286.033)", // --color-zinc-800 (from zinc)
-      "secondary-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
-      muted: "oklch(0.274 0.006 286.033)", // --color-zinc-800 (from zinc)
-      "muted-foreground": "oklch(0.705 0.015 286.067)", // --color-zinc-400 (from zinc)
-      accent: "oklch(0.274 0.006 286.033)", // --color-zinc-800 (from zinc)
-      "accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
-      destructive: "oklch(0.704 0.191 22.216)", // --color-red-400 (from zinc)
-      border: "oklch(1 0 0 / 10%)", // --color-white (from zinc)
-      input: "oklch(1 0 0 / 15%)", // --color-white (from zinc)
-      ring: "oklch(0.718 0.202 349.761)", // --color-pink-400 (approx HSL 328.6 85.5% 70.2%)
-      "chart-1": "oklch(0.488 0.243 264.376)", // --color-blue-700 (from zinc)
-      "chart-2": "oklch(0.696 0.17 162.48)", // --color-emerald-500 (from zinc)
-      "chart-3": "oklch(0.769 0.188 70.08)", // --color-amber-500 (from zinc)
-      "chart-4": "oklch(0.627 0.265 303.9)", // --color-purple-500 (from zinc)
-      "chart-5": "oklch(0.645 0.246 16.439)", // --color-rose-500 (from zinc)
-      sidebar: "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
-      "sidebar-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
-      "sidebar-primary": "oklch(0.718 0.202 349.761)", // --color-pink-400 (approx HSL 328.6 85.5% 70.2%)
-      "sidebar-primary-foreground": "oklch(0.293 0.136 325.661)", // --color-fuchsia-950 (approx HSL 296.8 90.2% 16.1%)
-      "sidebar-accent": "oklch(0.274 0.006 286.033)", // --color-zinc-800 (from zinc)
-      "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
-      "sidebar-border": "oklch(1 0 0 / 10%)", // --color-white (from zinc)
-      "sidebar-ring": "oklch(0.718 0.202 349.761)", // --color-pink-400 (approx HSL 328.6 85.5% 70.2%)
     },
   },
 } as const;
