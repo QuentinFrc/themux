@@ -78,49 +78,51 @@ export function QuickCustomizer() {
   return (
     <div className="flex h-full flex-wrap items-start gap-6 sm:flex-row">
       <section className="flex flex-col items-start gap-2">
-        <div className="flex w-full items-center justify-between gap-4">
+        <div className="flex w-full items-center gap-8">
           <Label className="flex items-center gap-1">
             <Droplet className="size-4" /> Primary color
           </Label>
-          <Label className="flex items-center gap-1">
+          <Label className="gap- flex items-center">
             {!isMounted && <Skeleton className="h-3 w-30" />}
+            <Switch checked={bothModes} onCheckedChange={setBothModes} />
+
             {bothModes && (
               <>
-                Both modes
                 <SunMoon
                   className={cn(
                     "size-4 transition",
                     bothModes ? "scale-100" : "scale-0",
                   )}
                 />
+                Both modes
               </>
             )}
             {isLightOnly && (
               <>
-                Light mode only
                 <Sun
                   className={cn(
                     "size-4 transition",
                     isLightOnly ? "scale-100" : "scale-0",
                   )}
                 />
+                Light mode only
               </>
             )}
             {isDarkOnly && (
               <>
-                Dark mode only
                 <Moon
                   className={cn(
                     "size-4 transition",
                     isDarkOnly ? "scale-100" : "scale-0",
                   )}
                 />
+                Dark mode only
               </>
             )}
-            <Switch checked={bothModes} onCheckedChange={setBothModes} />
           </Label>
         </div>
-        <div className="grid shrink-0 grid-cols-11 gap-1.5">
+
+        <div className="grid w-full shrink-0 grid-cols-11 gap-1.5">
           <MemoizedTailwindV4ColorPalette
             currentColor={getColorToken({
               property: "primary",
@@ -138,7 +140,7 @@ export function QuickCustomizer() {
         </Label>
         <div className="relative flex flex-col gap-1">
           <form
-            className="relative flex shrink-0 items-center gap-1 overflow-hidden rounded-lg border px-1"
+            className="relative flex shrink-0 items-center gap-1 overflow-hidden rounded-lg border p-1"
             onSubmit={handleSubmitColorPaste}
           >
             <Input
@@ -154,6 +156,7 @@ export function QuickCustomizer() {
             />
             <Button
               variant="ghost"
+              size="sm"
               className={cn(
                 "transition",
                 isValidPastedColor

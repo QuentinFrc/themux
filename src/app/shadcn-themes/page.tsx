@@ -56,11 +56,11 @@ export default function ShadcnThemesPage() {
       <CollapsibleCustomizer>
         <ContainerWrapper
           withCane
-          className="@container flex flex-col justify-between gap-4 py-4 md:flex-row"
+          className="@container flex flex-col justify-between gap-x-4 gap-y-6 py-4 md:flex-row"
         >
           <QuickCustomizer />
 
-          <div className="grid shrink-0 grid-cols-2 place-content-center items-center gap-2 md:grid-cols-1">
+          <div className="grid shrink-0 grid-cols-[3fr_1fr] place-content-center items-center gap-2 sm:grid-cols-[2fr_1fr] md:grid-cols-1">
             <CopyCodeButtonDialog size="sm" />
             <ResetButton variant="outline" size="sm" />
           </div>
