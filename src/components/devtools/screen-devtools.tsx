@@ -124,7 +124,7 @@ function ScreenDevtoolsWrapper() {
 }
 
 function InternalScreenDevTools() {
-  const [isShown, setIsShown] = useState(true);
+  const [isShown, setIsShown] = useState(false);
   const { preferences, tools } = useSettings();
 
   const positionClassNames = useMemo(() => {

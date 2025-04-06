@@ -16,7 +16,7 @@ export const MemoizedTailwindV4ColorPalette = React.memo(
 function TailwindV4ColorPalette({
   currentColor,
   shade,
-  bothModes = true,
+  bothModes,
   className,
   ...props
 }: {

@@ -27,7 +27,7 @@ export function TokenDisplay({
   return (
     <div
       className={cn(
-        "outline-border aspect-square size-8 rounded-full shadow outline-2",
+        "aspect-square size-8 rounded-full border shadow",
         className,
       )}
       style={{

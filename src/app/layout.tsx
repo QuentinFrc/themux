@@ -50,7 +50,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <ReactScan options={{ enabled: false }} />
+      <ReactScan options={{ enabled: true }} />
 
       <body className={cn(`font-sans antialiased`, fontVariables)}>
         <ThemeProvider
