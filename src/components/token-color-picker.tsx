@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
-import { useDebouncedCallback } from "./use-debounced-callback";
+import { useDebouncedCallback } from "../hooks/use-debounced-callback";
 
 interface TokenColorPickerProps {
   colorProperty: ColorProperty;

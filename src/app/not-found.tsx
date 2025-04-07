@@ -1,6 +1,6 @@
 import { Footer } from "@/components/footer";
 import { FrameHighlight } from "@/components/frame-highlight";
-import { GoBackLink } from "@/components/go-back-link";
+import { GoBackButton } from "@/components/go-back-button";
 import { Separator } from "@/components/ui/separator";
 import { ContainerWrapper } from "@/components/wrappers";
 import { MoveLeft } from "lucide-react";
@@ -20,13 +20,13 @@ export default function RootNotFound() {
             The page you're looking for does not exist.
           </p>
 
-          <GoBackLink
+          <GoBackButton
             className="flex cursor-pointer items-center gap-2 p-0"
             variant="link"
           >
             <MoveLeft className="size-4" />
             Go back
-          </GoBackLink>
+          </GoBackButton>
         </div>
       </ContainerWrapper>
 

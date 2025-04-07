@@ -7,10 +7,14 @@ import { ThemeCustomizer } from "./theme-customizer";
 import { Button } from "./ui/button";
 import { ContainerWrapper } from "./wrappers";
 
-const CollapsibleCustomizerContext = React.createContext<{
+type CollapsibleCustomizerContextProps = {
   isExpanded: boolean;
   setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
-}>({ isExpanded: false, setIsExpanded: () => {} });
+};
+
+const CollapsibleCustomizerContext = React.createContext<
+  CollapsibleCustomizerContextProps | undefined
+>(undefined);
 
 export function CollapsibleCustomizerProvider({
   children,
@@ -25,11 +29,23 @@ export function CollapsibleCustomizerProvider({
   );
 }
 
+export function useCollapsibleCustomizer() {
+  const context = use(CollapsibleCustomizerContext);
+
+  if (!context) {
+    throw Error(
+      "useCollapsibleCustomizer must be used withing a 'CollapsibleCustomizerContext' provider",
+    );
+  }
+
+  return context;
+}
+
 export function CollapsibleCustomizer({
   className,
   children,
 }: ComponentProps<"div">) {
-  const { isExpanded } = use(CollapsibleCustomizerContext);
+  const { isExpanded } = useCollapsibleCustomizer();
 
   return (
     <>
@@ -57,7 +73,7 @@ export function CollapsibleCustomizerTrigger({
   className,
   ...props
 }: ComponentProps<typeof Button>) {
-  const { isExpanded, setIsExpanded } = use(CollapsibleCustomizerContext);
+  const { isExpanded, setIsExpanded } = useCollapsibleCustomizer();
 
   return (
     <Button
