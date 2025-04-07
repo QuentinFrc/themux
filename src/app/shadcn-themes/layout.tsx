@@ -2,7 +2,10 @@ import {
   CustomizerSidebar,
   CustomizerSidebarToggle,
 } from "@/components/customizer-sidebar";
+import { ExternalLink } from "@/components/external-link";
+import { GitHub } from "@/components/icons/github";
 import { ModeSwitcher } from "@/components/mode-switcher";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ContainerWrapper } from "@/components/wrappers";
@@ -46,6 +49,16 @@ export default async function ShadcnThemesLayout({
             </div>
 
             <div className="flex items-center justify-center">
+              <Button
+                asChild
+                variant="ghost"
+                size="icon"
+                className="group/toggle"
+              >
+                <ExternalLink href="https://github.com/llanesluis/themux">
+                  <GitHub />
+                </ExternalLink>
+              </Button>
               <ModeSwitcher />
             </div>
           </ContainerWrapper>

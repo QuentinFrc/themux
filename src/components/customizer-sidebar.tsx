@@ -1,11 +1,9 @@
 "use client";
 
-import { Paintbrush2, X } from "lucide-react";
-import * as React from "react";
-
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
-import { Palette } from "lucide-react";
+import { Palette, X } from "lucide-react";
+import * as React from "react";
 import { TokensList } from "./color-tokens";
 import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
 import { Customizer } from "./customizer";
@@ -65,10 +63,10 @@ export function CustomizerSidebar({
 
   return (
     <Sidebar {...props}>
-      <SidebarContent className="scaled @container relative max-h-svh overflow-hidden py-2 group-data-[collapsible=icon]:invisible sm:max-w-82 [&>button]:hidden">
+      <SidebarContent className="scaled @container relative max-h-svh overflow-hidden py-2 group-data-[collapsible=icon]:invisible max-md:py-4 sm:max-w-82 [&>button]:hidden">
         <Tabs defaultValue="theme">
           <div className="px-4">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="w-full">
               <TabsTrigger value="theme">Theme</TabsTrigger>
               <TabsTrigger value="tokens">Tokens</TabsTrigger>
             </TabsList>
@@ -96,19 +94,6 @@ export function CustomizerSidebar({
           <ResetButton />
         </div>
       </SidebarContent>
-
-      <SidebarFooter>
-        <Button
-          asChild
-          variant="ghost"
-          size="icon"
-          className="group/toggle size-8"
-        >
-          <ExternalLink href="https://github.com/llanesluis/themux">
-            <GitHub />
-          </ExternalLink>
-        </Button>
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
@@ -128,7 +113,7 @@ export function CustomizerSidebarToggle({
         className={cn("relative hidden md:inline-flex", className)}
         {...props}
       >
-        <Paintbrush2
+        <Palette
           className={cn(
             "transition duration-200",
             open ? "absolute scale-0" : "scale-100",
@@ -155,7 +140,7 @@ export function CustomizerSidebarToggle({
         className={cn("relative inline-flex md:hidden", className)}
         {...props}
       >
-        <Paintbrush2
+        <Palette
           className={cn(
             "transition duration-200",
             openMobile ? "absolute scale-0" : "scale-100",
