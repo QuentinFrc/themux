@@ -25,26 +25,26 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
       className={cn("@container relative h-full w-full space-y-4", className)}
     >
       <div className="flex flex-col gap-8">
-        <div className="space-y-1.5">
+        <section className="space-y-1.5">
           <Label className="flex items-center gap-1 pb-2">
             <Shadcn className="size-4" /> Shadcn presets
           </Label>
           <PresetsControls className="grid grid-cols-3 gap-2 @sm:grid-cols-4 @md:flex @md:flex-wrap @3xl:max-w-[85px] @3xl:text-sm" />
-        </div>
+        </section>
 
-        <div className="space-y-1.5">
+        <section className="space-y-1.5">
           <Label className="flex items-center gap-1 pb-2">
             <SquareRoundCorner className="size-4" /> Radius
           </Label>
           <RadiusControls className="flex flex-wrap gap-2 @max-md:grid @max-md:grid-cols-3 @3xl:max-w-[85px] @3xl:text-sm" />
-        </div>
+        </section>
 
-        <div className="space-y-1.5">
+        <section className="space-y-1.5">
           <Label className="flex items-center gap-1 pb-2">
             <SunMoon className="size-4" /> Mode
           </Label>
           <ThemeModeControls className="flex flex-wrap gap-2 @max-md:grid @max-md:grid-cols-3 @3xl:max-w-[85px] @3xl:text-sm" />
-        </div>
+        </section>
       </div>
     </div>
   );
