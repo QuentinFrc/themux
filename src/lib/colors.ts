@@ -1053,19 +1053,19 @@ export const surfaceShadesPresets: Record<
       popover: "oklch(0.905 0 0)", // a little darker than --color-neutral-200
       "popover-foreground": "oklch(0.145 0 0)", // --color-neutral-950
 
-      muted: "oklch(0.84 0 0)", // a little darker than --color-neutral-300
+      muted: "oklch(0.95 0 0)", // a little darker than --color-neutral-100
       "muted-foreground": "oklch(0.442 0.017 285.786)", // --color-zinc-600
 
-      accent: "oklch(0.84 0 0)", // a little darker than --color-neutral-300
+      accent: "oklch(0.95 0 0)", // a little darker than --color-neutral-100
       "accent-foreground": "oklch(0.145 0 0)", // --color-neutral-950
 
-      border: "oklch(0.83 0 0)", // a little darker than --color-neutral-300
+      border: "oklch(0.83 0 0)", // a little darker than --color-neutral-100
       input: "oklch(0.83 0 0)", // a little darker than --color-neutral-300
 
       sidebar: "oklch(0.905 0 0)", // a little darker than --color-neutral-200
       "sidebar-foreground": "oklch(0.145 0 0)", // --color-neutral-950
 
-      "sidebar-accent": "oklch(0.84 0 0)", // a little darker than --color-neutral-300
+      "sidebar-accent": "oklch(0.95 0 0)", // a little darker than --color-neutral-300
       "sidebar-accent-foreground": "oklch(0.145 0 0)", // --color-neutral-950
 
       "sidebar-border": "oklch(0.83 0 0)", // a little darker than --color-neutral-300
@@ -1080,10 +1080,10 @@ export const surfaceShadesPresets: Record<
       popover: "oklch(0.31 0 0)", // a little lighter than --color-neutral-800
       "popover-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
-      muted: "oklch(0.371 0 0)", // --color-neutral-700
+      muted: "oklch(0.269 0 0)", // --color-neutral-800
       "muted-foreground": "oklch(0.861 0.006 286.286)", // --color-neutral-300
 
-      accent: "oklch(0.371 0 0)", // --color-neutral-700
+      accent: "oklch(0.269 0 0)", // --color-neutral-800
       "accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
       border: "oklch(0.985 0 0 / 12%)",
@@ -1092,7 +1092,7 @@ export const surfaceShadesPresets: Record<
       sidebar: "oklch(0.31 0 0)", // a little lighter than --color-neutral-800
       "sidebar-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
-      "sidebar-accent": "oklch(0.371 0 0)", // --color-neutral-700
+      "sidebar-accent": "oklch(0.269 0 0)", // --color-neutral-800
       "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
       "sidebar-border": "oklch(0.985 0 0 / 12%)",
