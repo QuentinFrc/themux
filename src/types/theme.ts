@@ -120,5 +120,48 @@ export type ThemeObject = {
 
 export type ThemeConfig = {
   radius: RemValue;
+  surface?: SurfaceShadesPreset;
   themeObject: ThemeObject;
+};
+
+// Surface shades
+export type SurfaceShadesPreset =
+  | "default"
+  | "plain"
+  | "grayish"
+  | "gray"
+  | "inverted";
+
+export type SurfaceShadesThemeObject = {
+  name: SurfaceShadesPreset;
+  label: string;
+  light: SurfaceShades;
+  dark: SurfaceShades;
+};
+
+export type SurfaceShades = {
+  background: OklchValue;
+  foreground: OklchValue;
+
+  card: OklchValue;
+  "card-foreground": OklchValue;
+  popover: OklchValue;
+  "popover-foreground": OklchValue;
+
+  muted: OklchValue;
+  "muted-foreground": OklchValue;
+
+  accent: OklchValue;
+  "accent-foreground": OklchValue;
+
+  border: OklchValue;
+  input: OklchValue;
+
+  sidebar: OklchValue;
+  "sidebar-foreground": OklchValue;
+
+  "sidebar-accent": OklchValue;
+  "sidebar-accent-foreground": OklchValue;
+
+  "sidebar-border": OklchValue;
 };

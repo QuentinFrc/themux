@@ -1,8 +1,13 @@
-import { ColorProperty, OklchValue } from "@/types/theme";
+import {
+  ColorProperty,
+  OklchValue,
+  SurfaceShadesThemeObject,
+} from "@/types/theme";
 import { getOptimalForegroundColor } from "@/utils/colors";
 import { useTheme } from "next-themes";
 import { useCallback } from "react";
 import { useConfig } from "./use-config";
+import { surfaceShadesPresets } from "@/lib/colors";
 
 export function useColorTokens() {
   const { resolvedTheme } = useTheme();
@@ -79,5 +84,66 @@ export function useColorTokens() {
     });
   };
 
-  return { getColorToken, setPrimaryColorTokens };
+  const setSurfaceShadesColorTokens = ({
+    bgShadesThemeObject,
+    bothModes = false,
+  }: {
+    bgShadesThemeObject: SurfaceShadesThemeObject;
+    bothModes?: boolean;
+  }) => {
+    // Update both modes
+    if (bothModes) {
+      return setConfig((prev) => {
+        return {
+          ...prev,
+          surface: bgShadesThemeObject.name,
+          themeObject: {
+            ...prev.themeObject,
+            label: "Custom",
+            name: "custom",
+            light: {
+              ...prev.themeObject.light,
+              ...bgShadesThemeObject.light,
+            },
+            dark: {
+              ...prev.themeObject.dark,
+              ...bgShadesThemeObject.dark,
+            },
+          },
+        };
+      });
+    }
+
+    // Only update the current mode
+    setConfig((prev) => {
+      return {
+        ...prev,
+        surface: bgShadesThemeObject.name,
+        themeObject: {
+          ...prev.themeObject,
+          label: "Custom",
+          name: "custom",
+          [mode]: {
+            ...prev.themeObject[mode],
+            ...bgShadesThemeObject[mode],
+          },
+        },
+      };
+    });
+  };
+
+  const getActiveSurfaceShades = useCallback(() => {
+    const surface = config?.surface;
+    const surfaceShadesThemeObject = Object.values(surfaceShadesPresets).find(
+      (theme) => theme.name === surface,
+    );
+    return surfaceShadesThemeObject;
+  }, [config.surface]);
+
+  return {
+    getColorToken,
+    setPrimaryColorTokens,
+    setSurfaceShadesColorTokens,
+    getActiveSurfaceShades,
+  };
 }

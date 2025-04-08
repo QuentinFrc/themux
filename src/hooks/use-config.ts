@@ -5,6 +5,7 @@ import { atomWithStorage } from "jotai/utils";
 
 export const initialThemeConfig: ThemeConfig = {
   radius: "0.625rem",
+  surface: "default",
   themeObject: basePresetsV4.neutral,
 };
 

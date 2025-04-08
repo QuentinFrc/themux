@@ -1,4 +1,10 @@
-import { ColorfulPreset, PresetV4, ThemeObject } from "../types/theme";
+import {
+  ColorfulPreset,
+  PresetV4,
+  SurfaceShadesPreset,
+  SurfaceShadesThemeObject,
+  ThemeObject,
+} from "../types/theme";
 
 // ===> Tailwind V4
 export const basePresetsV4: Record<PresetV4, ThemeObject> = {
@@ -6,11 +12,11 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
     name: "neutral",
     label: "Neutral",
     light: {
-      background: "oklch(1 0 0)", // --color-neutral-50
+      background: "oklch(1 0 0)", // --color-white (closest to neutral-50)
       foreground: "oklch(0.145 0 0)", // --color-neutral-950
-      card: "oklch(1 0 0)", // --color-neutral-50
+      card: "oklch(1 0 0)", // --color-white (closest to neutral-50)
       "card-foreground": "oklch(0.145 0 0)", // --color-neutral-950
-      popover: "oklch(1 0 0)", // --color-neutral-50
+      popover: "oklch(1 0 0)", // --color-white (closest to neutral-50)
       "popover-foreground": "oklch(0.145 0 0)", // --color-neutral-950
       primary: "oklch(0.205 0 0)", // --color-neutral-900
       "primary-foreground": "oklch(0.985 0 0)", // --color-neutral-50
@@ -76,11 +82,11 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
     name: "zinc",
     label: "Zinc",
     light: {
-      background: "oklch(1 0 0)", // --color-zinc-50
+      background: "oklch(1 0 0)", // --color-white (closest to zinc-50)
       foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950
-      card: "oklch(1 0 0)", // --color-zinc-50
+      card: "oklch(1 0 0)", // --color-white (closest to zinc-50)
       "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
-      popover: "oklch(1 0 0)", // --color-zinc-50
+      popover: "oklch(1 0 0)", // --color-white (closest to zinc-50)
       "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
       primary: "oklch(0.21 0.006 285.885)", // --color-zinc-900
       "primary-foreground": "oklch(0.985 0 0)", // --color-zinc-50
@@ -146,11 +152,11 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
     name: "stone",
     label: "Stone",
     light: {
-      background: "oklch(1 0 0)", // --color-white
+      background: "oklch(1 0 0)", // --color-white (closest to slate-50)
       foreground: "oklch(0.147 0.004 49.25)", // --color-stone-950
-      card: "oklch(1 0 0)", // --color-white
+      card: "oklch(1 0 0)", // --color-white (closest to slate-50)
       "card-foreground": "oklch(0.147 0.004 49.25)", // --color-stone-950
-      popover: "oklch(1 0 0)", // --color-white
+      popover: "oklch(1 0 0)", // --color-white (closest to slate-50)
       "popover-foreground": "oklch(0.147 0.004 49.25)", // --color-stone-950
       primary: "oklch(0.216 0.006 56.043)", // --color-stone-900
       "primary-foreground": "oklch(0.985 0.001 106.423)", // --color-stone-50
@@ -362,11 +368,11 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
     name: "red",
     label: "Red",
     light: {
-      background: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      background: "oklch(1 0 0)", // --color-white
       foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      card: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      card: "oklch(1 0 0)", // --color-white
       "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      popover: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      popover: "oklch(1 0 0)", // --color-white
       "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
       primary: "oklch(0.637 0.237 25.331)", // --color-red-500 (approx HSL 0 72.2% 50.6%)
       "primary-foreground": "oklch(0.971 0.013 17.38)", // --color-red-50 (approx HSL 0 85.7% 97.3%)
@@ -432,11 +438,11 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
     name: "rose",
     label: "Rose",
     light: {
-      background: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      background: "oklch(1 0 0)", // --color-white
       foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      card: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      card: "oklch(1 0 0)", // --color-white
       "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      popover: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      popover: "oklch(1 0 0)", // --color-white
       "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
       primary: "oklch(0.645 0.246 16.439)", // --color-rose-500 (approx HSL 346.8 77.2% 49.8%)
       "primary-foreground": "oklch(0.969 0.015 12.422)", // --color-rose-50 (approx HSL 355.7 100% 97.3%)
@@ -502,11 +508,11 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
     name: "orange",
     label: "Orange",
     light: {
-      background: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      background: "oklch(1 0 0)", // --color-white
       foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      card: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      card: "oklch(1 0 0)", // --color-white
       "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      popover: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      popover: "oklch(1 0 0)", // --color-white
       "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
       primary: "oklch(0.705 0.213 47.604)", // --color-orange-500 (approx HSL 24.6 95% 53.1%)
       "primary-foreground": "oklch(0.98 0.016 73.684)", // --color-orange-50 (approx HSL 60 9.1% 97.8%)
@@ -572,11 +578,11 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
     name: "green",
     label: "Green",
     light: {
-      background: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      background: "oklch(1 0 0)", // --color-white
       foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      card: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      card: "oklch(1 0 0)", // --color-white
       "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      popover: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      popover: "oklch(1 0 0)", // --color-white
       "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
       primary: "oklch(0.723 0.219 149.579)", // --color-green-500 (approx HSL 142.1 76.2% 36.3%)
       "primary-foreground": "oklch(0.982 0.018 155.826)", // --color-green-50 (approx HSL 355.7 100% 97.3%)
@@ -642,11 +648,11 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
     name: "blue",
     label: "Blue",
     light: {
-      background: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      background: "oklch(1 0 0)", // --color-white
       foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      card: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      card: "oklch(1 0 0)", // --color-white
       "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      popover: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      popover: "oklch(1 0 0)", // --color-white
       "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
       primary: "oklch(0.623 0.214 259.815)", // --color-blue-500 (approx HSL 221.2 83.2% 53.3%)
       "primary-foreground": "oklch(0.97 0.014 254.604)", // --color-blue-50 (approx HSL 210 40% 98%)
@@ -712,11 +718,11 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
     name: "yellow",
     label: "Yellow",
     light: {
-      background: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      background: "oklch(1 0 0)", // --color-white
       foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      card: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      card: "oklch(1 0 0)", // --color-white
       "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      popover: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      popover: "oklch(1 0 0)", // --color-white
       "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
       primary: "oklch(0.795 0.184 86.047)", // --color-yellow-500 (approx HSL 47.9 95.8% 53.1%)
       "primary-foreground": "oklch(0.286 0.066 53.813)", // --color-yellow-950 (approx HSL 26 83.3% 14.1%)
@@ -782,11 +788,11 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
     name: "violet",
     label: "Violet",
     light: {
-      background: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      background: "oklch(1 0 0)", // --color-white
       foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      card: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      card: "oklch(1 0 0)", // --color-white
       "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-      popover: "oklch(1 0 0)", // --color-zinc-50 (from zinc)
+      popover: "oklch(1 0 0)", // --color-white
       "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
       primary: "oklch(0.606 0.25 292.717)", // --color-violet-500 (approx HSL 262.1 83.3% 57.8%)
       "primary-foreground": "oklch(0.969 0.016 293.756)", // --color-violet-50 (approx HSL 210 20% 98%)
@@ -855,3 +861,301 @@ export const colorfulPresetsArray = Object.values(colorfulPresets);
 // Combination of base and colorful presets
 export const allPresets = { ...basePresetsV4, ...colorfulPresets };
 export const allPresetsArray = Object.values(allPresets);
+
+export const surfaceShadesPresets: Record<
+  SurfaceShadesPreset,
+  SurfaceShadesThemeObject
+> = {
+  default: {
+    name: "default",
+    label: "Default",
+    light: {
+      background: "oklch(1 0 0)", // --color-white
+      foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
+
+      card: "oklch(1 0 0)", // --color-white
+      "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
+
+      popover: "oklch(1 0 0)", // --color-white
+      "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
+
+      muted: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
+      "muted-foreground": "oklch(0.552 0.016 285.938)", // --color-zinc-500 (from zinc)
+
+      accent: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
+      "accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
+
+      border: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
+      input: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
+
+      sidebar: "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
+      "sidebar-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
+
+      "sidebar-accent": "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
+      "sidebar-accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
+
+      "sidebar-border": "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
+    },
+    dark: {
+      background: "oklch(0.145 0 0)", // --color-neutral-950
+      foreground: "oklch(0.985 0 0)", // --color-neutral-50
+
+      card: "oklch(0.205 0 0)", // --color-neutral-900
+      "card-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      popover: "oklch(0.205 0 0)", // --color-neutral-900
+      "popover-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      muted: "oklch(0.269 0 0)", // --color-neutral-800
+      "muted-foreground": "oklch(0.708 0 0)", // --color-neutral-400
+
+      accent: "oklch(0.269 0 0)", // --color-neutral-800
+      "accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      border: "oklch(1 0 0 / 10%)", // --color-white
+      input: "oklch(1 0 0 / 15%)", // --color-white
+
+      sidebar: "oklch(0.205 0 0)", // --color-neutral-900
+      "sidebar-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      "sidebar-accent": "oklch(0.269 0 0)", // --color-neutral-800
+      "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      "sidebar-border": "oklch(1 0 0 / 10%)", // --color-white
+    },
+  },
+  plain: {
+    name: "plain",
+    label: "Plain",
+    light: {
+      background: "oklch(1 0 0)", // --color-white
+      foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
+
+      card: "oklch(1 0 0)", // --color-white
+      "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
+
+      popover: "oklch(1 0 0)", // --color-white
+      "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
+
+      muted: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
+      "muted-foreground": "oklch(0.552 0.016 285.938)", // --color-zinc-500 (from zinc)
+
+      accent: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
+      "accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
+
+      border: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
+      input: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
+
+      sidebar: "oklch(1 0 0)", // --color-white
+      "sidebar-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
+
+      "sidebar-accent": "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
+      "sidebar-accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
+
+      "sidebar-border": "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)}
+    },
+    dark: {
+      background: "oklch(0 0 0)", // --color-black
+      foreground: "oklch(0.985 0 0)", // --color-neutral-50
+
+      card: "oklch(0 0 0)", // --color-black
+      "card-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      popover: "oklch(0 0 0)", // --color-black
+      "popover-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      muted: "oklch(0.205 0 0)", // --color-neutral-900
+      "muted-foreground": "oklch(0.708 0 0)", // --color-neutral-400
+
+      accent: "oklch(0.205 0 0)", // --color-neutral-900
+      "accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      border: "oklch(1 0 0 / 10%)", // --color-white
+      input: "oklch(1 0 0 / 15%)", // --color-white
+
+      sidebar: "oklch(0 0 0)", // --color-black
+      "sidebar-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      "sidebar-accent": "oklch(0.205 0 0)", // --color-neutral-900
+      "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      "sidebar-border": "oklch(1 0 0 / 10%)", // --color-white
+    },
+  },
+  grayish: {
+    name: "grayish",
+    label: "Grayish",
+    light: {
+      background: "oklch(0.967 0.001 286.375)", // --color-zinc-100
+      foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950
+
+      card: "oklch(0.957 0.001 286.375)", // a little darker than --color-zinc-100
+      "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
+
+      popover: "oklch(0.957 0.001 286.375)", // a little darker than --color-zinc-100
+      "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
+
+      muted: "oklch(0.92 0.004 286.32)", // --color-zinc-200
+      "muted-foreground": "oklch(0.442 0.017 285.786)", // --color-zinc-600
+
+      accent: "oklch(0.92 0.004 286.32)", // --color-zinc-200
+      "accent-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
+
+      border: "oklch(0.871 0.006 286.286)", // --color-zinc-300
+      input: "oklch(0.871 0.006 286.286)", // --color-zinc-300
+
+      sidebar: "oklch(0.947 0.001 286.375)", // a little darker than --color-zinc-100
+      "sidebar-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
+
+      "sidebar-accent": "oklch(0.92 0.004 286.32)", // --color-zinc-200
+      "sidebar-accent-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
+
+      "sidebar-border": "oklch(0.871 0.006 286.286)", // --color-zinc-300
+    },
+    dark: {
+      background: "oklch(0.21 0.006 285.885)", // --color-zinc-900
+      foreground: "oklch(0.985 0 0)", // --color-zinc-50
+
+      card: "oklch(0.274 0.006 286.033)", // --color-zinc-800
+      "card-foreground": "oklch(0.985 0 0)", // --color-zinc-50
+
+      popover: "oklch(0.274 0.006 286.033)", // --color-zinc-800
+      "popover-foreground": "oklch(0.985 0 0)", // --color-zinc-50
+
+      muted: "oklch(0.37 0.013 285.805)", // --color-zinc-700
+      "muted-foreground": "oklch(0.705 0.015 286.067)", // --color-zinc-400
+
+      accent: "oklch(0.37 0.013 285.805)", // --color-zinc-700
+      "accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50
+
+      border: "oklch(0.985 0 0 / 10%)",
+      input: "oklch(0.985 0 0 / 15%)",
+
+      sidebar: "oklch(0.274 0.006 286.033)", // --color-zinc-800
+      "sidebar-foreground": "oklch(0.985 0 0)", // --color-zinc-50
+
+      "sidebar-accent": "oklch(0.37 0.013 285.805)", // --color-zinc-700
+      "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50
+
+      "sidebar-border": "oklch(0.985 0 0 / 10%)",
+    },
+  },
+  gray: {
+    name: "gray",
+    label: "Gray",
+    light: {
+      background: "oklch(0.932 0 0)", // a little lighter than --color-neutral-200
+      foreground: "oklch(0.145 0 0)", // --color-neutral-950
+
+      card: "oklch(0.905 0 0)", // a little darker than --color-neutral-200
+      "card-foreground": "oklch(0.145 0 0)", // --color-neutral-950
+
+      popover: "oklch(0.905 0 0)", // a little darker than --color-neutral-200
+      "popover-foreground": "oklch(0.145 0 0)", // --color-neutral-950
+
+      muted: "oklch(0.84 0 0)", // a little darker than --color-neutral-300
+      "muted-foreground": "oklch(0.442 0.017 285.786)", // --color-zinc-600
+
+      accent: "oklch(0.84 0 0)", // a little darker than --color-neutral-300
+      "accent-foreground": "oklch(0.145 0 0)", // --color-neutral-950
+
+      border: "oklch(0.83 0 0)", // a little darker than --color-neutral-300
+      input: "oklch(0.83 0 0)", // a little darker than --color-neutral-300
+
+      sidebar: "oklch(0.905 0 0)", // a little darker than --color-neutral-200
+      "sidebar-foreground": "oklch(0.145 0 0)", // --color-neutral-950
+
+      "sidebar-accent": "oklch(0.84 0 0)", // a little darker than --color-neutral-300
+      "sidebar-accent-foreground": "oklch(0.145 0 0)", // --color-neutral-950
+
+      "sidebar-border": "oklch(0.83 0 0)", // a little darker than --color-neutral-300
+    },
+    dark: {
+      background: "oklch(0.269 0 0)", // --color-neutral-800
+      foreground: "oklch(0.985 0 0)", // --color-neutral-50
+
+      card: "oklch(0.31 0 0)", // a little lighter than --color-neutral-800
+      "card-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      popover: "oklch(0.31 0 0)", // a little lighter than --color-neutral-800
+      "popover-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      muted: "oklch(0.371 0 0)", // --color-neutral-700
+      "muted-foreground": "oklch(0.861 0.006 286.286)", // --color-neutral-300
+
+      accent: "oklch(0.371 0 0)", // --color-neutral-700
+      "accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      border: "oklch(0.985 0 0 / 12%)",
+      input: "oklch(0.985 0 0 / 17%)",
+
+      sidebar: "oklch(0.31 0 0)", // a little lighter than --color-neutral-800
+      "sidebar-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      "sidebar-accent": "oklch(0.371 0 0)", // --color-neutral-700
+      "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
+
+      "sidebar-border": "oklch(0.985 0 0 / 12%)",
+    },
+  },
+  inverted: {
+    name: "inverted",
+    label: "Inverted",
+    light: {
+      background: "oklch(0.967 0.001 286.375)", // --color-zinc-100
+      foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950
+
+      card: "oklch(0.985 0 0)", // --color-zinc-50
+      "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
+
+      popover: "oklch(0.985 0 0)", // --color-zinc-50
+      "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
+
+      muted: "oklch(0.92 0.004 286.32)", // --color-zinc-200
+      "muted-foreground": "oklch(0.442 0.017 285.786)", // --color-zinc-600
+
+      accent: "oklch(0.92 0.004 286.32)", // --color-zinc-200
+      "accent-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
+
+      border: "oklch(0.871 0.006 286.286)", // --color-zinc-300
+      input: "oklch(0.871 0.006 286.286)", // --color-zinc-300
+
+      sidebar: "oklch(0.985 0 0)", // --color-zinc-50
+      "sidebar-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
+
+      "sidebar-accent": "oklch(0.92 0.004 286.32)", // --color-zinc-200
+      "sidebar-accent-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
+
+      "sidebar-border": "oklch(0.871 0.006 286.286)", // --color-zinc-300
+    },
+    dark: {
+      background: "oklch(0.21 0.006 285.885)", // --color-zinc-900
+      foreground: "oklch(0.985 0 0)", // --color-zinc-50
+
+      card: "oklch(0.141 0.005 285.823)", // --color-zinc-950
+      "card-foreground": "oklch(0.985 0 0)", // --color-zinc-50
+
+      popover: "oklch(0.141 0.005 285.823)", // --color-zinc-950
+      "popover-foreground": "oklch(0.985 0 0)", // --color-zinc-50
+
+      muted: "oklch(0.274 0.006 286.033)", // --color-zinc-800
+      "muted-foreground": "oklch(0.705 0.015 286.067)", // --color-zinc-400
+
+      accent: "oklch(0.274 0.006 286.033)", // --color-zinc-800
+      "accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50
+
+      border: "oklch(0.985 0 0 / 10%)",
+      input: "oklch(0.985 0 0 / 15%)",
+
+      sidebar: "oklch(0.141 0.005 285.823)", // --color-zinc-950
+      "sidebar-foreground": "oklch(0.985 0 0)", // --color-zinc-50
+
+      "sidebar-accent": "oklch(0.274 0.006 286.033)", // --color-zinc-800
+      "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50
+
+      "sidebar-border": "oklch(0.985 0 0 / 10%)",
+    },
+  },
+};
+
+export const surfaceShadesPresetArray = Object.values(surfaceShadesPresets);
