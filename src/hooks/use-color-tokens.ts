@@ -133,7 +133,7 @@ export function useColorTokens() {
   };
 
   const getActiveSurfaceShades = useCallback(() => {
-    const surface = config?.surface;
+    const surface = config?.surface ?? "default";
     const surfaceShadesThemeObject = Object.values(surfaceShadesPresets).find(
       (theme) => theme.name === surface,
     );
