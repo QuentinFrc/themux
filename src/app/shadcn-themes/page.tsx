@@ -4,7 +4,6 @@ import {
   CollapsibleCustomizerProvider,
   CollapsibleCustomizerTrigger,
 } from "@/components/collapsible-theme-customizer-wrapper";
-import { CopyCodeButtonDialog } from "@/components/copy-code-button-dialog";
 import { FrameHighlight } from "@/components/frame-highlight";
 import {
   PageHeader,
@@ -12,7 +11,6 @@ import {
   PageHeaderHeading,
 } from "@/components/page-header";
 import { QuickCustomizer } from "@/components/quick-customizer";
-import { ResetButton } from "@/components/reset-button";
 import { Separator } from "@/components/ui/separator";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
 import { Metadata } from "next";
@@ -28,13 +26,16 @@ export default function ShadcnThemesPage() {
         <SectionWrapper className="@container flex flex-col gap-x-8 gap-y-4 lg:flex-row">
           <PageHeader className="grow">
             <PageHeaderHeading>
-              shadcn/ui customizer with
+              shadcn/ui customizer supporting
               <FrameHighlight>Tailwind v4</FrameHighlight>
             </PageHeaderHeading>
             <PageHeaderDescription>
               Generate a theme for your app and copy-paste the generated css
-              variables. Compatible with{" "}
-              <span className="font-semibold">Tailwind v3</span>, and supports{" "}
+              variables. Compatible with
+              <FrameHighlight className="font-semibold">
+                Tailwind v3
+              </FrameHighlight>
+              and supports{" "}
               <code className="font-mono font-semibold">oklch</code>
               {", "}
               <code className="font-mono font-semibold">hsl</code>
@@ -45,8 +46,8 @@ export default function ShadcnThemesPage() {
             </PageHeaderDescription>
           </PageHeader>
 
-          <div className="content-center">
-            <CollapsibleCustomizerTrigger size="sm" />
+          <div className="flex content-center items-center gap-2">
+            <CollapsibleCustomizerTrigger />
           </div>
         </SectionWrapper>
       </ContainerWrapper>
@@ -54,16 +55,8 @@ export default function ShadcnThemesPage() {
       <Separator />
 
       <CollapsibleCustomizer>
-        <ContainerWrapper
-          withCane
-          className="@container flex flex-col justify-between gap-x-4 gap-y-6 py-4 md:flex-row"
-        >
+        <ContainerWrapper withCane className="@container py-4">
           <QuickCustomizer />
-
-          <div className="grid shrink-0 grid-cols-[3fr_1fr] place-content-center items-center gap-2 sm:grid-cols-[2fr_1fr] md:grid-cols-1">
-            <CopyCodeButtonDialog size="sm" />
-            <ResetButton variant="outline" size="sm" />
-          </div>
         </ContainerWrapper>
       </CollapsibleCustomizer>
 

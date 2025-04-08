@@ -1,14 +1,14 @@
 import { useConfig } from "@/hooks/use-config";
+import { useMounted } from "@/hooks/use-mounted";
 import { basePresetsV4Array, colorfulPresetsArray } from "@/lib/colors";
 import { cn } from "@/lib/utils";
 import { RemValue, ThemeObject } from "@/types/theme";
-import { Laptop, Moon, SquareRoundCorner, Sun, SunMoon } from "lucide-react";
+import { Laptop, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import React, { ComponentProps } from "react";
 import { Shadcn } from "./icons/shadcn";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
-import { useMounted } from "@/hooks/use-mounted";
 
 const RADIUS_VALUES: RemValue[] = [
   "0rem",
@@ -32,7 +32,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
           <PresetsControls className="grid grid-cols-3 gap-2 @sm:grid-cols-4 @md:flex @md:flex-wrap @3xl:max-w-[85px] @3xl:text-sm" />
         </section>
 
-        <section className="space-y-1.5">
+        {/* <section className="space-y-1.5">
           <Label className="flex items-center gap-1 pb-2">
             <SquareRoundCorner className="size-4" /> Radius
           </Label>
@@ -44,7 +44,7 @@ export function Customizer({ className }: React.ComponentProps<"div">) {
             <SunMoon className="size-4" /> Mode
           </Label>
           <ThemeModeControls className="flex flex-wrap gap-2 @max-md:grid @max-md:grid-cols-3 @3xl:max-w-[85px] @3xl:text-sm" />
-        </section>
+        </section> */}
       </div>
     </div>
   );
@@ -214,8 +214,57 @@ export function RadiusControls({ className, ...props }: ComponentProps<"div">) {
   );
 }
 
-function ThemeModeControls({ className, ...props }: ComponentProps<"div">) {
-  const { setTheme: setMode, theme: mode } = useTheme();
+export function ThemeModeControls({
+  className,
+  showSystem = true,
+  ...props
+}: { showSystem?: boolean } & ComponentProps<"div">) {
+  const { setTheme: setMode, resolvedTheme: mode } = useTheme();
+  const isMounted = useMounted();
+
+  if (!isMounted) {
+    return (
+      <div className={cn("text-muted-foreground", className)}>
+        <Button
+          variant={"ghost"}
+          size="sm"
+          className={cn(
+            BUTTON_CLASSES,
+            "w-auto max-w-[75px] grow pr-1.5 @max-md:max-w-full",
+          )}
+        >
+          <Sun />
+          <span className={cn("hidden @md:inline-flex")}>Light</span>
+        </Button>
+
+        <Button
+          variant={"ghost"}
+          size="sm"
+          className={cn(
+            BUTTON_CLASSES,
+            "w-auto max-w-[75px] grow pr-1.5 @max-md:max-w-full",
+          )}
+        >
+          <Moon />
+          <span className={cn("hidden @md:inline-flex")}>Dark</span>
+        </Button>
+
+        {showSystem && (
+          <Button
+            variant={"ghost"}
+            size="sm"
+            className={cn(
+              BUTTON_CLASSES,
+              "w-auto max-w-[75px] grow pr-1.5 @max-md:max-w-full",
+            )}
+          >
+            <Laptop />
+            <span className={cn("hidden @md:inline-flex")}>Auto</span>
+          </Button>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className={cn("text-muted-foreground", className)}>
@@ -225,7 +274,7 @@ function ThemeModeControls({ className, ...props }: ComponentProps<"div">) {
         onClick={() => setMode("light")}
         className={cn(
           BUTTON_CLASSES,
-          "w-full max-w-[75px] pr-1.5 @max-md:max-w-full",
+          "w-auto max-w-[75px] grow pr-1.5 @max-md:max-w-full",
           mode === "light" &&
             "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
         )}
@@ -233,13 +282,14 @@ function ThemeModeControls({ className, ...props }: ComponentProps<"div">) {
         <Sun />
         <span className={cn("hidden @md:inline-flex")}>Light</span>
       </Button>
+
       <Button
         variant={"ghost"}
         size="sm"
         onClick={() => setMode("dark")}
         className={cn(
           BUTTON_CLASSES,
-          "w-full max-w-[75px] pr-1.5 @max-md:max-w-full",
+          "w-auto max-w-[75px] grow pr-1.5 @max-md:max-w-full",
           mode === "dark" &&
             "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
         )}
@@ -247,20 +297,23 @@ function ThemeModeControls({ className, ...props }: ComponentProps<"div">) {
         <Moon />
         <span className={cn("hidden @md:inline-flex")}>Dark</span>
       </Button>
-      <Button
-        variant={"ghost"}
-        size="sm"
-        onClick={() => setMode("system")}
-        className={cn(
-          BUTTON_CLASSES,
-          "w-full max-w-[75px] pr-1.5 @max-md:max-w-full",
-          mode === "system" &&
-            "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
-        )}
-      >
-        <Laptop />
-        <span className={cn("hidden @md:inline-flex")}>Auto</span>
-      </Button>
+
+      {showSystem && (
+        <Button
+          variant={"ghost"}
+          size="sm"
+          onClick={() => setMode("system")}
+          className={cn(
+            BUTTON_CLASSES,
+            "w-auto max-w-[75px] grow pr-1.5 @max-md:max-w-full",
+            mode === "system" &&
+              "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
+          )}
+        >
+          <Laptop />
+          <span className={cn("hidden @md:inline-flex")}>Auto</span>
+        </Button>
+      )}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { surfaceShadesPresets } from "@/lib/colors";
 import {
   ColorProperty,
   OklchValue,
@@ -7,7 +8,6 @@ import { getOptimalForegroundColor } from "@/utils/colors";
 import { useTheme } from "next-themes";
 import { useCallback } from "react";
 import { useConfig } from "./use-config";
-import { surfaceShadesPresets } from "@/lib/colors";
 
 export function useColorTokens() {
   const { resolvedTheme } = useTheme();

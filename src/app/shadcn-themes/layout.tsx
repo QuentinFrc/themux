@@ -35,7 +35,7 @@ export default async function ShadcnThemesLayout({
         "--sidebar-width-mobile": SIDEBAR_WIDTH_MOBILE,
       }}
     >
-      <CustomizerSidebar variant="inset" collapsible="offcanvas" />
+      <CustomizerSidebar variant="floating" collapsible="offcanvas" />
 
       <SidebarInset className="relative max-h-svh overflow-hidden peer-data-[variant=inset]:max-h-[calc(100svh-1rem)]">
         <header className="isolate z-10 flex shrink-0 items-center gap-2 border-b">
