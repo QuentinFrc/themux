@@ -1,14 +1,12 @@
 "use client";
 
 import { useColorTokens } from "@/hooks/use-color-tokens";
-import { useMounted } from "@/hooks/use-mounted";
 import { TAILWIND_PALETTE_V4, TailwindShadeKey } from "@/lib/palettes";
 import { cn } from "@/lib/utils";
 import { OklchValue } from "@/types/theme";
 import { convertToOklch } from "@/utils/color-converter";
 import React, { ComponentProps } from "react";
-import { Button } from "./ui/button";
-import { Skeleton } from "./ui/skeleton";
+import { Color } from "./color";
 
 export const MemoizedTailwindV4ColorPalette = React.memo(
   TailwindV4ColorPalette,
@@ -54,51 +52,5 @@ function TailwindV4ColorPalette({
         );
       })}
     </div>
-  );
-}
-
-export function Color({
-  color,
-  isActive,
-  className,
-  onClick,
-}: { color: string; isActive?: boolean } & ComponentProps<"button">) {
-  const isMounted = useMounted();
-
-  if (!isMounted) {
-    return (
-      <Button
-        variant={"ghost"}
-        className={cn(
-          "ring-border size-fit cursor-pointer rounded-lg p-1 ring",
-        )}
-      >
-        <Skeleton
-          className={cn(
-            "bg-muted ring-border relative flex size-4 shrink-0 items-center justify-center overflow-hidden rounded-lg ring",
-          )}
-        />
-      </Button>
-    );
-  }
-
-  return (
-    <Button
-      variant={"ghost"}
-      className={cn(
-        "size-fit cursor-pointer rounded-lg p-1",
-        className,
-        isActive &&
-          "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
-      )}
-      style={{ "--primary": color }}
-      onClick={onClick}
-    >
-      <span
-        className={cn(
-          "bg-primary ring-foreground/20 relative flex size-4 shrink-0 items-center justify-center overflow-hidden rounded-lg shadow ring",
-        )}
-      />
-    </Button>
   );
 }
