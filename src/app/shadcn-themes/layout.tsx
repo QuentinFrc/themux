@@ -19,8 +19,8 @@ export const metadata: Metadata = {
   },
 };
 
-const SIDEBAR_WIDTH = "19rem";
-const SIDEBAR_WIDTH_MOBILE = "19rem";
+const SIDEBAR_WIDTH = "20rem";
+const SIDEBAR_WIDTH_MOBILE = "20rem";
 
 export default async function ShadcnThemesLayout({
   children,
