@@ -40,9 +40,9 @@ export const metadata: Metadata = {
   creator: "llanesluis",
   metadataBase: new URL("https://themux.vercel.app"),
   openGraph: {
-    title: "themux | shadcn/ui theme generator supporting Tailwind v4.",
+    title: "themux | Not your regular shadcn/ui theme generator",
     description:
-      "A shadcn/ui theme generator, but fully customizable. Supports Tailwind v4 and v3.",
+      "A shadcn/ui theme generator, but fully customizable. Supports Tailwind v4 and v3 and different color formats.",
   },
   generator: "Next.js",
 };
