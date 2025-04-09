@@ -2,6 +2,7 @@
 
 import { useColorTokens } from "@/hooks/use-color-tokens";
 import { useMounted } from "@/hooks/use-mounted";
+import { useSettings } from "@/hooks/use-settings";
 import { surfaceShadesPresetArray, surfaceShadesPresets } from "@/lib/colors";
 import { TAILWIND_SHADES, TailwindShadeKey } from "@/lib/palettes";
 import { cn } from "@/lib/utils";
@@ -59,8 +60,7 @@ const PLACEHOLDERS = [
 export function QuickCustomizer() {
   const { getColorToken, setPrimaryColorTokens } = useColorTokens();
 
-  const [bothModes, setBothModes] = useState(false);
-  const isMounted = useMounted();
+  const { modesInSync } = useSettings();
   const [shade, setShade] = useState<TailwindShadeKey>("500");
 
   return (
@@ -72,7 +72,7 @@ export function QuickCustomizer() {
         </Label>
         <PasteColorControl
           setColorTokens={setPrimaryColorTokens}
-          bothModes={bothModes}
+          modesInSync={modesInSync}
         />
       </section>
 
@@ -125,7 +125,7 @@ export function QuickCustomizer() {
             })}
             shade={shade}
             className="contents"
-            bothModes={bothModes}
+            modesInSync={modesInSync}
           />
         </div>
       </section>
@@ -152,10 +152,7 @@ export function QuickCustomizer() {
         <CopyCodeButtonDialog size="sm" />
         <div className="flex w-full gap-1">
           <ResetButton variant="outline" size="sm" className="grow" />
-          <CustomizerSettings
-            bothModesInSync={bothModes}
-            setBothModesInSync={setBothModes}
-          />
+          <CustomizerSettings />
         </div>
       </section>
     </div>
@@ -165,14 +162,14 @@ export function QuickCustomizer() {
 export function PasteColorControl({
   className,
   setColorTokens,
-  bothModes,
+  modesInSync,
   ...props
 }: {
   setColorTokens: (args: {
     primaryColor: OklchValue;
-    bothModes: boolean;
+    modesInSync: boolean;
   }) => void;
-  bothModes: boolean;
+  modesInSync: boolean;
 } & ComponentProps<"div">) {
   const [placeholder, setPlaceholder] = useState(PLACEHOLDERS[0]);
   const [pastedColor, setPastedColor] = useState("");
@@ -202,7 +199,7 @@ export function PasteColorControl({
     const newOklchColor = convertToOklch(pastedColor);
     setPrimaryColorTokens({
       primaryColor: newOklchColor,
-      bothModes: bothModes,
+      modesInSync: modesInSync,
     });
   };
 
@@ -266,7 +263,7 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
 
   const setSelectedBackgroundShadePreset = (preset: SurfaceShadesPreset) => {
     const bgShadesThemeObject = surfaceShadesPresets[preset];
-    setSurfaceShadesColorTokens({ bgShadesThemeObject, bothModes: true });
+    setSurfaceShadesColorTokens({ bgShadesThemeObject, modesInSync: true });
   };
 
   return (

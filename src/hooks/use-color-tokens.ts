@@ -23,15 +23,15 @@ export function useColorTokens() {
 
   const setPrimaryColorTokens = ({
     primaryColor,
-    bothModes = false,
+    modesInSync = false,
   }: {
     primaryColor: OklchValue;
-    bothModes?: boolean;
+    modesInSync?: boolean;
   }) => {
     const foregroundColor = getOptimalForegroundColor(primaryColor);
 
     // Update both modes
-    if (bothModes) {
+    if (modesInSync) {
       return setConfig((prev) => {
         return {
           ...prev,
@@ -86,13 +86,13 @@ export function useColorTokens() {
 
   const setSurfaceShadesColorTokens = ({
     bgShadesThemeObject,
-    bothModes = false,
+    modesInSync = false,
   }: {
     bgShadesThemeObject: SurfaceShadesThemeObject;
-    bothModes?: boolean;
+    modesInSync?: boolean;
   }) => {
     // Update both modes
-    if (bothModes) {
+    if (modesInSync) {
       return setConfig((prev) => {
         return {
           ...prev,

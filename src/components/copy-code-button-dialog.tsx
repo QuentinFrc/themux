@@ -1,11 +1,12 @@
 "use client";
 
 import { useConfig } from "@/hooks/use-config";
+import { useSettings } from "@/hooks/use-settings";
 import { cn, copyToClipboard } from "@/lib/utils";
 import { ColorFormat, TailwindVersion } from "@/types/theme";
 import { generateThemeCode } from "@/utils/theme-style-generator";
 import { Check, Clipboard } from "lucide-react";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -31,16 +32,7 @@ export function CopyCodeButtonDialog({
   className,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const [colorFormat, setColorFormat] = useState<ColorFormat>("oklch");
-  const [tailwindVersion, setTailwindVersion] = useState<TailwindVersion>("4");
-
-  const changeColorFormat = (colorFormat: ColorFormat) => {
-    setColorFormat(colorFormat);
-  };
-
-  const changeTailwindVersion = (tailwindVersion: TailwindVersion) => {
-    setTailwindVersion(tailwindVersion);
-  };
+  const { colorFormat, tailwindVersion } = useSettings();
 
   return (
     <>
@@ -66,12 +58,7 @@ export function CopyCodeButtonDialog({
           </DrawerHeader>
 
           <div className="px-4 pb-4">
-            <GeneratedCodeOptions
-              colorFormat={colorFormat}
-              changeColorFormat={changeColorFormat}
-              tailwindVersion={tailwindVersion}
-              changeTailwindVersion={changeTailwindVersion}
-            />
+            <GeneratedCodeOptions />
           </div>
 
           <CustomizerCode
@@ -103,12 +90,7 @@ export function CopyCodeButtonDialog({
             </DialogDescription>
           </DialogHeader>
 
-          <GeneratedCodeOptions
-            colorFormat={colorFormat}
-            changeColorFormat={changeColorFormat}
-            tailwindVersion={tailwindVersion}
-            changeTailwindVersion={changeTailwindVersion}
-          />
+          <GeneratedCodeOptions />
 
           <CustomizerCode
             colorFormat={colorFormat}
@@ -120,17 +102,17 @@ export function CopyCodeButtonDialog({
   );
 }
 
-function GeneratedCodeOptions({
-  colorFormat,
-  changeColorFormat,
-  tailwindVersion,
-  changeTailwindVersion,
-}: {
-  colorFormat: ColorFormat;
-  changeColorFormat: (format: ColorFormat) => void;
-  tailwindVersion: TailwindVersion;
-  changeTailwindVersion: (version: TailwindVersion) => void;
-}) {
+function GeneratedCodeOptions() {
+  const { colorFormat, tailwindVersion, updateSettings } = useSettings();
+
+  const changeColorFormat = (colorFormat: ColorFormat) => {
+    updateSettings({ colorFormat: colorFormat });
+  };
+
+  const changeTailwindVersion = (tailwindVersion: TailwindVersion) => {
+    updateSettings({ tailwindVersion: tailwindVersion });
+  };
+
   return (
     <div className="grid grid-cols-1 gap-2 md:justify-between lg:grid-cols-2 lg:items-center lg:gap-8">
       <div className="flex flex-row items-start gap-2">

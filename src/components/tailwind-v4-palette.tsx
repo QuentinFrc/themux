@@ -14,19 +14,19 @@ export const MemoizedTailwindV4ColorPalette = React.memo(
 function TailwindV4ColorPalette({
   currentColor,
   shade,
-  bothModes,
+  modesInSync,
   className,
   ...props
 }: {
   currentColor: OklchValue;
   shade: TailwindShadeKey;
-  bothModes?: boolean;
+  modesInSync?: boolean;
 } & ComponentProps<"div">) {
   const { setPrimaryColorTokens } = useColorTokens();
 
   const handleColorChange = (color: string) => {
     const newOklchColor = convertToOklch(color);
-    setPrimaryColorTokens({ primaryColor: newOklchColor, bothModes });
+    setPrimaryColorTokens({ primaryColor: newOklchColor, modesInSync });
   };
 
   return (

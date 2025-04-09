@@ -30,8 +30,8 @@ export default function ShadcnThemesPage() {
               <FrameHighlight>Tailwind v4</FrameHighlight>
             </PageHeaderHeading>
             <PageHeaderDescription>
-              Generate a theme for your app and copy-paste the generated css
-              variables. Compatible with
+              Generate a theme for your app and copy-paste the css variables.
+              Compatible with
               <FrameHighlight className="font-semibold">
                 Tailwind v3
               </FrameHighlight>

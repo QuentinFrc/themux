@@ -17,7 +17,7 @@ interface TokenColorPickerProps {
   oklchColor: OklchValue;
   setColorTokens: (obj: {
     primaryColor: OklchValue;
-    bothModes?: boolean;
+    modesInSync?: boolean;
   }) => void;
 }
 
@@ -38,7 +38,10 @@ export function TokenColorPicker({
   const handleColorChange = useCallback((color: string) => {
     const newOklchColor = convertToOklch(color);
     setCurrentColor(newOklchColor);
-    debouncedSetColorTokens({ primaryColor: newOklchColor, bothModes: false });
+    debouncedSetColorTokens({
+      primaryColor: newOklchColor,
+      modesInSync: false,
+    });
   }, []);
 
   return (
