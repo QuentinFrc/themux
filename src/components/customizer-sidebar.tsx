@@ -7,16 +7,17 @@ import * as React from "react";
 import { TokensList } from "./color-tokens";
 import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
 import { Customizer } from "./customizer";
+import { CustomizerSettings } from "./customizer-settings";
 import { ExternalLink } from "./external-link";
 import { GitHub } from "./icons/github";
 import { ResetButton } from "./reset-button";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
-import { ScrollArea } from "./ui/scroll-area";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarHeader,
   SidebarRail,
   useSidebar,
 } from "./ui/sidebar";
@@ -31,8 +32,8 @@ export function CustomizerSidebar({
 
   if (!isMounted) {
     return (
-      <Sidebar {...props}>
-        <SidebarContent className="scaled @container max-h-svh overflow-hidden py-2 group-data-[collapsible=icon]:invisible sm:max-w-82 [&>button]:hidden">
+      <Sidebar {...props} className="overflow-hidden">
+        <SidebarContent className="scrollbar-thin @container relative max-h-svh group-data-[collapsible=icon]:invisible max-md:py-4 [&>button]:hidden">
           <div className="px-4">
             <Skeleton className="h-10" />
           </div>
@@ -62,38 +63,38 @@ export function CustomizerSidebar({
   }
 
   return (
-    <Sidebar {...props}>
-      <SidebarContent className="scaled @container relative max-h-svh overflow-hidden py-2 group-data-[collapsible=icon]:invisible max-md:py-4 sm:max-w-82 [&>button]:hidden">
+    <Sidebar {...props} className="overflow-hidden">
+      <SidebarContent className="scrollbar-thin @container relative max-h-svh group-data-[collapsible=icon]:invisible [&>button]:hidden">
         <Tabs defaultValue="theme">
-          <div className="px-4">
+          <SidebarHeader className="bg-sidebar sticky top-0 z-10 px-3 max-md:pt-2">
             <TabsList className="w-full">
               <TabsTrigger value="theme">Theme</TabsTrigger>
               <TabsTrigger value="tokens">Tokens</TabsTrigger>
             </TabsList>
-          </div>
-
-          <TabsContent value="theme">
-            <Customizer className="animate-in p-4" />
+          </SidebarHeader>
+          <TabsContent value="theme" className="px-3 py-2">
+            <Customizer className="" />
           </TabsContent>
 
           <TabsContent
             value="tokens"
-            className="flex h-fit flex-col space-y-1.5 py-4"
+            className="flex flex-col space-y-1.5 px-3 py-2"
           >
-            <Label className="flex items-center gap-1 px-4 pb-2">
+            <Label className="flex items-center gap-1 pb-2">
               <Palette className="size-4" /> Tokens
             </Label>
-            <ScrollArea className="relative max-h-104 px-4">
-              <TokensList />
-            </ScrollArea>
+            <TokensList className="" />
           </TabsContent>
         </Tabs>
+      </SidebarContent>
 
-        <div className="flex gap-2 px-4 py-4">
+      <SidebarFooter>
+        <div className="sticky flex gap-2 px-1">
           <CopyCodeButtonDialog className="flex-1" />
           <ResetButton />
+          <CustomizerSettings />
         </div>
-      </SidebarContent>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

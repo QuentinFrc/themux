@@ -1,8 +1,10 @@
 "use client";
 
 import { useConfig } from "@/hooks/use-config";
+import { useSettings } from "@/hooks/use-settings";
 import { ColorProperty, OklchValue, ThemeMode } from "@/types/theme";
 import { convertToHex, convertToOklch } from "@/utils/color-converter";
+import { getOptimalForegroundColor } from "@/utils/colors";
 import { CircleAlert, Pipette } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
@@ -15,8 +17,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 interface TokenColorPickerProps {
   colorProperty: ColorProperty;
   oklchColor: OklchValue;
+  syncModes?: boolean;
   setColorTokens: (obj: {
-    primaryColor: OklchValue;
+    property: ColorProperty;
+    color: OklchValue;
     modesInSync?: boolean;
   }) => void;
 }
@@ -24,25 +28,31 @@ interface TokenColorPickerProps {
 export function TokenColorPicker({
   colorProperty,
   oklchColor,
+  syncModes,
   setColorTokens,
 }: TokenColorPickerProps) {
   const [currentColor, setCurrentColor] = useState(oklchColor);
   const hexColor = convertToHex(oklchColor);
+  const { modesInSync } = useSettings();
 
   useEffect(() => {
     if (currentColor !== oklchColor) setCurrentColor(oklchColor);
   }, [oklchColor]);
 
-  const debouncedSetColorTokens = useDebouncedCallback(setColorTokens, 200);
+  const debouncedSetColorTokens = useDebouncedCallback(setColorTokens, 100);
 
-  const handleColorChange = useCallback((color: string) => {
-    const newOklchColor = convertToOklch(color);
-    setCurrentColor(newOklchColor);
-    debouncedSetColorTokens({
-      primaryColor: newOklchColor,
-      modesInSync: false,
-    });
-  }, []);
+  const handleColorChange = useCallback(
+    (color: string) => {
+      const newOklchColor = convertToOklch(color);
+      setCurrentColor(newOklchColor);
+      debouncedSetColorTokens({
+        color: newOklchColor,
+        modesInSync: syncModes !== undefined ? syncModes : modesInSync, // allows overriding the global sync mode
+        property: colorProperty,
+      });
+    },
+    [syncModes, modesInSync, colorProperty],
+  );
 
   return (
     <ComponentErrorBoundary
@@ -53,7 +63,12 @@ export function TokenColorPicker({
         <div className="flex items-center gap-2">
           <PopoverTrigger className="relative cursor-pointer">
             <TokenDisplay oklchColor={oklchColor} />
-            <Pipette className="text-primary-foreground fill-primary-foreground absolute inset-0 m-auto size-4" />
+            <Pipette
+              className="text-foreground fill-foreground absolute inset-0 m-auto size-4"
+              style={{
+                "--foreground": getOptimalForegroundColor(currentColor),
+              }}
+            />
           </PopoverTrigger>
           <TokenInfo colorProperty={colorProperty} oklchColor={oklchColor} />
         </div>

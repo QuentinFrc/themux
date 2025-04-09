@@ -58,9 +58,7 @@ export function TokenInfo({
         <p className="font-mono text-xs font-semibold">
           {`--${colorProperty}`}
         </p>
-        <p className="text-muted-foreground truncate font-mono text-xs">
-          {oklchColor}
-        </p>
+        <p className="text-muted-foreground font-mono text-xs">{oklchColor}</p>
       </div>
 
       <button

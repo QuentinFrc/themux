@@ -61,8 +61,8 @@ export function CustomizerSettings({
             <div className="flex flex-col gap-1">
               <span className="text-sm">Sync both modes</span>
               <span className="text-muted-foreground w-[25ch] text-xs">
-                Tokens will be in sync in light and dark modes. Theme presets
-                and surface shades are always synced.
+                {`Brand tokens will be in sync in light and dark modes. Theme presets
+                and surface shades are always synced.`}
               </span>
             </div>
             <Switch

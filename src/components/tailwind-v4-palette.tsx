@@ -26,7 +26,7 @@ function TailwindV4ColorPalette({
 
   const handleColorChange = (color: string) => {
     const newOklchColor = convertToOklch(color);
-    setPrimaryColorTokens({ primaryColor: newOklchColor, modesInSync });
+    setPrimaryColorTokens({ color: newOklchColor, modesInSync });
   };
 
   return (

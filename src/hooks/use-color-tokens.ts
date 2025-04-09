@@ -21,15 +21,15 @@ export function useColorTokens() {
     [mode, config.themeObject[mode]],
   );
 
-  const setPrimaryColorTokens = ({
-    primaryColor,
+  const setColorToken = ({
+    property,
+    color,
     modesInSync = false,
   }: {
-    primaryColor: OklchValue;
+    property: ColorProperty;
+    color: OklchValue;
     modesInSync?: boolean;
   }) => {
-    const foregroundColor = getOptimalForegroundColor(primaryColor);
-
     // Update both modes
     if (modesInSync) {
       return setConfig((prev) => {
@@ -41,21 +41,11 @@ export function useColorTokens() {
             name: "custom",
             light: {
               ...prev.themeObject.light,
-              primary: primaryColor,
-              "primary-foreground": foregroundColor,
-              ring: primaryColor,
-              "sidebar-primary": primaryColor,
-              "sidebar-primary-foreground": foregroundColor,
-              "sidebar-ring": primaryColor,
+              [property]: color,
             },
             dark: {
               ...prev.themeObject.dark,
-              primary: primaryColor,
-              "primary-foreground": foregroundColor,
-              ring: primaryColor,
-              "sidebar-primary": primaryColor,
-              "sidebar-primary-foreground": foregroundColor,
-              "sidebar-ring": primaryColor,
+              [property]: color,
             },
           },
         };
@@ -72,12 +62,125 @@ export function useColorTokens() {
           name: "custom",
           [mode]: {
             ...prev.themeObject[mode],
-            primary: primaryColor,
+            [property]: color,
+          },
+        },
+      };
+    });
+  };
+
+  const setColorTokenWithForeground = ({
+    property,
+    color,
+    modesInSync = false,
+  }: {
+    property: ColorProperty;
+    color: OklchValue;
+    modesInSync?: boolean;
+  }) => {
+    const foregroundColor = getOptimalForegroundColor(color);
+    const propertyForeground =
+      property === "background" ? "foreground" : property + "-foreground";
+
+    // Update both modes
+    if (modesInSync) {
+      return setConfig((prev) => {
+        return {
+          ...prev,
+          themeObject: {
+            ...prev.themeObject,
+            label: "Custom",
+            name: "custom",
+            light: {
+              ...prev.themeObject.light,
+              [property]: color,
+              [propertyForeground]: foregroundColor,
+            },
+            dark: {
+              ...prev.themeObject.dark,
+              [property]: color,
+              [propertyForeground]: foregroundColor,
+            },
+          },
+        };
+      });
+    }
+
+    // Only update the current mode
+    setConfig((prev) => {
+      return {
+        ...prev,
+        themeObject: {
+          ...prev.themeObject,
+          label: "Custom",
+          name: "custom",
+          [mode]: {
+            ...prev.themeObject[mode],
+            [property]: color,
+            [propertyForeground]: foregroundColor,
+          },
+        },
+      };
+    });
+  };
+
+  const setPrimaryColorTokens = ({
+    color: color,
+    modesInSync = false,
+  }: {
+    color: OklchValue;
+    modesInSync?: boolean;
+  }) => {
+    const foregroundColor = getOptimalForegroundColor(color);
+
+    // Update both modes
+    if (modesInSync) {
+      return setConfig((prev) => {
+        return {
+          ...prev,
+          themeObject: {
+            ...prev.themeObject,
+            label: "Custom",
+            name: "custom",
+            light: {
+              ...prev.themeObject.light,
+              primary: color,
+              "primary-foreground": foregroundColor,
+              ring: color,
+              "sidebar-primary": color,
+              "sidebar-primary-foreground": foregroundColor,
+              "sidebar-ring": color,
+            },
+            dark: {
+              ...prev.themeObject.dark,
+              primary: color,
+              "primary-foreground": foregroundColor,
+              ring: color,
+              "sidebar-primary": color,
+              "sidebar-primary-foreground": foregroundColor,
+              "sidebar-ring": color,
+            },
+          },
+        };
+      });
+    }
+
+    // Only update the current mode
+    setConfig((prev) => {
+      return {
+        ...prev,
+        themeObject: {
+          ...prev.themeObject,
+          label: "Custom",
+          name: "custom",
+          [mode]: {
+            ...prev.themeObject[mode],
+            primary: color,
             "primary-foreground": foregroundColor,
-            ring: primaryColor,
-            "sidebar-primary": primaryColor,
+            ring: color,
+            "sidebar-primary": color,
             "sidebar-primary-foreground": foregroundColor,
-            "sidebar-ring": primaryColor,
+            "sidebar-ring": color,
           },
         },
       };
@@ -142,6 +245,8 @@ export function useColorTokens() {
 
   return {
     getColorToken,
+    setColorToken,
+    setColorTokenWithForeground,
     setPrimaryColorTokens,
     setSurfaceShadesColorTokens,
     getActiveSurfaceShades,
