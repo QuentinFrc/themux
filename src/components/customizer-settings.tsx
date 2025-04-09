@@ -59,10 +59,10 @@ export function CustomizerSettings({
           </Label>
           <div className="flex items-center rounded-lg">
             <div className="flex flex-col gap-1">
-              <span className="text-sm">Sync light and dark modes</span>
+              <span className="text-sm">Sync both modes</span>
               <span className="text-muted-foreground w-[25ch] text-xs">
-                Tokens will sync in both modes. Surface presets are always
-                synced.
+                Tokens will be in sync in light and dark modes. Theme presets
+                and surface shades are always synced.
               </span>
             </div>
             <Switch
