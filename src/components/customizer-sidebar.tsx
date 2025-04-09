@@ -66,7 +66,7 @@ export function CustomizerSidebar({
     <Sidebar {...props} className="overflow-hidden">
       <SidebarContent className="scrollbar-thin @container relative max-h-svh group-data-[collapsible=icon]:invisible [&>button]:hidden">
         <Tabs defaultValue="theme">
-          <SidebarHeader className="bg-sidebar sticky top-0 z-10 px-3 max-md:pt-2">
+          <SidebarHeader className="bg-sidebar sticky top-0 z-10 rounded-t-lg px-3 max-md:pt-2">
             <TabsList className="w-full">
               <TabsTrigger value="theme">Theme</TabsTrigger>
               <TabsTrigger value="tokens">Tokens</TabsTrigger>

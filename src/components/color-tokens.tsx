@@ -195,7 +195,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
         />
       </ControlSection>
 
-      <ControlSection title="Chart Colors" id="chart-colors">
+      <ControlSection title="Chart colors" id="chart-colors">
         <TokenColorPicker
           colorProperty="chart-1"
           oklchColor={getColorToken({
@@ -233,7 +233,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
         />
       </ControlSection>
 
-      <ControlSection title="Sidebar Colors" id="sidebar-colors">
+      <ControlSection title="Sidebar colors" id="sidebar-colors">
         <TokenColorPicker
           colorProperty="sidebar"
           oklchColor={getColorToken({
