@@ -12,10 +12,11 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    default: "themux | shadcn/ui customizer",
+    default: "themux | shadcn/ui theme generator",
     template: "%s | themux",
   },
-  description: "A shadcn/ui theme generator that supports TailwindCSS v4.",
+  description:
+    "A shadcn/ui theme generator, but fully customizable. Supports Tailwind v4 and v3.",
   keywords: [
     "themux",
     "themux shadcn",
@@ -24,7 +25,9 @@ export const metadata: Metadata = {
     "Tailwind",
     "Tailwind v4",
     "TailwindCSS",
-    "Theme generator",
+    "theme generator",
+    "theme customizer",
+    "theme editor",
     "Next.js",
     "llanesluis",
   ],
@@ -37,8 +40,9 @@ export const metadata: Metadata = {
   creator: "llanesluis",
   metadataBase: new URL("https://themux.vercel.app"),
   openGraph: {
-    title: "themux | shadcn/ui theme generator with TailwindCSS v4",
-    description: "A shadcn/ui theme generator that supports TailwindCSS v4.",
+    title: "themux | shadcn/ui theme generator supporting Tailwind v4.",
+    description:
+      "A shadcn/ui theme generator, but fully customizable. Supports Tailwind v4 and v3.",
   },
   generator: "Next.js",
 };
