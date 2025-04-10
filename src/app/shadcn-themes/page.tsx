@@ -66,12 +66,12 @@ export default function ShadcnThemesPage() {
       <Separator />
 
       <ContainerWrapper withCane>
-        <Tabs defaultValue="cards-demo" className="space-y-4 py-6">
-          <TabsList className="content-center bg-transparent">
-            <TabsTrigger value="cards-demo" className="px-4">
+        <Tabs defaultValue="cards-demo" className="isolate space-y-2 py-4">
+          <TabsList className="bg-background sticky top-0 z-10 flex h-12 w-full content-center justify-start rounded-none py-2">
+            <TabsTrigger value="cards-demo" className="grow-0 px-4">
               Cards
             </TabsTrigger>
-            <TabsTrigger value="dashboard-demo" className="px-4">
+            <TabsTrigger value="dashboard-demo" className="grow-0 px-4">
               Dashboard
             </TabsTrigger>
           </TabsList>

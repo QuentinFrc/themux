@@ -4,9 +4,9 @@ import { DataTable } from "@/components/dashboard-demo/data-table";
 import { SectionCards } from "@/components/dashboard-demo/section-cards";
 import { SiteHeader } from "@/components/dashboard-demo/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { ScrollArea } from "../ui/scroll-area";
 
 import data from "./data.json";
-import { ScrollArea } from "../ui/scroll-area";
 
 export function Dashboard() {
   return (
@@ -44,7 +44,7 @@ export function DashboardDemo() {
     <iframe
       src={`/dashboard`}
       height={750}
-      className="bg-background relative z-20 hidden w-full md:block"
+      className="bg-background relative z-1 w-full"
     />
   );
 }
