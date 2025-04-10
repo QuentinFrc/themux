@@ -112,7 +112,7 @@ export type ColorfulPreset =
   | "violet";
 
 export type ThemeObject = {
-  name: PresetV4 | ColorfulPreset | "custom";
+  name: PresetV4 | ColorfulPreset;
   label: string;
   light: OklchColorProperties;
   dark: OklchColorProperties;

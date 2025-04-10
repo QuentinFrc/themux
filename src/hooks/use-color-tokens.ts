@@ -37,8 +37,6 @@ export function useColorTokens() {
           ...prev,
           themeObject: {
             ...prev.themeObject,
-            label: "Custom",
-            name: "custom",
             light: {
               ...prev.themeObject.light,
               [property]: color,
@@ -58,8 +56,6 @@ export function useColorTokens() {
         ...prev,
         themeObject: {
           ...prev.themeObject,
-          label: "Custom",
-          name: "custom",
           [mode]: {
             ...prev.themeObject[mode],
             [property]: color,
@@ -89,8 +85,6 @@ export function useColorTokens() {
           ...prev,
           themeObject: {
             ...prev.themeObject,
-            label: "Custom",
-            name: "custom",
             light: {
               ...prev.themeObject.light,
               [property]: color,
@@ -112,8 +106,6 @@ export function useColorTokens() {
         ...prev,
         themeObject: {
           ...prev.themeObject,
-          label: "Custom",
-          name: "custom",
           [mode]: {
             ...prev.themeObject[mode],
             [property]: color,
@@ -140,8 +132,6 @@ export function useColorTokens() {
           ...prev,
           themeObject: {
             ...prev.themeObject,
-            label: "Custom",
-            name: "custom",
             light: {
               ...prev.themeObject.light,
               primary: color,
@@ -171,8 +161,6 @@ export function useColorTokens() {
         ...prev,
         themeObject: {
           ...prev.themeObject,
-          label: "Custom",
-          name: "custom",
           [mode]: {
             ...prev.themeObject[mode],
             primary: color,
@@ -202,8 +190,6 @@ export function useColorTokens() {
           surface: bgShadesThemeObject.name,
           themeObject: {
             ...prev.themeObject,
-            label: "Custom",
-            name: "custom",
             light: {
               ...prev.themeObject.light,
               ...bgShadesThemeObject.light,
@@ -224,8 +210,6 @@ export function useColorTokens() {
         surface: bgShadesThemeObject.name,
         themeObject: {
           ...prev.themeObject,
-          label: "Custom",
-          name: "custom",
           [mode]: {
             ...prev.themeObject[mode],
             ...bgShadesThemeObject[mode],
