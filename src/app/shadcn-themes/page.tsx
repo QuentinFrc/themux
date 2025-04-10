@@ -66,32 +66,30 @@ export default function ShadcnThemesPage() {
       <Separator />
 
       <ContainerWrapper withCane>
-        <SectionWrapper>
-          <Tabs defaultValue="cards-demo" className="space-y-4">
-            <TabsList className="content-center bg-transparent">
-              <TabsTrigger value="cards-demo" className="px-4">
-                Cards
-              </TabsTrigger>
-              <TabsTrigger value="dashboard-demo" className="px-4">
-                Dashboard
-              </TabsTrigger>
-            </TabsList>
+        <Tabs defaultValue="cards-demo" className="space-y-4 py-6">
+          <TabsList className="content-center bg-transparent">
+            <TabsTrigger value="cards-demo" className="px-4">
+              Cards
+            </TabsTrigger>
+            <TabsTrigger value="dashboard-demo" className="px-4">
+              Dashboard
+            </TabsTrigger>
+          </TabsList>
 
-            <TabsContent value="cards-demo">
-              <CardsDemo />
-            </TabsContent>
+          <TabsContent value="cards-demo">
+            <CardsDemo />
+          </TabsContent>
 
-            <TabsContent value="dashboard-demo">
-              <ComponentWrapper
-                className="p-0"
-                name="dashboard-01"
-                internalUrl="/dashboard"
-              >
-                <DashboardDemo />
-              </ComponentWrapper>
-            </TabsContent>
-          </Tabs>
-        </SectionWrapper>
+          <TabsContent value="dashboard-demo">
+            <ComponentWrapper
+              className="p-0"
+              name="dashboard-01"
+              internalUrl="/dashboard"
+            >
+              <DashboardDemo />
+            </ComponentWrapper>
+          </TabsContent>
+        </Tabs>
       </ContainerWrapper>
     </CollapsibleCustomizerProvider>
   );
