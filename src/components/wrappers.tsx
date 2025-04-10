@@ -46,7 +46,7 @@ function ContainerWrapper({
     return (
       <div
         className={cn(
-          "relative mx-auto w-full max-w-[85rem] px-4 sm:px-6 lg:px-8",
+          "relative mx-auto w-full max-w-[96rem] px-4 lg:px-6",
           className,
         )}
         {...props}
@@ -61,7 +61,7 @@ function ContainerWrapper({
   return (
     <div
       className={cn(
-        "relative mx-auto w-full max-w-[85rem] px-4 sm:px-6 lg:px-8",
+        "relative mx-auto w-full max-w-[96rem] px-4 lg:px-6",
         className,
       )}
       {...props}
