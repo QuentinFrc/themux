@@ -4,6 +4,8 @@ import {
   CollapsibleCustomizerProvider,
   CollapsibleCustomizerTrigger,
 } from "@/components/collapsible-theme-customizer-wrapper";
+import { ComponentWrapper } from "@/components/components-demo/component-wrapper";
+import { DashboardDemo } from "@/components/dashboard-demo";
 import { FrameHighlight } from "@/components/frame-highlight";
 import {
   PageHeader,
@@ -12,6 +14,7 @@ import {
 } from "@/components/page-header";
 import { QuickCustomizer } from "@/components/quick-customizer";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
 import { Metadata } from "next";
 
@@ -35,7 +38,7 @@ export default function ShadcnThemesPage() {
               <FrameHighlight className="font-semibold">
                 Tailwind v3
               </FrameHighlight>
-              and supports{" "}
+              and supports
               <code className="font-mono font-semibold">oklch</code>
               {", "}
               <code className="font-mono font-semibold">hsl</code>
@@ -64,7 +67,30 @@ export default function ShadcnThemesPage() {
 
       <ContainerWrapper withCane>
         <SectionWrapper>
-          <CardsDemo />
+          <Tabs defaultValue="cards-demo" className="space-y-4">
+            <TabsList className="content-center bg-transparent">
+              <TabsTrigger value="cards-demo" className="px-4">
+                Cards
+              </TabsTrigger>
+              <TabsTrigger value="dashboard-demo" className="px-4">
+                Dashboard
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="cards-demo">
+              <CardsDemo />
+            </TabsContent>
+
+            <TabsContent value="dashboard-demo">
+              <ComponentWrapper
+                className="p-0"
+                name="dashboard-01"
+                internalUrl="/dashboard"
+              >
+                <DashboardDemo />
+              </ComponentWrapper>
+            </TabsContent>
+          </Tabs>
         </SectionWrapper>
       </ContainerWrapper>
     </CollapsibleCustomizerProvider>

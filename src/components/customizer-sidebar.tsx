@@ -32,7 +32,7 @@ export function CustomizerSidebar({
 
   if (!isMounted) {
     return (
-      <Sidebar {...props} className="overflow-hidden">
+      <Sidebar className="overflow-hidden" {...props}>
         <SidebarContent className="scrollbar-thin @container relative max-h-svh group-data-[collapsible=icon]:invisible max-md:py-4 [&>button]:hidden">
           <div className="px-4">
             <Skeleton className="h-10" />
@@ -63,7 +63,7 @@ export function CustomizerSidebar({
   }
 
   return (
-    <Sidebar {...props} className="overflow-hidden">
+    <Sidebar className="overflow-hidden" {...props}>
       <SidebarContent className="scrollbar-thin @container relative max-h-svh group-data-[collapsible=icon]:invisible [&>button]:hidden">
         <Tabs defaultValue="theme">
           <SidebarHeader className="bg-sidebar sticky top-0 z-10 rounded-t-lg px-3 max-md:pt-2">

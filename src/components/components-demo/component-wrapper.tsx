@@ -2,7 +2,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Check, Clipboard, Globe, Terminal } from "lucide-react";
+import { Check, Clipboard, Expand, Globe, Terminal } from "lucide-react";
 import * as React from "react";
 import { ComponentErrorBoundary } from "../error-boundary";
 import { ExternalLink } from "../external-link";
@@ -13,9 +13,19 @@ export function ComponentWrapper({
   className,
   name,
   children,
+  internalUrl,
+  showUrl = true,
   ...props
-}: React.ComponentPropsWithoutRef<"div"> & { name: string }) {
+}: React.ComponentPropsWithoutRef<"div"> & {
+  name: string;
+  internalUrl?: string;
+  showUrl?: boolean;
+}) {
   const [copied, setCopied] = React.useState(false);
+  const baseUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://themux.vercel.app";
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(`pnpm dlx shadcn@latest add ${name}`);
@@ -71,18 +81,33 @@ export function ComponentWrapper({
                   />
                 </Button>
 
-                <ExternalLink
-                  href={`https://ui.shadcn.com/docs/components/${name}`}
-                  showIcon
-                  className="size-fit cursor-pointer p-1"
-                >
-                  <Globe className="size-4" />
-                </ExternalLink>
+                {showUrl && (
+                  <ExternalLink
+                    href={
+                      internalUrl
+                        ? `${baseUrl}${internalUrl}`
+                        : `https://ui.shadcn.com/docs/components/${name}`
+                    }
+                    showIcon
+                    className="size-fit cursor-pointer p-1"
+                  >
+                    {internalUrl ? (
+                      <Expand className="size-4" />
+                    ) : (
+                      <Globe className="size-4" />
+                    )}
+                  </ExternalLink>
+                )}
               </div>
             </Alert>
           </div>
         </div>
-        <div className="flex flex-1 flex-col items-center justify-center gap-8 p-4 @5xl:flex-row @5xl:items-start">
+        <div
+          className={cn(
+            "flex flex-1 flex-col items-center justify-center gap-8 p-4 @5xl:flex-row @5xl:items-start",
+            className,
+          )}
+        >
           {children}
         </div>
       </div>

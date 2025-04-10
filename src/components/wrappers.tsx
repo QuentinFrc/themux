@@ -14,7 +14,7 @@ function SectionWrapper({
   if (withCane) {
     return (
       <div
-        className={cn("relative isolate my-8 md:my-10 lg:my-12", className)}
+        className={cn("relative isolate my-6 md:my-8 lg:my-10", className)}
         {...props}
       >
         {children}
@@ -25,10 +25,7 @@ function SectionWrapper({
   }
 
   return (
-    <div
-      className={cn("relative py-8 md:py-10 lg:py-12", className)}
-      {...props}
-    >
+    <div className={cn("relative py-6 md:py-8 lg:py-10", className)} {...props}>
       {children}
     </div>
   );
