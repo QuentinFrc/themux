@@ -33,7 +33,7 @@ export function CustomizerSidebar({
   if (!isMounted) {
     return (
       <Sidebar className="overflow-hidden" {...props}>
-        <SidebarContent className="scrollbar-thin @container relative max-h-svh group-data-[collapsible=icon]:invisible max-md:py-4 [&>button]:hidden">
+        <SidebarContent className="scrollbar-thin @container relative max-h-svh group-data-[collapsible=icon]:invisible max-md:py-4 max-md:pt-2 [&>button]:hidden">
           <div className="px-4">
             <Skeleton className="h-10" />
           </div>
@@ -65,17 +65,13 @@ export function CustomizerSidebar({
   return (
     <Sidebar className="overflow-hidden" {...props}>
       <SidebarContent className="scrollbar-thin @container relative max-h-svh group-data-[collapsible=icon]:invisible [&>button]:hidden">
-        <Tabs defaultValue="theme">
+        <Tabs defaultValue="tokens">
           <SidebarHeader className="bg-sidebar sticky top-0 z-10 rounded-t-lg px-3 max-md:pt-2">
             <TabsList className="w-full">
-              <TabsTrigger value="theme">Theme</TabsTrigger>
               <TabsTrigger value="tokens">Tokens</TabsTrigger>
+              <TabsTrigger value="theme-presets">Theme presets</TabsTrigger>
             </TabsList>
           </SidebarHeader>
-          <TabsContent value="theme" className="px-3 py-2">
-            <Customizer className="" />
-          </TabsContent>
-
           <TabsContent
             value="tokens"
             className="flex flex-col space-y-1.5 px-3 py-2"
@@ -84,6 +80,10 @@ export function CustomizerSidebar({
               <Palette className="size-4" /> Tokens
             </Label>
             <TokensList className="" />
+          </TabsContent>
+
+          <TabsContent value="theme-presets" className="px-3 py-2">
+            <Customizer className="" />
           </TabsContent>
         </Tabs>
       </SidebarContent>
