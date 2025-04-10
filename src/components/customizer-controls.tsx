@@ -266,7 +266,7 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
   );
 }
 
-export function PresetsControls({
+export function ShadcnPresetsControls({
   className,
   ...props
 }: ComponentProps<"div">) {

@@ -2,13 +2,12 @@
 
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
-import { ChevronUp, Clock, Ligature } from "lucide-react";
+import { ChevronUp } from "lucide-react";
 import React, { ComponentProps, use } from "react";
 import { ColorTokens } from "./color-tokens";
-import { Customizer } from "./customizer";
-import { ControlSection } from "./customizer-controls";
+import { ThemePresets } from "./theme-presets";
+import { Typography } from "./typography";
 import { Button } from "./ui/button";
-import { Label } from "./ui/label";
 import { ContainerWrapper } from "./wrappers";
 
 type CollapsibleCustomizerContextProps = {
@@ -72,45 +71,8 @@ export function CollapsibleCustomizer({
                     {isMounted && (
                       <>
                         <ColorTokens className="max-h-74" />
-                        <Customizer />
-                        <section className="space-y-1.5">
-                          <Label className="flex items-center gap-1 pb-2">
-                            <Ligature className="size-4" /> Typography
-                          </Label>
-
-                          <ControlSection
-                            title="Sans-Serif font"
-                            id="sans-serif-font"
-                            className="font-sans"
-                          >
-                            <span className="text-muted-foreground flex items-center gap-2 text-sm">
-                              <Clock className="size-4" />
-                              Coming soon...
-                            </span>
-                          </ControlSection>
-
-                          <ControlSection
-                            title="Serif font"
-                            id="serif-font"
-                            className="font-serif"
-                          >
-                            <span className="text-muted-foreground flex items-center gap-2 text-sm">
-                              <Clock className="size-4" />
-                              Coming soon...
-                            </span>
-                          </ControlSection>
-
-                          <ControlSection
-                            title="Mono font"
-                            id="mono-font"
-                            className="font-mono"
-                          >
-                            <span className="text-muted-foreground flex items-center gap-2 text-sm">
-                              <Clock className="size-4" />
-                              Coming soon...
-                            </span>
-                          </ControlSection>
-                        </section>
+                        <ThemePresets />
+                        <Typography />
                       </>
                     )}
                   </div>

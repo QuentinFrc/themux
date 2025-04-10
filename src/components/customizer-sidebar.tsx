@@ -6,7 +6,7 @@ import { Palette, X } from "lucide-react";
 import * as React from "react";
 import { TokensList } from "./color-tokens";
 import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
-import { Customizer } from "./customizer";
+import { ThemePresets } from "./theme-presets";
 import { CustomizerSettings } from "./customizer-settings";
 import { ExternalLink } from "./external-link";
 import { GitHub } from "./icons/github";
@@ -83,7 +83,7 @@ export function CustomizerSidebar({
           </TabsContent>
 
           <TabsContent value="theme-presets" className="px-3 py-2">
-            <Customizer className="" />
+            <ThemePresets className="" />
           </TabsContent>
         </Tabs>
       </SidebarContent>

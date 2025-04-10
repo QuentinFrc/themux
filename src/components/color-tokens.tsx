@@ -11,7 +11,7 @@ import { ScrollArea } from "./ui/scroll-area";
 
 export function ColorTokens({ className }: React.ComponentProps<"div">) {
   return (
-    <div className="h-full space-y-1.5">
+    <section className="h-full space-y-1.5">
       <Label className="flex items-center gap-1 pb-2">
         <Palette className="size-4" /> Tokens
       </Label>
@@ -20,7 +20,7 @@ export function ColorTokens({ className }: React.ComponentProps<"div">) {
           <TokensList />
         </ScrollArea>
       </div>
-    </div>
+    </section>
   );
 }
 
