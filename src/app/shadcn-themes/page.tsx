@@ -4,7 +4,6 @@ import {
   CollapsibleCustomizerTrigger,
 } from "@/components/collapsible-customizer";
 
-import { ComponentWrapper } from "@/components/components-demo/component-wrapper";
 import { DashboardDemo } from "@/components/dashboard-demo";
 import { FrameHighlight } from "@/components/frame-highlight";
 import {
@@ -64,32 +63,30 @@ export default function ShadcnThemesPage() {
 
       <Separator />
 
-      <ContainerWrapper withCane>
-        <Tabs defaultValue="cards-demo" className="isolate space-y-2 py-4">
-          <TabsList className="bg-background sticky top-0 z-10 flex h-12 w-full content-center justify-start rounded-none py-2">
-            <TabsTrigger value="cards-demo" className="grow-0 px-4">
+      <Tabs defaultValue="cards-demo" className="isolate gap-0">
+        <ContainerWrapper withCane>
+          <TabsList className="my-4 bg-transparent">
+            <TabsTrigger value="cards-demo" className="px-4">
               Cards
             </TabsTrigger>
-            <TabsTrigger value="dashboard-demo" className="grow-0 px-4">
+            <TabsTrigger value="dashboard-demo" className="px-4">
               Dashboard
             </TabsTrigger>
           </TabsList>
+        </ContainerWrapper>
 
+        <Separator />
+
+        <ContainerWrapper withCane className="py-8">
           <TabsContent value="cards-demo">
             <CardsDemo />
           </TabsContent>
 
           <TabsContent value="dashboard-demo">
-            <ComponentWrapper
-              className="p-0"
-              name="dashboard-01"
-              internalUrl="/dashboard"
-            >
-              <DashboardDemo />
-            </ComponentWrapper>
+            <DashboardDemo />
           </TabsContent>
-        </Tabs>
-      </ContainerWrapper>
+        </ContainerWrapper>
+      </Tabs>
     </>
   );
 }

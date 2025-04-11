@@ -1,13 +1,14 @@
 // pulled from https://github.com/shadcn-ui/ui/blob/main/apps/v4/components/component-wrapper.tsx#L7
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, getComponentName } from "@/lib/utils";
 import { Check, Clipboard, Expand, Globe, Terminal } from "lucide-react";
 import * as React from "react";
 import { ComponentErrorBoundary } from "../error-boundary";
 import { ExternalLink } from "../external-link";
 import { Alert, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
 export function ComponentWrapper({
   className,
@@ -21,17 +22,11 @@ export function ComponentWrapper({
   internalUrl?: string;
   showUrl?: boolean;
 }) {
-  const [copied, setCopied] = React.useState(false);
+  const { copyToClipboard, isCopied } = useCopyToClipboard();
   const baseUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
       : "https://themux.vercel.app";
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(`pnpm dlx shadcn@latest add ${name}`);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1200);
-  };
 
   return (
     <ComponentErrorBoundary name={name}>
@@ -45,18 +40,19 @@ export function ComponentWrapper({
         {...props}
       >
         <div className="border-b px-4 py-3">
-          <div className="flex flex-col items-center gap-2 text-xs font-medium lg:text-sm @lg:flex-row">
+          <div className="flex flex-col items-center justify-between gap-2 text-xs font-medium lg:text-sm @lg:flex-row">
             <span className="shrink-0 font-semibold">
               {getComponentName(name)}
             </span>
-            <Alert className="border-primary/30 bg-primary/10 ml-auto flex w-full items-center border px-4 py-1 @lg:max-w-1/2">
+
+            <Alert className="border-primary/30 bg-primary/10 flex w-full items-center border px-4 py-1 @lg:max-w-1/3">
               <div className="pr-2">
                 <Terminal className="size-4" />
               </div>
 
-              <AlertTitle className="w-full font-mono text-pretty">
+              <AlertTitle className="w-full font-mono text-xs text-pretty">
                 {`pnpm dlx shadcn@latest add `}
-                <span className="text-foreground">{name}</span>
+                <span>{name}</span>
               </AlertTitle>
 
               <div className="ml-auto flex items-center">
@@ -64,19 +60,21 @@ export function ComponentWrapper({
                   size={"icon"}
                   variant={"ghost"}
                   className="relative size-4 cursor-pointer p-1"
-                  onClick={copyToClipboard}
+                  onClick={() =>
+                    copyToClipboard(`pnpm dlx shadcn@latest add ${name}`)
+                  }
                 >
                   <Clipboard
                     className={cn(
                       "absolute size-4 transition duration-200",
-                      copied ? "scale-0" : "scale-100",
+                      isCopied ? "scale-0" : "scale-100",
                     )}
                   />
 
                   <Check
                     className={cn(
                       "absolute size-4 transition duration-200",
-                      !copied ? "scale-0" : "scale-100",
+                      !isCopied ? "scale-0" : "scale-100",
                     )}
                   />
                 </Button>
@@ -113,9 +111,4 @@ export function ComponentWrapper({
       </div>
     </ComponentErrorBoundary>
   );
-}
-
-function getComponentName(name: string) {
-  // convert kebab-case to title case
-  return name.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
 }

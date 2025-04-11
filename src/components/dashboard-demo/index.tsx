@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/dashboard-demo/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ScrollArea } from "../ui/scroll-area";
 
+import { BlockViewer } from "../block-viewer";
 import data from "./data.json";
 
 export function Dashboard() {
@@ -41,10 +42,12 @@ export function Dashboard() {
 
 export function DashboardDemo() {
   return (
-    <iframe
-      src={`/dashboard`}
-      height={750}
-      className="bg-background relative z-1 w-full"
-    />
+    <BlockViewer name="dashboard-01" internalUrl={`/dashboard`}>
+      <iframe
+        src={`/dashboard`}
+        height={750}
+        className="bg-background relative z-1 w-full"
+      />
+    </BlockViewer>
   );
 }

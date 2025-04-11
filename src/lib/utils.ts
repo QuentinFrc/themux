@@ -9,3 +9,8 @@ export const copyToClipboard = (text: string) => {
   if (window === undefined) return;
   window.navigator.clipboard.writeText(text);
 };
+
+export function getComponentName(name: string) {
+  // convert kebab-case to title case
+  return name.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+}
