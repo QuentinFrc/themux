@@ -65,7 +65,7 @@ export default function ShadcnThemesPage() {
 
       <Tabs defaultValue="cards-demo" className="isolate gap-0">
         <ContainerWrapper withCane>
-          <TabsList className="my-4 bg-transparent">
+          <TabsList className="my-6 bg-transparent">
             <TabsTrigger value="cards-demo" className="px-4">
               Cards
             </TabsTrigger>

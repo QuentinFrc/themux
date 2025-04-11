@@ -51,7 +51,7 @@ export function ComponentWrapper({
               </div>
 
               <AlertTitle className="w-full font-mono text-xs text-pretty">
-                {`pnpm dlx shadcn@latest add `}
+                {`npx shadcn@latest add `}
                 <span>{name}</span>
               </AlertTitle>
 
@@ -61,7 +61,7 @@ export function ComponentWrapper({
                   variant={"ghost"}
                   className="relative size-4 cursor-pointer p-1"
                   onClick={() =>
-                    copyToClipboard(`pnpm dlx shadcn@latest add ${name}`)
+                    copyToClipboard(`npx shadcn@latest add ${name}`)
                   }
                 >
                   <Clipboard

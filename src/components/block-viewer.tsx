@@ -119,25 +119,26 @@ function BlockViewerToolbar({
           >
             <ToggleGroupItem
               value="100"
-              className="h-fit rounded-sm p-1"
+              className="hidden h-fit rounded-sm p-1 md:inline-flex"
               title="Desktop"
             >
               <Monitor className="size-4" />
             </ToggleGroupItem>
             <ToggleGroupItem
               value="60"
-              className="h-fit rounded-sm p-1"
+              className="hidden h-fit rounded-sm p-1 md:inline-flex"
               title="Tablet"
             >
               <Tablet className="size-4" />
             </ToggleGroupItem>
             <ToggleGroupItem
               value="30"
-              className="h-fit rounded-sm p-1"
+              className="hidden h-fit rounded-sm p-1 md:inline-flex"
               title="Mobile"
             >
               <Smartphone className="size-4" />
             </ToggleGroupItem>
+
             <Button
               size="icon"
               variant="ghost"
@@ -145,7 +146,7 @@ function BlockViewerToolbar({
               asChild
               title="Open in New Tab"
             >
-              <ExternalLink href={`${baseUrl}${internalUrl}`} showIcon>
+              <ExternalLink href={`${baseUrl}${internalUrl}`}>
                 <span className="sr-only">Open in New Tab</span>
                 <Fullscreen className="size-4" />
               </ExternalLink>
@@ -153,13 +154,13 @@ function BlockViewerToolbar({
           </ToggleGroup>
         </div>
 
-        <Alert className="border-primary/30 bg-primary/10 flex w-full items-center border px-4 py-1 @lg:max-w-1/3">
+        <Alert className="border-primary/30 bg-primary/10 flex w-full items-center border px-4 py-1 @lg:max-w-1/2 @3xl:max-w-1/3">
           <div className="pr-2">
             <Terminal className="size-4" />
           </div>
 
           <AlertTitle className="w-full font-mono text-xs text-pretty">
-            {`pnpm dlx shadcn@latest add `}
+            {`npx shadcn@latest add `}
             <span>{name}</span>
           </AlertTitle>
 
@@ -168,9 +169,7 @@ function BlockViewerToolbar({
               size={"icon"}
               variant={"ghost"}
               className="relative size-4 cursor-pointer p-1"
-              onClick={() =>
-                copyToClipboard(`pnpm dlx shadcn@latest add ${name}`)
-              }
+              onClick={() => copyToClipboard(`npx shadcn@latest add ${name}`)}
             >
               <Clipboard
                 className={cn(

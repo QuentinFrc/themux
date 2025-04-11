@@ -6,11 +6,12 @@ import { Palette, X } from "lucide-react";
 import * as React from "react";
 import { TokensList } from "./color-tokens";
 import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
-import { ThemePresets } from "./theme-presets";
 import { CustomizerSettings } from "./customizer-settings";
 import { ExternalLink } from "./external-link";
 import { GitHub } from "./icons/github";
 import { ResetButton } from "./reset-button";
+import { ThemePresets } from "./theme-presets";
+import { Typography } from "./typography";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import {
@@ -67,9 +68,10 @@ export function CustomizerSidebar({
       <SidebarContent className="scrollbar-thin @container relative max-h-svh group-data-[collapsible=icon]:invisible [&>button]:hidden">
         <Tabs defaultValue="tokens">
           <SidebarHeader className="bg-sidebar sticky top-0 z-10 rounded-t-lg px-3 max-md:pt-2">
-            <TabsList className="w-full">
+            <TabsList className="w-full text-xs">
               <TabsTrigger value="tokens">Tokens</TabsTrigger>
-              <TabsTrigger value="theme-presets">Theme presets</TabsTrigger>
+              <TabsTrigger value="theme-presets">Presets</TabsTrigger>
+              <TabsTrigger value="typography">Typography</TabsTrigger>
             </TabsList>
           </SidebarHeader>
           <TabsContent
@@ -79,11 +81,15 @@ export function CustomizerSidebar({
             <Label className="flex items-center gap-1 pb-2">
               <Palette className="size-4" /> Tokens
             </Label>
-            <TokensList className="" />
+            <TokensList />
           </TabsContent>
 
           <TabsContent value="theme-presets" className="px-3 py-2">
-            <ThemePresets className="" />
+            <ThemePresets />
+          </TabsContent>
+
+          <TabsContent value="typography" className="px-3 py-2">
+            <Typography />
           </TabsContent>
         </Tabs>
       </SidebarContent>
