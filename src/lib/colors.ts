@@ -955,13 +955,13 @@ export const surfaceShadesPresets: Record<
       "sidebar-border": "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)}
     },
     dark: {
-      background: "oklch(0 0 0)", // --color-black
+      background: "oklch(0.145 0 0)", // --color-neutral-950
       foreground: "oklch(0.985 0 0)", // --color-neutral-50
 
-      card: "oklch(0 0 0)", // --color-black
+      card: "oklch(0.145 0 0)", // --color-neutral-950
       "card-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
-      popover: "oklch(0 0 0)", // --color-black
+      popover: "oklch(0.145 0 0)", // --color-neutral-950
       "popover-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
       muted: "oklch(0.205 0 0)", // --color-neutral-900
@@ -970,16 +970,16 @@ export const surfaceShadesPresets: Record<
       accent: "oklch(0.205 0 0)", // --color-neutral-900
       "accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
-      border: "oklch(1 0 0 / 10%)", // --color-white
+      border: "oklch(1 0 0 / 12.5%)", // --color-white
       input: "oklch(1 0 0 / 15%)", // --color-white
 
-      sidebar: "oklch(0 0 0)", // --color-black
+      sidebar: "oklch(0.145 0 0)", // --color-neutral-950
       "sidebar-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
       "sidebar-accent": "oklch(0.205 0 0)", // --color-neutral-900
       "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
-      "sidebar-border": "oklch(1 0 0 / 10%)", // --color-white
+      "sidebar-border": "oklch(1 0 0 / 12.5%)", // --color-white
     },
   },
   grayish: {
