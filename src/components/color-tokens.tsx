@@ -15,9 +15,9 @@ export function ColorTokens({ className }: React.ComponentProps<"div">) {
       <Label className="flex items-center gap-1 pb-2">
         <Palette className="size-4" /> Tokens
       </Label>
-      <div className={cn("h-full rounded-lg", className)}>
+      <div className={cn("h-full rounded-lg")}>
         <ScrollArea className="relative size-full">
-          <TokensList />
+          <TokensList className={className} />
         </ScrollArea>
       </div>
     </section>
@@ -33,7 +33,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
   } = useColorTokens();
 
   return (
-    <div className={cn("grid space-y-2", className)}>
+    <div className={cn("space-y-2", className)}>
       <ControlSection title="Base colors" id="base-colors" expanded>
         <TokenColorPicker
           colorProperty="background"

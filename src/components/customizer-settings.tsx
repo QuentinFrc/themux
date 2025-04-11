@@ -38,7 +38,8 @@ export function CustomizerSettings({
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="ghost" size="sm">
-          <Settings />
+          <span className="hidden @md:inline-flex">Settings</span> <Settings />
+          <span className="sr-only">Settings</span>
         </Button>
       </PopoverTrigger>
 

@@ -107,9 +107,9 @@ export function PasteColorControl({
   };
 
   return (
-    <div className={cn("min-w-48", className)}>
+    <div className={cn("min-w-48", className)} {...props}>
       <form
-        className="relative flex items-center gap-1 overflow-hidden rounded-lg border p-1"
+        className="relative flex items-center gap-1 overflow-hidden rounded-lg border p-0.5"
         onSubmit={handleSubmitColorPaste}
       >
         <Input
@@ -168,7 +168,7 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="group scaled relative flex h-10 w-full shrink-0 items-center justify-between gap-1 rounded-lg border p-1 px-2">
+        <div className="group scaled relative mb-0 flex h-10 w-full shrink-0 items-center justify-between gap-1 rounded-lg border p-1 px-2">
           <div className="flex items-center gap-2 px-1">
             <span className="min-w-16 text-sm">
               {isMounted && activePresetLabel}
@@ -202,12 +202,14 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
           <ChevronDown className="size-4 shrink-0 opacity-50" />
         </div>
       </PopoverTrigger>
-
+      <span className="text-muted-foreground truncate text-xs">
+        {`background, card, popover, muted, etc.`}
+      </span>
       <PopoverContent
         className="scaled w-auto overflow-hidden p-0"
         align="start"
       >
-        <Command className="w-full">
+        <Command className={cn("w-full", className)}>
           {isMounted && (
             <>
               <CommandEmpty>No surface shades found.</CommandEmpty>
@@ -273,7 +275,7 @@ export function ShadcnPresetsControls({
   const [config] = useConfig();
 
   return (
-    <div className={cn("", className)}>
+    <div className={cn("", className)} {...props}>
       {/* Default shadcn/ui presets */}
       {basePresetsV4Array.map((themeObject) => {
         const isActive = config.themeObject.name === themeObject.name;
@@ -589,6 +591,18 @@ export function ControlSection({
           <div className="space-y-2 p-2.5">{children}</div>
         </div>
       </div>
+    </div>
+  );
+}
+
+export function ControlsSkeleton() {
+  return (
+    <div className="space-y-3.5">
+      <div className="flex items-center gap-1">
+        <Skeleton className="size-4" />
+        <Skeleton className="h-4 w-24" />
+      </div>
+      <Skeleton className="h-48" />
     </div>
   );
 }

@@ -32,23 +32,15 @@ import {
   SelectValue,
 } from "./ui/select";
 
-const PLACEHOLDERS = [
-  "oklch(0.685 0.169 237.323)",
-  "hsl(199.18 100% 47.843%)",
-  "rgb(0, 166, 244)",
-  "#00a6f4",
-];
-
 export function QuickCustomizer() {
   const { getColorToken, setPrimaryColorTokens } = useColorTokens();
-
   const { modesInSync } = useSettings();
   const [shade, setShade] = useState<TailwindShadeKey>("500");
 
   return (
     <div className="@container flex flex-wrap items-start gap-6 sm:flex-row">
       {/* Paste your primary color */}
-      <section className="grow space-y-1.5 md:flex-1">
+      <section className="grow space-y-1.5 sm:flex-1">
         <Label className="flex items-center gap-1 pb-2">
           <ClipboardPaste className="size-4" /> Paste your primary color
         </Label>
@@ -130,10 +122,13 @@ export function QuickCustomizer() {
       </section>
 
       {/* Action buttons */}
-      <section className="grid grow grid-cols-[3fr_1fr] place-content-center items-center gap-2 self-baseline-last sm:grid-cols-[2fr_1fr] @7xl:grid-cols-1">
-        <CopyCodeButtonDialog size="sm" />
-        <div className="flex w-full gap-1">
-          <ResetButton variant="outline" size="sm" className="grow" />
+      <section className="@container my-auto flex min-w-48 flex-3 flex-wrap gap-2 @6xl:w-full @7xl:w-fit">
+        <div className="flex grow items-center gap-2">
+          <CopyCodeButtonDialog size="sm" className="grow" />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <ResetButton size="sm" />
           <CustomizerSettings />
         </div>
       </section>

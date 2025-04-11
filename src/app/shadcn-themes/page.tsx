@@ -1,9 +1,9 @@
 import { CardsDemo } from "@/components/cards-demo";
 import {
   CollapsibleCustomizer,
-  CollapsibleCustomizerProvider,
   CollapsibleCustomizerTrigger,
-} from "@/components/collapsible-theme-customizer-wrapper";
+} from "@/components/collapsible-customizer";
+
 import { ComponentWrapper } from "@/components/components-demo/component-wrapper";
 import { DashboardDemo } from "@/components/dashboard-demo";
 import { FrameHighlight } from "@/components/frame-highlight";
@@ -16,6 +16,7 @@ import { QuickCustomizer } from "@/components/quick-customizer";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
+import { CollapsibleCustomizerProvider } from "@/hooks/use-collapsible-customizer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -24,9 +25,9 @@ export const metadata: Metadata = {
 
 export default function ShadcnThemesPage() {
   return (
-    <CollapsibleCustomizerProvider>
+    <>
       <ContainerWrapper withCane>
-        <SectionWrapper className="@container flex flex-col gap-x-8 gap-y-4 lg:flex-row">
+        <SectionWrapper className="@container">
           <PageHeader className="grow">
             <PageHeaderHeading>
               shadcn/ui customizer supporting
@@ -48,20 +49,18 @@ export default function ShadcnThemesPage() {
               <code className="font-mono font-semibold">hex</code>.
             </PageHeaderDescription>
           </PageHeader>
-
-          <div className="flex content-center items-center gap-2">
-            <CollapsibleCustomizerTrigger />
-          </div>
         </SectionWrapper>
       </ContainerWrapper>
 
       <Separator />
 
-      <CollapsibleCustomizer>
-        <ContainerWrapper withCane className="@container py-4">
+      <CollapsibleCustomizerProvider>
+        <ContainerWrapper withCane className="@container py-8">
           <QuickCustomizer />
+          <CollapsibleCustomizer />
+          <CollapsibleCustomizerTrigger className="absolute bottom-0 left-1/2 z-50 -translate-x-1/2 translate-y-1/2 backdrop-blur-lg" />
         </ContainerWrapper>
-      </CollapsibleCustomizer>
+      </CollapsibleCustomizerProvider>
 
       <Separator />
 
@@ -91,6 +90,6 @@ export default function ShadcnThemesPage() {
           </TabsContent>
         </Tabs>
       </ContainerWrapper>
-    </CollapsibleCustomizerProvider>
+    </>
   );
 }
