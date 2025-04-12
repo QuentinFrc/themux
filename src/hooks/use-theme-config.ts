@@ -1,0 +1,57 @@
+import { allPresetsArray } from "@/lib/colors";
+import { initialThemeConfig, useConfig } from "./use-config";
+import { isEqual } from "lodash";
+
+// TODO: Migrate useConfig to useThemeConfig
+export function useThemeConfig() {
+  const [config, setConfig] = useConfig();
+
+  const currentThemeObject = config.themeObject;
+  const currentSurfacePreset = config.surface;
+  const currentRadius = config.radius;
+
+  const resetToDefault = () => {
+    setConfig(initialThemeConfig);
+  };
+
+  const currentPresetName = config.themeObject.name;
+  const currentPresetThemeObject = allPresetsArray.find(
+    (preset) => preset.name === currentPresetName,
+  );
+
+  const resetToLatestThemePreset = () => {
+    if (!currentPresetThemeObject) return;
+
+    setConfig((prev) => {
+      return {
+        ...prev,
+        radius: currentPresetThemeObject.radius ?? prev.radius,
+        themeObject: {
+          ...prev.themeObject,
+          ...currentPresetThemeObject,
+        },
+      };
+    });
+  };
+
+  const hasDefaultThemeChanged = () => {
+    const defaultThemeObject = initialThemeConfig.themeObject;
+    return !isEqual(currentThemeObject, defaultThemeObject);
+  };
+
+  const hasCurrentPresetChanged = () => {
+    return !isEqual(currentPresetThemeObject, currentThemeObject);
+  };
+
+  return {
+    currentThemeObject,
+    currentSurfacePreset,
+    currentRadius,
+    config,
+    setConfig,
+    resetToDefault,
+    resetToLatestThemePreset,
+    hasDefaultThemeChanged,
+    hasCurrentPresetChanged,
+  };
+}
