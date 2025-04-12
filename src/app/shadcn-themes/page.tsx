@@ -54,16 +54,16 @@ export default function ShadcnThemesPage() {
       <Separator />
 
       <CollapsibleCustomizerProvider>
-        <ContainerWrapper withCane className="@container isolate py-8">
+        <ContainerWrapper withCane className="@container z-1 py-8">
           <QuickCustomizer />
           <CollapsibleCustomizer />
-          <CollapsibleCustomizerTrigger className="absolute bottom-0 left-1/2 z-50 -translate-x-1/2 translate-y-1/2 backdrop-blur-lg" />
+          <CollapsibleCustomizerTrigger className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 backdrop-blur-lg" />
         </ContainerWrapper>
       </CollapsibleCustomizerProvider>
 
       <Separator />
 
-      <Tabs defaultValue="cards-demo" className="relative isolate gap-0">
+      <Tabs defaultValue="cards-demo" className="relative gap-0">
         <ContainerWrapper withCane>
           <TabsList className="my-6 bg-transparent">
             <TabsTrigger value="cards-demo" className="px-4">
@@ -77,7 +77,7 @@ export default function ShadcnThemesPage() {
 
         <Separator />
 
-        <ContainerWrapper withCane className="relative isolate py-8">
+        <ContainerWrapper withCane className="relative z-2 py-8">
           <TabsContent value="cards-demo">
             <CardsDemo />
           </TabsContent>
