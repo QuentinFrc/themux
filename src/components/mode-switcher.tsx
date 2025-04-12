@@ -7,7 +7,10 @@ import { useTheme } from "next-themes";
 import * as React from "react";
 import { Button } from "./ui/button";
 
-export function ModeSwitcher() {
+export function ModeSwitcher({
+  className,
+  ...props
+}: React.ComponentProps<typeof Button>) {
   const { setTheme, resolvedTheme } = useTheme();
   const { setMetaColor } = useMetaColor();
 
@@ -21,7 +24,13 @@ export function ModeSwitcher() {
   }, [resolvedTheme, setTheme, setMetaColor]);
 
   return (
-    <Button variant="ghost" size="icon" onClick={toggleTheme}>
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={toggleTheme}
+      className={className}
+      {...props}
+    >
       <SunIcon className="hidden size-4 [html.dark_&]:block" />
       <MoonIcon className="hidden size-4 [html.light_&]:block" />
       <span className="sr-only">Toggle theme</span>

@@ -35,9 +35,9 @@ export default async function ShadcnThemesLayout({
         "--sidebar-width-mobile": SIDEBAR_WIDTH_MOBILE,
       }}
     >
-      <CustomizerSidebar variant="floating" collapsible="offcanvas" />
+      <CustomizerSidebar variant="inset" />
 
-      <SidebarInset className="relative max-h-svh overflow-hidden peer-data-[variant=inset]:max-h-[calc(100svh-1rem)]">
+      <SidebarInset className="relative isolate max-h-svh overflow-hidden peer-data-[variant=inset]:max-h-[calc(100svh-1rem)]">
         <header className="isolate z-10 flex shrink-0 items-center gap-2 border-b">
           <ContainerWrapper className="flex items-center justify-between">
             <div className="flex h-14 w-full items-center gap-2">
@@ -64,7 +64,7 @@ export default async function ShadcnThemesLayout({
           </ContainerWrapper>
         </header>
 
-        <ScrollArea className="relative flex h-full flex-col overflow-hidden">
+        <ScrollArea className="relative z-20 flex h-full flex-col overflow-hidden">
           {children}
         </ScrollArea>
       </SidebarInset>

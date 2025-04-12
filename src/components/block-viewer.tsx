@@ -1,11 +1,14 @@
 "use client";
 
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { useFullscreen } from "@/hooks/use-fullscreen";
 import { cn, getComponentName } from "@/lib/utils";
 import {
   Check,
   Clipboard,
   Fullscreen,
+  Maximize,
+  Minimize,
   Monitor,
   Smartphone,
   Tablet,
@@ -15,6 +18,7 @@ import React from "react";
 import { ImperativePanelHandle } from "react-resizable-panels";
 import { ComponentErrorBoundary } from "./error-boundary";
 import { ExternalLink } from "./external-link";
+import { ModeSwitcher } from "./mode-switcher";
 import { Alert, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
 import {
@@ -74,10 +78,27 @@ export function BlockViewer({
   href?: string;
   internalUrl?: string;
 }) {
+  const { isFullscreen, toggleFullscreen } = useFullscreen();
+
   return (
     <BlockViewerProvider {...props}>
-      <div className="overflow-clip rounded-lg border">
-        <BlockViewerToolbar name={name} internalUrl={internalUrl} />
+      {isFullscreen && (
+        <div className="pointer-events-none fixed inset-0 z-[-1] backdrop-blur-lg" />
+      )}
+      <div
+        className={cn(
+          "flex flex-col rounded-lg border",
+          isFullscreen
+            ? "bg-background fixed inset-0 z-100 m-8 shadow-2xl"
+            : "overflow-clip",
+        )}
+      >
+        <BlockViewerToolbar
+          name={name}
+          internalUrl={internalUrl}
+          isFullscreen={isFullscreen}
+          toggleFullscreen={toggleFullscreen}
+        />
         <BlockViewerView name={name}>{children}</BlockViewerView>
       </div>
     </BlockViewerProvider>
@@ -88,13 +109,18 @@ function BlockViewerToolbar({
   name,
   href,
   internalUrl,
+  isFullscreen,
+  toggleFullscreen,
 }: {
   name: string;
   href?: string;
   internalUrl?: string;
+  isFullscreen: boolean;
+  toggleFullscreen: () => void;
 }) {
   const { resizablePanelRef } = useBlockViewer();
   const { copyToClipboard, isCopied } = useCopyToClipboard();
+
   const baseUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
@@ -102,13 +128,13 @@ function BlockViewerToolbar({
 
   return (
     <div className="w-full border-b px-4 py-3">
-      <div className="flex flex-col items-center gap-2 text-xs font-medium lg:text-sm @lg:flex-row">
+      <div className="flex flex-col items-center gap-4 text-xs font-medium lg:text-sm @lg:flex-row">
         <div className="flex w-full items-center justify-between gap-4">
           <span className="shrink-0 font-semibold">
             {getComponentName(name)}
           </span>
           <ToggleGroup
-            className="ml-auto"
+            className="ml-auto border"
             type="single"
             defaultValue="100"
             onValueChange={(value) => {
@@ -119,42 +145,70 @@ function BlockViewerToolbar({
           >
             <ToggleGroupItem
               value="100"
-              className="hidden h-fit rounded-sm p-1 md:inline-flex"
+              className="hidden aspect-square size-7 md:inline-flex"
               title="Desktop"
             >
               <Monitor className="size-4" />
             </ToggleGroupItem>
             <ToggleGroupItem
               value="60"
-              className="hidden h-fit rounded-sm p-1 md:inline-flex"
+              className="hidden aspect-square size-7 md:inline-flex"
               title="Tablet"
             >
               <Tablet className="size-4" />
             </ToggleGroupItem>
             <ToggleGroupItem
               value="30"
-              className="hidden h-fit rounded-sm p-1 md:inline-flex"
+              className="hidden aspect-square size-7 md:inline-flex"
               title="Mobile"
             >
               <Smartphone className="size-4" />
             </ToggleGroupItem>
+          </ToggleGroup>
+
+          <div className="flex items-center">
+            {isFullscreen && <ModeSwitcher className="size-7" />}
 
             <Button
               size="icon"
               variant="ghost"
-              className="size-fit rounded-sm p-1"
-              asChild
+              onClick={toggleFullscreen}
+              className="hidden size-7 md:inline-flex"
+              title={
+                isFullscreen
+                  ? "Minimize Component View"
+                  : "Maximize Component View"
+              }
+            >
+              {isFullscreen ? (
+                <>
+                  <span className="sr-only">Minimize Component View</span>
+                  <Minimize />
+                </>
+              ) : (
+                <>
+                  <span className="sr-only">Maximize Component View</span>
+                  <Maximize />
+                </>
+              )}
+            </Button>
+
+            <Button
+              size="icon"
+              variant="ghost"
+              className="size-7"
               title="Open in New Tab"
+              asChild
             >
               <ExternalLink href={`${baseUrl}${internalUrl}`}>
                 <span className="sr-only">Open in New Tab</span>
                 <Fullscreen className="size-4" />
               </ExternalLink>
             </Button>
-          </ToggleGroup>
+          </div>
         </div>
 
-        <Alert className="border-primary/30 bg-primary/10 flex w-full items-center border px-4 py-1 @lg:max-w-1/2 @3xl:max-w-1/3">
+        <Alert className="border-primary/30 bg-primary/10 flex w-full items-center border px-4 py-1.5 @lg:max-w-1/2 @3xl:max-w-1/3">
           <div className="pr-2">
             <Terminal className="size-4" />
           </div>
@@ -210,7 +264,7 @@ function BlockViewerView({
         id={name}
         data-name={name.toLowerCase()}
         className={cn(
-          "grid w-full scroll-mt-16 gap-4 overflow-clip",
+          "grid w-full grow scroll-mt-16 gap-4 overflow-clip pr-1",
           className,
         )}
         {...props}
@@ -218,7 +272,7 @@ function BlockViewerView({
         <ResizablePanelGroup direction="horizontal" className="relative z-10">
           <ResizablePanel
             ref={resizablePanelRef}
-            className="bg-background relative aspect-[4/2.5] border md:aspect-auto"
+            className="bg-background relative border-r md:aspect-auto"
             defaultSize={100}
             minSize={30}
           >

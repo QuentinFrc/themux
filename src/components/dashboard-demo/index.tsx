@@ -45,8 +45,7 @@ export function DashboardDemo() {
     <BlockViewer name="dashboard-01" internalUrl={`/dashboard`}>
       <iframe
         src={`/dashboard`}
-        height={750}
-        className="bg-background relative z-1 w-full"
+        className="bg-background relative z-1 h-full min-h-[750px] w-full"
       />
     </BlockViewer>
   );
