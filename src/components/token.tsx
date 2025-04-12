@@ -1,29 +1,29 @@
 "use client";
 
 import { cn, copyToClipboard } from "@/lib/utils";
-import { ColorProperty, OklchValue } from "@/types/theme";
+import { ColorProperty } from "@/types/theme";
 import { Check, Clipboard } from "lucide-react";
 import { ComponentProps, useState } from "react";
 
 export function Token({
   colorProperty,
-  oklchColor,
+  color,
 }: {
   colorProperty: ColorProperty;
-  oklchColor: OklchValue;
+  color: string;
 }) {
   return (
     <div className="flex items-center gap-2">
-      <TokenDisplay oklchColor={oklchColor} />
-      <TokenInfo colorProperty={colorProperty} oklchColor={oklchColor} />
+      <TokenDisplay color={color} />
+      <TokenInfo colorProperty={colorProperty} color={color} />
     </div>
   );
 }
 
 export function TokenDisplay({
-  oklchColor,
+  color,
   className,
-}: ComponentProps<"div"> & { oklchColor: OklchValue }) {
+}: ComponentProps<"div"> & { color: string }) {
   return (
     <div
       className={cn(
@@ -31,7 +31,7 @@ export function TokenDisplay({
         className,
       )}
       style={{
-        backgroundColor: oklchColor,
+        backgroundColor: color,
       }}
     />
   );
@@ -39,15 +39,15 @@ export function TokenDisplay({
 
 export function TokenInfo({
   colorProperty,
-  oklchColor,
+  color,
 }: {
   colorProperty: ColorProperty;
-  oklchColor: OklchValue;
+  color: string;
 }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopyColor = () => {
-    copyToClipboard(oklchColor);
+    copyToClipboard(color);
 
     setCopied(true);
     setTimeout(() => setCopied(false), 1200);
@@ -58,7 +58,7 @@ export function TokenInfo({
         <p className="font-mono text-xs font-semibold">
           {`--${colorProperty}`}
         </p>
-        <p className="text-muted-foreground font-mono text-xs">{oklchColor}</p>
+        <p className="text-muted-foreground font-mono text-xs">{color}</p>
       </div>
 
       <button

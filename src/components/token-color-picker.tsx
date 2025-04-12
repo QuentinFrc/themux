@@ -16,7 +16,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 interface TokenColorPickerProps {
   colorProperty: ColorProperty;
-  oklchColor: OklchValue;
+  color: string;
   syncModes?: boolean;
   setColorTokens: (obj: {
     property: ColorProperty;
@@ -27,17 +27,17 @@ interface TokenColorPickerProps {
 
 export function TokenColorPicker({
   colorProperty,
-  oklchColor,
+  color,
   syncModes,
   setColorTokens,
 }: TokenColorPickerProps) {
-  const [currentColor, setCurrentColor] = useState(oklchColor);
-  const hexColor = convertToHex(oklchColor);
+  const [currentColor, setCurrentColor] = useState(color);
+  const hexColor = convertToHex(color);
   const { modesInSync } = useSettings();
 
   useEffect(() => {
-    if (currentColor !== oklchColor) setCurrentColor(oklchColor);
-  }, [oklchColor]);
+    if (currentColor !== color) setCurrentColor(color);
+  }, [color]);
 
   const debouncedSetColorTokens = useDebouncedCallback(setColorTokens, 100);
 
@@ -62,7 +62,7 @@ export function TokenColorPicker({
       <Popover>
         <div className="flex items-center gap-2">
           <PopoverTrigger className="relative cursor-pointer">
-            <TokenDisplay oklchColor={oklchColor} />
+            <TokenDisplay color={color} />
             <Pipette
               className="text-foreground fill-foreground absolute inset-0 m-auto size-4"
               style={{
@@ -70,7 +70,7 @@ export function TokenColorPicker({
               }}
             />
           </PopoverTrigger>
-          <TokenInfo colorProperty={colorProperty} oklchColor={oklchColor} />
+          <TokenInfo colorProperty={colorProperty} color={color} />
         </div>
 
         <PopoverContent className="bg-background flex size-fit gap-6 p-4">
@@ -84,7 +84,7 @@ export function TokenColorPicker({
   );
 }
 
-function ColorOklchValue({ currentColor }: { currentColor: OklchValue }) {
+function ColorOklchValue({ currentColor }: { currentColor: string }) {
   return (
     <div className="flex items-center gap-1">
       <div
@@ -107,9 +107,7 @@ function ColorPickerErrorFallback() {
     <div className="flex items-center gap-2">
       <div className="relative cursor-pointer">
         <TokenDisplay
-          oklchColor={
-            config.themeObject[resolvedTheme as ThemeMode].destructive
-          }
+          color={config.themeObject[resolvedTheme as ThemeMode].destructive!}
         />
         <CircleAlert className="absolute inset-0 m-auto size-4 text-neutral-50" />
       </div>

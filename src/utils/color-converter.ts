@@ -30,7 +30,7 @@ const formatAlphaForHex = (alpha: number | undefined): string | null => {
 export const colorFormatter = (
   colorValue: string, // Expected "oklch(L C H)" or "oklch(L C H / A)"
   format: ColorFormat = "oklch",
-  tailwindVersion: TailwindVersion = "3",
+  tailwindVersion: TailwindVersion = "4",
 ): string => {
   try {
     const parsedColor = culori.parse(colorValue);
@@ -113,7 +113,7 @@ export const convertToOklch = (colorToConvert: string): OklchValue => {
   return `oklch(${l} ${c} ${h})`;
 };
 
-export function convertToHex(colorToConvert: OklchValue | string): string {
+export function convertToHex(colorToConvert: string): string {
   const parsedColor = culori.parse(colorToConvert);
   if (!parsedColor) throw new Error("Invalid color input");
 

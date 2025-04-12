@@ -1,8 +1,8 @@
 import {
-  CssThemeProperties,
   OklchValue,
   RemValue,
   ThemeObject,
+  ThemeProperties,
 } from "@/types/theme";
 import { basePresetsV4, colorfulPresets } from "./colors";
 
@@ -147,8 +147,10 @@ function getCopyableThemeCSSVariablesV4({
   }`.trim();
 }
 
-export function getCssVarsFromThemeObject(themeProperties: CssThemeProperties) {
-  const cssVars = {} as Record<string, OklchValue | RemValue>;
+export function getCssVarsFromThemeObject(
+  themeProperties: Partial<ThemeProperties>,
+) {
+  const cssVars = {} as Record<string, OklchValue | RemValue | string>;
 
   for (const [key, value] of Object.entries(themeProperties)) {
     cssVars[`--${key}`] = value;

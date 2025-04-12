@@ -37,7 +37,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
       <ControlSection title="Base colors" id="base-colors" expanded>
         <TokenColorPicker
           colorProperty="background"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "background",
           })}
           setColorTokens={setColorTokenWithForeground}
@@ -45,7 +45,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
         />
         <TokenColorPicker
           colorProperty="foreground"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "foreground",
           })}
           setColorTokens={setColorToken}
@@ -56,14 +56,14 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
       <ControlSection title="Primary colors" id="primary-colors" expanded>
         <TokenColorPicker
           colorProperty="primary"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "primary",
           })}
           setColorTokens={setPrimaryColorTokens}
         />
         <Token
           colorProperty="primary-foreground"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "primary-foreground",
           })}
         />
@@ -72,14 +72,14 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
       <ControlSection title="Secondary colors" id="secondary-colors">
         <TokenColorPicker
           colorProperty="secondary"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "secondary",
           })}
           setColorTokens={setColorTokenWithForeground}
         />
         <Token
           colorProperty="secondary-foreground"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "secondary-foreground",
           })}
         />
@@ -88,7 +88,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
       <ControlSection title="Card colors" id="card-colors">
         <TokenColorPicker
           colorProperty="card"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "card",
           })}
           setColorTokens={setColorTokenWithForeground}
@@ -96,7 +96,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
         />
         <Token
           colorProperty="card-foreground"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "card-foreground",
           })}
         />
@@ -105,7 +105,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
       <ControlSection title="Popover colors" id="popover-colors">
         <TokenColorPicker
           colorProperty="popover"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "popover",
           })}
           setColorTokens={setColorTokenWithForeground}
@@ -113,7 +113,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
         />
         <Token
           colorProperty="popover-foreground"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "popover-foreground",
           })}
         />
@@ -122,7 +122,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
       <ControlSection title="Muted colors" id="muted-colors">
         <TokenColorPicker
           colorProperty="muted"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "muted",
           })}
           setColorTokens={setColorTokenWithForeground}
@@ -130,7 +130,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
         />
         <TokenColorPicker
           colorProperty="muted-foreground"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "muted-foreground",
           })}
           setColorTokens={setColorToken}
@@ -141,7 +141,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
       <ControlSection title="Accent colors" id="accent-colors">
         <TokenColorPicker
           colorProperty="accent"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "accent",
           })}
           setColorTokens={setColorTokenWithForeground}
@@ -149,7 +149,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
         />
         <Token
           colorProperty="accent-foreground"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "accent-foreground",
           })}
         />
@@ -158,7 +158,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
       <ControlSection title="Destructive colors" id="destructive-colors">
         <TokenColorPicker
           colorProperty="destructive"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "destructive",
           })}
           setColorTokens={setColorToken}
@@ -172,7 +172,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
       >
         <TokenColorPicker
           colorProperty="border"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "border",
           })}
           setColorTokens={setColorToken}
@@ -180,7 +180,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
         />
         <TokenColorPicker
           colorProperty="input"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "input",
           })}
           setColorTokens={setColorToken}
@@ -188,7 +188,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
         />
         <TokenColorPicker
           colorProperty="ring"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "ring",
           })}
           setColorTokens={setColorToken}
@@ -198,35 +198,35 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
       <ControlSection title="Chart colors" id="chart-colors">
         <TokenColorPicker
           colorProperty="chart-1"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "chart-1",
           })}
           setColorTokens={setColorToken}
         />
         <TokenColorPicker
           colorProperty="chart-2"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "chart-2",
           })}
           setColorTokens={setColorToken}
         />
         <TokenColorPicker
           colorProperty="chart-3"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "chart-3",
           })}
           setColorTokens={setColorToken}
         />
         <TokenColorPicker
           colorProperty="chart-4"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "chart-4",
           })}
           setColorTokens={setColorToken}
         />
         <TokenColorPicker
           colorProperty="chart-5"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "chart-5",
           })}
           setColorTokens={setColorToken}
@@ -236,7 +236,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
       <ControlSection title="Sidebar colors" id="sidebar-colors">
         <TokenColorPicker
           colorProperty="sidebar"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "sidebar",
           })}
           setColorTokens={setColorTokenWithForeground}
@@ -244,13 +244,13 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
         />
         <Token
           colorProperty="sidebar-foreground"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "sidebar-foreground",
           })}
         />
         <TokenColorPicker
           colorProperty="sidebar-primary"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "sidebar-primary",
           })}
           setColorTokens={setColorTokenWithForeground}
@@ -258,13 +258,13 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
         />
         <Token
           colorProperty="sidebar-primary-foreground"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "sidebar-primary-foreground",
           })}
         />
         <TokenColorPicker
           colorProperty="sidebar-accent"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "sidebar-accent",
           })}
           setColorTokens={setColorTokenWithForeground}
@@ -272,13 +272,13 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
         />
         <Token
           colorProperty="sidebar-accent-foreground"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "sidebar-accent-foreground",
           })}
         />
         <TokenColorPicker
           colorProperty="sidebar-border"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "sidebar-border",
           })}
           setColorTokens={setColorToken}
@@ -286,7 +286,7 @@ export function TokensList({ className }: React.ComponentProps<"div">) {
         />
         <TokenColorPicker
           colorProperty="sidebar-ring"
-          oklchColor={getColorToken({
+          color={getColorToken({
             property: "sidebar-ring",
           })}
           setColorTokens={setColorToken}

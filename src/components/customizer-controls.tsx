@@ -334,6 +334,7 @@ function PresetButton({
   const setThemeConfig = () => {
     setConfig((prev) => ({
       ...prev,
+      radius: themeObject.radius ?? prev.radius,
       themeObject,
     }));
   };

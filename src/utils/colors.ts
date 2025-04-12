@@ -1,15 +1,14 @@
 import { basePresetsV4 } from "@/lib/colors";
-import { OklchValue } from "@/types/theme";
 import Color from "color";
 import { parse } from "culori";
 import { convertToHex } from "./color-converter";
 
-export function getOptimalForegroundColor(colorInOklch: OklchValue) {
-  if (!isValidColor(colorInOklch)) {
-    throw new Error(`Invalid color format: ${colorInOklch}`);
+export function getOptimalForegroundColor(baseColor: string) {
+  if (!isValidColor(baseColor)) {
+    throw new Error(`Invalid color format: ${baseColor}`);
   }
 
-  const colorInHex = convertToHex(colorInOklch);
+  const colorInHex = convertToHex(baseColor);
   const color = Color(colorInHex);
 
   const foregroundColor = color.isDark()

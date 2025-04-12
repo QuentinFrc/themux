@@ -3,7 +3,6 @@
 import { useColorTokens } from "@/hooks/use-color-tokens";
 import { TAILWIND_PALETTE_V4, TailwindShadeKey } from "@/lib/palettes";
 import { cn } from "@/lib/utils";
-import { OklchValue } from "@/types/theme";
 import { convertToOklch } from "@/utils/color-converter";
 import React, { ComponentProps } from "react";
 import { Color } from "./color";
@@ -18,7 +17,7 @@ function TailwindV4ColorPalette({
   className,
   ...props
 }: {
-  currentColor: OklchValue;
+  currentColor: string;
   shade: TailwindShadeKey;
   modesInSync?: boolean;
 } & ComponentProps<"div">) {

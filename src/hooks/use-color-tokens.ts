@@ -16,7 +16,13 @@ export function useColorTokens() {
 
   const getColorToken = useCallback(
     ({ property }: { property: ColorProperty }) => {
-      return config.themeObject[mode][property];
+      const color = config.themeObject[mode][property];
+
+      if (!color) {
+        throw new Error(`Color token "${property}" not found in theme object`);
+      }
+
+      return color;
     },
     [mode, config.themeObject[mode]],
   );
@@ -27,7 +33,7 @@ export function useColorTokens() {
     modesInSync = false,
   }: {
     property: ColorProperty;
-    color: OklchValue;
+    color: string;
     modesInSync?: boolean;
   }) => {
     // Update both modes
@@ -71,7 +77,7 @@ export function useColorTokens() {
     modesInSync = false,
   }: {
     property: ColorProperty;
-    color: OklchValue;
+    color: OklchValue | string;
     modesInSync?: boolean;
   }) => {
     const foregroundColor = getOptimalForegroundColor(color);

@@ -4,6 +4,7 @@ import {
   ThemeConfig,
   ThemeMode,
   ThemeObject,
+  ThemeProperties,
 } from "@/types/theme";
 import { colorFormatter } from "@/utils/color-converter";
 
@@ -12,7 +13,7 @@ function generateColorVariables(
   mode: ThemeMode,
   formatColor: (color: string) => string,
 ): string {
-  const styles = themeObject[mode];
+  const styles = themeObject[mode] as ThemeProperties;
 
   return `--background: ${formatColor(styles.background)};
   --foreground: ${formatColor(styles.foreground)};
@@ -54,7 +55,7 @@ function generateThemeVariables(
 ): string {
   if (mode === "light") {
     return `:root {
-  --radius: ${themeConfig.radius};
+  --radius: ${themeConfig.themeObject.radius ?? themeConfig.radius};
   ${generateColorVariables(themeConfig.themeObject, mode, formatColor)}
 }`;
   }

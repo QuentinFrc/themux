@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { useConfig } from "@/hooks/use-config";
 import { getCssVarsFromThemeObject } from "@/lib/themes";
-import { CssThemeProperties, ThemeMode } from "@/types/theme";
+import { ThemeMode, ThemeProperties } from "@/types/theme";
 import {
   DATA_KEYS,
   DataKey,
@@ -23,7 +23,7 @@ export function ThemeSync() {
     if (!root) return;
 
     const preset = config.themeObject.name;
-    const primary = config.themeObject[mode].primary;
+    const primary = config.themeObject[mode].primary!;
     const surface = config.surface ?? "default";
 
     setAttributeToElement({
@@ -42,9 +42,9 @@ export function ThemeSync() {
       value: surface,
     });
 
-    const themeProperties: CssThemeProperties = {
+    const themeProperties: Partial<ThemeProperties> = {
       ...config.themeObject[mode],
-      radius: config.radius,
+      radius: config.themeObject.radius ?? config.radius,
     };
 
     const cssVars = getCssVarsFromThemeObject(themeProperties);
