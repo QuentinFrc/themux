@@ -19,10 +19,10 @@ import {
 } from "@tabler/icons-react";
 import * as React from "react";
 
-import { NavDocuments } from "@/components/dashboard-demo/nav-documents";
-import { NavMain } from "@/components/dashboard-demo/nav-main";
-import { NavSecondary } from "@/components/dashboard-demo/nav-secondary";
-import { NavUser } from "@/components/dashboard-demo/nav-user";
+import { NavDocuments } from "@/components/dashboard-demo/components/nav-documents";
+import { NavMain } from "@/components/dashboard-demo/components/nav-main";
+import { NavSecondary } from "@/components/dashboard-demo/components/nav-secondary";
+import { NavUser } from "@/components/dashboard-demo/components/nav-user";
 import {
   Sidebar,
   SidebarContent,

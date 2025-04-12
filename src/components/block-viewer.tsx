@@ -54,12 +54,7 @@ function BlockViewerProvider({ children }: { children: React.ReactNode }) {
         resizablePanelRef,
       }}
     >
-      <div
-        className="group/block-view-wrapper @container flex min-w-0 flex-col items-stretch gap-4"
-        style={{
-          "--height": "750px",
-        }}
-      >
+      <div className="group/block-view-wrapper @container flex min-w-0 flex-col items-stretch gap-4">
         {children}
       </div>
     </BlockViewerContext.Provider>
@@ -89,7 +84,7 @@ export function BlockViewer({
         className={cn(
           "flex flex-col overflow-clip rounded-lg border",
           isFullscreen
-            ? "bg-background fixed inset-0 z-100 m-8 shadow-2xl"
+            ? "bg-background fixed inset-0 z-100 h-svh scale-95 shadow-2xl"
             : "overflow-clip",
         )}
       >
@@ -107,24 +102,18 @@ export function BlockViewer({
 
 function BlockViewerToolbar({
   name,
-  href,
   internalUrl,
   isFullscreen,
   toggleFullscreen,
 }: {
   name: string;
-  href?: string;
   internalUrl?: string;
   isFullscreen: boolean;
   toggleFullscreen: () => void;
 }) {
   const { resizablePanelRef } = useBlockViewer();
-  const { copyToClipboard, isCopied } = useCopyToClipboard();
 
-  const baseUrl =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://themux.vercel.app";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   return (
     <div className="w-full border-b px-4 py-3">
@@ -207,54 +196,18 @@ function BlockViewerToolbar({
             </Button>
           </div>
         </div>
-
-        <Alert className="border-primary/30 bg-primary/10 flex w-full items-center border px-4 py-1.5 @lg:max-w-1/2 @3xl:max-w-1/3">
-          <div className="pr-2">
-            <Terminal className="size-4" />
-          </div>
-
-          <AlertTitle className="w-full font-mono text-xs text-pretty">
-            {`npx shadcn@latest add `}
-            <span>{name}</span>
-          </AlertTitle>
-
-          <div className="ml-auto flex items-center">
-            <Button
-              size={"icon"}
-              variant={"ghost"}
-              className="relative size-4 cursor-pointer p-1"
-              onClick={() => copyToClipboard(`npx shadcn@latest add ${name}`)}
-            >
-              <Clipboard
-                className={cn(
-                  "absolute size-4 transition duration-200",
-                  isCopied ? "scale-0" : "scale-100",
-                )}
-              />
-
-              <Check
-                className={cn(
-                  "absolute size-4 transition duration-200",
-                  !isCopied ? "scale-0" : "scale-100",
-                )}
-              />
-            </Button>
-          </div>
-        </Alert>
       </div>
     </div>
   );
 }
 
 function BlockViewerView({
-  className,
   name,
+  className,
   children,
-  href,
   ...props
 }: React.ComponentPropsWithoutRef<"div"> & {
   name: string;
-  href?: string;
 }) {
   const { resizablePanelRef } = useBlockViewer();
 

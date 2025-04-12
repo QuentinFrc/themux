@@ -6,6 +6,7 @@ import {
 
 import { DashboardDemo } from "@/components/dashboard-demo";
 import { FrameHighlight } from "@/components/frame-highlight";
+import { MailDemo } from "@/components/mail-demo";
 import {
   PageHeader,
   PageHeaderDescription,
@@ -72,6 +73,9 @@ export default function ShadcnThemesPage() {
             <TabsTrigger value="dashboard-demo" className="px-4">
               Dashboard
             </TabsTrigger>
+            <TabsTrigger value="mail-demo" className="px-4">
+              Mail
+            </TabsTrigger>
           </TabsList>
         </ContainerWrapper>
 
@@ -84,6 +88,10 @@ export default function ShadcnThemesPage() {
 
           <TabsContent value="dashboard-demo">
             <DashboardDemo />
+          </TabsContent>
+
+          <TabsContent value="mail-demo">
+            <MailDemo />
           </TabsContent>
         </ContainerWrapper>
       </Tabs>

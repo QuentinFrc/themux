@@ -23,10 +23,7 @@ export function ComponentWrapper({
   showUrl?: boolean;
 }) {
   const { copyToClipboard, isCopied } = useCopyToClipboard();
-  const baseUrl =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://themux.vercel.app";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   return (
     <ComponentErrorBoundary name={name}>

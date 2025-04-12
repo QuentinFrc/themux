@@ -1,15 +1,15 @@
-import { AppSidebar } from "@/components/dashboard-demo/app-sidebar";
-import { ChartAreaInteractive } from "@/components/dashboard-demo/chart-area-interactive";
-import { DataTable } from "@/components/dashboard-demo/data-table";
-import { SectionCards } from "@/components/dashboard-demo/section-cards";
-import { SiteHeader } from "@/components/dashboard-demo/site-header";
+import { AppSidebar } from "@/components/dashboard-demo/components/app-sidebar";
+import { ChartAreaInteractive } from "@/components/dashboard-demo/components/chart-area-interactive";
+import { DataTable } from "@/components/dashboard-demo/components/data-table";
+import { SectionCards } from "@/components/dashboard-demo/components/section-cards";
+import { SiteHeader } from "@/components/dashboard-demo/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ScrollArea } from "../ui/scroll-area";
 
 import { BlockViewer } from "../block-viewer";
 import data from "./data.json";
 
-export function Dashboard() {
+export function DashboardPage() {
   return (
     <SidebarProvider
       style={
