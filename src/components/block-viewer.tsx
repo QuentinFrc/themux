@@ -87,7 +87,7 @@ export function BlockViewer({
       )}
       <div
         className={cn(
-          "flex flex-col rounded-lg border",
+          "flex flex-col overflow-clip rounded-lg border",
           isFullscreen
             ? "bg-background fixed inset-0 z-100 m-8 shadow-2xl"
             : "overflow-clip",
@@ -264,7 +264,7 @@ function BlockViewerView({
         id={name}
         data-name={name.toLowerCase()}
         className={cn(
-          "grid w-full grow scroll-mt-16 gap-4 overflow-clip pr-1",
+          "grid w-full grow scroll-mt-16 gap-4 overflow-clip md:pr-1",
           className,
         )}
         {...props}
@@ -272,7 +272,7 @@ function BlockViewerView({
         <ResizablePanelGroup direction="horizontal" className="relative z-10">
           <ResizablePanel
             ref={resizablePanelRef}
-            className="bg-background relative border-r md:aspect-auto"
+            className="bg-background relative md:aspect-auto md:border-r"
             defaultSize={100}
             minSize={30}
           >
