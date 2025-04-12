@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { useConfig } from "@/hooks/use-config";
+import { useThemeConfig } from "@/hooks/use-theme-config";
 import { getCssVarsFromThemeObject } from "@/lib/themes";
 import { ThemeMode, ThemeProperties } from "@/types/theme";
 import {
@@ -14,17 +14,17 @@ import {
 import { useTheme } from "next-themes";
 
 export function ThemeSync() {
-  const [config] = useConfig();
-  const { resolvedTheme } = useTheme();
-  const mode = resolvedTheme as ThemeMode;
+  const { currentThemeObject, currentSurfacePreset, currentRadius } =
+    useThemeConfig();
+  const mode = useTheme().resolvedTheme as ThemeMode;
 
   React.useEffect(() => {
     const root = document.querySelector(":root") as HTMLElement;
     if (!root) return;
 
-    const preset = config.themeObject.name;
-    const primary = config.themeObject[mode].primary!;
-    const surface = config.surface ?? "default";
+    const preset = currentThemeObject.name;
+    const primary = currentThemeObject[mode].primary!;
+    const surface = currentSurfacePreset ?? "default";
 
     setAttributeToElement({
       element: root,
@@ -43,8 +43,8 @@ export function ThemeSync() {
     });
 
     const themeProperties: Partial<ThemeProperties> = {
-      ...config.themeObject[mode],
-      radius: config.themeObject.radius ?? config.radius,
+      ...currentThemeObject[mode],
+      radius: currentThemeObject.radius ?? currentRadius,
     };
 
     const cssVars = getCssVarsFromThemeObject(themeProperties);
@@ -52,7 +52,7 @@ export function ThemeSync() {
     for (const [key, value] of Object.entries(cssVars)) {
       setStyleProperty({ element: root, key: key as DataKey, value });
     }
-  }, [config, mode]);
+  }, [currentThemeObject, currentSurfacePreset, currentRadius, mode]);
 
   return null;
 }

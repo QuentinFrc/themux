@@ -1,8 +1,9 @@
 "use client";
 
-import { useConfig } from "@/hooks/use-config";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { useSettings } from "@/hooks/use-settings";
-import { cn, copyToClipboard } from "@/lib/utils";
+import { useThemeConfig } from "@/hooks/use-theme-config";
+import { cn } from "@/lib/utils";
 import { ColorFormat, TailwindVersion } from "@/types/theme";
 import { generateThemeCode } from "@/utils/theme-style-generator";
 import { Check, Clipboard } from "lucide-react";
@@ -187,8 +188,8 @@ function CustomizerCode({
   colorFormat: ColorFormat;
   tailwindVersion: TailwindVersion;
 }) {
-  const [config] = useConfig();
-  const [copied, setCopied] = React.useState(false);
+  const { config } = useThemeConfig();
+  const { isCopied, copyToClipboard } = useCopyToClipboard();
 
   const themeCode = useMemo(
     () =>
@@ -202,9 +203,6 @@ function CustomizerCode({
 
   const handleCopyThemeStylesCode = () => {
     copyToClipboard(themeCode);
-
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1200);
   };
 
   return (
@@ -235,13 +233,13 @@ function CustomizerCode({
             <Clipboard
               className={cn(
                 "size-4 transition duration-200",
-                copied ? "absolute scale-0" : "scale-100",
+                isCopied ? "absolute scale-0" : "scale-100",
               )}
             />
             <Check
               className={cn(
                 "size-4 transition duration-200",
-                !copied ? "absolute scale-0" : "scale-100",
+                !isCopied ? "absolute scale-0" : "scale-100",
               )}
             />
             Copy code

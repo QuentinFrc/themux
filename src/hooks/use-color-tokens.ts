@@ -7,12 +7,12 @@ import {
 import { getOptimalForegroundColor } from "@/utils/colors";
 import { useTheme } from "next-themes";
 import { useCallback } from "react";
-import { useConfig } from "./use-config";
+import { useThemeConfig } from "./use-theme-config";
 
 export function useColorTokens() {
   const { resolvedTheme } = useTheme();
   const mode = resolvedTheme === "dark" ? "dark" : "light";
-  const [config, setConfig] = useConfig();
+  const { config, setConfig } = useThemeConfig();
 
   const getColorToken = useCallback(
     ({ property }: { property: ColorProperty }) => {

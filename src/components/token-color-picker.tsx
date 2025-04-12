@@ -1,7 +1,7 @@
 "use client";
 
-import { useConfig } from "@/hooks/use-config";
 import { useSettings } from "@/hooks/use-settings";
+import { useThemeConfig } from "@/hooks/use-theme-config";
 import { ColorProperty, OklchValue, ThemeMode } from "@/types/theme";
 import { convertToHex, convertToOklch } from "@/utils/color-converter";
 import { getOptimalForegroundColor } from "@/utils/colors";
@@ -100,14 +100,14 @@ function ColorOklchValue({ currentColor }: { currentColor: string }) {
 
 // Error fallback to prevent *shittier* experiences, for the moment
 function ColorPickerErrorFallback() {
-  const [config] = useConfig();
+  const { currentThemeObject } = useThemeConfig();
   const { resolvedTheme } = useTheme();
 
   return (
     <div className="flex items-center gap-2">
       <div className="relative cursor-pointer">
         <TokenDisplay
-          color={config.themeObject[resolvedTheme as ThemeMode].destructive!}
+          color={currentThemeObject[resolvedTheme as ThemeMode].destructive!}
         />
         <CircleAlert className="absolute inset-0 m-auto size-4 text-neutral-50" />
       </div>

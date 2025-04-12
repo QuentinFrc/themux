@@ -1,10 +1,8 @@
 "use client";
 
 import { useColorTokens } from "@/hooks/use-color-tokens";
-import { useConfig } from "@/hooks/use-config";
 import { useMounted } from "@/hooks/use-mounted";
-import { ChevronUp } from "lucide-react";
-
+import { useThemeConfig } from "@/hooks/use-theme-config";
 import {
   basePresetsV4Array,
   colorfulPresetsArray,
@@ -24,6 +22,7 @@ import { getOptimalForegroundColor, isValidColor } from "@/utils/colors";
 import {
   Check,
   ChevronDown,
+  ChevronUp,
   Laptop,
   Moon,
   SendHorizontal,
@@ -272,13 +271,13 @@ export function ShadcnPresetsControls({
   className,
   ...props
 }: ComponentProps<"div">) {
-  const [config] = useConfig();
+  const { currentThemeObject } = useThemeConfig();
 
   return (
     <div className={cn("", className)} {...props}>
       {/* Default shadcn/ui presets */}
       {basePresetsV4Array.map((themeObject) => {
-        const isActive = config.themeObject.name === themeObject.name;
+        const isActive = currentThemeObject.name === themeObject.name;
 
         return (
           <PresetButton
@@ -294,7 +293,7 @@ export function ShadcnPresetsControls({
       })}
       {/* Colorful presets */}
       {colorfulPresetsArray.map((themeObject) => {
-        const isActive = config.themeObject.name === themeObject.name;
+        const isActive = currentThemeObject.name === themeObject.name;
 
         return (
           <PresetButton
@@ -328,7 +327,7 @@ function PresetButton({
   isActive: boolean;
   showLabel?: boolean;
 } & React.ComponentProps<typeof Button>) {
-  const [_, setConfig] = useConfig();
+  const { setConfig } = useThemeConfig();
   const { resolvedTheme: mode } = useTheme();
 
   const setThemeConfig = () => {
@@ -377,13 +376,13 @@ function PresetButton({
 }
 
 export function RadiusControls({ className, ...props }: ComponentProps<"div">) {
-  const [config, setConfig] = useConfig();
+  const { currentRadius, setConfig } = useThemeConfig();
   const isMounted = useMounted();
 
   return (
     <div className={cn("text-muted-foreground", className)} {...props}>
       {RADIUS_VALUES.map((value) => {
-        const isActive = config.radius === value;
+        const isActive = currentRadius === value;
         const valueWithoutRem = value.replace("rem", "");
 
         if (!isMounted) {
@@ -412,10 +411,10 @@ export function RadiusControls({ className, ...props }: ComponentProps<"div">) {
             size="sm"
             key={value}
             onClick={() => {
-              setConfig({
-                ...config,
+              setConfig((prev) => ({
+                ...prev,
                 radius: value,
-              });
+              }));
             }}
             className={cn(
               BUTTON_CLASSES,

@@ -2,7 +2,6 @@ import { allPresetsArray } from "@/lib/colors";
 import { initialThemeConfig, useConfig } from "./use-config";
 import { isEqual } from "lodash";
 
-// TODO: Migrate useConfig to useThemeConfig
 export function useThemeConfig() {
   const [config, setConfig] = useConfig();
 
