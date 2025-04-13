@@ -1,25 +1,20 @@
 "use client";
 
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { useFullscreen } from "@/hooks/use-fullscreen";
 import { cn, getComponentName } from "@/lib/utils";
 import {
-  Check,
-  Clipboard,
   Fullscreen,
   Maximize,
   Minimize,
   Monitor,
   Smartphone,
   Tablet,
-  Terminal,
 } from "lucide-react";
 import React from "react";
 import { ImperativePanelHandle } from "react-resizable-panels";
 import { ComponentErrorBoundary } from "./error-boundary";
 import { ExternalLink } from "./external-link";
 import { ModeSwitcher } from "./mode-switcher";
-import { Alert, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
 import {
   ResizableHandle,
@@ -78,7 +73,7 @@ export function BlockViewer({
   return (
     <BlockViewerProvider {...props}>
       {isFullscreen && (
-        <div className="pointer-events-none fixed inset-0 z-[-1] backdrop-blur-lg" />
+        <div className="pointer-events-none fixed inset-0 z-[-1] backdrop-blur-md" />
       )}
       <div
         className={cn(
@@ -162,7 +157,7 @@ function BlockViewerToolbar({
               size="icon"
               variant="ghost"
               onClick={toggleFullscreen}
-              className="hidden size-7 md:inline-flex"
+              className="relative hidden size-7 md:inline-flex"
               title={
                 isFullscreen
                   ? "Minimize Component View"
@@ -180,6 +175,13 @@ function BlockViewerToolbar({
                   <Maximize />
                 </>
               )}
+
+              <div
+                className={cn(
+                  "bg-primary absolute top-0 right-0 size-1.5 rounded-full transition-opacity duration-300 ease-in-out",
+                  isFullscreen ? "animate-bounce opacity-100" : "opacity-0",
+                )}
+              />
             </Button>
 
             <Button

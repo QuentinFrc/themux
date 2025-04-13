@@ -22,19 +22,19 @@ export function CollapsibleCustomizerTrigger({
     <Button
       onClick={() => setIsExpanded(!isExpanded)}
       variant="ghost"
-      className={cn("relative flex", className)}
+      className={cn("relative flex h-8", className)}
       {...props}
     >
       <span>{isExpanded ? "Collapse" : "Expand"}</span>
       <ChevronUp
         className={cn(
-          "size-6 transition",
+          "size-4 transition",
           isExpanded ? "rotate-0" : "rotate-180",
         )}
       />
       <div
         className={cn(
-          "bg-primary absolute top-0 right-0 size-2 rounded-full transition-opacity duration-300 ease-in-out",
+          "bg-primary absolute top-1 right-0 size-2 rounded-full transition-opacity duration-300 ease-in-out",
           isExpanded ? "opacity-0" : "animate-bounce opacity-100",
         )}
       />
