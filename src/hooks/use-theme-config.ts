@@ -44,11 +44,25 @@ export function useThemeConfig() {
 
   const hasDefaultThemeChanged = () => {
     const defaultThemeObject = initialThemeConfig.themeObject;
-    return !isEqual(currentThemeObject, defaultThemeObject);
+
+    const themeObjectIsEqual = isEqual(currentThemeObject, defaultThemeObject);
+    const radiusIsEqual = currentRadius === initialThemeConfig.radius;
+
+    return !themeObjectIsEqual || !radiusIsEqual;
   };
 
   const hasCurrentPresetChanged = () => {
-    return !isEqual(currentPresetThemeObject, currentThemeObject);
+    const themeObjectIsEqual = isEqual(
+      currentPresetThemeObject,
+      currentThemeObject,
+    );
+    const radiusIsEqual =
+      (currentPresetThemeObject?.radius ?? initialThemeConfig.radius) ===
+      currentRadius;
+
+    console.log(currentPresetThemeObject?.radius, currentRadius, radiusIsEqual);
+
+    return !themeObjectIsEqual || !radiusIsEqual;
   };
 
   return {

@@ -44,7 +44,7 @@ export function ThemeSync() {
 
     const themeProperties: Partial<ThemeProperties> = {
       ...currentThemeObject[mode],
-      radius: currentThemeObject.radius ?? currentRadius,
+      radius: currentRadius,
     };
 
     const cssVars = getCssVarsFromThemeObject(themeProperties);

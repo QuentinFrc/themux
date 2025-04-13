@@ -55,7 +55,7 @@ function generateThemeVariables(
 ): string {
   if (mode === "light") {
     return `:root {
-  --radius: ${themeConfig.themeObject.radius ?? themeConfig.radius};
+  --radius: ${themeConfig.radius};
   ${generateColorVariables(themeConfig.themeObject, mode, formatColor)}
 }`;
   }

@@ -420,10 +420,12 @@ export function RadiusControls({ className, ...props }: ComponentProps<"div">) {
             size="sm"
             key={value}
             onClick={() => {
-              setConfig((prev) => ({
-                ...prev,
-                radius: value,
-              }));
+              setConfig((prev) => {
+                return {
+                  ...prev,
+                  radius: value,
+                };
+              });
             }}
             className={cn(
               BUTTON_CLASSES,
