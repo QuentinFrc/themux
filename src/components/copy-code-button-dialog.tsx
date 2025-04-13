@@ -111,7 +111,15 @@ function GeneratedCodeOptions() {
   };
 
   const changeTailwindVersion = (tailwindVersion: TailwindVersion) => {
-    updateSettings({ tailwindVersion: tailwindVersion });
+    tailwindVersion === "4"
+      ? updateSettings({
+          tailwindVersion: tailwindVersion,
+          colorFormat: "oklch",
+        })
+      : updateSettings({
+          tailwindVersion: tailwindVersion,
+          colorFormat: "hsl",
+        });
   };
 
   return (

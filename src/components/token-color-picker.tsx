@@ -1,8 +1,9 @@
 "use client";
 
+import { useColorTokens } from "@/hooks/use-color-tokens";
 import { useSettings } from "@/hooks/use-settings";
 import { useThemeConfig } from "@/hooks/use-theme-config";
-import { ColorProperty, OklchValue, ThemeMode } from "@/types/theme";
+import { ColorProperty, ThemeMode } from "@/types/theme";
 import { convertToHex, convertToOklch } from "@/utils/color-converter";
 import { getOptimalForegroundColor } from "@/utils/colors";
 import { CircleAlert, Pipette } from "lucide-react";
@@ -10,6 +11,7 @@ import { useTheme } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { useDebouncedCallback } from "../hooks/use-debounced-callback";
+import { PasteColorControl } from "./customizer-controls";
 import { ComponentErrorBoundary } from "./error-boundary";
 import { TokenDisplay, TokenInfo } from "./token";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
@@ -20,7 +22,7 @@ interface TokenColorPickerProps {
   syncModes?: boolean;
   setColorTokens: (obj: {
     property: ColorProperty;
-    color: OklchValue;
+    color: string;
     modesInSync?: boolean;
   }) => void;
 }
@@ -34,6 +36,9 @@ export function TokenColorPicker({
   const [currentColor, setCurrentColor] = useState(color);
   const hexColor = convertToHex(color);
   const { modesInSync } = useSettings();
+  const { setColorToken } = useColorTokens();
+
+  const resolvedModesInSync = syncModes !== undefined ? syncModes : modesInSync; // allows overriding the global sync mode
 
   useEffect(() => {
     if (currentColor !== color) setCurrentColor(color);
@@ -47,11 +52,11 @@ export function TokenColorPicker({
       setCurrentColor(newOklchColor);
       debouncedSetColorTokens({
         color: newOklchColor,
-        modesInSync: syncModes !== undefined ? syncModes : modesInSync, // allows overriding the global sync mode
+        modesInSync: resolvedModesInSync,
         property: colorProperty,
       });
     },
-    [syncModes, modesInSync, colorProperty],
+    [resolvedModesInSync, colorProperty],
   );
 
   return (
@@ -73,10 +78,16 @@ export function TokenColorPicker({
           <TokenInfo colorProperty={colorProperty} color={color} />
         </div>
 
-        <PopoverContent className="bg-background flex size-fit gap-6 p-4">
+        <PopoverContent className="flex size-fit gap-6 p-4" align="start">
           <div className="space-y-2">
             <HexColorPicker color={hexColor} onChange={handleColorChange} />
             <ColorOklchValue currentColor={currentColor} />
+            <PasteColorControl
+              modesInSync={resolvedModesInSync}
+              setColorTokens={debouncedSetColorTokens}
+              property={colorProperty}
+              className="w-50"
+            />
           </div>
         </PopoverContent>
       </Popover>

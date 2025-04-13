@@ -29,8 +29,8 @@ const formatAlphaForHex = (alpha: number | undefined): string | null => {
 
 export const colorFormatter = (
   colorValue: string, // Expected "oklch(L C H)" or "oklch(L C H / A)"
-  format: ColorFormat = "oklch",
-  tailwindVersion: TailwindVersion = "4",
+  format: ColorFormat,
+  tailwindVersion: TailwindVersion,
 ): string => {
   try {
     const parsedColor = culori.parse(colorValue);
@@ -38,8 +38,8 @@ export const colorFormatter = (
 
     switch (format) {
       case "oklch": {
-        // Due my implementation, the input is already in oklch format, return it as is.
-        return colorValue;
+        const colorInOklch = convertToOklch(colorValue);
+        return colorInOklch;
       }
       case "hsl": {
         // Transform to hex first to avoid weird conversion issues from oklch to hsl

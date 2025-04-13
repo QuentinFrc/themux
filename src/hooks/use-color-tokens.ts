@@ -4,7 +4,7 @@ import {
   OklchValue,
   SurfaceShadesThemeObject,
 } from "@/types/theme";
-import { getOptimalForegroundColor } from "@/utils/colors";
+import { getOptimalForegroundColor, isValidColor } from "@/utils/colors";
 import { useTheme } from "next-themes";
 import { useCallback } from "react";
 import { useThemeConfig } from "./use-theme-config";
@@ -36,6 +36,9 @@ export function useColorTokens() {
     color: string;
     modesInSync?: boolean;
   }) => {
+    const isValidPastedColor = isValidColor(color);
+    if (!isValidPastedColor) return;
+
     // Update both modes
     if (modesInSync) {
       return setConfig((prev) => {
@@ -80,6 +83,9 @@ export function useColorTokens() {
     color: OklchValue | string;
     modesInSync?: boolean;
   }) => {
+    const isValidPastedColor = isValidColor(color);
+    if (!isValidPastedColor) return;
+
     const foregroundColor = getOptimalForegroundColor(color);
     const propertyForeground =
       property === "background" ? "foreground" : property + "-foreground";
@@ -126,9 +132,12 @@ export function useColorTokens() {
     color: color,
     modesInSync = false,
   }: {
-    color: OklchValue;
+    color: string | OklchValue;
     modesInSync?: boolean;
   }) => {
+    const isValidPastedColor = isValidColor(color);
+    if (!isValidPastedColor) return;
+
     const foregroundColor = getOptimalForegroundColor(color);
 
     // Update both modes

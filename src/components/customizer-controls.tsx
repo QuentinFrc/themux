@@ -11,13 +11,12 @@ import {
 } from "@/lib/colors";
 import { cn } from "@/lib/utils";
 import {
-  OklchValue,
+  ColorProperty,
   RemValue,
   SurfaceShadesPreset,
   ThemeMode,
   ThemeObject,
 } from "@/types/theme";
-import { convertToOklch } from "@/utils/color-converter";
 import { getOptimalForegroundColor, isValidColor } from "@/utils/colors";
 import {
   Check,
@@ -62,17 +61,22 @@ const PLACEHOLDERS = [
 
 export function PasteColorControl({
   className,
+  property,
   setColorTokens,
   modesInSync,
   ...props
 }: {
-  setColorTokens: (args: { color: OklchValue; modesInSync: boolean }) => void;
+  setColorTokens: (obj: {
+    property: ColorProperty;
+    color: string;
+    modesInSync?: boolean;
+  }) => void;
+  property: ColorProperty;
   modesInSync: boolean;
 } & ComponentProps<"div">) {
   const [placeholder, setPlaceholder] = useState(PLACEHOLDERS[0]);
   const [pastedColor, setPastedColor] = useState("");
   const isValidPastedColor = isValidColor(pastedColor);
-  const { setPrimaryColorTokens } = useColorTokens();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -88,15 +92,21 @@ export function PasteColorControl({
   const handleSubmitColorPaste = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!pastedColor) return;
-    if (!isValidPastedColor) {
+    const normalizedColor = pastedColor.trim().toLowerCase();
+
+    const allowedStartWith = ["oklch", "hsl", "rgb", "#"];
+    const colorStartsWithAnyAllowed = allowedStartWith.some((c) =>
+      normalizedColor.startsWith(c),
+    );
+
+    if (!colorStartsWithAnyAllowed || !isValidPastedColor) {
       toast.error("Invalid color format.");
       return;
     }
 
-    const newOklchColor = convertToOklch(pastedColor);
-    setPrimaryColorTokens({
-      color: newOklchColor,
+    setColorTokens({
+      color: normalizedColor,
+      property: property,
       modesInSync: modesInSync,
     });
   };
@@ -106,7 +116,7 @@ export function PasteColorControl({
   };
 
   return (
-    <div className={cn("min-w-48", className)} {...props}>
+    <div className={cn(className)} {...props}>
       <form
         className="relative flex items-center gap-1 overflow-hidden rounded-lg border p-0.5"
         onSubmit={handleSubmitColorPaste}
@@ -132,11 +142,9 @@ export function PasteColorControl({
               : "",
           )}
           style={{
-            "--pasted-color": isValidPastedColor
-              ? convertToOklch(pastedColor)
-              : "",
+            "--pasted-color": isValidPastedColor ? pastedColor : "",
             "--pasted-color-foreground": isValidPastedColor
-              ? getOptimalForegroundColor(convertToOklch(pastedColor))
+              ? getOptimalForegroundColor(pastedColor)
               : "",
           }}
         >

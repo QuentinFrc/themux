@@ -1,14 +1,14 @@
 import { basePresetsV4 } from "@/lib/colors";
 import Color from "color";
 import { parse } from "culori";
-import { convertToHex } from "./color-converter";
+import { colorFormatter } from "./color-converter";
 
 export function getOptimalForegroundColor(baseColor: string) {
   if (!isValidColor(baseColor)) {
     throw new Error(`Invalid color format: ${baseColor}`);
   }
 
-  const colorInHex = convertToHex(baseColor);
+  const colorInHex = colorFormatter(baseColor, "hex", "4");
   const color = Color(colorInHex);
 
   const foregroundColor = color.isDark()

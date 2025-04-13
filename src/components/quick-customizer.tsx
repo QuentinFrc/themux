@@ -47,6 +47,8 @@ export function QuickCustomizer() {
         <PasteColorControl
           setColorTokens={setPrimaryColorTokens}
           modesInSync={modesInSync}
+          property={"primary"}
+          className="min-w-48"
         />
       </section>
 
