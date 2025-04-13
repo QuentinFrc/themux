@@ -103,8 +103,10 @@ export type ColorfulPreset =
   | "yellow"
   | "violet";
 
+export type OtherPresets = "claude";
+
 export type ThemeObject = {
-  name: PresetV4 | ColorfulPreset;
+  name: PresetV4 | ColorfulPreset | OtherPresets | (string & {});
   label: string;
   radius?: string;
   light: Partial<ThemeProperties>;

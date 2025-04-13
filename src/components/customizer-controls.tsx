@@ -212,6 +212,7 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
       <span className="text-muted-foreground truncate text-xs">
         {`background, card, popover, muted, etc.`}
       </span>
+
       <PopoverContent
         className="scaled w-auto overflow-hidden p-0"
         align="start"
@@ -560,10 +561,10 @@ export function ControlSection({
 } & ComponentProps<"div">) {
   const [isExpanded, setIsExpanded] = useState(expanded);
   return (
-    <div id={id} className={cn("overflow-hidden rounded-lg border", className)}>
+    <div id={id} className="overflow-hidden rounded-lg border">
       <div
         className={cn(
-          "group/control bg-background hover:bg-muted/40 flex cursor-pointer items-center justify-between border-b p-2.5 transition-colors duration-300 ease-in-out",
+          "group/control bg-background hover:bg-muted/40 flex h-10 w-full shrink-0 cursor-pointer items-center justify-between gap-4 border-b p-2.5 transition-colors duration-300 ease-in-out",
           isExpanded ? "border-border" : "border-transparent",
         )}
         onClick={() => setIsExpanded(!isExpanded)}
@@ -596,7 +597,7 @@ export function ControlSection({
         )}
       >
         <div className="bg-background overflow-hidden">
-          <div className="space-y-2 p-2.5">{children}</div>
+          <div className={cn("space-y-2 p-2.5", className)}>{children}</div>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { allPresetsArray } from "@/lib/colors";
-import { initialThemeConfig, useConfig } from "./use-config";
+import { ThemeObject } from "@/types/theme";
 import { isEqual } from "lodash";
+import { initialThemeConfig, useConfig } from "./use-config";
 
 export function useThemeConfig() {
   const [config, setConfig] = useConfig();
@@ -8,6 +9,14 @@ export function useThemeConfig() {
   const currentThemeObject = config.themeObject;
   const currentSurfacePreset = config.surface;
   const currentRadius = config.radius;
+
+  const updateThemeConfig = (themeObject: ThemeObject) => {
+    setConfig((prev) => ({
+      ...prev,
+      radius: themeObject.radius ?? prev.radius,
+      themeObject,
+    }));
+  };
 
   const resetToDefault = () => {
     setConfig(initialThemeConfig);
@@ -48,6 +57,7 @@ export function useThemeConfig() {
     currentRadius,
     config,
     setConfig,
+    updateThemeConfig,
     resetToDefault,
     resetToLatestThemePreset,
     hasDefaultThemeChanged,

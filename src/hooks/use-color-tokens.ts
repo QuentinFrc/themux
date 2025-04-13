@@ -1,4 +1,4 @@
-import { surfaceShadesPresets } from "@/lib/colors";
+import { allPresetsArray, surfaceShadesPresets } from "@/lib/colors";
 import {
   ColorProperty,
   OklchValue,
@@ -12,11 +12,11 @@ import { useThemeConfig } from "./use-theme-config";
 export function useColorTokens() {
   const { resolvedTheme } = useTheme();
   const mode = resolvedTheme === "dark" ? "dark" : "light";
-  const { config, setConfig } = useThemeConfig();
+  const { config, setConfig, currentThemeObject } = useThemeConfig();
 
   const getColorToken = useCallback(
     ({ property }: { property: ColorProperty }) => {
-      const color = config.themeObject[mode][property];
+      const color = currentThemeObject[mode][property];
 
       if (!color) {
         throw new Error(`Color token "${property}" not found in theme object`);
@@ -24,7 +24,25 @@ export function useColorTokens() {
 
       return color;
     },
-    [mode, config.themeObject[mode]],
+    [mode, currentThemeObject[mode]],
+  );
+
+  const getActiveThemeColorToken = useCallback(
+    ({ property }: { property: ColorProperty }) => {
+      const activeThemeObject = allPresetsArray.find(
+        (theme) => theme.name === currentThemeObject.name,
+      );
+
+      const themeObject = activeThemeObject ?? currentThemeObject;
+      const color = themeObject[mode][property];
+
+      if (!color) {
+        throw new Error(`Color token "${property}" not found in theme object`);
+      }
+
+      return color;
+    },
+    [currentThemeObject, mode],
   );
 
   const setColorToken = ({
@@ -249,5 +267,6 @@ export function useColorTokens() {
     setPrimaryColorTokens,
     setSurfaceShadesColorTokens,
     getActiveSurfaceShades,
+    getActiveThemeColorToken,
   };
 }

@@ -5,6 +5,7 @@ import {
   SurfaceShadesThemeObject,
   ThemeObject,
 } from "../types/theme";
+import { otherPresets } from "./presets";
 
 // ===> Tailwind V4
 export const basePresetsV4: Record<PresetV4, ThemeObject> = {
@@ -859,7 +860,11 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
 export const colorfulPresetsArray = Object.values(colorfulPresets);
 
 // Combination of base and colorful presets
-export const allPresets = { ...basePresetsV4, ...colorfulPresets };
+export const allPresets = {
+  ...basePresetsV4,
+  ...colorfulPresets,
+  ...otherPresets,
+};
 export const allPresetsArray = Object.values(allPresets);
 
 export const surfaceShadesPresets: Record<
