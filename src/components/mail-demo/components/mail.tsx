@@ -63,7 +63,7 @@ export function Mail({
             sizes,
           )}`;
         }}
-        className="h-full max-h-svh items-stretch"
+        className="h-full max-h-[95svh] items-stretch"
       >
         <ResizablePanel
           defaultSize={defaultLayout[0]}
@@ -203,7 +203,11 @@ export function Mail({
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
+        <ResizablePanel
+          defaultSize={defaultLayout[2]}
+          minSize={30}
+          className="flex flex-col"
+        >
           <MailDisplay
             mail={mails.find((item) => item.id === mail.selected) || null}
           />

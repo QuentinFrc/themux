@@ -43,7 +43,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
   const today = new Date();
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex grow flex-col">
       <div className="flex items-center p-2">
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon" disabled={!mail} title="Archive">
