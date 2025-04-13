@@ -60,8 +60,6 @@ export function useThemeConfig() {
       (currentPresetThemeObject?.radius ?? initialThemeConfig.radius) ===
       currentRadius;
 
-    console.log(currentPresetThemeObject?.radius, currentRadius, radiusIsEqual);
-
     return !themeObjectIsEqual || !radiusIsEqual;
   };
 

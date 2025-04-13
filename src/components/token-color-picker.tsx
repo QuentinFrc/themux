@@ -1,6 +1,5 @@
 "use client";
 
-import { useColorTokens } from "@/hooks/use-color-tokens";
 import { useSettings } from "@/hooks/use-settings";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { ColorProperty, ThemeMode } from "@/types/theme";
@@ -36,7 +35,6 @@ export function TokenColorPicker({
   const [currentColor, setCurrentColor] = useState(color);
   const hexColor = convertToHex(color);
   const { modesInSync } = useSettings();
-  const { setColorToken } = useColorTokens();
 
   const resolvedModesInSync = syncModes !== undefined ? syncModes : modesInSync; // allows overriding the global sync mode
 
