@@ -127,14 +127,14 @@ function GeneratedCodeOptions() {
   return (
     <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:justify-between lg:items-center lg:gap-x-8">
       <div className="col-span-2 grid grid-cols-2 gap-x-8">
-        <div className="flex flex-row items-start gap-2">
+        <div className="flex flex-col items-start gap-2 md:flex-row">
           <Label className="text-muted-foreground text-xs max-lg:w-24">
             Color format
           </Label>
           <RadioGroup
             value={colorFormat}
             onValueChange={changeColorFormat}
-            className="ml-auto flex flex-row gap-2"
+            className="flex flex-row gap-2 md:ml-auto"
           >
             <div className="flex items-center space-x-1">
               <RadioGroupItem value="oklch" id="color-oklch" />
@@ -163,14 +163,14 @@ function GeneratedCodeOptions() {
           </RadioGroup>
         </div>
 
-        <div className="flex flex-row items-start gap-2">
+        <div className="flex flex-col items-start gap-2 md:flex-row">
           <Label className="text-muted-foreground text-xs max-lg:w-24">
             Tailwind version
           </Label>
           <RadioGroup
             value={tailwindVersion}
             onValueChange={changeTailwindVersion}
-            className="ml-auto flex flex-row gap-2"
+            className="flex flex-row gap-2 md:ml-auto"
           >
             <div className="flex items-center space-x-1">
               <RadioGroupItem value="4" id="tw-v4" />
