@@ -46,38 +46,38 @@ export type OklchColorProperties = {
 };
 
 export type ThemeProperties = {
-  background: string | OklchValue;
-  foreground: string | OklchValue;
-  card: string | OklchValue;
-  "card-foreground": string | OklchValue;
-  popover: string | OklchValue;
-  "popover-foreground": string | OklchValue;
-  primary: string | OklchValue;
-  "primary-foreground": string | OklchValue;
-  secondary: string | OklchValue;
-  "secondary-foreground": string | OklchValue;
-  muted: string | OklchValue;
-  "muted-foreground": string | OklchValue;
-  accent: string | OklchValue;
-  "accent-foreground": string | OklchValue;
-  destructive: string | OklchValue;
-  "destructive-foreground"?: string | OklchValue;
-  border: string | OklchValue;
-  input: string | OklchValue;
-  ring: string | OklchValue;
-  "chart-1": string | OklchValue;
-  "chart-2": string | OklchValue;
-  "chart-3": string | OklchValue;
-  "chart-4": string | OklchValue;
-  "chart-5": string | OklchValue;
-  sidebar: string | OklchValue;
-  "sidebar-foreground": string | OklchValue;
-  "sidebar-primary": string | OklchValue;
-  "sidebar-primary-foreground": string | OklchValue;
-  "sidebar-accent": string | OklchValue;
-  "sidebar-accent-foreground": string | OklchValue;
-  "sidebar-border": string | OklchValue;
-  "sidebar-ring": string | OklchValue;
+  background: string;
+  foreground: string;
+  card: string;
+  "card-foreground": string;
+  popover: string;
+  "popover-foreground": string;
+  primary: string;
+  "primary-foreground": string;
+  secondary: string;
+  "secondary-foreground": string;
+  muted: string;
+  "muted-foreground": string;
+  accent: string;
+  "accent-foreground": string;
+  destructive: string;
+  "destructive-foreground"?: string;
+  border: string;
+  input: string;
+  ring: string;
+  "chart-1": string;
+  "chart-2": string;
+  "chart-3": string;
+  "chart-4": string;
+  "chart-5": string;
+  sidebar: string;
+  "sidebar-foreground": string;
+  "sidebar-primary": string;
+  "sidebar-primary-foreground": string;
+  "sidebar-accent": string;
+  "sidebar-accent-foreground": string;
+  "sidebar-border": string;
+  "sidebar-ring": string;
   "font-sans"?: string;
   "font-serif"?: string;
   "font-mono"?: string;
@@ -88,6 +88,13 @@ export type ThemeProperties = {
   "shadow-spread"?: string;
   "shadow-offset-x"?: string;
   "shadow-offset-y"?: string;
+  spacing?: string;
+};
+
+export type Fonts = {
+  sans?: string;
+  serif?: string;
+  mono?: string;
 };
 
 export type ColorProperty = keyof OklchColorProperties;
@@ -109,6 +116,7 @@ export type ThemeObject = {
   name: PresetV4 | ColorfulPreset | OtherPresets | (string & {});
   label: string;
   radius?: string;
+  fonts?: Fonts;
   light: Partial<ThemeProperties>;
   dark: Partial<ThemeProperties>;
 };
@@ -116,6 +124,7 @@ export type ThemeObject = {
 export type ThemeConfig = {
   radius: RemValue | string;
   surface?: SurfaceShadesPreset;
+  fonts?: Fonts;
   themeObject: ThemeObject;
 };
 

@@ -28,6 +28,7 @@ import {
 import { Label } from "./ui/label";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { ScrollArea } from "./ui/scroll-area";
+import { Switch } from "./ui/switch";
 
 export function CopyCodeButtonDialog({
   className,
@@ -80,7 +81,7 @@ export function CopyCodeButtonDialog({
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="bg-background min-h-[300px] space-y-2 overflow-hidden rounded-lg outline-none sm:max-w-xl lg:max-w-2xl">
+        <DialogContent className="bg-background min-h-[400px] space-y-2 overflow-hidden rounded-lg outline-none sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
           <DialogHeader>
             <DialogTitle className="leading-none font-semibold tracking-tight">
               Generated theme
@@ -104,7 +105,8 @@ export function CopyCodeButtonDialog({
 }
 
 function GeneratedCodeOptions() {
-  const { colorFormat, tailwindVersion, updateSettings } = useSettings();
+  const { colorFormat, tailwindVersion, updateSettings, fontVars, shadows } =
+    useSettings();
 
   const changeColorFormat = (colorFormat: ColorFormat) => {
     updateSettings({ colorFormat: colorFormat });
@@ -123,66 +125,94 @@ function GeneratedCodeOptions() {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-2 md:justify-between lg:grid-cols-2 lg:items-center lg:gap-8">
-      <div className="flex flex-row items-start gap-2">
-        <Label className="text-muted-foreground text-xs max-lg:w-24">
-          Color format
-        </Label>
-        <RadioGroup
-          value={colorFormat}
-          onValueChange={changeColorFormat}
-          className="flex flex-row gap-2"
-        >
-          <div className="flex items-center space-x-1">
-            <RadioGroupItem value="oklch" id="color-oklch" />
-            <Label htmlFor="color-oklch" className="text-xs font-normal">
-              oklch
-            </Label>
-          </div>
-          <div className="flex items-center space-x-1">
-            <RadioGroupItem value="hsl" id="color-hsl" />
-            <Label htmlFor="color-hsl" className="text-xs font-normal">
-              hsl
-            </Label>
-          </div>
-          <div className="flex items-center space-x-1">
-            <RadioGroupItem value="rgb" id="color-rgb" />
-            <Label htmlFor="color-rgb" className="text-xs font-normal">
-              rgb
-            </Label>
-          </div>
-          <div className="flex items-center space-x-1">
-            <RadioGroupItem value="hex" id="color-hex" />
-            <Label htmlFor="color-hex" className="text-xs font-normal">
-              hex
-            </Label>
-          </div>
-        </RadioGroup>
+    <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:justify-between lg:items-center lg:gap-x-8">
+      <div className="col-span-2 grid grid-cols-2 gap-x-8">
+        <div className="flex flex-row items-start gap-2">
+          <Label className="text-muted-foreground text-xs max-lg:w-24">
+            Color format
+          </Label>
+          <RadioGroup
+            value={colorFormat}
+            onValueChange={changeColorFormat}
+            className="ml-auto flex flex-row gap-2"
+          >
+            <div className="flex items-center space-x-1">
+              <RadioGroupItem value="oklch" id="color-oklch" />
+              <Label htmlFor="color-oklch" className="text-xs font-normal">
+                oklch
+              </Label>
+            </div>
+            <div className="flex items-center space-x-1">
+              <RadioGroupItem value="hsl" id="color-hsl" />
+              <Label htmlFor="color-hsl" className="text-xs font-normal">
+                hsl
+              </Label>
+            </div>
+            <div className="flex items-center space-x-1">
+              <RadioGroupItem value="rgb" id="color-rgb" />
+              <Label htmlFor="color-rgb" className="text-xs font-normal">
+                rgb
+              </Label>
+            </div>
+            <div className="flex items-center space-x-1">
+              <RadioGroupItem value="hex" id="color-hex" />
+              <Label htmlFor="color-hex" className="text-xs font-normal">
+                hex
+              </Label>
+            </div>
+          </RadioGroup>
+        </div>
+
+        <div className="flex flex-row items-start gap-2">
+          <Label className="text-muted-foreground text-xs max-lg:w-24">
+            Tailwind version
+          </Label>
+          <RadioGroup
+            value={tailwindVersion}
+            onValueChange={changeTailwindVersion}
+            className="ml-auto flex flex-row gap-2"
+          >
+            <div className="flex items-center space-x-1">
+              <RadioGroupItem value="4" id="tw-v4" />
+
+              <Label htmlFor="tw-v4" className="text-xs font-normal">
+                v4
+              </Label>
+            </div>
+            <div className="flex items-center space-x-1">
+              <RadioGroupItem value="3" id="tw-v3" />
+              <Label htmlFor="tw-v3" className="text-xs font-normal">
+                v3
+              </Label>
+            </div>
+          </RadioGroup>
+        </div>
       </div>
 
-      <div className="flex flex-row items-start gap-2">
-        <Label className="text-muted-foreground text-xs max-lg:w-24">
-          Tailwind version
-        </Label>
-        <RadioGroup
-          value={tailwindVersion}
-          onValueChange={changeTailwindVersion}
-          className="flex flex-row gap-2"
-        >
-          <div className="flex items-center space-x-1">
-            <RadioGroupItem value="4" id="tw-v4" />
+      <div className="col-span-2 grid grid-cols-2 gap-x-8">
+        <div className="flex shrink-0 grow flex-row items-start justify-between gap-2">
+          <Label className="text-muted-foreground text-xs text-nowrap">
+            Show font variables
+          </Label>
+          <Switch
+            checked={fontVars}
+            onCheckedChange={(isActive) =>
+              updateSettings({ fontVars: isActive })
+            }
+          />
+        </div>
 
-            <Label htmlFor="tw-v4" className="text-xs font-normal">
-              Version 4
-            </Label>
-          </div>
-          <div className="flex items-center space-x-1">
-            <RadioGroupItem value="3" id="tw-v3" />
-            <Label htmlFor="tw-v3" className="text-xs font-normal">
-              Version 3
-            </Label>
-          </div>
-        </RadioGroup>
+        <div className="flex shrink-0 grow flex-row items-start justify-between gap-2">
+          <Label className="text-muted-foreground text-xs text-nowrap">
+            Show shadow variables
+          </Label>
+          <Switch
+            checked={shadows}
+            onCheckedChange={(isActive) =>
+              updateSettings({ shadows: isActive })
+            }
+          />
+        </div>
       </div>
     </div>
   );
@@ -198,6 +228,7 @@ function CustomizerCode({
 }) {
   const { config } = useThemeConfig();
   const { isCopied, copyToClipboard } = useCopyToClipboard();
+  const { fontVars, shadows } = useSettings();
 
   const themeCode = useMemo(
     () =>
@@ -205,8 +236,12 @@ function CustomizerCode({
         themeConfig: config,
         colorFormat,
         tailwindVersion,
+        tailwindInlineOptions: {
+          fontVars: fontVars,
+          shadowVars: shadows,
+        },
       }),
-    [config, colorFormat, tailwindVersion],
+    [config, colorFormat, tailwindVersion, fontVars, shadows],
   );
 
   const handleCopyThemeStylesCode = () => {
@@ -222,7 +257,7 @@ function CustomizerCode({
     >
       <ScrollArea className="h-full">
         <pre className="p-4">
-          <code className="relative border border-none p-0 font-mono text-sm">
+          <code className="relative border border-none p-0 font-mono text-xs">
             {themeCode}
           </code>
         </pre>

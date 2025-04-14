@@ -1,3 +1,4 @@
+import { DEFAULT_FONTS } from "@/lib/themes";
 import {
   ColorFormat,
   TailwindVersion,
@@ -7,6 +8,7 @@ import {
   ThemeProperties,
 } from "@/types/theme";
 import { colorFormatter } from "@/utils/color-converter";
+import { getShadowMap } from "./shadows";
 
 function generateColorVariables(
   themeObject: ThemeObject,
@@ -30,6 +32,11 @@ function generateColorVariables(
   --accent: ${formatColor(styles.accent)};
   --accent-foreground: ${formatColor(styles["accent-foreground"])};
   --destructive: ${formatColor(styles.destructive)};
+  ${
+    styles["destructive-foreground"]
+      ? `--destructive-foreground: ${formatColor(styles["destructive-foreground"])};`
+      : ``
+  }
   --border: ${formatColor(styles.border)};
   --input: ${formatColor(styles.input)};
   --ring: ${formatColor(styles.ring)};
@@ -45,41 +52,76 @@ function generateColorVariables(
   --sidebar-accent: ${formatColor(styles["sidebar-accent"])};
   --sidebar-accent-foreground: ${formatColor(styles["sidebar-accent-foreground"])};
   --sidebar-border: ${formatColor(styles["sidebar-border"])};
-  --sidebar-ring: ${formatColor(styles["sidebar-ring"])};`.trim();
+  --sidebar-ring: ${formatColor(styles["sidebar-ring"])};`
+
+    .split("\n")
+    .filter((line) => line !== "")
+    .join("\n");
 }
+
+const generateFontVariables = (themeConfig: ThemeConfig): string => {
+  const fonts = themeConfig.fonts;
+
+  return `
+  --font-sans: ${fonts?.sans ?? DEFAULT_FONTS["font-sans"]};
+  --font-serif: ${fonts?.serif ?? DEFAULT_FONTS["font-serif"]};
+  --font-mono: ${fonts?.mono ?? DEFAULT_FONTS["font-mono"]};`;
+};
+
+const generateShadowVariables = (shadowMap: Record<string, string>): string => {
+  return `
+  --shadow-2xs: ${shadowMap["shadow-2xs"]};
+  --shadow-xs: ${shadowMap["shadow-xs"]};
+  --shadow-sm: ${shadowMap["shadow-sm"]};
+  --shadow: ${shadowMap["shadow"]};
+  --shadow-md: ${shadowMap["shadow-md"]};
+  --shadow-lg: ${shadowMap["shadow-lg"]};
+  --shadow-xl: ${shadowMap["shadow-xl"]};
+  --shadow-2xl: ${shadowMap["shadow-2xl"]};`;
+};
 
 function generateThemeVariables(
   themeConfig: ThemeConfig,
   mode: ThemeMode,
   formatColor: (color: string) => string,
+  themeVarsSettings: ThemeVarsOptions,
 ): string {
+  const radiusVar = `--radius: ${themeConfig.radius};`;
+  const colorVars = generateColorVariables(
+    themeConfig.themeObject,
+    mode,
+    formatColor,
+  );
+  const fontVars = themeVarsSettings.fontVars
+    ? generateFontVariables(themeConfig)
+    : ``;
+  const shadowVars = themeVarsSettings.shadowVars
+    ? generateShadowVariables(getShadowMap(themeConfig.themeObject, mode))
+    : ``;
+
   if (mode === "light") {
-    return `:root {
-  --radius: ${themeConfig.radius};
-  ${generateColorVariables(themeConfig.themeObject, mode, formatColor)}
+    return `:root {${fontVars}
+  ${radiusVar}
+  ${colorVars}
+  ${shadowVars}
 }`;
   }
 
   return `.dark {
-  ${generateColorVariables(themeConfig.themeObject, mode, formatColor)}
-}`;
+  ${colorVars}${shadowVars}\n}`;
 }
 
-function generateTailwindV4ThemeInline(): string {
-  return `@theme inline {
-  /* adjust your fonts variables here */
-  /* --font-sans: var(--font-sans);   */
-  /* --font-mono: var(--font-mono);   */
-  /* --font-serif: var(--font-serif); */
+type ThemeVarsOptions = {
+  fontVars?: boolean | undefined;
+  shadowVars?: boolean | undefined;
+};
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-
-  --color-background: var(--background);
+function generateTailwindV4ThemeInline({
+  fontVars = false,
+  shadowVars = false,
+}: ThemeVarsOptions): string {
+  const colorVarsInline = `--color-background: var(--background);
   --color-foreground: var(--foreground);
-
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
@@ -110,18 +152,54 @@ function generateTailwindV4ThemeInline(): string {
   --color-sidebar-accent: var(--sidebar-accent);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  }`.trim();
+  --color-sidebar-ring: var(--sidebar-ring);`;
+
+  const radiusVarsInline = `--radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);`;
+
+  const fontVarsInline = fontVars
+    ? `--font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);`
+    : `/* adjust your fonts variables here */
+  /* --font-sans: var(--font-sans);   */
+  /* --font-mono: var(--font-mono);   */
+  /* --font-serif: var(--font-serif); */`;
+
+  const shadowVarsInline = shadowVars
+    ? `--shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);`
+    : ``;
+
+  return `@theme inline {
+  ${fontVarsInline}
+
+  ${radiusVarsInline}
+
+  ${colorVarsInline}
+
+  ${shadowVarsInline}
+}`;
 }
 
 export function generateThemeCode({
   themeConfig,
   colorFormat = "oklch",
   tailwindVersion = "4",
+  tailwindInlineOptions,
 }: {
   themeConfig: ThemeConfig;
   colorFormat?: ColorFormat;
   tailwindVersion?: TailwindVersion;
+  tailwindInlineOptions?: ThemeVarsOptions;
 }): string {
   if (
     !themeConfig ||
@@ -135,11 +213,23 @@ export function generateThemeCode({
     return colorFormatter(color, colorFormat, tailwindVersion);
   };
 
-  const lightTheme = generateThemeVariables(themeConfig, "light", formatColor);
-  const darkTheme = generateThemeVariables(themeConfig, "dark", formatColor);
+  const lightTheme = generateThemeVariables(themeConfig, "light", formatColor, {
+    fontVars: tailwindInlineOptions?.fontVars,
+    shadowVars: tailwindInlineOptions?.shadowVars,
+  });
+  const darkTheme = generateThemeVariables(themeConfig, "dark", formatColor, {
+    fontVars: tailwindInlineOptions?.fontVars,
+    shadowVars: tailwindInlineOptions?.shadowVars,
+  });
+
+  let v4Options = {};
+
+  if (tailwindVersion === "4" && tailwindInlineOptions) {
+    v4Options = tailwindInlineOptions;
+  }
 
   if (tailwindVersion === "4") {
-    return `${lightTheme}\n\n${darkTheme}\n\n${generateTailwindV4ThemeInline()}`;
+    return `${lightTheme}\n\n${darkTheme}\n\n${generateTailwindV4ThemeInline(v4Options)}`;
   }
 
   return `@layer base {

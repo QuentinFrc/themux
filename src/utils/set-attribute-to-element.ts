@@ -3,6 +3,9 @@ export const DATA_KEYS = {
   primary: "data-primary",
   surface: "data-surface",
   variant: "data-variant",
+  "font-sans": "data-font-sans",
+  "font-serif": "data-font-serif",
+  "font-mono": "data-font-mono",
 } as const;
 
 export type DataKey = (typeof DATA_KEYS)[keyof typeof DATA_KEYS];
@@ -13,7 +16,7 @@ export function setStyleProperty({
   key,
 }: {
   element: HTMLElement;
-  key: DataKey;
+  key: string;
   value: string;
 }) {
   element.style.setProperty(key, value);
@@ -25,7 +28,7 @@ export function setAttributeToElement({
   value,
 }: {
   element: HTMLElement;
-  attribute: DataKey;
+  attribute: DataKey | (string & {});
   value: string;
 }) {
   if (element) {

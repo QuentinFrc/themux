@@ -32,6 +32,8 @@ export function CustomizerSettings({
     resetSettings,
     tailwindVersion,
     colorFormat,
+    fontVars,
+    shadows,
   } = useSettings();
 
   return (
@@ -43,7 +45,7 @@ export function CustomizerSettings({
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className={cn("w-80 p-0", className)} align="end">
+      <PopoverContent className={cn("w-92 p-0", className)} align="end">
         <header className="text-muted-foreground flex items-center justify-between px-4 py-2 text-sm font-semibold">
           <span>Customizer settings</span>{" "}
           <Button variant="ghost" onClick={resetSettings}>
@@ -61,7 +63,7 @@ export function CustomizerSettings({
           <div className="flex items-center rounded-lg">
             <div className="flex flex-col gap-1">
               <span className="text-sm">Sync both modes</span>
-              <span className="text-muted-foreground w-[25ch] text-xs">
+              <span className="text-muted-foreground w-[28ch] text-xs">
                 {`Brand tokens will be in sync in light and dark modes. Theme presets
                 and surface shades are always synced.`}
               </span>
@@ -84,7 +86,7 @@ export function CustomizerSettings({
             <div className="flex items-center justify-between gap-4 rounded-lg">
               <div className="flex flex-col gap-1">
                 <span className="text-sm">Tailwind version</span>
-                <span className="text-muted-foreground w-[25ch] text-xs">
+                <span className="text-muted-foreground w-[28ch] text-xs">
                   For the generated CSS output. Supports v3 and v4.
                 </span>
               </div>
@@ -111,7 +113,7 @@ export function CustomizerSettings({
             <div className="flex items-center justify-between gap-4 rounded-lg">
               <div className="flex flex-col gap-1">
                 <span className="text-sm">Color format</span>
-                <span className="text-muted-foreground w-[25ch] text-xs">
+                <span className="text-muted-foreground w-[28ch] text-xs">
                   For the generated CSS output. Supports oklch, hsl, rbg and
                   hex.
                 </span>
@@ -140,6 +142,39 @@ export function CustomizerSettings({
                   </SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+
+            <div className="flex items-center justify-between gap-4 rounded-lg">
+              <div className="flex flex-col gap-1">
+                <span className="text-sm">Show font variables</span>
+                <span className="text-muted-foreground w-[28ch] text-xs">
+                  Show font variables in the generated CSS output. Keep this
+                  setting OFF if you handle fonts separately.
+                </span>
+              </div>
+              <Switch
+                className="ml-auto"
+                checked={fontVars}
+                onCheckedChange={(isActive) =>
+                  updateSettings({ fontVars: isActive })
+                }
+              />
+            </div>
+
+            <div className="flex items-center justify-between gap-4 rounded-lg">
+              <div className="flex flex-col gap-1">
+                <span className="text-sm">Show shadow variables</span>
+                <span className="text-muted-foreground w-[28ch] text-xs">
+                  Show shadow variables in the generated CSS output.
+                </span>
+              </div>
+              <Switch
+                className="ml-auto"
+                checked={shadows}
+                onCheckedChange={(isActive) =>
+                  updateSettings({ shadows: isActive })
+                }
+              />
             </div>
           </div>
         </section>

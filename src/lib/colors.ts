@@ -1,3 +1,4 @@
+import { monoFonts, sansFonts } from "@/utils/fonts";
 import {
   ColorfulPreset,
   PresetV4,
@@ -6,12 +7,17 @@ import {
   ThemeObject,
 } from "../types/theme";
 import { otherPresets } from "./presets";
+import { DEFAULT_FONTS } from "./themes";
 
 // ===> Tailwind V4
 export const basePresetsV4: Record<PresetV4, ThemeObject> = {
   neutral: {
     name: "neutral",
     label: "Neutral",
+    fonts: {
+      sans: sansFonts.Geist,
+      mono: monoFonts["Geist Mono"],
+    },
     light: {
       background: "oklch(1 0 0)", // --color-white (closest to neutral-50)
       foreground: "oklch(0.145 0 0)", // --color-neutral-950
@@ -82,6 +88,10 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
   zinc: {
     name: "zinc",
     label: "Zinc",
+    fonts: {
+      sans: sansFonts.Geist,
+      mono: monoFonts["Geist Mono"],
+    },
     light: {
       background: "oklch(1 0 0)", // --color-white (closest to zinc-50)
       foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950
@@ -152,6 +162,10 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
   stone: {
     name: "stone",
     label: "Stone",
+    fonts: {
+      sans: sansFonts.Geist,
+      mono: monoFonts["Geist Mono"],
+    },
     light: {
       background: "oklch(1 0 0)", // --color-white (closest to slate-50)
       foreground: "oklch(0.147 0.004 49.25)", // --color-stone-950
@@ -222,6 +236,10 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
   gray: {
     name: "gray",
     label: "Gray",
+    fonts: {
+      sans: sansFonts.Geist,
+      mono: monoFonts["Geist Mono"],
+    },
     light: {
       background: "oklch(1 0 0)", // --color-white (closest to gray-50)
       foreground: "oklch(0.13 0.028 261.692)", // --color-gray-950
@@ -292,6 +310,10 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
   slate: {
     name: "slate",
     label: "Slate",
+    fonts: {
+      sans: sansFonts.Geist,
+      mono: monoFonts["Geist Mono"],
+    },
     light: {
       background: "oklch(1 0 0)", // --color-white (closest to slate-50)
       foreground: "oklch(0.129 0.042 264.695)", // --color-slate-950

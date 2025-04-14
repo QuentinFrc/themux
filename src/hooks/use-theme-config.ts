@@ -1,7 +1,8 @@
 import { allPresetsArray } from "@/lib/colors";
+import { initialThemeConfig } from "@/lib/themes";
 import { ThemeObject } from "@/types/theme";
 import { isEqual } from "lodash";
-import { initialThemeConfig, useConfig } from "./use-config";
+import { useConfig } from "./use-config";
 
 export function useThemeConfig() {
   const [config, setConfig] = useConfig();
@@ -9,10 +10,12 @@ export function useThemeConfig() {
   const currentThemeObject = config.themeObject;
   const currentSurfacePreset = config.surface;
   const currentRadius = config.radius;
+  const currentFonts = config.fonts;
 
   const updateThemeConfig = (themeObject: ThemeObject) => {
     setConfig((prev) => ({
       ...prev,
+      fonts: { ...prev.fonts, ...themeObject.fonts },
       radius: themeObject.radius ?? prev.radius,
       themeObject,
     }));
@@ -30,9 +33,14 @@ export function useThemeConfig() {
   const resetToLatestThemePreset = () => {
     if (!currentPresetThemeObject) return;
 
+    if (currentPresetName === "neutral") {
+      return;
+    }
+
     setConfig((prev) => {
       return {
         ...prev,
+        fonts: currentPresetThemeObject.fonts ?? prev.fonts,
         radius: currentPresetThemeObject.radius ?? prev.radius,
         themeObject: {
           ...prev.themeObject,
@@ -47,11 +55,16 @@ export function useThemeConfig() {
 
     const themeObjectIsEqual = isEqual(currentThemeObject, defaultThemeObject);
     const radiusIsEqual = currentRadius === initialThemeConfig.radius;
+    const areFontsEqual = isEqual(currentFonts, defaultThemeObject.fonts);
 
-    return !themeObjectIsEqual || !radiusIsEqual;
+    return !themeObjectIsEqual || !radiusIsEqual || !areFontsEqual;
   };
 
   const hasCurrentPresetChanged = () => {
+    if (currentPresetName === "neutral") {
+      return false;
+    }
+
     const themeObjectIsEqual = isEqual(
       currentPresetThemeObject,
       currentThemeObject,
@@ -59,14 +72,18 @@ export function useThemeConfig() {
     const radiusIsEqual =
       (currentPresetThemeObject?.radius ?? initialThemeConfig.radius) ===
       currentRadius;
+    const areFontsEqual = currentPresetThemeObject?.fonts
+      ? isEqual(currentPresetThemeObject.fonts, currentFonts)
+      : true;
 
-    return !themeObjectIsEqual || !radiusIsEqual;
+    return !themeObjectIsEqual || !radiusIsEqual || !areFontsEqual;
   };
 
   return {
     currentThemeObject,
     currentSurfacePreset,
     currentRadius,
+    currentFonts,
     config,
     setConfig,
     updateThemeConfig,

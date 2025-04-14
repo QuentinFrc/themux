@@ -563,7 +563,7 @@ export function ControlSection({
 } & ComponentProps<"div">) {
   const [isExpanded, setIsExpanded] = useState(expanded);
   return (
-    <div id={id} className="overflow-hidden rounded-lg border">
+    <div id={id} className={cn("overflow-hidden rounded-lg border", className)}>
       <div
         className={cn(
           "group/control bg-background hover:bg-muted/40 flex h-10 w-full shrink-0 cursor-pointer items-center justify-between gap-4 border-b p-2.5 transition-colors duration-300 ease-in-out",

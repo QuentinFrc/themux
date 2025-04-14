@@ -39,7 +39,7 @@ export default function ShadcnThemesPage() {
               <FrameHighlight className="font-semibold">
                 Tailwind v3
               </FrameHighlight>
-              and supports
+              and supports{" "}
               <code className="font-mono font-semibold">oklch</code>
               {", "}
               <code className="font-mono font-semibold">hsl</code>
