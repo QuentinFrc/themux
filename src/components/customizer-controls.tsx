@@ -213,11 +213,8 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
         {`background, card, popover, muted, etc.`}
       </span>
 
-      <PopoverContent
-        className="scaled w-auto overflow-hidden p-0"
-        align="start"
-      >
-        <Command className={cn("w-full", className)}>
+      <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+        <Command className={cn("", className)}>
           {isMounted && (
             <>
               <CommandEmpty>No surface shades found.</CommandEmpty>

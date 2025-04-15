@@ -133,6 +133,9 @@
 :root {
   /* Tailwind CSS Candy cane */
   --pattern-fg: color-mix(in oklab, var(--color-foreground) 10%, transparent);
+  & > * {
+    @apply scrollbar-thin;
+  }
 }
 
 @utility wrapper {

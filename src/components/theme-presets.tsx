@@ -135,12 +135,12 @@ export function PresetsControl({
         </div>
       </PopoverTrigger>
 
-      <PopoverContent className="w-full overflow-hidden p-0" align="start">
-        <Command className={cn("w-full", className)}>
+      <PopoverContent className="overflow-hidden p-0" align="center">
+        <Command className={cn("", className)}>
           {isMounted && (
             <>
               <CommandEmpty>No theme presets found.</CommandEmpty>
-              <CommandGroup>
+              <CommandGroup className="scrollbar-thin max-h-82 w-full overflow-y-auto">
                 {presetObjectsArray.map((presetThemeObject) => {
                   const properties = presetThemeObject[resolvedTheme];
                   const { name, label } = presetThemeObject;

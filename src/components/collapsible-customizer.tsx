@@ -68,7 +68,7 @@ export function CollapsibleCustomizer() {
               <div className="relative grid w-full grid-cols-3 gap-6">
                 {isMounted ? (
                   <>
-                    <ColorTokens className="max-h-82" />
+                    <ColorTokens className="max-h-70" />
                     <ThemePresets />
                     <Typography />
                   </>
@@ -98,7 +98,7 @@ export function MobileCollapsibleCustomizer() {
       </TabsList>
 
       <TabsContent value="color-tokens">
-        <ColorTokens className="max-h-82 overflow-hidden" />
+        <ColorTokens className="max-h-70 overflow-hidden" />
       </TabsContent>
 
       <TabsContent value="theme-presets">
