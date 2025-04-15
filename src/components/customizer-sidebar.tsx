@@ -34,30 +34,17 @@ export function CustomizerSidebar({
   if (!isMounted) {
     return (
       <Sidebar className="overflow-hidden" {...props}>
-        <SidebarContent className="scrollbar-thin @container relative max-h-svh group-data-[collapsible=icon]:invisible max-md:py-4 max-md:pt-2 [&>button]:hidden">
+        <SidebarContent className="scrollbar-thin @container relative flex max-h-svh flex-col py-2 group-data-[collapsible=icon]:invisible [&>button]:hidden">
           <div className="px-4">
             <Skeleton className="h-10" />
           </div>
-          <div className="p-4">
-            <Skeleton className="h-118" />
+          <div className="grow p-4">
+            <Skeleton className="h-full" />
           </div>
           <div className="px-4">
             <Skeleton className="h-10" />
           </div>
         </SidebarContent>
-
-        <SidebarFooter>
-          <Button
-            asChild
-            variant="ghost"
-            size="icon"
-            className="group/toggle size-8"
-          >
-            <ExternalLink href="https://github.com/llanesluis/themux">
-              <GitHub />
-            </ExternalLink>
-          </Button>
-        </SidebarFooter>
         <SidebarRail />
       </Sidebar>
     );
