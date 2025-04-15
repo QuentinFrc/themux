@@ -3,6 +3,7 @@
 import { useFullscreen } from "@/hooks/use-fullscreen";
 import { cn, getComponentName } from "@/lib/utils";
 import {
+  Command,
   Fullscreen,
   Maximize,
   Minimize,
@@ -73,7 +74,7 @@ export function BlockViewer({
   return (
     <BlockViewerProvider {...props}>
       {isFullscreen && (
-        <div className="pointer-events-none fixed inset-0 z-[-1] backdrop-blur-md" />
+        <div className="pointer-events-none fixed inset-0 z-1 backdrop-blur-md" />
       )}
       <div
         className={cn(
@@ -117,85 +118,97 @@ function BlockViewerToolbar({
           <span className="shrink-0 font-semibold">
             {getComponentName(name)}
           </span>
-          <ToggleGroup
-            className="ml-auto border"
-            type="single"
-            defaultValue="100"
-            onValueChange={(value) => {
-              if (resizablePanelRef?.current) {
-                resizablePanelRef.current.resize(parseInt(value));
-              }
-            }}
-          >
-            <ToggleGroupItem
-              value="100"
-              className="hidden aspect-square size-7 md:inline-flex"
-              title="Desktop"
-            >
-              <Monitor className="size-4" />
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              value="60"
-              className="hidden aspect-square size-7 md:inline-flex"
-              title="Tablet"
-            >
-              <Tablet className="size-4" />
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              value="30"
-              className="hidden aspect-square size-7 md:inline-flex"
-              title="Mobile"
-            >
-              <Smartphone className="size-4" />
-            </ToggleGroupItem>
-          </ToggleGroup>
 
-          <div className="flex items-center">
-            {isFullscreen && <ModeSwitcher className="size-7" />}
+          {isFullscreen && (
+            <div className="text-muted-foreground ml-auto flex items-center gap-2 text-sm">
+              <span className="text-muted-foreground flex items-center gap-[0.5ch] rounded-sm border p-0.5 px-1.5 font-mono">
+                <Command className="size-3" /> <kbd>+</kbd> <kbd>b</kbd>
+              </span>
+              <span>Toggle customizer sidebar</span>
+            </div>
+          )}
 
-            <Button
-              size="icon"
-              variant="ghost"
-              onClick={toggleFullscreen}
-              className="relative hidden size-7 md:inline-flex"
-              title={
-                isFullscreen
-                  ? "Minimize Component View"
-                  : "Maximize Component View"
-              }
+          <div className="flex items-center justify-between gap-4">
+            <ToggleGroup
+              className="border"
+              type="single"
+              defaultValue="100"
+              onValueChange={(value) => {
+                if (resizablePanelRef?.current) {
+                  resizablePanelRef.current.resize(parseInt(value));
+                }
+              }}
             >
-              {isFullscreen ? (
-                <>
-                  <span className="sr-only">Minimize Component View</span>
-                  <Minimize />
-                </>
-              ) : (
-                <>
-                  <span className="sr-only">Maximize Component View</span>
-                  <Maximize />
-                </>
-              )}
+              <ToggleGroupItem
+                value="100"
+                className="hidden aspect-square size-7 md:inline-flex"
+                title="Desktop"
+              >
+                <Monitor className="size-4" />
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                value="60"
+                className="hidden aspect-square size-7 md:inline-flex"
+                title="Tablet"
+              >
+                <Tablet className="size-4" />
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                value="30"
+                className="hidden aspect-square size-7 md:inline-flex"
+                title="Mobile"
+              >
+                <Smartphone className="size-4" />
+              </ToggleGroupItem>
+            </ToggleGroup>
 
-              <div
-                className={cn(
-                  "bg-primary absolute top-0 right-0 size-1.5 rounded-full transition-opacity duration-300 ease-in-out",
-                  isFullscreen ? "animate-bounce opacity-100" : "opacity-0",
+            <div className="flex items-center">
+              {isFullscreen && <ModeSwitcher className="size-7" />}
+
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={toggleFullscreen}
+                className="relative hidden size-7 md:inline-flex"
+                title={
+                  isFullscreen
+                    ? "Minimize Component View"
+                    : "Maximize Component View"
+                }
+              >
+                {isFullscreen ? (
+                  <>
+                    <span className="sr-only">Minimize Component View</span>
+                    <Minimize />
+                  </>
+                ) : (
+                  <>
+                    <span className="sr-only">Maximize Component View</span>
+                    <Maximize />
+                  </>
                 )}
-              />
-            </Button>
 
-            <Button
-              size="icon"
-              variant="ghost"
-              className="size-7"
-              title="Open in New Tab"
-              asChild
-            >
-              <ExternalLink href={`${baseUrl}${internalUrl}`}>
-                <span className="sr-only">Open in New Tab</span>
-                <Fullscreen className="size-4" />
-              </ExternalLink>
-            </Button>
+                <div
+                  className={cn(
+                    "bg-primary absolute top-0 right-0 size-1.5 rounded-full transition-opacity duration-300 ease-in-out",
+                    isFullscreen ? "animate-bounce opacity-100" : "opacity-0",
+                  )}
+                />
+              </Button>
+
+              <Button
+                size="icon"
+                variant="ghost"
+                className="size-7"
+                title="Open in New Tab"
+                asChild
+              >
+                <ExternalLink href={`${baseUrl}${internalUrl}`}>
+                  <span className="sr-only">Open in New Tab</span>
+                  <Fullscreen className="size-4" />
+                </ExternalLink>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
