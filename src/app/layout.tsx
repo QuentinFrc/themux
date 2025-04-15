@@ -1,18 +1,14 @@
 import { ReactScan } from "@/components/devtools/react-scan";
 
 import { ScreenDevTools } from "@/components/devtools/screen-devtools";
+import { LoadFonts } from "@/components/load-fonts";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeSync } from "@/components/theme-sync";
 import { Toaster } from "@/components/ui/sonner";
-import { loadMonoFonts, loadSansFonts, loadSerifFonts } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
-
-loadSansFonts();
-loadSerifFonts();
-loadMonoFonts();
 
 export const metadata: Metadata = {
   title: {
@@ -59,6 +55,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <ReactScan options={{ enabled: true }} />
+      <LoadFonts />
 
       <body className={cn(`antialiased`)}>
         <ThemeProvider

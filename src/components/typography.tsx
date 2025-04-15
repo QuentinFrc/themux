@@ -31,7 +31,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                 const isActive = font.value === currentFonts?.sans;
                 return (
                   <CommandItem
-                    key={font.label}
+                    key={font.key}
                     onSelect={() =>
                       setConfig((prev) => {
                         return {
@@ -46,7 +46,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                     className="group/item flex items-center gap-4 py-2 font-sans"
                     style={{ "--font-sans": font.value }}
                   >
-                    <span className="text-nowrap">{font.label}</span>
+                    <span className="text-nowrap">{font.key}</span>
                     <span
                       className={cn(
                         "text-muted-foreground/80 justify-end truncate text-xs text-nowrap opacity-0 transition",
@@ -74,7 +74,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                 const isActive = font.value === currentFonts?.sans;
                 return (
                   <CommandItem
-                    key={font.label}
+                    key={font.key}
                     onSelect={() =>
                       setConfig((prev) => {
                         return {
@@ -89,7 +89,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                     className="group/item flex items-center gap-4 py-2 font-sans"
                     style={{ "--font-sans": font.value }}
                   >
-                    <span className="text-nowrap">{font.label}</span>
+                    <span className="text-nowrap">{font.key}</span>
                     <span
                       className={cn(
                         "text-muted-foreground/80 justify-end truncate text-xs text-nowrap opacity-0 transition",
@@ -124,7 +124,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
               const isActive = font.value === currentFonts?.serif;
               return (
                 <CommandItem
-                  key={font.label}
+                  key={font.key}
                   onSelect={() =>
                     setConfig((prev) => {
                       return {
@@ -139,7 +139,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                   className="group/item flex items-center gap-4 py-2 font-serif"
                   style={{ "--font-serif": font.value }}
                 >
-                  <span className="text-nowrap">{font.label}</span>
+                  <span className="text-nowrap">{font.key}</span>
                   <span
                     className={cn(
                       "text-muted-foreground/80 justify-end truncate text-xs text-nowrap opacity-0 transition",
@@ -173,7 +173,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
               const isActive = font.value === currentFonts?.mono;
               return (
                 <CommandItem
-                  key={font.label}
+                  key={font.key}
                   onSelect={() =>
                     setConfig((prev) => {
                       return {
@@ -188,7 +188,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                   className="group/item flex items-center gap-4 py-2 font-mono"
                   style={{ "--font-mono": font.value }}
                 >
-                  <span className="text-nowrap">{font.label}</span>
+                  <span className="text-nowrap">{font.key}</span>
                   <span
                     className={cn(
                       "text-muted-foreground/80 justify-end truncate text-xs text-nowrap opacity-0 transition",

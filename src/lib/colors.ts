@@ -15,8 +15,8 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
     name: "neutral",
     label: "Neutral",
     fonts: {
-      sans: sansFonts.Geist,
-      mono: monoFonts["Geist Mono"],
+      sans: sansFonts.Geist.value,
+      mono: monoFonts["Geist Mono"].value,
     },
     light: {
       background: "oklch(1 0 0)", // --color-white (closest to neutral-50)
@@ -89,8 +89,8 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
     name: "zinc",
     label: "Zinc",
     fonts: {
-      sans: sansFonts.Geist,
-      mono: monoFonts["Geist Mono"],
+      sans: sansFonts.Geist.value,
+      mono: monoFonts["Geist Mono"].value,
     },
     light: {
       background: "oklch(1 0 0)", // --color-white (closest to zinc-50)
@@ -163,8 +163,8 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
     name: "stone",
     label: "Stone",
     fonts: {
-      sans: sansFonts.Geist,
-      mono: monoFonts["Geist Mono"],
+      sans: sansFonts.Geist.value,
+      mono: monoFonts["Geist Mono"].value,
     },
     light: {
       background: "oklch(1 0 0)", // --color-white (closest to slate-50)
@@ -237,8 +237,8 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
     name: "gray",
     label: "Gray",
     fonts: {
-      sans: sansFonts.Geist,
-      mono: monoFonts["Geist Mono"],
+      sans: sansFonts.Geist.value,
+      mono: monoFonts["Geist Mono"].value,
     },
     light: {
       background: "oklch(1 0 0)", // --color-white (closest to gray-50)
@@ -311,8 +311,8 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
     name: "slate",
     label: "Slate",
     fonts: {
-      sans: sansFonts.Geist,
-      mono: monoFonts["Geist Mono"],
+      sans: sansFonts.Geist.value,
+      mono: monoFonts["Geist Mono"].value,
     },
     light: {
       background: "oklch(1 0 0)", // --color-white (closest to slate-50)
