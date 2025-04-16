@@ -4,7 +4,7 @@
 
 Heavily inspired by shadcn/ui and Tailwind CSS website designs.
 
-![hero](public/og-themux.png)
+![hero](public/opengraph-image.png)
 
 ## Features
 
@@ -18,7 +18,7 @@ Heavily inspired by shadcn/ui and Tailwind CSS website designs.
 
 ## Coming Features
 
-- ⌚ Community presets
+- ⌚ More presets
 - ⌚ Typography customizer and typography dump
 - ⌚ Blocks showcase
 
@@ -37,19 +37,22 @@ The name "themux" blends "theming" and "UX" to highlight its focus on both aesth
 
 1. Clone the repository:
 
-bash
+```bash
 git clone https://github.com/llanesluis/themux.git
 cd themux
+```
 
 2. Install dependencies:
 
-bash
+```bash
 pnpm install
+```
 
 3. Start the dev server:
 
-bash
+```bash
 pnpm dev
+```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
