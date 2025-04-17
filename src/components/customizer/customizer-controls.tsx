@@ -37,11 +37,16 @@ import React, {
 } from "react";
 import { toast } from "sonner";
 import { Color } from "./color";
-import { Button } from "./ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandItem } from "./ui/command";
-import { Input } from "./ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Skeleton } from "./ui/skeleton";
+import { Button } from "../ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from "../ui/command";
+import { Input } from "../ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Skeleton } from "../ui/skeleton";
 
 const RADIUS_VALUES: RemValue[] = [
   "0rem",

@@ -4,7 +4,12 @@ import { cn } from "@/lib/utils";
 import { monoFontsArray, sansFontsArray, serifFontsArray } from "@/utils/fonts";
 import { Check, Ligature } from "lucide-react";
 import { ControlSection } from "./customizer-controls";
-import { Command, CommandEmpty, CommandGroup, CommandItem } from "./ui/command";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from "../ui/command";
 
 export function Typography({ className }: React.ComponentProps<"div">) {
   const { setConfig, currentFonts } = useThemeConfig();

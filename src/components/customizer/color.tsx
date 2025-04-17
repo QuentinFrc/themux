@@ -3,8 +3,8 @@
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 import { ComponentProps } from "react";
-import { Button } from "./ui/button";
-import { Skeleton } from "./ui/skeleton";
+import { Button } from "../ui/button";
+import { Skeleton } from "../ui/skeleton";
 
 export function Color({
   color,

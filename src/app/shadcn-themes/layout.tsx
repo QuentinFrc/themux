@@ -1,7 +1,7 @@
 import {
   CustomizerSidebar,
   CustomizerSidebarToggle,
-} from "@/components/customizer-sidebar";
+} from "@/components/customizer/customizer-sidebar";
 import { ExternalLink } from "@/components/external-link";
 import { GitHub } from "@/components/icons/github";
 import { ModeSwitcher } from "@/components/mode-switcher";

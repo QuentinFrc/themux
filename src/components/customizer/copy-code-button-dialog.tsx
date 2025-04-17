@@ -8,7 +8,7 @@ import { ColorFormat, TailwindVersion } from "@/types/theme";
 import { generateThemeCode } from "@/utils/theme-style-generator";
 import { Check, Clipboard } from "lucide-react";
 import React, { useMemo } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
+} from "../ui/dialog";
 import {
   Drawer,
   DrawerContent,
@@ -24,11 +24,11 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./ui/drawer";
-import { Label } from "./ui/label";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { ScrollArea } from "./ui/scroll-area";
-import { Switch } from "./ui/switch";
+} from "../ui/drawer";
+import { Label } from "../ui/label";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { ScrollArea } from "../ui/scroll-area";
+import { Switch } from "../ui/switch";
 
 export function CopyCodeButtonDialog({
   className,

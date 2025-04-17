@@ -2,7 +2,7 @@ import { CardsDemo } from "@/components/cards-demo";
 import {
   CollapsibleCustomizer,
   CollapsibleCustomizerTrigger,
-} from "@/components/collapsible-customizer";
+} from "@/components/customizer/collapsible-customizer";
 
 import { DashboardDemo } from "@/components/dashboard-demo";
 import { FrameHighlight } from "@/components/frame-highlight";
@@ -12,7 +12,7 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/page-header";
-import { QuickCustomizer } from "@/components/quick-customizer";
+import { QuickCustomizer } from "@/components/customizer/quick-customizer";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";

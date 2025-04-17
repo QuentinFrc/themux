@@ -4,13 +4,13 @@ import { useThemeConfig } from "@/hooks/use-theme-config";
 import { cn } from "@/lib/utils";
 import { Repeat, Undo } from "lucide-react";
 import { ComponentProps } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 
 export function ResetButton({
   className,

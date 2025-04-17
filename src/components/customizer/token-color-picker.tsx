@@ -9,11 +9,11 @@ import { CircleAlert, Pipette } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
-import { useDebouncedCallback } from "../hooks/use-debounced-callback";
+import { useDebouncedCallback } from "../../hooks/use-debounced-callback";
 import { PasteColorControl } from "./customizer-controls";
-import { ComponentErrorBoundary } from "./error-boundary";
+import { ComponentErrorBoundary } from "../error-boundary";
 import { TokenDisplay, TokenInfo } from "./token";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 interface TokenColorPickerProps {
   colorProperty: ColorProperty;

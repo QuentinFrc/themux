@@ -6,8 +6,8 @@ import { Palette } from "lucide-react";
 import { ControlSection } from "./customizer-controls";
 import { Token } from "./token";
 import { TokenColorPicker } from "./token-color-picker";
-import { Label } from "./ui/label";
-import { ScrollArea } from "./ui/scroll-area";
+import { Label } from "../ui/label";
+import { ScrollArea } from "../ui/scroll-area";
 
 export function ColorTokens({ className }: React.ComponentProps<"div">) {
   return (

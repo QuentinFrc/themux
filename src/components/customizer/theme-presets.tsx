@@ -14,11 +14,16 @@ import { Check, ChevronDown, PaintBucket } from "lucide-react";
 import { useTheme } from "next-themes";
 import React, { ComponentProps } from "react";
 import { Color } from "./color";
-import { Shadcn } from "./icons/shadcn";
-import { Command, CommandEmpty, CommandGroup, CommandItem } from "./ui/command";
-import { Label } from "./ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Skeleton } from "./ui/skeleton";
+import { Shadcn } from "../icons/shadcn";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from "../ui/command";
+import { Label } from "../ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Skeleton } from "../ui/skeleton";
 
 export function ThemePresets({ className }: React.ComponentProps<"div">) {
   return (

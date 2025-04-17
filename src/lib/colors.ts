@@ -7,7 +7,6 @@ import {
   ThemeObject,
 } from "../types/theme";
 import { otherPresets } from "./presets";
-import { DEFAULT_FONTS } from "./themes";
 
 // ===> Tailwind V4
 export const basePresetsV4: Record<PresetV4, ThemeObject> = {

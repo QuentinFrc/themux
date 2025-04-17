@@ -21,7 +21,7 @@ import {
 import { CustomizerSettings } from "./customizer-settings";
 import { ResetButton } from "./reset-button";
 import { MemoizedTailwindV4ColorPalette } from "./tailwind-v4-palette";
-import { Label } from "./ui/label";
+import { Label } from "../ui/label";
 import {
   Select,
   SelectContent,
@@ -30,7 +30,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "../ui/select";
 
 export function QuickCustomizer() {
   const { getColorToken, setPrimaryColorTokens } = useColorTokens();

@@ -7,13 +7,13 @@ import * as React from "react";
 import { TokensList } from "./color-tokens";
 import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
 import { CustomizerSettings } from "./customizer-settings";
-import { ExternalLink } from "./external-link";
-import { GitHub } from "./icons/github";
+import { ExternalLink } from "../external-link";
+import { GitHub } from "../icons/github";
 import { ResetButton } from "./reset-button";
 import { ThemePresets } from "./theme-presets";
 import { Typography } from "./typography";
-import { Button } from "./ui/button";
-import { Label } from "./ui/label";
+import { Button } from "../ui/button";
+import { Label } from "../ui/label";
 import {
   Sidebar,
   SidebarContent,
@@ -21,9 +21,9 @@ import {
   SidebarHeader,
   SidebarRail,
   useSidebar,
-} from "./ui/sidebar";
-import { Skeleton } from "./ui/skeleton";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+} from "../ui/sidebar";
+import { Skeleton } from "../ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 export function CustomizerSidebar({
   className,

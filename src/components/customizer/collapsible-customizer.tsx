@@ -9,8 +9,8 @@ import { ColorTokens } from "./color-tokens";
 import { ControlsSkeleton } from "./customizer-controls";
 import { ThemePresets } from "./theme-presets";
 import { Typography } from "./typography";
-import { Button } from "./ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Button } from "../ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 export function CollapsibleCustomizerTrigger({
   className,
