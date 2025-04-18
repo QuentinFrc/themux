@@ -31,6 +31,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface MailProps {
   accounts: {
@@ -176,8 +177,15 @@ export function Mail({
           />
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-          <Tabs defaultValue="all">
+        <ResizablePanel
+          defaultSize={defaultLayout[1]}
+          minSize={30}
+          className="flex flex-1 flex-col"
+        >
+          <Tabs
+            defaultValue="all"
+            className="flex flex-1 flex-col overflow-hidden"
+          >
             <div className="mt-2 flex items-center px-4">
               <h1 className="text-xl font-bold">Inbox</h1>
               <TabsList className="ml-auto">
@@ -194,12 +202,18 @@ export function Mail({
                 </div>
               </form>
             </div>
-            <TabsContent value="all" className="m-0">
-              <MailList items={mails} />
-            </TabsContent>
-            <TabsContent value="unread" className="m-0">
-              <MailList items={mails.filter((item) => !item.read)} />
-            </TabsContent>
+
+            <ScrollArea className="flex flex-col overflow-hidden">
+              <div className="flex h-full flex-col gap-2 p-4 pt-0">
+                <TabsContent value="all" className="m-0">
+                  <MailList items={mails} />
+                </TabsContent>
+
+                <TabsContent value="unread" className="m-0">
+                  <MailList items={mails.filter((item) => !item.read)} />
+                </TabsContent>
+              </div>
+            </ScrollArea>
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />

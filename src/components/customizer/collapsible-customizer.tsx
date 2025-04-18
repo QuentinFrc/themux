@@ -11,6 +11,7 @@ import { ThemePresets } from "./theme-presets";
 import { Typography } from "./typography";
 import { Button } from "../ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { ScrollArea } from "../ui/scroll-area";
 
 export function CollapsibleCustomizerTrigger({
   className,
@@ -68,7 +69,9 @@ export function CollapsibleCustomizer() {
               <div className="relative grid w-full grid-cols-3 gap-6">
                 {isMounted ? (
                   <>
-                    <ColorTokens className="max-h-70" />
+                    <ScrollArea>
+                      <ColorTokens className="max-h-73" />
+                    </ScrollArea>
                     <ThemePresets />
                     <Typography />
                   </>

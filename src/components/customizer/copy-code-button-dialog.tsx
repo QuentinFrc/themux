@@ -27,7 +27,7 @@ import {
 } from "../ui/drawer";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { Switch } from "../ui/switch";
 
 export function CopyCodeButtonDialog({
@@ -260,6 +260,7 @@ function CustomizerCode({
           <code className="relative border border-none p-0 font-mono text-xs">
             {themeCode}
           </code>
+          <ScrollBar orientation="horizontal" />
         </pre>
       </ScrollArea>
 

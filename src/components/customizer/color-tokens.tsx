@@ -3,11 +3,10 @@
 import { useColorTokens } from "@/hooks/use-color-tokens";
 import { cn } from "@/lib/utils";
 import { Palette } from "lucide-react";
+import { Label } from "../ui/label";
 import { ControlSection } from "./customizer-controls";
 import { Token } from "./token";
 import { TokenColorPicker } from "./token-color-picker";
-import { Label } from "../ui/label";
-import { ScrollArea } from "../ui/scroll-area";
 
 export function ColorTokens({ className }: React.ComponentProps<"div">) {
   return (
@@ -15,16 +14,13 @@ export function ColorTokens({ className }: React.ComponentProps<"div">) {
       <Label className="flex items-center gap-1 pb-2">
         <Palette className="size-4" /> Tokens
       </Label>
-      <div className={cn("h-full rounded-lg")}>
-        <ScrollArea className="relative size-full">
-          <TokensList className={className} />
-        </ScrollArea>
-      </div>
+
+      <TokensList className={className} />
     </section>
   );
 }
 
-export function TokensList({ className }: React.ComponentProps<"div">) {
+function TokensList({ className }: React.ComponentProps<"div">) {
   const {
     getColorToken,
     setPrimaryColorTokens,
