@@ -11,16 +11,6 @@ import {
   SunMoon,
 } from "lucide-react";
 import { useState } from "react";
-import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
-import {
-  PasteColorControl,
-  RadiusControls,
-  SurfaceShadesControl,
-  ThemeModeControls,
-} from "./customizer-controls";
-import { CustomizerSettings } from "./customizer-settings";
-import { ResetButton } from "./reset-button";
-import { MemoizedTailwindV4ColorPalette } from "./tailwind-v4-palette";
 import { Label } from "../ui/label";
 import {
   Select,
@@ -31,6 +21,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
+import {
+  PasteColorControl,
+  RadiusControls,
+  SurfaceShadesControl,
+  ThemeModeControls,
+} from "./customizer-controls";
+import { CustomizerSettings } from "./customizer-settings";
+import { ResetButton } from "./reset-button";
+import { MemoizedTailwindV4ColorPalette } from "./tailwind-v4-palette";
 
 export function QuickCustomizer() {
   const { getColorToken, setPrimaryColorTokens } = useColorTokens();

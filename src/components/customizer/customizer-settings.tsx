@@ -10,7 +10,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { useSettings } from "@/hooks/use-settings";
-import { cn } from "@/lib/utils";
 import { ColorFormat, TailwindVersion } from "@/types/theme";
 import { Repeat, Settings } from "lucide-react";
 import { ComponentProps } from "react";
@@ -21,60 +20,93 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { TooltipWrapper } from "../tooltip-wrapper";
 
 export function CustomizerSettings({
   className,
   ...props
-}: ComponentProps<"div">) {
+}: ComponentProps<typeof PopoverTrigger>) {
   const {
     modesInSync,
     updateSettings,
     resetSettings,
     tailwindVersion,
     colorFormat,
+    showTootips,
     fontVars,
     shadows,
   } = useSettings();
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild {...props}>
         <Button variant="ghost" size="sm">
           <span className="hidden @md:inline-flex">Settings</span> <Settings />
           <span className="sr-only">Settings</span>
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className={cn("w-92 p-0", className)} align="end">
+      <PopoverContent className="w-92 p-0" align="end">
         <header className="text-muted-foreground flex items-center justify-between px-4 py-2 text-sm font-semibold">
           <span>Customizer settings</span>{" "}
-          <Button variant="ghost" onClick={resetSettings}>
-            <Repeat />
-            <span className="sr-only">Reset</span>
-          </Button>
+          <TooltipWrapper asChild label="Reset settings">
+            <Button variant="ghost" onClick={resetSettings}>
+              <Repeat />
+              <span className="sr-only">Reset</span>
+            </Button>
+          </TooltipWrapper>
         </header>
 
         <Separator className="mb-2" />
 
         <section className="grid px-4 pb-4">
-          <Label className="text-muted-foreground py-1 text-xs">
-            Color tokens
-          </Label>
-          <div className="flex items-center rounded-lg">
-            <div className="flex flex-col gap-1">
-              <span className="text-sm">Sync both modes</span>
-              <span className="text-muted-foreground w-[28ch] text-xs">
-                {`Brand tokens will be in sync in light and dark modes. Theme presets
-                and surface shades are always synced.`}
-              </span>
+          <Label className="text-muted-foreground py-1 text-xs">Tokens</Label>
+          <div className="space-y-4">
+            <div className="flex items-center rounded-lg">
+              <div className="flex flex-col gap-1">
+                <span className="text-sm">Sync both modes</span>
+                <span className="text-muted-foreground w-[28ch] text-xs">
+                  {`Brand tokens will be in sync in light and dark modes. Presets are always synced.`}
+                </span>
+              </div>
+              <Switch
+                className="ml-auto"
+                checked={modesInSync}
+                onCheckedChange={(isActive) =>
+                  updateSettings({ modesInSync: isActive })
+                }
+              />
             </div>
-            <Switch
-              className="ml-auto"
-              checked={modesInSync}
-              onCheckedChange={(isActive) =>
-                updateSettings({ modesInSync: isActive })
-              }
-            />
+            <div className="flex items-center justify-between gap-4 rounded-lg">
+              <div className="flex flex-col gap-1">
+                <span className="text-sm">Show font variables</span>
+                <span className="text-muted-foreground w-[28ch] text-xs">
+                  Keep this setting OFF if you handle fonts separately.
+                </span>
+              </div>
+              <Switch
+                className="ml-auto"
+                checked={fontVars}
+                onCheckedChange={(isActive) =>
+                  updateSettings({ fontVars: isActive })
+                }
+              />
+            </div>
+            <div className="flex items-center justify-between gap-4 rounded-lg">
+              <div className="flex flex-col gap-1">
+                <span className="text-sm">Show shadow variables</span>
+                <span className="text-muted-foreground w-[28ch] text-xs">
+                  Show shadow variables in the generated CSS output.
+                </span>
+              </div>
+              <Switch
+                className="ml-auto"
+                checked={shadows}
+                onCheckedChange={(isActive) =>
+                  updateSettings({ shadows: isActive })
+                }
+              />
+            </div>
           </div>
         </section>
 
@@ -146,33 +178,16 @@ export function CustomizerSettings({
 
             <div className="flex items-center justify-between gap-4 rounded-lg">
               <div className="flex flex-col gap-1">
-                <span className="text-sm">Show font variables</span>
+                <span className="text-sm">Show tooltips</span>
                 <span className="text-muted-foreground w-[28ch] text-xs">
-                  Show font variables in the generated CSS output. Keep this
-                  setting OFF if you handle fonts separately.
+                  Enable or disable tooltips throughout the app.
                 </span>
               </div>
               <Switch
                 className="ml-auto"
-                checked={fontVars}
+                checked={showTootips}
                 onCheckedChange={(isActive) =>
-                  updateSettings({ fontVars: isActive })
-                }
-              />
-            </div>
-
-            <div className="flex items-center justify-between gap-4 rounded-lg">
-              <div className="flex flex-col gap-1">
-                <span className="text-sm">Show shadow variables</span>
-                <span className="text-muted-foreground w-[28ch] text-xs">
-                  Show shadow variables in the generated CSS output.
-                </span>
-              </div>
-              <Switch
-                className="ml-auto"
-                checked={shadows}
-                onCheckedChange={(isActive) =>
-                  updateSettings({ shadows: isActive })
+                  updateSettings({ showTootips: isActive })
                 }
               />
             </div>

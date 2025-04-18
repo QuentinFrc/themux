@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { convertToOklch } from "@/utils/color-converter";
 import React, { ComponentProps } from "react";
 import { Color } from "./color";
+import { TooltipWrapper } from "../tooltip-wrapper";
 
 export const MemoizedTailwindV4ColorPalette = React.memo(
   TailwindV4ColorPalette,
@@ -41,13 +42,14 @@ function TailwindV4ColorPalette({
         const isActive = currentColor === color;
 
         return (
-          <Color
-            key={key}
-            color={color}
-            isActive={isActive}
-            onClick={() => handleColorChange(color)}
-            className="ring-border ring"
-          />
+          <TooltipWrapper label={`${key}-${shade}`} key={key} asChild>
+            <Color
+              color={color}
+              isActive={isActive}
+              onClick={() => handleColorChange(color)}
+              className="ring-border ring"
+            />
+          </TooltipWrapper>
         );
       })}
     </div>

@@ -4,6 +4,8 @@ import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 import { Palette, X } from "lucide-react";
 import * as React from "react";
+import { ModeSwitcher } from "../mode-switcher";
+import { TooltipWrapper } from "../tooltip-wrapper";
 import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
 import {
@@ -87,8 +89,17 @@ export function CustomizerSidebar({
       <SidebarFooter>
         <div className="sticky mt-auto flex gap-2">
           <CopyCodeButtonDialog className="flex-1" />
-          <ResetButton />
-          <CustomizerSettings />
+          <TooltipWrapper label="Toggle light/dark" asChild>
+            <ModeSwitcher />
+          </TooltipWrapper>
+
+          <TooltipWrapper label="Reset" asChild>
+            <ResetButton />
+          </TooltipWrapper>
+
+          <TooltipWrapper label="Settings" asChild>
+            <CustomizerSettings />
+          </TooltipWrapper>
         </div>
       </SidebarFooter>
       <SidebarRail />

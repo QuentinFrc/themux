@@ -16,6 +16,7 @@ import { ImperativePanelHandle } from "react-resizable-panels";
 import { ComponentErrorBoundary } from "./error-boundary";
 import { ExternalLink } from "./external-link";
 import { ModeSwitcher } from "./mode-switcher";
+import { TooltipWrapper } from "./tooltip-wrapper";
 import { Button } from "./ui/button";
 import {
   ResizableHandle,
@@ -139,75 +140,84 @@ function BlockViewerToolbar({
                 }
               }}
             >
-              <ToggleGroupItem
-                value="100"
-                className="hidden aspect-square size-7 md:inline-flex"
-                title="Desktop"
-              >
-                <Monitor className="size-4" />
-              </ToggleGroupItem>
-              <ToggleGroupItem
-                value="60"
-                className="hidden aspect-square size-7 md:inline-flex"
-                title="Tablet"
-              >
-                <Tablet className="size-4" />
-              </ToggleGroupItem>
-              <ToggleGroupItem
-                value="30"
-                className="hidden aspect-square size-7 md:inline-flex"
-                title="Mobile"
-              >
-                <Smartphone className="size-4" />
-              </ToggleGroupItem>
+              <TooltipWrapper label="Desktop view" asChild>
+                <ToggleGroupItem
+                  value="100"
+                  className="hidden aspect-square size-7 md:inline-flex"
+                >
+                  <Monitor className="size-4" />
+                </ToggleGroupItem>
+              </TooltipWrapper>
+
+              <TooltipWrapper label="Tablet view" asChild>
+                <ToggleGroupItem
+                  value="60"
+                  className="hidden aspect-square size-7 md:inline-flex"
+                >
+                  <Tablet className="size-4" />
+                </ToggleGroupItem>
+              </TooltipWrapper>
+
+              <TooltipWrapper label="Mobile view" asChild>
+                <ToggleGroupItem
+                  value="30"
+                  className="hidden aspect-square size-7 md:inline-flex"
+                >
+                  <Smartphone className="size-4" />
+                </ToggleGroupItem>
+              </TooltipWrapper>
             </ToggleGroup>
 
             <div className="flex items-center">
-              {isFullscreen && <ModeSwitcher className="size-7" />}
+              {isFullscreen && (
+                <TooltipWrapper label="Toggle light/dark" asChild>
+                  <ModeSwitcher className="size-7" />
+                </TooltipWrapper>
+              )}
 
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={toggleFullscreen}
-                className="relative hidden size-7 md:inline-flex"
-                title={
-                  isFullscreen
-                    ? "Minimize Component View"
-                    : "Maximize Component View"
-                }
-              >
-                {isFullscreen ? (
-                  <>
-                    <span className="sr-only">Minimize Component View</span>
-                    <Minimize />
-                  </>
-                ) : (
-                  <>
-                    <span className="sr-only">Maximize Component View</span>
-                    <Maximize />
-                  </>
-                )}
-
-                <div
-                  className={cn(
-                    "bg-primary absolute top-0 right-0 size-1.5 rounded-full transition-opacity duration-300 ease-in-out",
-                    isFullscreen ? "animate-bounce opacity-100" : "opacity-0",
-                  )}
-                />
-              </Button>
-
-              <Button
-                size="icon"
-                variant="ghost"
-                className="size-7"
-                title="Open in New Tab"
+              <TooltipWrapper
+                label={isFullscreen ? "Minimize view" : "Maximize view"}
                 asChild
               >
-                <ExternalLink href={`${baseUrl}${internalUrl}`}>
-                  <span className="sr-only">Open in New Tab</span>
-                  <Fullscreen className="size-4" />
-                </ExternalLink>
-              </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={toggleFullscreen}
+                  className="relative hidden size-7 md:inline-flex"
+                >
+                  <div>
+                    {isFullscreen ? (
+                      <>
+                        <span className="sr-only">Minimize view</span>
+                        <Minimize />
+                      </>
+                    ) : (
+                      <>
+                        <span className="sr-only">Maximize view</span>
+                        <Maximize />
+                      </>
+                    )}
+
+                    <div
+                      className={cn(
+                        "bg-primary absolute top-0 right-0 size-1.5 rounded-full transition-opacity duration-300 ease-in-out",
+                        isFullscreen
+                          ? "animate-bounce opacity-100"
+                          : "opacity-0",
+                      )}
+                    />
+                  </div>
+                </Button>
+              </TooltipWrapper>
+
+              <TooltipWrapper label="Open in new tab" asChild>
+                <Button size="icon" variant="ghost" className="size-7">
+                  <ExternalLink href={`${baseUrl}${internalUrl}`}>
+                    <span className="sr-only">Open in New Tab</span>
+                    <Fullscreen className="size-4" />
+                  </ExternalLink>
+                </Button>
+              </TooltipWrapper>
             </div>
           </div>
         </div>

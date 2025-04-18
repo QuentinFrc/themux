@@ -6,6 +6,7 @@ type Settings = {
   modesInSync: boolean;
   colorFormat: ColorFormat;
   tailwindVersion: TailwindVersion;
+  showTootips?: boolean;
   fontVars?: boolean;
   shadows?: boolean;
 };
@@ -14,6 +15,7 @@ export const initialSettings: Settings = {
   modesInSync: false,
   colorFormat: "oklch",
   tailwindVersion: "4",
+  showTootips: true,
   fontVars: false,
   shadows: false,
 };
@@ -25,8 +27,14 @@ const initialConfigAtom = atomWithStorage<Settings>(
 
 export function useSettings() {
   const [settings, setSettings] = useAtom(initialConfigAtom);
-  const { modesInSync, colorFormat, tailwindVersion, fontVars, shadows } =
-    settings;
+  const {
+    modesInSync,
+    colorFormat,
+    tailwindVersion,
+    showTootips,
+    fontVars,
+    shadows,
+  } = settings;
 
   const updateSettings = (newSettings: Partial<Settings>) => {
     setSettings((prev) => ({ ...prev, ...newSettings }));
@@ -42,6 +50,7 @@ export function useSettings() {
     modesInSync,
     colorFormat,
     tailwindVersion,
+    showTootips,
     fontVars,
     shadows,
     setSettings,

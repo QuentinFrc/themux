@@ -9,6 +9,7 @@ import { ExternalLink } from "../external-link";
 import { Alert, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { TooltipWrapper } from "../tooltip-wrapper";
 
 export function ComponentWrapper({
   className,
@@ -53,45 +54,48 @@ export function ComponentWrapper({
               </AlertTitle>
 
               <div className="ml-auto flex items-center">
-                <Button
-                  size={"icon"}
-                  variant={"ghost"}
-                  className="relative size-4 cursor-pointer p-1"
-                  onClick={() =>
-                    copyToClipboard(`npx shadcn@latest add ${name}`)
-                  }
-                >
-                  <Clipboard
-                    className={cn(
-                      "absolute size-4 transition duration-200",
-                      isCopied ? "scale-0" : "scale-100",
-                    )}
-                  />
-
-                  <Check
-                    className={cn(
-                      "absolute size-4 transition duration-200",
-                      !isCopied ? "scale-0" : "scale-100",
-                    )}
-                  />
-                </Button>
+                <TooltipWrapper label="Copy command" asChild>
+                  <Button
+                    size={"icon"}
+                    variant={"ghost"}
+                    className="relative size-4 cursor-pointer p-1"
+                    onClick={() =>
+                      copyToClipboard(`npx shadcn@latest add ${name}`)
+                    }
+                  >
+                    <Clipboard
+                      className={cn(
+                        "absolute size-4 transition duration-200",
+                        isCopied ? "scale-0" : "scale-100",
+                      )}
+                    />
+                    <Check
+                      className={cn(
+                        "absolute size-4 transition duration-200",
+                        !isCopied ? "scale-0" : "scale-100",
+                      )}
+                    />
+                  </Button>
+                </TooltipWrapper>
 
                 {showUrl && (
-                  <ExternalLink
-                    href={
-                      internalUrl
-                        ? `${baseUrl}${internalUrl}`
-                        : `https://ui.shadcn.com/docs/components/${name}`
-                    }
-                    showIcon
-                    className="size-fit cursor-pointer p-1"
-                  >
-                    {internalUrl ? (
-                      <Expand className="size-4" />
-                    ) : (
-                      <Globe className="size-4" />
-                    )}
-                  </ExternalLink>
+                  <TooltipWrapper label="Shadcn docs" asChild>
+                    <ExternalLink
+                      href={
+                        internalUrl
+                          ? `${baseUrl}${internalUrl}`
+                          : `https://ui.shadcn.com/docs/components/${name}`
+                      }
+                      showIcon
+                      className="size-fit cursor-pointer p-1"
+                    >
+                      {internalUrl ? (
+                        <Expand className="size-4" />
+                      ) : (
+                        <Globe className="size-4" />
+                      )}
+                    </ExternalLink>
+                  </TooltipWrapper>
                 )}
               </div>
             </Alert>
