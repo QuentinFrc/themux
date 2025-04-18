@@ -179,13 +179,9 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <div className="group scaled relative mb-0 flex h-10 w-full shrink-0 items-center justify-between gap-1 rounded-lg border p-1 px-2">
-          <div className="flex items-center gap-2 px-1">
-            <span className="min-w-16 text-sm">
-              {isMounted && activePresetLabel}
-              {!isMounted && <Skeleton className="h-4 w-full" />}
-            </span>
+      <PopoverTrigger asChild className="rounded-lg border">
+        <div className="group/control bg-background hover:bg-muted/40 flex h-10 w-full cursor-pointer items-center justify-between gap-4 p-2.5 transition-colors duration-300 ease-in-out *:shrink-0">
+          <div className="flex items-center gap-2">
             <div className="flex">
               <Color
                 color={
@@ -210,20 +206,41 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
                 className="pointer-events-none"
               />
             </div>
+            <h3
+              className={cn(
+                "group-hover/control:text-foreground text-muted-foreground min-w-16 text-sm font-medium",
+                activePresetName !== "custom" && "text-foreground",
+              )}
+            >
+              {!isMounted ? (
+                <Skeleton className="h-4" />
+              ) : activePresetLabel ? (
+                activePresetLabel
+              ) : (
+                "Preset"
+              )}
+            </h3>
           </div>
-          <ChevronDown className="size-4 shrink-0 opacity-50" />
+
+          <button
+            type="button"
+            className="text-muted-foreground group-hover/control:text-foreground transition-colors"
+            aria-label="Expand section"
+          >
+            <ChevronDown className="h-4 w-4" />
+          </button>
         </div>
       </PopoverTrigger>
       <span className="text-muted-foreground truncate text-xs">
         {`background, card, popover, muted, etc.`}
       </span>
 
-      <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+      <PopoverContent className="overflow-hidden p-0" align="center">
         <Command className={cn("", className)}>
           {isMounted && (
             <>
               <CommandEmpty>No surface shades found.</CommandEmpty>
-              <CommandGroup>
+              <CommandGroup className="scrollbar-thin max-h-82 w-full overflow-y-auto">
                 {surfaceShadesPresetArray.map((bgShadesThemeObject) => {
                   const properties = bgShadesThemeObject[resolvedTheme];
                   const { name, label } = bgShadesThemeObject;
@@ -262,7 +279,7 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
 
                       <Check
                         className={cn(
-                          "size-4 shrink-0 transition",
+                          "ml-auto size-4 shrink-0 transition",
                           isActive ? "opacity-100" : "opacity-0",
                         )}
                       />

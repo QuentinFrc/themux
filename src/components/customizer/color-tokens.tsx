@@ -12,7 +12,7 @@ export function ColorTokens({ className }: React.ComponentProps<"div">) {
   return (
     <section className="h-full space-y-1.5">
       <Label className="flex items-center gap-1 pb-2">
-        <Palette className="size-4" /> Tokens
+        <Palette className="size-4" /> Color tokens
       </Label>
 
       <TokensList className={className} />

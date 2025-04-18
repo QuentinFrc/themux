@@ -134,7 +134,8 @@ export type SurfaceShadesPreset =
   | "plain"
   | "grayish"
   | "gray"
-  | "inverted";
+  | "inverted"
+  | (string & {});
 
 export type SurfaceShadesThemeObject = {
   name: SurfaceShadesPreset;

@@ -123,11 +123,13 @@ export function PresetsControl({
                 activeThemeInArray && "text-foreground",
               )}
             >
-              {isMounted && activeThemeInArray
-                ? activeThemeInArray.label
-                : "Select a preset"}
-
-              {!isMounted && <Skeleton className="h-4 w-full" />}
+              {!isMounted ? (
+                <Skeleton className="h-4 w-full" />
+              ) : activeThemeInArray ? (
+                activeThemeInArray.label
+              ) : (
+                "Select a preset"
+              )}
             </h3>
           </div>
           <button
@@ -163,7 +165,7 @@ export function PresetsControl({
 
                       <Check
                         className={cn(
-                          "size-4 shrink-0 transition",
+                          "ml-auto size-4 shrink-0 transition",
                           isActive ? "opacity-100" : "opacity-0",
                         )}
                       />

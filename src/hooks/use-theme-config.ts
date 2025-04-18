@@ -15,6 +15,7 @@ export function useThemeConfig() {
   const updateThemeConfig = (themeObject: ThemeObject) => {
     setConfig((prev) => ({
       ...prev,
+      surface: "custom",
       fonts: { ...prev.fonts, ...themeObject.fonts },
       radius: themeObject.radius ?? prev.radius,
       themeObject,

@@ -11,7 +11,8 @@ export function Color({
   isActive,
   className,
   onClick,
-}: { color: string; isActive?: boolean } & ComponentProps<"button">) {
+  ...props
+}: { color: string; isActive?: boolean } & ComponentProps<typeof Button>) {
   const isMounted = useMounted();
 
   if (!isMounted) {
@@ -40,6 +41,7 @@ export function Color({
       )}
       style={{ "--primary": color }}
       onClick={onClick}
+      {...props}
     >
       <span
         className={cn(
