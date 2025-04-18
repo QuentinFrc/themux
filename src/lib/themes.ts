@@ -41,7 +41,11 @@ export const DEFAULT_SHADOWS = {
 export const initialThemeConfig: ThemeConfig = {
   radius: "0.625rem",
   surface: "default",
-  fonts: { ...DEFAULT_FONTS, ...basePresetsV4.neutral.fonts },
+  fonts: {
+    sans: basePresetsV4.neutral.fonts?.sans || DEFAULT_FONTS["font-sans"],
+    serif: basePresetsV4.neutral.fonts?.serif || DEFAULT_FONTS["font-serif"],
+    mono: basePresetsV4.neutral.fonts?.mono || DEFAULT_FONTS["font-mono"],
+  },
   themeObject: {
     ...basePresetsV4.neutral,
     light: {

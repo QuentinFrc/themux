@@ -1,7 +1,8 @@
 import { ReactScan } from "@/components/devtools/react-scan";
 
 import { ScreenDevTools } from "@/components/devtools/screen-devtools";
-import { LoadFonts } from "@/components/load-fonts";
+import { FontLoader } from "@/components/font-loader";
+import { LoadTheme } from "@/components/load-theme";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeSync } from "@/components/theme-sync";
 import { Toaster } from "@/components/ui/sonner";
@@ -54,8 +55,10 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <LoadTheme />
+      </head>
       <ReactScan options={{ enabled: true }} />
-      <LoadFonts />
 
       <body className={cn(`antialiased`)}>
         <ThemeProvider
@@ -66,6 +69,7 @@ export default async function RootLayout({
         >
           {children}
 
+          <FontLoader />
           <ThemeSync />
           <Toaster />
           <ScreenDevTools />

@@ -20,8 +20,17 @@ export function ThemeSync() {
     currentFonts,
   } = useThemeConfig();
   const mode = useTheme().resolvedTheme as ThemeMode;
+  const [shouldSync, setShouldSync] = React.useState(false);
 
   React.useEffect(() => {
+    // This prevents the theme from being set with the default values
+    // since the theme config from localStorage was applied in a script in the <head>
+    setShouldSync(true);
+  }, []);
+
+  React.useEffect(() => {
+    if (!shouldSync) return;
+
     const root = document.querySelector(":root") as HTMLElement;
     if (!root) return;
 
