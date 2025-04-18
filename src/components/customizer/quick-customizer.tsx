@@ -1,6 +1,7 @@
 "use client";
 
 import { useColorTokens } from "@/hooks/use-color-tokens";
+import { useMounted } from "@/hooks/use-mounted";
 import { useSettings } from "@/hooks/use-settings";
 import { TAILWIND_SHADES, TailwindShadeKey } from "@/lib/palettes";
 import {
@@ -21,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { Skeleton } from "../ui/skeleton";
 import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
 import {
   PasteColorControl,
@@ -36,6 +38,7 @@ export function QuickCustomizer() {
   const { getColorToken, setPrimaryColorTokens } = useColorTokens();
   const { modesInSync } = useSettings();
   const [shade, setShade] = useState<TailwindShadeKey>("500");
+  const isMounted = useMounted();
 
   return (
     <div className="@container flex flex-wrap items-start gap-6 sm:flex-row">
@@ -79,7 +82,11 @@ export function QuickCustomizer() {
                 size="sm"
                 className="data-[size=sm]:h-5 data-[size=sm]:px-2 data-[size=sm]:text-xs"
               >
-                <SelectValue defaultValue={shade} />
+                {isMounted ? (
+                  <SelectValue defaultValue={shade} />
+                ) : (
+                  <Skeleton className="h-[1ch] w-[3ch]" />
+                )}
               </SelectTrigger>
               <SelectContent className="w-fit min-w-0">
                 <SelectGroup>
