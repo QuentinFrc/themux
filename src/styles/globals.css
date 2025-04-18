@@ -168,6 +168,10 @@
   scrollbar-color: var(--color-border) transparent;
 }
 
+@utility scrollbar-gutter-both {
+  scrollbar-gutter: stable both-edges;
+}
+
 @utility grid-cols-fluid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));

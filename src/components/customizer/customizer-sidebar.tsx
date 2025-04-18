@@ -52,9 +52,9 @@ export function CustomizerSidebar({
 
   return (
     <Sidebar className="overflow-hidden" {...props}>
-      <SidebarContent className="scrollbar-thin @container relative max-h-svh group-data-[collapsible=icon]:invisible [&>button]:hidden">
+      <SidebarContent className="scrollbar-thin scrollbar-gutter-both @container relative max-h-svh pr-1 group-data-[collapsible=icon]:invisible [&>button]:hidden">
         <Tabs defaultValue="tokens">
-          <SidebarHeader className="bg-sidebar sticky top-0 z-10 rounded-t-lg px-3 max-md:pt-2">
+          <SidebarHeader className="bg-sidebar sticky top-0 z-10 rounded-t-lg px-0 max-md:pt-2">
             <TabsList className="w-full text-xs">
               <TabsTrigger value="tokens">Tokens</TabsTrigger>
               <TabsTrigger value="theme-presets">Presets</TabsTrigger>
@@ -63,7 +63,7 @@ export function CustomizerSidebar({
           </SidebarHeader>
           <TabsContent
             value="tokens"
-            className="flex flex-col space-y-1.5 px-3 py-2"
+            className="flex flex-col space-y-1.5 py-2"
           >
             <Label className="flex items-center gap-1 pb-2">
               <Palette className="size-4" /> Tokens
@@ -71,11 +71,11 @@ export function CustomizerSidebar({
             <TokensList />
           </TabsContent>
 
-          <TabsContent value="theme-presets" className="px-3 py-2">
+          <TabsContent value="theme-presets" className="py-2">
             <ThemePresets />
           </TabsContent>
 
-          <TabsContent value="typography" className="px-3 py-2">
+          <TabsContent value="typography" className="py-2">
             <Typography />
           </TabsContent>
         </Tabs>
