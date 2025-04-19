@@ -6,7 +6,7 @@ import { useThemeConfig } from "@/hooks/use-theme-config";
 import { cn } from "@/lib/utils";
 import { ColorFormat, TailwindVersion } from "@/types/theme";
 import { generateThemeCode } from "@/utils/theme-style-generator";
-import { Check, Clipboard } from "lucide-react";
+import { Check, Clipboard, Code } from "lucide-react";
 import React, { useMemo } from "react";
 import { Button } from "../ui/button";
 import {
@@ -45,6 +45,7 @@ export function CopyCodeButtonDialog({
             className={cn("flex cursor-pointer sm:hidden", className)}
             {...props}
           >
+            <Code />
             Copy
           </Button>
         </DrawerTrigger>
@@ -77,6 +78,7 @@ export function CopyCodeButtonDialog({
             className={cn("hidden cursor-pointer sm:flex", className)}
             {...props}
           >
+            <Code />
             Copy code
           </Button>
         </DialogTrigger>

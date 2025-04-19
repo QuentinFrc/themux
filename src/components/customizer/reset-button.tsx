@@ -2,7 +2,7 @@
 
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { cn } from "@/lib/utils";
-import { Repeat, Undo } from "lucide-react";
+import { Repeat, RotateCcw, Undo } from "lucide-react";
 import { ComponentProps } from "react";
 import { Button } from "../ui/button";
 import {
@@ -27,18 +27,19 @@ export function ResetButton({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className={cn("", className)} {...props}>
-          <span className="hidden @md:inline-flex">Reset</span> <Repeat />
+          <RotateCcw />
+          <span className="hidden @md:inline-flex">Reset</span>
           <span className="sr-only">Reset</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-fit">
+      <DropdownMenuContent className="w-fit" align="start">
         <DropdownMenuItem
           className={cn(hasDefaultThemeChanged() && "cursor-pointer")}
           onClick={resetToDefault}
           disabled={!hasDefaultThemeChanged()}
         >
-          <Repeat />
-          Reset to default
+          <RotateCcw />
+          To default
         </DropdownMenuItem>
         <DropdownMenuItem
           className={cn(hasCurrentPresetChanged() && "cursor-pointer")}
@@ -46,7 +47,7 @@ export function ResetButton({
           disabled={!hasCurrentPresetChanged()}
         >
           <Undo />
-          Reset to latest preset
+          To latest preset
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

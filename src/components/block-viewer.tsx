@@ -143,7 +143,7 @@ function BlockViewerToolbar({
               <TooltipWrapper label="Desktop view" asChild>
                 <ToggleGroupItem
                   value="100"
-                  className="hidden aspect-square size-7 md:inline-flex"
+                  className="hidden aspect-square size-7 lg:inline-flex"
                 >
                   <Monitor className="size-4" />
                 </ToggleGroupItem>
@@ -152,7 +152,7 @@ function BlockViewerToolbar({
               <TooltipWrapper label="Tablet view" asChild>
                 <ToggleGroupItem
                   value="60"
-                  className="hidden aspect-square size-7 md:inline-flex"
+                  className="hidden aspect-square size-7 lg:inline-flex"
                 >
                   <Tablet className="size-4" />
                 </ToggleGroupItem>
@@ -161,7 +161,7 @@ function BlockViewerToolbar({
               <TooltipWrapper label="Mobile view" asChild>
                 <ToggleGroupItem
                   value="30"
-                  className="hidden aspect-square size-7 md:inline-flex"
+                  className="hidden aspect-square size-7 lg:inline-flex"
                 >
                   <Smartphone className="size-4" />
                 </ToggleGroupItem>
@@ -183,7 +183,7 @@ function BlockViewerToolbar({
                   size="icon"
                   variant="ghost"
                   onClick={toggleFullscreen}
-                  className="relative hidden size-7 md:inline-flex"
+                  className="relative hidden size-7 lg:inline-flex"
                 >
                   <div>
                     {isFullscreen ? (

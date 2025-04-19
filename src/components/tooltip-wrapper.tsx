@@ -1,12 +1,7 @@
-import { cn } from "@/lib/utils";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./ui/tooltip";
-import { ComponentProps } from "react";
 import { useSettings } from "@/hooks/use-settings";
+import { cn } from "@/lib/utils";
+import { ComponentProps } from "react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function TooltipWrapper({
   label,
@@ -23,15 +18,13 @@ export function TooltipWrapper({
   }
 
   return (
-    <TooltipProvider>
-      <Tooltip delayDuration={500}>
-        <TooltipTrigger className={cn(className)} {...props}>
-          {children}
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{label}</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Tooltip delayDuration={500} key={label} defaultOpen={false}>
+      <TooltipTrigger className={cn(className)} {...props}>
+        {children}
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>{label}</p>
+      </TooltipContent>
+    </Tooltip>
   );
 }

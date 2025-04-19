@@ -8,6 +8,7 @@ import { ModeSwitcher } from "@/components/mode-switcher";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { ContainerWrapper } from "@/components/wrappers";
 import { Metadata } from "next";
 import { MainNavigation } from "./navigation";
@@ -28,46 +29,48 @@ export default async function ShadcnThemesLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SidebarProvider
-      defaultOpen={false}
-      style={{
-        "--sidebar-width": SIDEBAR_WIDTH,
-        "--sidebar-width-mobile": SIDEBAR_WIDTH_MOBILE,
-      }}
-    >
-      <CustomizerSidebar variant="inset" />
+    <TooltipProvider>
+      <SidebarProvider
+        defaultOpen={false}
+        style={{
+          "--sidebar-width": SIDEBAR_WIDTH,
+          "--sidebar-width-mobile": SIDEBAR_WIDTH_MOBILE,
+        }}
+      >
+        <CustomizerSidebar variant="inset" />
 
-      <SidebarInset className="relative isolate max-h-svh overflow-hidden peer-data-[variant=inset]:max-h-[calc(100svh-1rem)]">
-        <header className="isolate z-10 flex shrink-0 items-center gap-2 border-b">
-          <ContainerWrapper className="flex items-center justify-between">
-            <div className="flex h-14 w-full items-center gap-2">
-              <div className="inline-flex">
-                <CustomizerSidebarToggle />
+        <SidebarInset className="relative isolate max-h-svh overflow-hidden peer-data-[variant=inset]:max-h-[calc(100svh-1rem)]">
+          <header className="isolate z-10 flex shrink-0 items-center gap-2 border-b">
+            <ContainerWrapper className="flex items-center justify-between">
+              <div className="flex h-14 w-full items-center gap-2">
+                <div className="inline-flex">
+                  <CustomizerSidebarToggle />
+                </div>
+
+                <MainNavigation />
               </div>
 
-              <MainNavigation />
-            </div>
+              <div className="flex items-center justify-center">
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="icon"
+                  className="group/toggle"
+                >
+                  <ExternalLink href="https://github.com/llanesluis/themux">
+                    <GitHub />
+                  </ExternalLink>
+                </Button>
+                <ModeSwitcher />
+              </div>
+            </ContainerWrapper>
+          </header>
 
-            <div className="flex items-center justify-center">
-              <Button
-                asChild
-                variant="ghost"
-                size="icon"
-                className="group/toggle"
-              >
-                <ExternalLink href="https://github.com/llanesluis/themux">
-                  <GitHub />
-                </ExternalLink>
-              </Button>
-              <ModeSwitcher />
-            </div>
-          </ContainerWrapper>
-        </header>
-
-        <ScrollArea className="relative z-20 flex h-full flex-col overflow-hidden">
-          {children}
-        </ScrollArea>
-      </SidebarInset>
-    </SidebarProvider>
+          <ScrollArea className="relative z-20 flex h-full flex-col overflow-hidden">
+            {children}
+          </ScrollArea>
+        </SidebarInset>
+      </SidebarProvider>
+    </TooltipProvider>
   );
 }
