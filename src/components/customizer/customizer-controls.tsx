@@ -232,7 +232,7 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
         </div>
       </PopoverTrigger>
 
-      <PopoverContent className="overflow-hidden p-0" align="center">
+      <PopoverContent className="overflow-hidden p-0" align="start">
         <Command className={cn(className)}>
           {isMounted && (
             <>

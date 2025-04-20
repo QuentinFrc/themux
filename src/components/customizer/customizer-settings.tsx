@@ -50,18 +50,18 @@ export function CustomizerSettings({
         className="min-h-0 w-auto max-w-full overflow-hidden p-0"
         align="end"
       >
-        <ScrollArea className="h-88 overflow-hidden">
-          <header className="text-muted-foreground/80 flex items-center justify-between px-4 py-1 text-sm font-semibold">
-            <span>Customizer settings</span>
-            <Button variant="ghost" onClick={resetSettings}>
-              <RotateCcw />
-              <span className="sr-only">Reset</span>
-            </Button>
-          </header>
+        <header className="text-muted-foreground/80 flex items-center justify-between px-4 py-1 text-sm font-semibold">
+          <span>Customizer settings</span>
+          <Button variant="ghost" onClick={resetSettings}>
+            <RotateCcw />
+            <span className="sr-only">Reset</span>
+          </Button>
+        </header>
 
-          <Separator className="mb-2" />
+        <Separator />
 
-          <section className="grid px-4 pb-4">
+        <ScrollArea className="h-84 overflow-hidden">
+          <section className="grid px-4 pt-2 pb-4">
             <Label className="text-muted-foreground/80 py-1 text-xs">
               Preferences
             </Label>
