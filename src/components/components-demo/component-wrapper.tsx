@@ -32,7 +32,7 @@ export function ComponentWrapper({
         id={name}
         data-name={name.toLowerCase()}
         className={cn(
-          "@container flex w-full scroll-mt-16 flex-col overflow-clip rounded-lg border",
+          "@container flex w-full scroll-mt-16 flex-col overflow-clip rounded-lg border shadow",
           className,
         )}
         {...props}
@@ -43,7 +43,7 @@ export function ComponentWrapper({
               {getComponentName(name)}
             </span>
 
-            <Alert className="border-primary/30 bg-primary/10 flex w-full items-center border px-4 py-1 @lg:max-w-1/3">
+            <Alert className="border-primary/30 bg-primary/10 flex w-full items-center border px-4 py-1 shadow-sm @lg:max-w-1/3">
               <div className="pr-2">
                 <Terminal className="size-4" />
               </div>

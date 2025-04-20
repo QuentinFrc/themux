@@ -79,7 +79,7 @@ export function BlockViewer({
       )}
       <div
         className={cn(
-          "flex flex-col overflow-clip rounded-lg border",
+          "flex flex-col overflow-clip rounded-lg border shadow",
           isFullscreen
             ? "bg-background fixed inset-0 z-100 h-svh scale-95 shadow-2xl"
             : "overflow-clip",
@@ -131,7 +131,7 @@ function BlockViewerToolbar({
 
           <div className="flex items-center justify-between gap-4">
             <ToggleGroup
-              className="border"
+              className="border shadow-sm"
               type="single"
               defaultValue="100"
               onValueChange={(value) => {

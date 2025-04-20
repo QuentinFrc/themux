@@ -205,11 +205,11 @@ export function Mail({
 
             <ScrollArea className="flex flex-col overflow-hidden">
               <div className="flex h-full flex-col gap-2 p-4 pt-0">
-                <TabsContent value="all" className="m-0">
+                <TabsContent value="all" className="m-0 space-y-2">
                   <MailList items={mails} />
                 </TabsContent>
 
-                <TabsContent value="unread" className="m-0">
+                <TabsContent value="unread" className="m-0 space-y-2">
                   <MailList items={mails.filter((item) => !item.read)} />
                 </TabsContent>
               </div>
