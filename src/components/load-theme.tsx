@@ -2,13 +2,11 @@
 
 import { initialThemeConfig } from "@/lib/themes";
 import { monoFontsArray, sansFontsArray, serifFontsArray } from "@/utils/fonts";
-import { useTheme } from "next-themes";
 import { preconnect } from "react-dom";
 
 const THEME_CONFIG_KEY_LS = "theme-config";
 
 export function LoadTheme() {
-  const nextThemes = useTheme();
   preconnect("https://fonts.gstatic.com", { crossOrigin: "anonymous" });
   preconnect("https://fonts.googleapis.com", { crossOrigin: "anonymous" });
 
@@ -41,7 +39,15 @@ export function LoadTheme() {
     const prefersDark = window.matchMedia(
       "(prefers-color-scheme: dark)",
     ).matches;
-    const mode = ${JSON.stringify(nextThemes?.resolvedTheme)} ?? (prefersDark ? "dark" : "light");
+
+    const localStorageMode = localStorage.getItem("theme");
+    let resolvedMode = localStorageMode;
+
+    if (resolvedMode === "system" || resolvedMode === null) {
+      resolvedMode = prefersDark ? "dark" : "light"
+    }
+
+    const mode = resolvedMode;
 
     const activeThemeObjectStyles =
       mode === "dark"
