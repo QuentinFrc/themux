@@ -1,11 +1,12 @@
 "use client";
 
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { useSettings } from "@/hooks/use-settings";
-import { cn, copyToClipboard } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { ColorProperty } from "@/types/theme";
 import { colorFormatter } from "@/utils/color-converter";
 import { Check, Clipboard } from "lucide-react";
-import { ComponentProps, useState } from "react";
+import { ComponentProps } from "react";
 
 export function Token({
   colorProperty,
@@ -43,17 +44,14 @@ export function TokenInfo({
   colorProperty: ColorProperty;
   color: string;
 }) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyColor = () => {
-    copyToClipboard(color);
-
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1200);
-  };
+  const { isCopied, copyToClipboard } = useCopyToClipboard();
 
   const { colorFormat } = useSettings();
   const colorValue = colorFormatter(color, colorFormat, "4");
+
+  const handleCopyColor = () => {
+    copyToClipboard(colorValue);
+  };
 
   return (
     <div className="flex w-full items-center justify-between gap-2">
@@ -71,13 +69,13 @@ export function TokenInfo({
         <Clipboard
           className={cn(
             "size-4 transition duration-200",
-            copied ? "absolute scale-0" : "scale-100",
+            isCopied ? "absolute scale-0" : "scale-100",
           )}
         />
         <Check
           className={cn(
             "size-4 transition duration-200",
-            !copied ? "absolute scale-0" : "scale-100",
+            !isCopied ? "absolute scale-0" : "scale-100",
           )}
         />
       </button>
