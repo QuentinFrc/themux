@@ -86,9 +86,10 @@ export function LoadTheme() {
       }
     };
 
-    const activeFontSansHref = [...${JSON.stringify(sansFontsArray)}, ...${JSON.stringify(serifFontsArray)}].find(
-        (font) => font.value === activeFonts.sans,
-      )?.href
+    const activeFontSansHref = [
+      ...${JSON.stringify(sansFontsArray)},
+      ...${JSON.stringify(serifFontsArray)},
+      ...${JSON.stringify(monoFontsArray)}].find((font) => font.value === activeFonts.sans)?.href
     const activeFontSerifHref = ${JSON.stringify(serifFontsArray)}.find(
         (font) => font.value === activeFonts.serif,
       )?.href;

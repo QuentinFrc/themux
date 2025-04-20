@@ -20,15 +20,10 @@ export function Typography({ className }: React.ComponentProps<"div">) {
         <Ligature className="size-4" /> Typography
       </Label>
 
-      <ControlSection
-        title="Sans-Serif font"
-        id="sans-serif-font"
-        className="p-0"
-        expanded
-      >
+      <ControlSection title="Sans font" id="sans-font" className="p-0" expanded>
         <Command className={cn("", className)}>
           <CommandEmpty>No theme presets found.</CommandEmpty>
-          <CommandGroup className="scrollbar-thin bg-background max-h-38 w-full overflow-y-auto font-sans">
+          <CommandGroup className="scrollbar-thin bg-background max-h-56 w-full overflow-y-auto font-sans">
             <section className="font-sans">
               <Label className="text-muted-foreground px-2 py-1 text-xs">
                 Sans fonts
@@ -114,6 +109,49 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                 );
               })}
             </section>
+
+            <section className="font-mono">
+              <Label className="text-muted-foreground px-2 py-1 text-xs">
+                Mono fonts
+              </Label>
+              {monoFontsArray.map((font) => {
+                const isActive = font.value === currentFonts?.sans;
+                return (
+                  <CommandItem
+                    key={font.key}
+                    onSelect={() =>
+                      setConfig((prev) => {
+                        return {
+                          ...prev,
+                          fonts: {
+                            ...prev.fonts,
+                            sans: font.value,
+                          },
+                        };
+                      })
+                    }
+                    className="group/item flex items-center gap-4 py-2 font-mono"
+                    style={{ "--font-mono": font.value }}
+                  >
+                    <span className="text-nowrap">{font.key}</span>
+                    <span
+                      className={cn(
+                        "text-muted-foreground/80 justify-end truncate text-xs text-nowrap opacity-0 transition",
+                        "group-hover/item:opacity-100",
+                      )}
+                    >
+                      let sampleText = "Hello!";
+                    </span>
+                    <Check
+                      className={cn(
+                        "ml-auto size-4 shrink-0 transition",
+                        isActive ? "opacity-100" : "opacity-0",
+                      )}
+                    />
+                  </CommandItem>
+                );
+              })}
+            </section>
           </CommandGroup>
         </Command>
       </ControlSection>
@@ -125,7 +163,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
       >
         <Command className={cn("", className)}>
           <CommandEmpty>No theme presets found.</CommandEmpty>
-          <CommandGroup className="scrollbar-thin bg-background max-h-38 w-full overflow-y-auto">
+          <CommandGroup className="scrollbar-thin bg-background max-h-56 w-full overflow-y-auto">
             {serifFontsArray.map((font) => {
               const isActive = font.value === currentFonts?.serif;
               return (
@@ -174,7 +212,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
       >
         <Command className={cn("", className)}>
           <CommandEmpty>No theme presets found.</CommandEmpty>
-          <CommandGroup className="scrollbar-thin bg-background max-h-38 w-full overflow-y-auto">
+          <CommandGroup className="scrollbar-thin bg-background max-h-56 w-full overflow-y-auto">
             {monoFontsArray.map((font) => {
               const isActive = font.value === currentFonts?.mono;
               return (

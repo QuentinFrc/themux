@@ -17,9 +17,11 @@ export function FontLoader() {
 
   if (!shouldSync) return null;
 
-  const sansFontHref = [...sansFontsArray, ...serifFontsArray].find(
-    (font) => font.value === currentFonts?.sans,
-  )?.href;
+  const sansFontHref = [
+    ...sansFontsArray,
+    ...serifFontsArray,
+    ...monoFontsArray,
+  ].find((font) => font.value === currentFonts?.sans)?.href;
   const serifFontHref = serifFontsArray.find(
     (font) => font.value === currentFonts?.serif,
   )?.href;
