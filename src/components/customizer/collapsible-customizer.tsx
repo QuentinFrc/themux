@@ -125,22 +125,25 @@ export function MobileCollapsibleCustomizer() {
       </TabsList>
 
       <TabsContent value="color-tokens">
-        <ColorTokens className="max-h-70 overflow-hidden" />
+        <ScrollArea className="h-86">
+          <div className="px-2">
+            <ColorTokens />
+          </div>
+        </ScrollArea>
       </TabsContent>
 
-      <TabsContent value="other-tokens">
-        {/* TODO: Change for other tokens (radius, shadows (soon)) */}
+      <TabsContent value="other-tokens" className="px-2">
         <section className="space-y-1.5">
           <Label className="flex items-center gap-1 pb-2">
             <SlidersHorizontal className="size-4" /> Other tokens
           </Label>
 
           <ControlSection title="Radius" expanded>
-            <ComingSoon />
+            <RadiusSliderControl />
           </ControlSection>
 
           <ControlSection title="Shadows">
-            <ComingSoon />
+            <ShadowsControl />
           </ControlSection>
 
           <ControlSection title="Spacing">
@@ -149,7 +152,7 @@ export function MobileCollapsibleCustomizer() {
         </section>
       </TabsContent>
 
-      <TabsContent value="typography">
+      <TabsContent value="typography" className="px-2">
         <Typography />
       </TabsContent>
     </Tabs>

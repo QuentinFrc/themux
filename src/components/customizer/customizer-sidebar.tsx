@@ -60,10 +60,16 @@ export function CustomizerSidebar({
         className="flex flex-1 flex-col overflow-hidden"
       >
         <SidebarHeader className="px-2 pr-3 max-md:pt-2">
-          <TabsList className="w-full p-1 text-xs">
-            <TabsTrigger value="palette">Palette</TabsTrigger>
-            <TabsTrigger value="tokens">Tokens</TabsTrigger>
-            <TabsTrigger value="typography">Typography</TabsTrigger>
+          <TabsList className="w-full p-1">
+            <TabsTrigger value="palette" className="text-xs">
+              Palette
+            </TabsTrigger>
+            <TabsTrigger value="tokens" className="text-xs">
+              Tokens
+            </TabsTrigger>
+            <TabsTrigger value="typography" className="text-xs">
+              Typography
+            </TabsTrigger>
           </TabsList>
         </SidebarHeader>
 
@@ -74,7 +80,7 @@ export function CustomizerSidebar({
                 value="palette"
                 className="flex flex-col space-y-6 py-2"
               >
-                <section className="max-w-82 min-w-72 flex-1 space-y-1.5 max-sm:w-full max-sm:max-w-full">
+                <section className="flex-1 space-y-1.5 max-sm:w-full max-sm:max-w-full">
                   <Label className="flex items-center gap-1 pb-2">
                     <PaintBucket className="size-4" /> Theme presets
                   </Label>

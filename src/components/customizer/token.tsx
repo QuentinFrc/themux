@@ -28,10 +28,7 @@ export function TokenDisplay({
 }: ComponentProps<"div"> & { color: string }) {
   return (
     <div
-      className={cn(
-        "aspect-square size-8 rounded-full border shadow",
-        className,
-      )}
+      className={cn("aspect-square size-8 rounded-lg border shadow", className)}
       style={{
         backgroundColor: color,
       }}
