@@ -1,12 +1,12 @@
 "use client";
 
-import { useColorTokens } from "@/hooks/use-color-tokens";
+import { useTokens } from "@/hooks/use-tokens";
 import { TAILWIND_PALETTE_V4, TailwindShadeKey } from "@/lib/palettes";
 import { cn } from "@/lib/utils";
 import { convertToOklch } from "@/utils/color-converter";
 import React, { ComponentProps } from "react";
-import { Color } from "./color";
 import { TooltipWrapper } from "../tooltip-wrapper";
+import { Color } from "./color";
 
 export const MemoizedTailwindV4ColorPalette = React.memo(
   TailwindV4ColorPalette,
@@ -22,7 +22,7 @@ function TailwindV4ColorPalette({
   shade: TailwindShadeKey;
   modesInSync?: boolean;
 } & ComponentProps<"div">) {
-  const { setPrimaryColorTokens } = useColorTokens();
+  const { setPrimaryColorTokens } = useTokens();
 
   const handleColorChange = (color: string) => {
     const newOklchColor = convertToOklch(color);

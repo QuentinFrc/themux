@@ -1,9 +1,11 @@
 import { CardsDemo } from "@/components/cards-demo";
+import { ActionButtons } from "@/components/customizer/action-buttons";
 import {
   CollapsibleCustomizer,
   CollapsibleCustomizerTrigger,
 } from "@/components/customizer/collapsible-customizer";
 
+import { QuickCustomizer } from "@/components/customizer/quick-customizer";
 import { DashboardDemo } from "@/components/dashboard-demo";
 import { FrameHighlight } from "@/components/frame-highlight";
 import { MailDemo } from "@/components/mail-demo";
@@ -12,7 +14,6 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/page-header";
-import { QuickCustomizer } from "@/components/customizer/quick-customizer";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
@@ -57,6 +58,7 @@ export default function ShadcnThemesPage() {
       <CollapsibleCustomizerProvider>
         <ContainerWrapper withCane className="@container pt-4 pb-8">
           <QuickCustomizer />
+          <ActionButtons className="pt-4" />
           <CollapsibleCustomizer />
           <CollapsibleCustomizerTrigger className="bg-background absolute bottom-1 left-1/2 -translate-x-1/2 translate-y-1/2 backdrop-blur" />
         </ContainerWrapper>

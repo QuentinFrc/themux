@@ -24,6 +24,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
         title="Sans-Serif font"
         id="sans-serif-font"
         className="p-0"
+        expanded
       >
         <Command className={cn("", className)}>
           <CommandEmpty>No theme presets found.</CommandEmpty>

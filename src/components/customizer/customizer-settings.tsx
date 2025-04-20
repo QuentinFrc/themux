@@ -13,6 +13,7 @@ import { useSettings } from "@/hooks/use-settings";
 import { ColorFormat, TailwindVersion } from "@/types/theme";
 import { RotateCcw, Settings } from "lucide-react";
 import { ComponentProps } from "react";
+import { ScrollArea } from "../ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -20,12 +21,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { ScrollArea } from "../ui/scroll-area";
 
 export function CustomizerSettings({
   className,
   ...props
-}: ComponentProps<typeof PopoverTrigger>) {
+}: ComponentProps<typeof Button>) {
   const {
     modesInSync,
     updateSettings,
@@ -39,9 +39,9 @@ export function CustomizerSettings({
 
   return (
     <Popover>
-      <PopoverTrigger asChild {...props}>
-        <Button variant="ghost" size="sm">
-          <Settings /> <span className="hidden @md:inline-flex">Settings</span>
+      <PopoverTrigger asChild>
+        <Button variant="ghost" size="sm" className={className} {...props}>
+          <Settings /> <span className="hidden @xl:inline-flex">Settings</span>
           <span className="sr-only">Settings</span>
         </Button>
       </PopoverTrigger>
@@ -50,7 +50,7 @@ export function CustomizerSettings({
         className="min-h-0 w-auto max-w-full overflow-hidden p-0"
         align="end"
       >
-        <ScrollArea className="h-86 overflow-hidden">
+        <ScrollArea className="h-88 overflow-hidden">
           <header className="text-muted-foreground/80 flex items-center justify-between px-4 py-1 text-sm font-semibold">
             <span>Customizer settings</span>
             <Button variant="ghost" onClick={resetSettings}>

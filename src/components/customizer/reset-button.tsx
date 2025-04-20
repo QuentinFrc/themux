@@ -2,7 +2,7 @@
 
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { cn } from "@/lib/utils";
-import { Repeat, RotateCcw, Undo } from "lucide-react";
+import { RotateCcw, Undo } from "lucide-react";
 import { ComponentProps } from "react";
 import { Button } from "../ui/button";
 import {
@@ -28,7 +28,7 @@ export function ResetButton({
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className={cn("", className)} {...props}>
           <RotateCcw />
-          <span className="hidden @md:inline-flex">Reset</span>
+          <span className="hidden @xl:inline-flex">Reset</span>
           <span className="sr-only">Reset</span>
         </Button>
       </DropdownMenuTrigger>

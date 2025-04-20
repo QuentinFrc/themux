@@ -1,14 +1,16 @@
 "use client";
 
-import { useColorTokens } from "@/hooks/use-color-tokens";
+import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
 import { useMounted } from "@/hooks/use-mounted";
 import { useThemeConfig } from "@/hooks/use-theme-config";
+import { useTokens } from "@/hooks/use-tokens";
 import {
   basePresetsV4Array,
   colorfulPresetsArray,
   surfaceShadesPresetArray,
   surfaceShadesPresets,
 } from "@/lib/colors";
+import { otherPresetsArray } from "@/lib/presets";
 import { cn } from "@/lib/utils";
 import {
   ColorProperty,
@@ -16,17 +18,10 @@ import {
   SurfaceShadesPreset,
   ThemeMode,
   ThemeObject,
+  ThemeProperties,
 } from "@/types/theme";
 import { getOptimalForegroundColor, isValidColor } from "@/utils/colors";
-import {
-  Check,
-  ChevronDown,
-  ChevronUp,
-  Laptop,
-  Moon,
-  SendHorizontal,
-  Sun,
-} from "lucide-react";
+import { Check, ChevronDown, ChevronUp, SendHorizontal } from "lucide-react";
 import { useTheme } from "next-themes";
 import React, {
   ChangeEvent,
@@ -36,17 +31,23 @@ import React, {
   useState,
 } from "react";
 import { toast } from "sonner";
-import { Color } from "./color";
 import { Button } from "../ui/button";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
+  CommandInput,
   CommandItem,
+  CommandSeparator,
 } from "../ui/command";
 import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { ScrollArea } from "../ui/scroll-area";
 import { Skeleton } from "../ui/skeleton";
+import { Slider } from "../ui/slider";
+import { Color } from "./color";
+import { TokenColorPicker } from "./token-color-picker";
 
 const RADIUS_VALUES: RemValue[] = [
   "0rem",
@@ -96,6 +97,7 @@ export function PasteColorControl({
 
   const handleSubmitColorPaste = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (pastedColor === "") return;
 
     const normalizedColor = pastedColor.trim().toLowerCase();
 
@@ -117,13 +119,14 @@ export function PasteColorControl({
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPastedColor(event.target.value);
+    const value = event.target.value.trim().toLowerCase();
+    setPastedColor(value);
   };
 
   return (
-    <div className={cn(className)} {...props}>
+    <div className={cn("rounded-lg shadow", className)} {...props}>
       <form
-        className="relative flex items-center gap-1 overflow-hidden rounded-lg border p-0.5"
+        className="relative flex h-10 items-center gap-1 overflow-hidden rounded-lg border p-0.5"
         onSubmit={handleSubmitColorPaste}
       >
         <Input
@@ -141,7 +144,7 @@ export function PasteColorControl({
           variant="ghost"
           size="sm"
           className={cn(
-            "transition",
+            "mr-0.5 size-7 transition",
             isValidPastedColor
               ? "bg-(--pasted-color) text-(--pasted-color-foreground) inset-ring-2 inset-ring-(--pasted-color)"
               : "",
@@ -153,19 +156,16 @@ export function PasteColorControl({
               : "",
           }}
         >
-          <SendHorizontal />
+          <SendHorizontal className="size-3.5" />
         </Button>
       </form>
-      <span className="text-muted-foreground text-xs">
-        {`oklch(), hsl(), rbg() and #hex`}
-      </span>
     </div>
   );
 }
 
 export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
   const { getColorToken, setSurfaceShadesColorTokens, getActiveSurfaceShades } =
-    useColorTokens();
+    useTokens();
 
   const isMounted = useMounted();
   const resolvedTheme = useTheme().resolvedTheme as ThemeMode;
@@ -179,7 +179,7 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
 
   return (
     <Popover>
-      <PopoverTrigger asChild className="rounded-lg border">
+      <PopoverTrigger asChild className="rounded-lg border shadow">
         <div className="group/control bg-background hover:bg-muted/40 flex h-10 w-full cursor-pointer items-center justify-between gap-4 p-2.5 transition-colors duration-300 ease-in-out *:shrink-0">
           <div className="flex items-center gap-2">
             <div className="flex">
@@ -231,16 +231,13 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
           </button>
         </div>
       </PopoverTrigger>
-      <span className="text-muted-foreground truncate text-xs">
-        {`background, card, popover, muted, etc.`}
-      </span>
 
       <PopoverContent className="overflow-hidden p-0" align="center">
-        <Command className={cn("", className)}>
+        <Command className={cn(className)}>
           {isMounted && (
             <>
               <CommandEmpty>No surface shades found.</CommandEmpty>
-              <CommandGroup className="scrollbar-thin max-h-82 w-full overflow-y-auto">
+              <CommandGroup>
                 {surfaceShadesPresetArray.map((bgShadesThemeObject) => {
                   const properties = bgShadesThemeObject[resolvedTheme];
                   const { name, label } = bgShadesThemeObject;
@@ -340,7 +337,7 @@ export function ShadcnPresetsControls({
 }
 
 const BUTTON_CLASSES = cn(
-  "ring-border h-fit cursor-pointer p-1 text-xs ring rounded-lg",
+  "ring-border h-fit cursor-pointer p-1 text-xs ring rounded-lg shadow",
 );
 
 function PresetButton({
@@ -465,110 +462,258 @@ export function RadiusControls({ className, ...props }: ComponentProps<"div">) {
   );
 }
 
-export function ThemeModeControls({
-  className,
-  showSystem = true,
-  ...props
-}: { showSystem?: boolean } & ComponentProps<"div">) {
-  const { setTheme: setMode, resolvedTheme: mode } = useTheme();
-  const isMounted = useMounted();
+export function RadiusSliderControl() {
+  const { currentRadius, setConfig } = useThemeConfig();
+  const currentRadiusValue = Number.parseFloat(
+    currentRadius.replace("rem", ""),
+  );
 
-  if (!isMounted) {
-    return (
-      <div className={cn("text-muted-foreground", className)}>
-        <Button
-          variant={"ghost"}
-          size="sm"
-          className={cn(
-            BUTTON_CLASSES,
-            "w-auto max-w-[75px] grow pr-1.5 @max-md:max-w-full",
-          )}
-        >
-          <Sun />
-          <span className={cn("hidden @md:inline-flex")}>Light</span>
-        </Button>
-
-        <Button
-          variant={"ghost"}
-          size="sm"
-          className={cn(
-            BUTTON_CLASSES,
-            "w-auto max-w-[75px] grow pr-1.5 @max-md:max-w-full",
-          )}
-        >
-          <Moon />
-          <span className={cn("hidden @md:inline-flex")}>Dark</span>
-        </Button>
-
-        {showSystem && (
-          <Button
-            variant={"ghost"}
-            size="sm"
-            className={cn(
-              BUTTON_CLASSES,
-              "w-auto max-w-[75px] grow pr-1.5 @max-md:max-w-full",
-            )}
-          >
-            <Laptop />
-            <span className={cn("hidden @md:inline-flex")}>Auto</span>
-          </Button>
-        )}
-      </div>
-    );
-  }
+  const handleChange = useDebouncedCallback((v: number) => {
+    setConfig((prev) => ({ ...prev, radius: `${v}rem` }));
+  }, 100);
 
   return (
-    <div className={cn("text-muted-foreground", className)}>
-      <Button
-        variant={"ghost"}
-        size="sm"
-        onClick={() => setMode("light")}
-        className={cn(
-          BUTTON_CLASSES,
-          "w-auto max-w-[75px] grow pr-1.5 @max-md:max-w-full",
-          mode === "light" &&
-            "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
-        )}
-      >
-        <Sun />
-        <span className={cn("hidden @md:inline-flex")}>Light</span>
-      </Button>
+    <SliderWithInput
+      value={currentRadiusValue}
+      label="--radius"
+      unit="rem"
+      max={2}
+      min={0}
+      step={0.025}
+      onValueChange={handleChange}
+      className="font-mono"
+    />
+  );
+}
 
-      <Button
-        variant={"ghost"}
-        size="sm"
-        onClick={() => setMode("dark")}
-        className={cn(
-          BUTTON_CLASSES,
-          "w-auto max-w-[75px] grow pr-1.5 @max-md:max-w-full",
-          mode === "dark" &&
-            "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
-        )}
-      >
-        <Moon />
-        <span className={cn("hidden @md:inline-flex")}>Dark</span>
-      </Button>
+interface AllPresetsControlProps extends ComponentProps<"div"> {}
 
-      {showSystem && (
-        <Button
-          variant={"ghost"}
-          size="sm"
-          onClick={() => setMode("system")}
-          className={cn(
-            BUTTON_CLASSES,
-            "w-auto max-w-[75px] grow pr-1.5 @max-md:max-w-full",
-            mode === "system" &&
-              "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
-          )}
-        >
-          <Laptop />
-          <span className={cn("hidden @md:inline-flex")}>Auto</span>
-        </Button>
-      )}
+export function AllPresetsControl({ className }: AllPresetsControlProps) {
+  const { getActiveThemeColorToken } = useTokens();
+  const { updateThemeConfig, currentThemeObject } = useThemeConfig();
+
+  const isMounted = useMounted();
+  const resolvedTheme = useTheme().resolvedTheme as ThemeMode;
+  const activePresetName = currentThemeObject.name;
+
+  const baseShadcnPresets = basePresetsV4Array;
+  const colorShadcnPresets = colorfulPresetsArray;
+  const otherPresets = otherPresetsArray;
+
+  const allPresets = [
+    ...otherPresets,
+    ...baseShadcnPresets,
+    ...colorShadcnPresets,
+  ];
+
+  const activeThemeInArray = allPresets.find(
+    (p) => p.name === activePresetName,
+  );
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild className="rounded-lg border shadow">
+        <div className="group/control bg-background hover:bg-muted/40 flex h-10 w-full cursor-pointer items-center justify-between gap-4 p-2.5 transition-colors duration-300 ease-in-out *:shrink-0">
+          <div className="flex items-center gap-2">
+            {activeThemeInArray ? (
+              <div className="flex">
+                <Color
+                  color={
+                    isMounted
+                      ? getActiveThemeColorToken({ property: "primary" })
+                      : ""
+                  }
+                  className="pointer-events-none"
+                />
+                <Color
+                  color={
+                    isMounted
+                      ? getActiveThemeColorToken({ property: "background" })
+                      : ""
+                  }
+                  className="pointer-events-none"
+                />
+                <Color
+                  color={
+                    isMounted
+                      ? getActiveThemeColorToken({ property: "secondary" })
+                      : ""
+                  }
+                  className="pointer-events-none"
+                />
+                <Color
+                  color={
+                    isMounted
+                      ? getActiveThemeColorToken({ property: "muted" })
+                      : ""
+                  }
+                  className="pointer-events-none"
+                />
+                <Color
+                  color={
+                    isMounted
+                      ? getActiveThemeColorToken({ property: "card" })
+                      : ""
+                  }
+                  className="pointer-events-none"
+                />
+              </div>
+            ) : null}
+
+            <h3
+              className={cn(
+                "group-hover/control:text-foreground text-muted-foreground text-sm font-medium",
+                activeThemeInArray && "text-foreground",
+              )}
+            >
+              {!isMounted ? (
+                <Skeleton className="h-4 w-full" />
+              ) : activeThemeInArray ? (
+                activeThemeInArray.label
+              ) : (
+                "Select a preset"
+              )}
+            </h3>
+          </div>
+          <button
+            type="button"
+            className="text-muted-foreground group-hover/control:text-foreground transition-colors"
+            aria-label="Expand section"
+          >
+            <ChevronDown className="h-4 w-4" />
+          </button>
+        </div>
+      </PopoverTrigger>
+
+      <PopoverContent className="overflow-hidden p-0" align="start">
+        <Command className={cn(className)}>
+          <CommandInput />
+          <ScrollArea className="h-96">
+            {isMounted && (
+              <>
+                <CommandEmpty>No theme presets found.</CommandEmpty>
+
+                <CommandGroup heading="Other">
+                  {otherPresets.map((presetThemeObject) => {
+                    const properties = presetThemeObject[resolvedTheme];
+                    const { name, label } = presetThemeObject;
+                    const isActive = name === activePresetName;
+                    return (
+                      <CommandItem
+                        key={presetThemeObject.name}
+                        onSelect={() => updateThemeConfig(presetThemeObject)}
+                        className="flex items-center gap-4 py-2"
+                      >
+                        <ThemePresetColors
+                          label={label}
+                          properties={properties}
+                        />
+
+                        <Check
+                          className={cn(
+                            "ml-auto size-4 shrink-0 transition",
+                            isActive ? "opacity-100" : "opacity-0",
+                          )}
+                        />
+                      </CommandItem>
+                    );
+                  })}
+                </CommandGroup>
+
+                <CommandSeparator />
+
+                <CommandGroup heading="Shadcn/ui base">
+                  {baseShadcnPresets.map((presetThemeObject) => {
+                    const properties = presetThemeObject[resolvedTheme];
+                    const { name, label } = presetThemeObject;
+                    const isActive = name === activePresetName;
+                    return (
+                      <CommandItem
+                        key={presetThemeObject.name}
+                        onSelect={() => updateThemeConfig(presetThemeObject)}
+                        className="flex items-center gap-4 py-2"
+                      >
+                        <ThemePresetColors
+                          label={label}
+                          properties={properties}
+                        />
+
+                        <Check
+                          className={cn(
+                            "ml-auto size-4 shrink-0 transition",
+                            isActive ? "opacity-100" : "opacity-0",
+                          )}
+                        />
+                      </CommandItem>
+                    );
+                  })}
+                </CommandGroup>
+
+                <CommandSeparator />
+
+                <CommandGroup heading="Shadcn/ui color">
+                  {colorShadcnPresets.map((presetThemeObject) => {
+                    const properties = presetThemeObject[resolvedTheme];
+                    const { name, label } = presetThemeObject;
+                    const isActive = name === activePresetName;
+                    return (
+                      <CommandItem
+                        key={presetThemeObject.name}
+                        onSelect={() => updateThemeConfig(presetThemeObject)}
+                        className="flex items-center gap-4 py-2"
+                      >
+                        <ThemePresetColors
+                          label={label}
+                          properties={properties}
+                        />
+
+                        <Check
+                          className={cn(
+                            "ml-auto size-4 shrink-0 transition",
+                            isActive ? "opacity-100" : "opacity-0",
+                          )}
+                        />
+                      </CommandItem>
+                    );
+                  })}
+                </CommandGroup>
+              </>
+            )}
+          </ScrollArea>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+function ThemePresetColors({
+  properties,
+  label,
+}: {
+  properties: Partial<ThemeProperties>;
+  label: ColorProperty | (string & {});
+}) {
+  return (
+    <div className="flex items-center gap-4">
+      <div className="pointer-events-none flex">
+        <Color color={properties["primary"]!} className="pointer-events-none" />
+        <Color
+          color={properties["background"]!}
+          className="pointer-events-none"
+        />
+        <Color
+          color={properties["secondary"]!}
+          className="pointer-events-none"
+        />
+        <Color color={properties["muted"]!} className="pointer-events-none" />
+        <Color color={properties["card"]!} className="pointer-events-none" />
+      </div>
+      <span>{label}</span>
     </div>
   );
 }
 
+// Building blocks
 export function ControlSection({
   id,
   title,
@@ -582,7 +727,10 @@ export function ControlSection({
 } & ComponentProps<"div">) {
   const [isExpanded, setIsExpanded] = useState(expanded);
   return (
-    <div id={id} className={cn("overflow-hidden rounded-lg border", className)}>
+    <div
+      id={id}
+      className={cn("overflow-hidden rounded-lg border shadow", className)}
+    >
       <div
         className={cn(
           "group/control bg-background hover:bg-muted/40 flex h-10 w-full shrink-0 cursor-pointer items-center justify-between gap-4 border-b p-2.5 transition-colors duration-300 ease-in-out",
@@ -633,6 +781,202 @@ export function ControlsSkeleton() {
         <Skeleton className="h-4 w-24" />
       </div>
       <Skeleton className="h-48" />
+    </div>
+  );
+}
+
+export function ShadowsControl() {
+  const { getToken, setToken, setColorToken } = useTokens();
+
+  const shadowColor = getToken({
+    property: "shadow-color",
+  });
+  const shadowOpacity = parseFloat(getToken({ property: "shadow-opacity" }));
+  const shadowBlur = parseFloat(
+    getToken({ property: "shadow-blur" }).replace("px", ""),
+  );
+  const shadowSpread = parseFloat(
+    getToken({ property: "shadow-spread" }).replace("px", ""),
+  );
+  const shadowOffsetX = parseFloat(
+    getToken({ property: "shadow-offset-x" }).replace("px", ""),
+  );
+  const shadowOffsetY = parseFloat(
+    getToken({ property: "shadow-offset-y" }).replace("px", ""),
+  );
+
+  return (
+    <div className="space-y-4 font-mono">
+      <div>
+        <TokenColorPicker
+          colorProperty="shadow-color"
+          color={shadowColor}
+          setColorTokens={setColorToken}
+          syncModes={false}
+        />
+      </div>
+
+      <div>
+        <SliderWithInput
+          value={shadowOpacity}
+          onValueChange={(value) =>
+            setToken({
+              property: "shadow-opacity",
+              value: `${value}`,
+              modesInSync: true,
+            })
+          }
+          min={0}
+          max={1}
+          step={0.01}
+          unit=""
+          label="--shadow-opacity"
+        />
+      </div>
+
+      <div>
+        <SliderWithInput
+          value={shadowBlur}
+          onValueChange={(value) =>
+            setToken({
+              property: "shadow-blur",
+              value: `${value}px`,
+              modesInSync: true,
+            })
+          }
+          min={0}
+          max={50}
+          step={0.5}
+          unit="px"
+          label="--shadow-blur"
+        />
+      </div>
+
+      <div>
+        <SliderWithInput
+          value={shadowSpread}
+          onValueChange={(value) =>
+            setToken({
+              property: "shadow-spread",
+              value: `${value}px`,
+              modesInSync: true,
+            })
+          }
+          min={-50}
+          max={50}
+          step={0.5}
+          unit="px"
+          label="--shadow-spread"
+        />
+      </div>
+
+      <div>
+        <SliderWithInput
+          value={shadowOffsetX}
+          onValueChange={(value) =>
+            setToken({
+              property: "shadow-offset-x",
+              value: `${value}px`,
+              modesInSync: true,
+            })
+          }
+          min={-50}
+          max={50}
+          step={0.5}
+          unit="px"
+          label="--shadow-offset-x"
+        />
+      </div>
+
+      <div>
+        <SliderWithInput
+          value={shadowOffsetY}
+          onValueChange={(value) =>
+            setToken({
+              property: "shadow-offset-y",
+              value: `${value}px`,
+              modesInSync: true,
+            })
+          }
+          min={-50}
+          max={50}
+          step={0.5}
+          unit="px"
+          label="--shadow-offset-y"
+        />
+      </div>
+    </div>
+  );
+}
+
+interface SliderWithInputProps extends ComponentProps<"div"> {
+  value: number;
+  onValueChange: (value: number) => void;
+  min: number;
+  max: number;
+  step?: number;
+  label: string;
+  unit?: string;
+}
+
+function SliderWithInput({
+  value,
+  onValueChange,
+  min,
+  max,
+  step = 1,
+  label,
+  unit = "px",
+  className,
+  ...props
+}: SliderWithInputProps) {
+  const [localValue, setLocalValue] = useState(value);
+
+  useEffect(() => {
+    if (localValue !== value) {
+      setLocalValue(value);
+    }
+  }, [value]);
+
+  return (
+    <div className={cn("space-y-2 pb-2", className)} {...props}>
+      <div className="flex items-center justify-between">
+        <Label
+          htmlFor={`slider-${label.replace(/\s+/g, "-").toLowerCase()}`}
+          className="text-xs font-medium"
+        >
+          {label}
+        </Label>
+        <div className="flex items-center gap-1">
+          <Input
+            id={`input-${label.replace(/\s+/g, "-").toLowerCase()}`}
+            type="number"
+            value={localValue}
+            onChange={(e) => {
+              const newValue = Number(e.target.value);
+              setLocalValue(newValue);
+              onValueChange(newValue);
+            }}
+            min={min}
+            max={max}
+            step={step}
+            className="h-6 w-18 px-2 pr-0 text-xs"
+          />
+          <span className="text-muted-foreground text-xs">{unit}</span>
+        </div>
+      </div>
+      <Slider
+        id={`slider-${label.replace(/\s+/g, "-").toLowerCase()}`}
+        value={[localValue]}
+        min={min}
+        max={max}
+        step={step}
+        onValueChange={(values) => {
+          setLocalValue(values[0]);
+          onValueChange(values[0]);
+        }}
+        className="py-1"
+      />
     </div>
   );
 }

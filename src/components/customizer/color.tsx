@@ -19,11 +19,11 @@ export function Color({
     return (
       <Button
         variant={"ghost"}
-        className={cn("size-fit cursor-pointer rounded-lg p-1")}
+        className={cn("size-fit cursor-pointer rounded-lg p-0.5")}
       >
         <Skeleton
           className={cn(
-            "bg-muted ring-border relative flex size-4 shrink-0 items-center justify-center overflow-hidden rounded-lg ring",
+            "bg-muted ring-border relative flex size-3.5 shrink-0 items-center justify-center overflow-hidden rounded-lg ring",
           )}
         />
       </Button>
@@ -34,7 +34,7 @@ export function Color({
     <Button
       variant={"ghost"}
       className={cn(
-        "size-fit cursor-pointer rounded-lg p-1",
+        "size-fit cursor-pointer rounded-lg p-0.5",
         className,
         isActive &&
           "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
@@ -45,7 +45,7 @@ export function Color({
     >
       <span
         className={cn(
-          "bg-primary ring-foreground/20 relative flex size-4 shrink-0 items-center justify-center overflow-hidden rounded-lg shadow ring",
+          "bg-primary ring-foreground/20 relative flex size-3.5 shrink-0 items-center justify-center overflow-hidden rounded-lg shadow-xs ring",
         )}
       />
     </Button>

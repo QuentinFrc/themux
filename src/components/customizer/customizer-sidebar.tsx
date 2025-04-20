@@ -2,10 +2,8 @@
 
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
-import { Palette, X } from "lucide-react";
+import { PaintBucket, Palette, SlidersHorizontal, X } from "lucide-react";
 import * as React from "react";
-import { ModeSwitcher } from "../mode-switcher";
-import { TooltipWrapper } from "../tooltip-wrapper";
 import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
 import {
@@ -18,12 +16,18 @@ import {
 } from "../ui/sidebar";
 import { Skeleton } from "../ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { ActionButtons } from "./action-buttons";
 import { ColorTokens } from "./color-tokens";
-import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
-import { CustomizerSettings } from "./customizer-settings";
-import { ResetButton } from "./reset-button";
 import { ThemePresets } from "./theme-presets";
 import { Typography } from "./typography";
+import {
+  AllPresetsControl,
+  ControlSection,
+  RadiusSliderControl,
+  ShadowsControl,
+} from "./customizer-controls";
+import { Label } from "../ui/label";
+import { ComingSoon } from "./coming-soon";
 
 export function CustomizerSidebar({
   className,
@@ -53,13 +57,13 @@ export function CustomizerSidebar({
   return (
     <Sidebar className="overflow-hidden" {...props}>
       <Tabs
-        defaultValue="tokens"
+        defaultValue="palette"
         className="flex flex-1 flex-col overflow-hidden"
       >
         <SidebarHeader className="px-2 pr-3 max-md:pt-2">
           <TabsList className="w-full p-1 text-xs">
+            <TabsTrigger value="palette">Palette</TabsTrigger>
             <TabsTrigger value="tokens">Tokens</TabsTrigger>
-            <TabsTrigger value="theme-presets">Presets</TabsTrigger>
             <TabsTrigger value="typography">Typography</TabsTrigger>
           </TabsList>
         </SidebarHeader>
@@ -68,14 +72,37 @@ export function CustomizerSidebar({
           <ScrollArea className="flex flex-col overflow-hidden pr-1">
             <div className="y-0 flex h-full flex-col gap-2 px-2">
               <TabsContent
-                value="tokens"
-                className="flex flex-col space-y-1.5 py-2"
+                value="palette"
+                className="flex flex-col space-y-6 py-2"
               >
+                <section className="max-w-82 min-w-72 flex-1 space-y-1.5 max-sm:w-full max-sm:max-w-full">
+                  <Label className="flex items-center gap-1 pb-2">
+                    <PaintBucket className="size-4" /> Theme presets
+                  </Label>
+                  <AllPresetsControl />
+                </section>
+
                 <ColorTokens />
               </TabsContent>
 
-              <TabsContent value="theme-presets" className="py-2">
-                <ThemePresets />
+              <TabsContent value="tokens" className="py-2">
+                <section className="space-y-1.5">
+                  <Label className="flex items-center gap-1 pb-2">
+                    <SlidersHorizontal className="size-4" /> Other tokens
+                  </Label>
+
+                  <ControlSection title="Radius" expanded>
+                    <RadiusSliderControl />
+                  </ControlSection>
+
+                  <ControlSection title="Shadows">
+                    <ShadowsControl />
+                  </ControlSection>
+
+                  <ControlSection title="Spacing">
+                    <ComingSoon />
+                  </ControlSection>
+                </section>
               </TabsContent>
 
               <TabsContent value="typography" className="py-2">
@@ -87,20 +114,7 @@ export function CustomizerSidebar({
       </Tabs>
 
       <SidebarFooter>
-        <div className="sticky mt-auto flex gap-2">
-          <CopyCodeButtonDialog className="flex-1" />
-          <TooltipWrapper label="Toggle light/dark" asChild>
-            <ModeSwitcher />
-          </TooltipWrapper>
-
-          <TooltipWrapper label="Reset" asChild>
-            <ResetButton />
-          </TooltipWrapper>
-
-          <TooltipWrapper label="Settings" asChild>
-            <CustomizerSettings />
-          </TooltipWrapper>
-        </div>
+        <ActionButtons />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

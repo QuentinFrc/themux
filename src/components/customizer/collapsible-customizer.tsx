@@ -3,15 +3,21 @@
 import { useCollapsibleCustomizer } from "@/hooks/use-collapsible-customizer";
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
-import { ChevronUp } from "lucide-react";
+import { ChevronUp, SlidersHorizontal } from "lucide-react";
 import { ComponentProps } from "react";
-import { ColorTokens } from "./color-tokens";
-import { ControlsSkeleton } from "./customizer-controls";
-import { ThemePresets } from "./theme-presets";
-import { Typography } from "./typography";
 import { Button } from "../ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Label } from "../ui/label";
 import { ScrollArea } from "../ui/scroll-area";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { ColorTokens } from "./color-tokens";
+import { ComingSoon } from "./coming-soon";
+import {
+  ControlSection,
+  ControlsSkeleton,
+  RadiusSliderControl,
+  ShadowsControl,
+} from "./customizer-controls";
+import { Typography } from "./typography";
 
 export function CollapsibleCustomizerTrigger({
   className,
@@ -56,7 +62,7 @@ export function CollapsibleCustomizer() {
         )}
       >
         <div className="overflow-hidden">
-          <div className="pt-8">
+          <div className="pt-6">
             <section className="block @3xl:hidden">
               {isMounted ? (
                 <MobileCollapsibleCustomizer />
@@ -66,13 +72,31 @@ export function CollapsibleCustomizer() {
             </section>
 
             <section className={cn("hidden items-center gap-2", "@3xl:flex")}>
-              <div className="relative grid w-full grid-cols-3 gap-6">
+              <div className="relative grid w-full grid-cols-3 gap-6 px-2 pb-4">
                 {isMounted ? (
                   <>
                     <ScrollArea>
-                      <ColorTokens className="max-h-73" />
+                      <ColorTokens className="max-h-73 pr-2" />
                     </ScrollArea>
-                    <ThemePresets />
+
+                    <section className="space-y-1.5">
+                      <Label className="flex items-center gap-1 pb-2">
+                        <SlidersHorizontal className="size-4" /> Other tokens
+                      </Label>
+
+                      <ControlSection title="Radius" expanded>
+                        <RadiusSliderControl />
+                      </ControlSection>
+
+                      <ControlSection title="Shadows">
+                        <ShadowsControl />
+                      </ControlSection>
+
+                      <ControlSection title="Spacing">
+                        <ComingSoon />
+                      </ControlSection>
+                    </section>
+
                     <Typography />
                   </>
                 ) : (
@@ -95,8 +119,8 @@ export function MobileCollapsibleCustomizer() {
   return (
     <Tabs defaultValue="color-tokens" className="space-y-4">
       <TabsList className="w-full">
-        <TabsTrigger value="color-tokens">Tokens</TabsTrigger>
-        <TabsTrigger value="theme-presets">Presets</TabsTrigger>
+        <TabsTrigger value="color-tokens">Color tokens</TabsTrigger>
+        <TabsTrigger value="other-tokens">Other tokens</TabsTrigger>
         <TabsTrigger value="typography">Typography</TabsTrigger>
       </TabsList>
 
@@ -104,8 +128,25 @@ export function MobileCollapsibleCustomizer() {
         <ColorTokens className="max-h-70 overflow-hidden" />
       </TabsContent>
 
-      <TabsContent value="theme-presets">
-        <ThemePresets />
+      <TabsContent value="other-tokens">
+        {/* TODO: Change for other tokens (radius, shadows (soon)) */}
+        <section className="space-y-1.5">
+          <Label className="flex items-center gap-1 pb-2">
+            <SlidersHorizontal className="size-4" /> Other tokens
+          </Label>
+
+          <ControlSection title="Radius" expanded>
+            <ComingSoon />
+          </ControlSection>
+
+          <ControlSection title="Shadows">
+            <ComingSoon />
+          </ControlSection>
+
+          <ControlSection title="Spacing">
+            <ComingSoon />
+          </ControlSection>
+        </section>
       </TabsContent>
 
       <TabsContent value="typography">
@@ -119,8 +160,8 @@ function MobileCollapsibleCustomizerSkeleton() {
   return (
     <Tabs defaultValue="color-tokens" className="space-y-4">
       <TabsList className="w-full">
-        <TabsTrigger value="color-tokens">Tokens</TabsTrigger>
-        <TabsTrigger value="theme-presets">Presets</TabsTrigger>
+        <TabsTrigger value="color-tokens">Color tokens</TabsTrigger>
+        <TabsTrigger value="other-tokens">Other tokens</TabsTrigger>
         <TabsTrigger value="typography">Typography</TabsTrigger>
       </TabsList>
 
@@ -128,7 +169,7 @@ function MobileCollapsibleCustomizerSkeleton() {
         <ControlsSkeleton />
       </TabsContent>
 
-      <TabsContent value="theme-presets">
+      <TabsContent value="other-tokens">
         <ControlsSkeleton />
       </TabsContent>
 

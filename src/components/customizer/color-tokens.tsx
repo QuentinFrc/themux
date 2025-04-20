@@ -1,6 +1,6 @@
 "use client";
 
-import { useColorTokens } from "@/hooks/use-color-tokens";
+import { useTokens } from "@/hooks/use-tokens";
 import { cn } from "@/lib/utils";
 import { Palette } from "lucide-react";
 import { Label } from "../ui/label";
@@ -26,7 +26,7 @@ function TokensList({ className }: React.ComponentProps<"div">) {
     setPrimaryColorTokens,
     setColorToken,
     setColorTokenWithForeground,
-  } = useColorTokens();
+  } = useTokens();
 
   return (
     <div className={cn("space-y-2", className)}>
