@@ -117,7 +117,8 @@ export type OtherPresets =
   | "t3-chat"
   | "bubblegum"
   | "tokyo-night"
-  | "mono";
+  | "mono"
+  | "matsu-ghibli";
 
 export type ThemeObject = {
   name: PresetV4 | ColorfulPreset | OtherPresets | (string & {});
