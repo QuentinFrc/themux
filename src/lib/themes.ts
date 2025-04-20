@@ -1,15 +1,10 @@
-import {
-  OklchValue,
-  RemValue,
-  ThemeConfig,
-  ThemeProperties,
-} from "@/types/theme";
+import { ThemeConfig, ThemeProperties } from "@/types/theme";
 import { basePresetsV4 } from "./colors";
 
 export function getCssVarsFromThemeObject(
   themeProperties: Partial<ThemeProperties>,
 ) {
-  const cssVars = {} as Record<string, OklchValue | RemValue | string>;
+  const cssVars = {} as Record<string, string>;
 
   for (const [key, value] of Object.entries(themeProperties)) {
     cssVars[`--${key}`] = value;

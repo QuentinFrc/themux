@@ -11,38 +11,39 @@ export type OklchValue =
   | `oklch(${number} ${number} ${number} / ${number}%)` // For oklch values with with the alpha channel in %, i.e., 'oklch(1 0 0 / 15%)'
   | `oklch(${number} ${number} ${number} / ${number})`; // For oklch values with with the alpha channel in decimal, i.e., 'oklch(1 0 0 / 0.15)'
 
-export type OklchColorProperties = {
-  background: OklchValue;
-  foreground: OklchValue;
-  card: OklchValue;
-  "card-foreground": OklchValue;
-  popover: OklchValue;
-  "popover-foreground": OklchValue;
-  primary: OklchValue;
-  "primary-foreground": OklchValue;
-  secondary: OklchValue;
-  "secondary-foreground": OklchValue;
-  muted: OklchValue;
-  "muted-foreground": OklchValue;
-  accent: OklchValue;
-  "accent-foreground": OklchValue;
-  destructive: OklchValue;
-  border: OklchValue;
-  input: OklchValue;
-  ring: OklchValue;
-  "chart-1": OklchValue;
-  "chart-2": OklchValue;
-  "chart-3": OklchValue;
-  "chart-4": OklchValue;
-  "chart-5": OklchValue;
-  sidebar: OklchValue;
-  "sidebar-foreground": OklchValue;
-  "sidebar-primary": OklchValue;
-  "sidebar-primary-foreground": OklchValue;
-  "sidebar-accent": OklchValue;
-  "sidebar-accent-foreground": OklchValue;
-  "sidebar-border": OklchValue;
-  "sidebar-ring": OklchValue;
+export type ColorProperties = {
+  background: OklchValue | string;
+  foreground: OklchValue | string;
+  card: OklchValue | string;
+  "card-foreground": OklchValue | string;
+  popover: OklchValue | string;
+  "popover-foreground": OklchValue | string;
+  primary: OklchValue | string;
+  "primary-foreground": OklchValue | string;
+  secondary: OklchValue | string;
+  "secondary-foreground": OklchValue | string;
+  muted: OklchValue | string;
+  "muted-foreground": OklchValue | string;
+  accent: OklchValue | string;
+  "accent-foreground": OklchValue | string;
+  destructive: OklchValue | string;
+  border: OklchValue | string;
+  input: OklchValue | string;
+  ring: OklchValue | string;
+  "chart-1": OklchValue | string;
+  "chart-2": OklchValue | string;
+  "chart-3": OklchValue | string;
+  "chart-4": OklchValue | string;
+  "chart-5": OklchValue | string;
+  sidebar: OklchValue | string;
+  "sidebar-foreground": OklchValue | string;
+  "sidebar-primary": OklchValue | string;
+  "sidebar-primary-foreground": OklchValue | string;
+  "sidebar-accent": OklchValue | string;
+  "sidebar-accent-foreground": OklchValue | string;
+  "sidebar-border": OklchValue | string;
+  "sidebar-ring": OklchValue | string;
+  "shadow-color"?: string;
 };
 
 export type ThemeProperties = {
@@ -90,6 +91,7 @@ export type ThemeProperties = {
   "shadow-offset-y"?: string;
   spacing?: string;
 };
+export type ThemeProperty = keyof ThemeProperties;
 
 export type Fonts = {
   sans?: string;
@@ -97,7 +99,7 @@ export type Fonts = {
   mono?: string;
 };
 
-export type ColorProperty = keyof OklchColorProperties;
+export type ColorProperty = keyof ColorProperties;
 
 export type PresetV4 = "stone" | "zinc" | "neutral" | "gray" | "slate";
 
@@ -110,7 +112,7 @@ export type ColorfulPreset =
   | "yellow"
   | "violet";
 
-export type OtherPresets = "claude" | "t3.chat";
+export type OtherPresets = "claude" | "t3.chat" | "bubblegum";
 
 export type ThemeObject = {
   name: PresetV4 | ColorfulPreset | OtherPresets | (string & {});

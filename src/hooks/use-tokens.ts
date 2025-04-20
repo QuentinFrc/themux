@@ -3,16 +3,88 @@ import {
   ColorProperty,
   OklchValue,
   SurfaceShadesThemeObject,
+  ThemeMode,
+  ThemeProperty,
 } from "@/types/theme";
 import { getOptimalForegroundColor, isValidColor } from "@/utils/colors";
 import { useTheme } from "next-themes";
 import { useCallback } from "react";
 import { useThemeConfig } from "./use-theme-config";
+import { initialThemeConfig } from "@/lib/themes";
 
-export function useColorTokens() {
+export function useTokens() {
   const { resolvedTheme } = useTheme();
-  const mode = resolvedTheme === "dark" ? "dark" : "light";
+  const mode: ThemeMode = resolvedTheme === "dark" ? "dark" : "light";
   const { config, setConfig, currentThemeObject } = useThemeConfig();
+
+  const getToken = useCallback(
+    ({ property }: { property: ThemeProperty }) => {
+      const isShadow = property.startsWith("shadow-");
+      const isShadowColor = property.startsWith("shadow-color");
+
+      let resolvedMode = mode;
+
+      if (isShadow) {
+        resolvedMode = "light";
+        if (isShadowColor) resolvedMode = mode;
+      }
+
+      const token =
+        currentThemeObject[resolvedMode][property] ??
+        initialThemeConfig.themeObject[resolvedMode][property];
+
+      if (!token) {
+        throw new Error(`Token "${property}" not found in theme object`);
+      }
+
+      return token;
+    },
+    [mode, currentThemeObject[mode]],
+  );
+
+  const setToken = ({
+    property,
+    value,
+    modesInSync = false,
+  }: {
+    property: ThemeProperty;
+    value: string;
+    modesInSync?: boolean;
+  }) => {
+    // Update both modes
+    if (modesInSync) {
+      return setConfig((prev) => {
+        return {
+          ...prev,
+          themeObject: {
+            ...prev.themeObject,
+            light: {
+              ...prev.themeObject.light,
+              [property]: value,
+            },
+            dark: {
+              ...prev.themeObject.dark,
+              [property]: value,
+            },
+          },
+        };
+      });
+    }
+
+    // Only update the current mode
+    setConfig((prev) => {
+      return {
+        ...prev,
+        themeObject: {
+          ...prev.themeObject,
+          [mode]: {
+            ...prev.themeObject[mode],
+            [property]: value,
+          },
+        },
+      };
+    });
+  };
 
   const getColorToken = useCallback(
     ({ property }: { property: ColorProperty }) => {
@@ -261,6 +333,8 @@ export function useColorTokens() {
   }, [config.surface]);
 
   return {
+    getToken,
+    setToken,
     getColorToken,
     setColorToken,
     setColorTokenWithForeground,

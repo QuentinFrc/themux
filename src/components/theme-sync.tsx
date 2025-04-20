@@ -10,6 +10,7 @@ import {
   setAttributeToElement,
   setStyleProperty,
 } from "@/utils/set-attribute-to-element";
+import { setShadowVariables } from "@/utils/shadows";
 import { useTheme } from "next-themes";
 
 export function ThemeSync() {
@@ -85,6 +86,9 @@ export function ThemeSync() {
     for (const [key, value] of Object.entries(cssVars)) {
       setStyleProperty({ element: root, key: key, value });
     }
+
+    // Sync shadow tokens based on --shadow-[x] variables
+    setShadowVariables(root, currentThemeObject, mode);
   }, [
     currentThemeObject,
     currentSurfacePreset,

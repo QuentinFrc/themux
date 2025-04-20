@@ -1,13 +1,32 @@
-import { ThemeMode, ThemeObject } from "@/types/theme";
+import { initialThemeConfig } from "@/lib/themes";
+import {
+  ThemeMode,
+  ThemeObject,
+  ThemeProperties,
+  ThemeProperty,
+} from "@/types/theme";
 import { colorFormatter } from "./color-converter";
 import { setStyleProperty } from "./set-attribute-to-element";
-import { initialThemeConfig } from "@/lib/themes";
 
 export const getShadowMap = (themeObject: ThemeObject, mode: ThemeMode) => {
-  const styles = {
-    ...initialThemeConfig.themeObject.light,
+  const getShadowProperty = (property: ThemeProperty) => {
+    return (
+      themeObject[mode][property] ||
+      themeObject.light[property] ||
+      initialThemeConfig.themeObject[mode][property] ||
+      initialThemeConfig.themeObject.light[property]
+    );
+  };
+
+  const styles: Partial<ThemeProperties> = {
     ...initialThemeConfig.themeObject[mode],
     ...themeObject[mode],
+    "shadow-color": getShadowProperty("shadow-color"),
+    "shadow-opacity": getShadowProperty("shadow-opacity"),
+    "shadow-blur": getShadowProperty("shadow-blur"),
+    "shadow-spread": getShadowProperty("shadow-spread"),
+    "shadow-offset-x": getShadowProperty("shadow-offset-x"),
+    "shadow-offset-y": getShadowProperty("shadow-offset-y"),
   };
 
   const shadowColor = styles["shadow-color"];
@@ -69,11 +88,13 @@ export const getShadowMap = (themeObject: ThemeObject, mode: ThemeMode) => {
 };
 
 // Function to set shadow CSS variables
-export function setShadowVariables(themeObject: ThemeObject, mode: ThemeMode) {
-  const root = document.documentElement;
-
+export function setShadowVariables(
+  element: HTMLElement,
+  themeObject: ThemeObject,
+  mode: ThemeMode,
+) {
   const shadows = getShadowMap(themeObject, mode);
   Object.entries(shadows).forEach(([name, value]) => {
-    setStyleProperty({ element: root, key: `--${name}`, value });
+    setStyleProperty({ element, key: `--${name}`, value });
   });
 }
