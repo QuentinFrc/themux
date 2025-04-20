@@ -17,7 +17,7 @@ export const initialSettings: Settings = {
   tailwindVersion: "4",
   showTootips: true,
   fontVars: false,
-  shadows: false,
+  shadows: true,
 };
 
 const initialConfigAtom = atomWithStorage<Settings>(
