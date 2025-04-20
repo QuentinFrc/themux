@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { PaintBucket, Palette, SlidersHorizontal, X } from "lucide-react";
 import * as React from "react";
 import { Button } from "../ui/button";
+import { Label } from "../ui/label";
 import { ScrollArea } from "../ui/scroll-area";
 import {
   Sidebar,
@@ -18,16 +19,14 @@ import { Skeleton } from "../ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { ActionButtons } from "./action-buttons";
 import { ColorTokens } from "./color-tokens";
-import { ThemePresets } from "./theme-presets";
-import { Typography } from "./typography";
+import { ComingSoon } from "./coming-soon";
 import {
   AllPresetsControl,
   ControlSection,
   RadiusSliderControl,
   ShadowsControl,
 } from "./customizer-controls";
-import { Label } from "../ui/label";
-import { ComingSoon } from "./coming-soon";
+import { Typography } from "./typography";
 
 export function CustomizerSidebar({
   className,

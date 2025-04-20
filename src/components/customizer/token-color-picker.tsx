@@ -3,17 +3,21 @@
 import { useSettings } from "@/hooks/use-settings";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { ColorProperty, ThemeMode } from "@/types/theme";
-import { convertToHex, convertToOklch } from "@/utils/color-converter";
+import {
+  colorFormatter,
+  convertToHex,
+  convertToOklch,
+} from "@/utils/color-converter";
 import { getOptimalForegroundColor } from "@/utils/colors";
 import { CircleAlert, Pipette } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { useDebouncedCallback } from "../../hooks/use-debounced-callback";
-import { PasteColorControl } from "./customizer-controls";
 import { ComponentErrorBoundary } from "../error-boundary";
-import { TokenDisplay, TokenInfo } from "./token";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { PasteColorControl } from "./customizer-controls";
+import { TokenDisplay, TokenInfo } from "./token";
 
 interface TokenColorPickerProps {
   colorProperty: ColorProperty;
@@ -76,10 +80,14 @@ export function TokenColorPicker({
           <TokenInfo colorProperty={colorProperty} color={color} />
         </div>
 
-        <PopoverContent className="flex size-fit gap-6 p-4" align="start">
-          <div className="space-y-2">
-            <HexColorPicker color={hexColor} onChange={handleColorChange} />
-            <ColorOklchValue currentColor={currentColor} />
+        <PopoverContent className="flex h-fit w-60 gap-6 p-4" align="start">
+          <div className="w-full space-y-2">
+            <div className="mx-auto w-fit">
+              <HexColorPicker color={hexColor} onChange={handleColorChange} />
+            </div>
+            <div className="w-fit">
+              <ColorOklchValue currentColor={currentColor} />
+            </div>
             <PasteColorControl
               modesInSync={resolvedModesInSync}
               setColorTokens={debouncedSetColorTokens}
@@ -94,16 +102,11 @@ export function TokenColorPicker({
 }
 
 function ColorOklchValue({ currentColor }: { currentColor: string }) {
+  const { colorFormat } = useSettings();
+  const colorValue = colorFormatter(currentColor, colorFormat, "4");
+
   return (
-    <div className="flex items-center gap-1">
-      <div
-        className="bg-primary size-2 rounded-full"
-        style={{
-          "--primary": currentColor,
-        }}
-      />
-      <p className="text-muted-foreground font-mono text-xs">{currentColor}</p>
-    </div>
+    <p className="text-muted-foreground font-mono text-xs">{colorValue}</p>
   );
 }
 

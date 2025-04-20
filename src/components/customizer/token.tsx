@@ -1,7 +1,9 @@
 "use client";
 
+import { useSettings } from "@/hooks/use-settings";
 import { cn, copyToClipboard } from "@/lib/utils";
 import { ColorProperty } from "@/types/theme";
+import { colorFormatter } from "@/utils/color-converter";
 import { Check, Clipboard } from "lucide-react";
 import { ComponentProps, useState } from "react";
 
@@ -52,13 +54,17 @@ export function TokenInfo({
     setCopied(true);
     setTimeout(() => setCopied(false), 1200);
   };
+
+  const { colorFormat } = useSettings();
+  const colorValue = colorFormatter(color, colorFormat, "4");
+
   return (
     <div className="flex w-full items-center justify-between gap-2">
       <div>
         <p className="font-mono text-xs font-semibold">
           {`--${colorProperty}`}
         </p>
-        <p className="text-muted-foreground font-mono text-xs">{color}</p>
+        <p className="text-muted-foreground font-mono text-xs">{colorValue}</p>
       </div>
 
       <button
