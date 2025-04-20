@@ -112,7 +112,12 @@ export type ColorfulPreset =
   | "yellow"
   | "violet";
 
-export type OtherPresets = "claude" | "t3-chat" | "bubblegum" | "tokyo-night";
+export type OtherPresets =
+  | "claude"
+  | "t3-chat"
+  | "bubblegum"
+  | "tokyo-night"
+  | "mono";
 
 export type ThemeObject = {
   name: PresetV4 | ColorfulPreset | OtherPresets | (string & {});
