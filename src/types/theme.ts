@@ -120,8 +120,10 @@ export type OtherPresets =
   | "mono"
   | "matsu-ghibli";
 
+export type Preset = PresetV4 | ColorfulPreset | OtherPresets | (string & {});
+
 export type ThemeObject = {
-  name: PresetV4 | ColorfulPreset | OtherPresets | (string & {});
+  name: Preset;
   label: string;
   radius?: string;
   fonts?: Fonts;

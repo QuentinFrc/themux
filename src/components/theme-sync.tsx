@@ -2,6 +2,7 @@
 
 import * as React from "react";
 
+import { usePresetSyncUrl } from "@/hooks/use-preset-sync-url";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { getCssVarsFromThemeObject } from "@/lib/themes";
 import { ThemeMode, ThemeProperties } from "@/types/theme";
@@ -22,6 +23,8 @@ export function ThemeSync() {
   } = useThemeConfig();
   const mode = useTheme().resolvedTheme as ThemeMode;
   const [shouldSync, setShouldSync] = React.useState(false);
+
+  usePresetSyncUrl();
 
   React.useEffect(() => {
     // This prevents the theme from being set with the default values

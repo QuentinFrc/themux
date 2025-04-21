@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const metadata: Metadata = {
   title: {
@@ -61,20 +62,22 @@ export default async function RootLayout({
       <ReactScan options={{ enabled: true }} />
 
       <body className={cn(`antialiased`)}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
+        <NuqsAdapter>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
 
-          <FontLoader />
-          <ThemeSync />
-          <Toaster />
-          <ScreenDevTools />
-        </ThemeProvider>
-        <Analytics />
+            <FontLoader />
+            <ThemeSync />
+            <Toaster />
+            <ScreenDevTools />
+          </ThemeProvider>
+          <Analytics />
+        </NuqsAdapter>
       </body>
     </html>
   );
