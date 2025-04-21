@@ -26,9 +26,8 @@ import {
   DrawerTrigger,
 } from "../ui/drawer";
 import { Label } from "../ui/label";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
-import { Switch } from "../ui/switch";
+import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 
 export function CopyCodeButtonDialog({
   className,
@@ -111,10 +110,13 @@ function GeneratedCodeOptions() {
     useSettings();
 
   const changeColorFormat = (colorFormat: ColorFormat) => {
+    if (!colorFormat) return;
     updateSettings({ colorFormat: colorFormat });
   };
 
   const changeTailwindVersion = (tailwindVersion: TailwindVersion) => {
+    if (!tailwindVersion) return;
+
     tailwindVersion === "4"
       ? updateSettings({
           tailwindVersion: tailwindVersion,
@@ -126,94 +128,124 @@ function GeneratedCodeOptions() {
         });
   };
 
+  const togleFontVars = (isActive: boolean) => {
+    if (!isActive) return;
+
+    updateSettings({ fontVars: isActive });
+  };
+
   return (
-    <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:justify-between lg:items-center lg:gap-x-8">
-      <div className="col-span-2 grid grid-cols-2 gap-x-8">
-        <div className="flex flex-col items-start gap-2 md:flex-row">
-          <Label className="text-muted-foreground text-xs max-lg:w-24">
-            Color format
-          </Label>
-          <RadioGroup
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+      <div className="flex items-center gap-4">
+        <div className="flex flex-col items-start gap-1">
+          <Label className="text-muted-foreground text-xs">Color format</Label>
+          <ToggleGroup
+            className="border shadow-sm"
+            type="single"
             value={colorFormat}
             onValueChange={changeColorFormat}
-            className="flex flex-row gap-2 md:ml-auto"
           >
-            <div className="flex items-center space-x-1">
-              <RadioGroupItem value="oklch" id="color-oklch" />
-              <Label htmlFor="color-oklch" className="text-xs font-normal">
-                oklch
-              </Label>
-            </div>
-            <div className="flex items-center space-x-1">
-              <RadioGroupItem value="hsl" id="color-hsl" />
-              <Label htmlFor="color-hsl" className="text-xs font-normal">
-                hsl
-              </Label>
-            </div>
-            <div className="flex items-center space-x-1">
-              <RadioGroupItem value="rgb" id="color-rgb" />
-              <Label htmlFor="color-rgb" className="text-xs font-normal">
-                rgb
-              </Label>
-            </div>
-            <div className="flex items-center space-x-1">
-              <RadioGroupItem value="hex" id="color-hex" />
-              <Label htmlFor="color-hex" className="text-xs font-normal">
-                hex
-              </Label>
-            </div>
-          </RadioGroup>
-        </div>
+            <ToggleGroupItem
+              value="oklch"
+              className="h-fit px-3 py-1.5 text-xs md:text-sm"
+            >
+              oklch
+            </ToggleGroupItem>
 
-        <div className="flex flex-col items-start gap-2 md:flex-row">
-          <Label className="text-muted-foreground text-xs max-lg:w-24">
-            Tailwind version
-          </Label>
-          <RadioGroup
+            <ToggleGroupItem
+              value="hsl"
+              className="h-fit px-3 py-1.5 text-xs md:text-sm"
+            >
+              hsl
+            </ToggleGroupItem>
+
+            <ToggleGroupItem
+              value="rgb"
+              className="h-fit px-3 py-1.5 text-xs md:text-sm"
+            >
+              rgb
+            </ToggleGroupItem>
+
+            <ToggleGroupItem
+              value="hex"
+              className="h-fit px-3 py-1.5 text-xs md:text-sm"
+            >
+              hex
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+        <div className="flex flex-col items-start gap-1">
+          <Label className="text-muted-foreground text-xs">Tailwind</Label>
+          <ToggleGroup
+            className="border shadow-sm"
+            type="single"
             value={tailwindVersion}
             onValueChange={changeTailwindVersion}
-            className="flex flex-row gap-2 md:ml-auto"
           >
-            <div className="flex items-center space-x-1">
-              <RadioGroupItem value="4" id="tw-v4" />
+            <ToggleGroupItem
+              value="4"
+              className="h-fit px-3 py-1.5 text-xs md:text-sm"
+            >
+              v4
+            </ToggleGroupItem>
 
-              <Label htmlFor="tw-v4" className="text-xs font-normal">
-                v4
-              </Label>
-            </div>
-            <div className="flex items-center space-x-1">
-              <RadioGroupItem value="3" id="tw-v3" />
-              <Label htmlFor="tw-v3" className="text-xs font-normal">
-                v3
-              </Label>
-            </div>
-          </RadioGroup>
+            <ToggleGroupItem
+              value="3"
+              className="h-fit px-3 py-1.5 text-xs md:text-sm"
+            >
+              v3
+            </ToggleGroupItem>
+          </ToggleGroup>
         </div>
       </div>
 
-      <div className="col-span-2 grid grid-cols-2 gap-x-8">
-        <div className="flex shrink-0 grow flex-row items-start justify-between gap-2">
-          <Label className="text-muted-foreground text-xs text-nowrap">
-            Show font variables
-          </Label>
-          <Switch
-            checked={fontVars}
-            onCheckedChange={(isActive) =>
-              updateSettings({ fontVars: isActive })
-            }
-          />
+      <div className="flex items-center gap-4">
+        <div className="flex flex-col items-start gap-1">
+          <Label className="text-muted-foreground text-xs">Font vars</Label>
+          <ToggleGroup
+            className="border shadow-sm"
+            type="single"
+            value={fontVars ? "on" : "off"}
+            onValueChange={(v) => updateSettings({ fontVars: v === "on" })}
+          >
+            <ToggleGroupItem
+              value="on"
+              className="h-fit px-3 py-1.5 text-xs md:text-sm"
+            >
+              ON
+            </ToggleGroupItem>
+
+            <ToggleGroupItem
+              value="off"
+              className="h-fit px-3 py-1.5 text-xs md:text-sm"
+            >
+              OFF
+            </ToggleGroupItem>
+          </ToggleGroup>
         </div>
 
-        <div className="flex shrink-0 grow flex-row items-start justify-between gap-2">
-          <Label className="text-muted-foreground text-xs text-nowrap">
-            Show shadow variables
-          </Label>
-          <Switch
-            checked={shadows}
-            onCheckedChange={(isActive) =>
-              updateSettings({ shadows: isActive })
-            }
-          />
+        <div className="flex flex-col items-start gap-1">
+          <Label className="text-muted-foreground text-xs">Shadow vars</Label>
+          <ToggleGroup
+            className="border shadow-sm"
+            type="single"
+            value={shadows ? "on" : "off"}
+            onValueChange={(v) => updateSettings({ shadows: v === "on" })}
+          >
+            <ToggleGroupItem
+              value="on"
+              className="h-fit px-3 py-1.5 text-xs md:text-sm"
+            >
+              ON
+            </ToggleGroupItem>
+
+            <ToggleGroupItem
+              value="off"
+              className="h-fit px-3 py-1.5 text-xs md:text-sm"
+            >
+              OFF
+            </ToggleGroupItem>
+          </ToggleGroup>
         </div>
       </div>
     </div>
@@ -259,7 +291,7 @@ function CustomizerCode({
     >
       <ScrollArea className="h-full">
         <pre className="p-4">
-          <code className="relative border border-none p-0 font-mono text-xs">
+          <code className="relative border border-none p-0 font-mono text-xs md:text-sm">
             {themeCode}
           </code>
           <ScrollBar orientation="horizontal" />

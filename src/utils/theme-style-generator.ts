@@ -18,7 +18,8 @@ function generateColorVariables(
 ): string {
   const styles = themeObject[mode] as ThemeProperties;
 
-  return `--background: ${formatColor(styles.background)};
+  const colorVars = `
+  --background: ${formatColor(styles.background)};
   --foreground: ${formatColor(styles.foreground)};
   --card: ${formatColor(styles.card)};
   --card-foreground: ${formatColor(styles["card-foreground"])};
@@ -54,24 +55,27 @@ function generateColorVariables(
   --sidebar-accent-foreground: ${formatColor(styles["sidebar-accent-foreground"])};
   --sidebar-border: ${formatColor(styles["sidebar-border"])};
   --sidebar-ring: ${formatColor(styles["sidebar-ring"])};`
-
     .split("\n")
-    .filter((line) => line !== "")
+    .filter((line) => line.trim() !== "")
     .join("\n");
+
+  return colorVars.trimStart();
 }
 
 const generateFontVariables = (themeConfig: ThemeConfig): string => {
   const fonts = themeConfig.fonts;
 
-  return `
-  --font-sans: ${fonts?.sans ?? DEFAULT_FONTS["font-sans"]};
+  const fontVars = `
+  \n  --font-sans: ${fonts?.sans ?? DEFAULT_FONTS["font-sans"]};
   --font-serif: ${fonts?.serif ?? DEFAULT_FONTS["font-serif"]};
   --font-mono: ${fonts?.mono ?? DEFAULT_FONTS["font-mono"]};`;
+
+  return fontVars;
 };
 
 const generateShadowVariables = (shadowMap: Record<string, string>): string => {
-  return `
-  --shadow-2xs: ${shadowMap["shadow-2xs"]};
+  const shadowVars = `
+  \n  --shadow-2xs: ${shadowMap["shadow-2xs"]};
   --shadow-xs: ${shadowMap["shadow-xs"]};
   --shadow-sm: ${shadowMap["shadow-sm"]};
   --shadow: ${shadowMap["shadow"]};
@@ -79,6 +83,8 @@ const generateShadowVariables = (shadowMap: Record<string, string>): string => {
   --shadow-lg: ${shadowMap["shadow-lg"]};
   --shadow-xl: ${shadowMap["shadow-xl"]};
   --shadow-2xl: ${shadowMap["shadow-2xl"]};`;
+
+  return shadowVars;
 };
 
 function generateThemeVariables(
@@ -89,6 +95,7 @@ function generateThemeVariables(
   themeVarsSettings: ThemeVarsOptions,
 ): string {
   const radiusVar = `--radius: ${themeConfig.radius};`;
+
   const colorVars = generateColorVariables(
     themeConfig.themeObject,
     mode,
@@ -103,15 +110,10 @@ function generateThemeVariables(
     : ``;
 
   if (mode === "light") {
-    return `:root {${fontVars}
-  ${radiusVar}
-  ${colorVars}
-  ${shadowVars}
-}`;
+    return `:root {\n  ${radiusVar}\n  ${colorVars}${fontVars}${shadowVars}\n}`;
   }
 
-  return `.dark {
-  ${colorVars}${shadowVars}\n}`;
+  return `.dark {\n  ${colorVars}${shadowVars}\n}`;
 }
 
 type ThemeVarsOptions = {
@@ -141,13 +143,11 @@ function generateTailwindV4ThemeInline({
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -163,16 +163,16 @@ function generateTailwindV4ThemeInline({
   --radius-xl: calc(var(--radius) + 4px);`;
 
   const fontVarsInline = fontVars
-    ? `--font-sans: var(--font-sans);
+    ? `\n  --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
-  --font-serif: var(--font-serif);`
-    : `/* adjust your fonts variables here */
+  --font-serif: var(--font-serif);\n`
+    : `\n  /* adjust your fonts variables here */
   /* --font-sans: var(--font-sans);   */
   /* --font-mono: var(--font-mono);   */
-  /* --font-serif: var(--font-serif); */`;
+  /* --font-serif: var(--font-serif); */\n`;
 
   const shadowVarsInline = shadowVars
-    ? `--shadow-2xs: var(--shadow-2xs);
+    ? `\n\n  --shadow-2xs: var(--shadow-2xs);
   --shadow-xs: var(--shadow-xs);
   --shadow-sm: var(--shadow-sm);
   --shadow: var(--shadow);
@@ -182,14 +182,9 @@ function generateTailwindV4ThemeInline({
   --shadow-2xl: var(--shadow-2xl);`
     : ``;
 
-  return `@theme inline {
-  ${fontVarsInline}
-
+  return `@theme inline {${fontVarsInline}
   ${radiusVarsInline}
-
-  ${colorVarsInline}
-
-  ${shadowVarsInline}
+  ${colorVarsInline}${shadowVarsInline}
 }`;
 }
 
@@ -247,7 +242,5 @@ export function generateThemeCode({
     return `${lightTheme}\n\n${darkTheme}\n\n${generateTailwindV4ThemeInline(v4Options)}`;
   }
 
-  return `@layer base {
-${lightTheme}\n\n${darkTheme}
-}`;
+  return `${lightTheme}\n\n${darkTheme}`;
 }
