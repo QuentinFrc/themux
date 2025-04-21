@@ -1,4 +1,5 @@
 import { OtherPresets, ThemeObject } from "@/types/theme";
+import { monoFonts, sansFonts, serifFonts } from "@/utils/fonts";
 
 export const otherPresets: Record<OtherPresets, ThemeObject> = {
   claude: {
@@ -154,9 +155,9 @@ export const otherPresets: Record<OtherPresets, ThemeObject> = {
     label: "Bubblegum",
     radius: "1rem",
     fonts: {
-      sans: "Poppins, sans-serif",
-      serif: "Lora, serif",
-      mono: "Fira Code, monospace",
+      sans: sansFonts.Poppins.value,
+      serif: serifFonts.Lora.value,
+      mono: monoFonts["Fira Code"].value,
     },
     light: {
       background: "#f6e6ee",
@@ -246,9 +247,9 @@ export const otherPresets: Record<OtherPresets, ThemeObject> = {
     label: "Tokyo Night",
     radius: "0rem",
     fonts: {
-      sans: "JetBrains Mono, monospace",
-      serif: "IBM Plex Serif, serif",
-      mono: "JetBrains Mono, monospace",
+      sans: monoFonts["JetBrains Mono"].value,
+      serif: serifFonts["IBM Plex Serif"].value,
+      mono: monoFonts["JetBrains Mono"].value,
     },
     light: {
       background: "#e6e7ed",
@@ -339,8 +340,8 @@ export const otherPresets: Record<OtherPresets, ThemeObject> = {
     label: "Mono",
     radius: "0rem",
     fonts: {
-      sans: "Geist Mono, monospace",
-      mono: "Geist Mono, monospace",
+      sans: monoFonts["Geist Mono"].value,
+      mono: monoFonts["Geist Mono"].value,
     },
     light: {
       radius: "0rem",
@@ -415,9 +416,9 @@ export const otherPresets: Record<OtherPresets, ThemeObject> = {
     label: "Ghibli Studio",
     radius: "0.625rem",
     fonts: {
-      sans: "Nunito, ui-sans-serif, sans-serif",
-      serif: "PT Serif, ui-serif, serif",
-      mono: "Geist Mono, ui-monospace, monospace",
+      sans: sansFonts.Nunito.value,
+      serif: serifFonts["PT Serif"].value,
+      mono: monoFonts["Geist Mono"].value,
     },
     light: {
       radius: "0.625rem",
