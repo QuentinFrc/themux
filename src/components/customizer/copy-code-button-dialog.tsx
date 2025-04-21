@@ -269,7 +269,7 @@ function CustomizerCode({
       {/* Copy code button */}
       <div className="absolute top-3 right-3 isolate">
         <div className="relative overflow-hidden rounded-lg p-[2px]">
-          <div className="bg-rotating-gradient opacity-40" />
+          <div className="from-primary to-secondary via-muted absolute inset-0 size-full bg-linear-45 opacity-40" />
           <Button
             size="sm"
             variant={"ghost"}
