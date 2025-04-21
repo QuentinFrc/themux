@@ -71,16 +71,11 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Suspense>
-              <FontLoader />
-            </Suspense>
-
-            <Suspense fallback={<LoadingComponent />}>
-              {children}
-              <ThemeSync />
-            </Suspense>
-
+            <Suspense fallback={<LoadingComponent />}>{children}</Suspense>
+            <ThemeSync />
+            <FontLoader />
             <Toaster />
+
             <ScreenDevTools />
           </ThemeProvider>
         </NuqsAdapter>

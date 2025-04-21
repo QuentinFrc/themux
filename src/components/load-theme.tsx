@@ -61,19 +61,6 @@ export function LoadTheme() {
       mono: themeConfig?.fonts?.mono ?? defaultFonts.mono,
     };
 
-    const themeProperties = {
-      ...activeThemeObjectStyles,
-      radius: activeRadius,
-      "font-sans": activeFonts.sans,
-      "font-serif": activeFonts.serif,
-      "font-mono": activeFonts.mono,
-    };
-
-    let cssVars = [];
-    for (const [key, value] of Object.entries(themeProperties)) {
-      cssVars[\`--\${key}\`] = value;
-    }
-
     // Function to fetch fonts up-front for the initial load
     const loadFont = (href) => {
       if (href) {
@@ -99,6 +86,19 @@ export function LoadTheme() {
     loadFont(activeFontSansHref);
     loadFont(activeFontSerifHref);
     loadFont(activeFontMonoHref);
+
+    const themeProperties = {
+      ...activeThemeObjectStyles,
+      radius: activeRadius,
+      "font-sans": activeFonts.sans,
+      "font-serif": activeFonts.serif,
+      "font-mono": activeFonts.mono,
+    };
+
+    let cssVars = [];
+    for (const [key, value] of Object.entries(themeProperties)) {
+      cssVars[\`--\${key}\`] = value;
+    }
 
     // Set the CSS variables on the root element
     console.log("Theme initialization. CSS variables set:", cssVars);

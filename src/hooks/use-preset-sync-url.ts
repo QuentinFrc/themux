@@ -23,10 +23,10 @@ export const usePresetSyncUrl = () => {
 
       if (presetThemeObject) {
         updateThemeConfig(presetThemeObject);
-      } else {
-        // If the preset is not valid, set it to null
-        setPreset(null);
       }
+
+      // Either way, set the preset to null to avoid weird sync issues
+      setPreset(null);
     }
   }, [preset, setPreset, currentPresetName, updateThemeConfig]);
 };

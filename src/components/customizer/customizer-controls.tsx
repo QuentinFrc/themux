@@ -490,7 +490,7 @@ interface AllPresetsControlProps extends ComponentProps<"div"> {}
 
 export function AllPresetsControl({ className }: AllPresetsControlProps) {
   const { getActiveThemeColorToken } = useTokens();
-  const { currentThemeObject, updateThemePreset } = useThemeConfig();
+  const { currentThemeObject, updateThemeConfig } = useThemeConfig();
 
   const isMounted = useMounted();
   const resolvedTheme = useTheme().resolvedTheme as ThemeMode;
@@ -601,9 +601,7 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                     return (
                       <CommandItem
                         key={presetThemeObject.name}
-                        onSelect={() =>
-                          updateThemePreset(presetThemeObject.name)
-                        }
+                        onSelect={() => updateThemeConfig(presetThemeObject)}
                         className="flex items-center gap-4 py-2"
                       >
                         <ThemePresetColors
@@ -632,9 +630,7 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                     return (
                       <CommandItem
                         key={presetThemeObject.name}
-                        onSelect={() =>
-                          updateThemePreset(presetThemeObject.name)
-                        }
+                        onSelect={() => updateThemeConfig(presetThemeObject)}
                         className="flex items-center gap-4 py-2"
                       >
                         <ThemePresetColors
@@ -663,9 +659,7 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                     return (
                       <CommandItem
                         key={presetThemeObject.name}
-                        onSelect={() =>
-                          updateThemePreset(presetThemeObject.name)
-                        }
+                        onSelect={() => updateThemeConfig(presetThemeObject)}
                         className="flex items-center gap-4 py-2"
                       >
                         <ThemePresetColors

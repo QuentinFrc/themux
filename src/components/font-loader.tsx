@@ -1,21 +1,12 @@
 "use client";
 
-import React from "react";
-
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { monoFontsArray, sansFontsArray, serifFontsArray } from "@/utils/fonts";
 
 export function FontLoader() {
-  const { currentFonts } = useThemeConfig();
-  const [shouldSync, setShouldSync] = React.useState(false);
+  const { hasLoaded, currentFonts } = useThemeConfig();
 
-  React.useEffect(() => {
-    // This prevents the theme from being set with the default values
-    // since the theme config from localStorage was applied in a script in the <head>
-    setShouldSync(true);
-  }, []);
-
-  if (!shouldSync) return null;
+  if (!hasLoaded) return null;
 
   const sansFontHref = [
     ...sansFontsArray,

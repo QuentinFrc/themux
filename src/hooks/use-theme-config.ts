@@ -1,14 +1,19 @@
 import { allPresetsArray } from "@/lib/colors";
 import { initialThemeConfig } from "@/lib/themes";
 import { ThemeObject } from "@/types/theme";
-import { QUERY_PARAMS_KEYS } from "@/utils/constants";
 import { isEqual } from "lodash";
-import { useQueryState } from "nuqs";
+import React from "react";
 import { useConfig } from "./use-config";
 
 export function useThemeConfig() {
   const [config, setConfig] = useConfig();
-  const [_, setState] = useQueryState(QUERY_PARAMS_KEYS.preset);
+  const [hasLoaded, setHasLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    // This prevents the theme from being set with the default values
+    // since the theme config from localStorage was applied in a script in the <head>
+    setHasLoaded(true);
+  }, []);
 
   const currentThemeObject = config.themeObject;
   const currentSurfacePreset = config.surface;
@@ -18,10 +23,6 @@ export function useThemeConfig() {
   const currentPresetThemeObject = allPresetsArray.find(
     (preset) => preset.name === currentPresetName,
   );
-
-  const updateThemePreset = (preset: string) => {
-    setState(preset);
-  };
 
   const updateThemeConfig = (themeObject: ThemeObject) => {
     setConfig((prev) => ({
@@ -87,13 +88,13 @@ export function useThemeConfig() {
   };
 
   return {
+    hasLoaded,
     currentThemeObject,
     currentSurfacePreset,
     currentRadius,
     currentFonts,
     config,
     setConfig,
-    updateThemePreset,
     updateThemeConfig,
     resetToDefault,
     resetToLatestThemePreset,
