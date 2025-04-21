@@ -1,10 +1,9 @@
 "use client";
 
 import { initialThemeConfig } from "@/lib/themes";
+import { LOCAL_STORAGE_KEYS } from "@/utils/constants";
 import { monoFontsArray, sansFontsArray, serifFontsArray } from "@/utils/fonts";
 import { preconnect } from "react-dom";
-
-const THEME_CONFIG_KEY_LS = "theme-config";
 
 export function LoadTheme() {
   preconnect("https://fonts.gstatic.com", { crossOrigin: "anonymous" });
@@ -24,7 +23,7 @@ export function LoadTheme() {
 
     let themeConfig = null;
     try {
-      const persistedThemeConfig = localStorage.getItem("${THEME_CONFIG_KEY_LS}");
+      const persistedThemeConfig = localStorage.getItem("${LOCAL_STORAGE_KEYS.themeConfig}");
       if (persistedThemeConfig) {
         const parsedThemeConfig = JSON.parse(persistedThemeConfig);
         themeConfig = parsedThemeConfig;
@@ -40,7 +39,7 @@ export function LoadTheme() {
       "(prefers-color-scheme: dark)",
     ).matches;
 
-    const localStorageMode = localStorage.getItem("theme");
+    const localStorageMode = localStorage.getItem("${LOCAL_STORAGE_KEYS.nextThemesMode}");
     let resolvedMode = localStorageMode;
 
     if (resolvedMode === "system" || resolvedMode === null) {
