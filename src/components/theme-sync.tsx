@@ -12,7 +12,6 @@ import { useTheme } from "next-themes";
 
 export function ThemeSync() {
   const {
-    hasLoaded,
     currentThemeObject,
     currentSurfacePreset,
     currentRadius,
@@ -23,8 +22,6 @@ export function ThemeSync() {
   usePresetSyncUrl();
 
   React.useEffect(() => {
-    if (!hasLoaded) return;
-
     const root = document.querySelector(":root") as HTMLElement;
     if (!root) return;
 
