@@ -14,6 +14,7 @@ function generateColorVariables(
   themeObject: ThemeObject,
   mode: ThemeMode,
   formatColor: (color: string) => string,
+  tailwindVersion: TailwindVersion = "4",
 ): string {
   const styles = themeObject[mode] as ThemeProperties;
 
@@ -33,7 +34,7 @@ function generateColorVariables(
   --accent-foreground: ${formatColor(styles["accent-foreground"])};
   --destructive: ${formatColor(styles.destructive)};
   ${
-    styles["destructive-foreground"]
+    styles["destructive-foreground"] && tailwindVersion === "3"
       ? `--destructive-foreground: ${formatColor(styles["destructive-foreground"])};`
       : ``
   }
@@ -84,6 +85,7 @@ function generateThemeVariables(
   themeConfig: ThemeConfig,
   mode: ThemeMode,
   formatColor: (color: string) => string,
+  tailwindVersion: TailwindVersion = "4",
   themeVarsSettings: ThemeVarsOptions,
 ): string {
   const radiusVar = `--radius: ${themeConfig.radius};`;
@@ -91,6 +93,7 @@ function generateThemeVariables(
     themeConfig.themeObject,
     mode,
     formatColor,
+    tailwindVersion,
   );
   const fontVars = themeVarsSettings.fontVars
     ? generateFontVariables(themeConfig)
@@ -213,14 +216,26 @@ export function generateThemeCode({
     return colorFormatter(color, colorFormat, tailwindVersion);
   };
 
-  const lightTheme = generateThemeVariables(themeConfig, "light", formatColor, {
-    fontVars: tailwindInlineOptions?.fontVars,
-    shadowVars: tailwindInlineOptions?.shadowVars,
-  });
-  const darkTheme = generateThemeVariables(themeConfig, "dark", formatColor, {
-    fontVars: tailwindInlineOptions?.fontVars,
-    shadowVars: tailwindInlineOptions?.shadowVars,
-  });
+  const lightTheme = generateThemeVariables(
+    themeConfig,
+    "light",
+    formatColor,
+    tailwindVersion,
+    {
+      fontVars: tailwindInlineOptions?.fontVars,
+      shadowVars: tailwindInlineOptions?.shadowVars,
+    },
+  );
+  const darkTheme = generateThemeVariables(
+    themeConfig,
+    "dark",
+    formatColor,
+    tailwindVersion,
+    {
+      fontVars: tailwindInlineOptions?.fontVars,
+      shadowVars: tailwindInlineOptions?.shadowVars,
+    },
+  );
 
   let v4Options = {};
 
