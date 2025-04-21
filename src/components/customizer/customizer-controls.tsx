@@ -14,13 +14,13 @@ import { otherPresetsArray } from "@/lib/presets";
 import { cn } from "@/lib/utils";
 import {
   ColorProperty,
-  RemValue,
   SurfaceShadesPreset,
   ThemeMode,
   ThemeObject,
   ThemeProperties,
 } from "@/types/theme";
 import { getOptimalForegroundColor, isValidColor } from "@/utils/colors";
+import { RADIUS_VALUES } from "@/utils/constants";
 import { Check, ChevronDown, ChevronUp, SendHorizontal } from "lucide-react";
 import { useTheme } from "next-themes";
 import React, {
@@ -48,15 +48,6 @@ import { Skeleton } from "../ui/skeleton";
 import { Slider } from "../ui/slider";
 import { Color } from "./color";
 import { TokenColorPicker } from "./token-color-picker";
-
-const RADIUS_VALUES: RemValue[] = [
-  "0rem",
-  "0.25rem",
-  "0.5rem",
-  "0.625rem",
-  "0.75rem",
-  "1rem",
-];
 
 const PLACEHOLDERS = [
   "oklch(0.685 0.169 237.323)",
