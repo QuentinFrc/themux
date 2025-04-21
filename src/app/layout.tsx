@@ -11,6 +11,7 @@ import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: {
@@ -63,21 +64,23 @@ export default async function RootLayout({
 
       <body className={cn(`antialiased`)}>
         <NuqsAdapter>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
+          <Suspense>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
 
-            <FontLoader />
-            <ThemeSync />
-            <Toaster />
-            <ScreenDevTools />
-          </ThemeProvider>
-          <Analytics />
+              <FontLoader />
+              <ThemeSync />
+              <Toaster />
+              <ScreenDevTools />
+            </ThemeProvider>
+          </Suspense>
         </NuqsAdapter>
+        <Analytics />
       </body>
     </html>
   );
