@@ -1,15 +1,20 @@
 import { allPresetsArray } from "@/lib/colors";
 import { Preset } from "@/types/theme";
+import { QUERY_PARAMS_KEYS } from "@/utils/constants";
 import { useQueryState } from "nuqs";
 import React from "react";
 import { useThemeConfig } from "./use-theme-config";
 
 export const usePresetSyncUrl = () => {
-  const [preset, setPreset] = useQueryState("preset");
-  const { updateThemeConfig } = useThemeConfig();
+  const [preset, setPreset] = useQueryState(QUERY_PARAMS_KEYS.preset);
+  const { currentThemeObject, updateThemeConfig } = useThemeConfig();
+  const currentPresetName = currentThemeObject.name;
 
   // Apply theme preset from the URL if it exists
   React.useEffect(() => {
+    // No need to update if the preset is already applied
+    if (preset === currentPresetName) return;
+
     if (preset) {
       const normalizedPresetFromUrl = preset.trim().toLowerCase() as Preset;
       const presetThemeObject = allPresetsArray.find(
@@ -23,7 +28,5 @@ export const usePresetSyncUrl = () => {
         setPreset(null);
       }
     }
-  }, [preset, setPreset, updateThemeConfig]);
-
-  return { preset, setPreset };
+  }, [preset, setPreset, currentPresetName, updateThemeConfig]);
 };

@@ -2,7 +2,6 @@
 
 import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
 import { useMounted } from "@/hooks/use-mounted";
-import { usePresetSyncUrl } from "@/hooks/use-preset-sync-url";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { useTokens } from "@/hooks/use-tokens";
 import {
@@ -491,8 +490,7 @@ interface AllPresetsControlProps extends ComponentProps<"div"> {}
 
 export function AllPresetsControl({ className }: AllPresetsControlProps) {
   const { getActiveThemeColorToken } = useTokens();
-  const { currentThemeObject } = useThemeConfig();
-  const { setPreset } = usePresetSyncUrl();
+  const { currentThemeObject, updateThemePreset } = useThemeConfig();
 
   const isMounted = useMounted();
   const resolvedTheme = useTheme().resolvedTheme as ThemeMode;
@@ -595,7 +593,7 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
               <>
                 <CommandEmpty>No theme presets found.</CommandEmpty>
 
-                <CommandGroup heading="Community">
+                <CommandGroup heading="Other">
                   {otherPresets.map((presetThemeObject) => {
                     const properties = presetThemeObject[resolvedTheme];
                     const { name, label } = presetThemeObject;
@@ -603,9 +601,9 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                     return (
                       <CommandItem
                         key={presetThemeObject.name}
-                        onSelect={() => {
-                          setPreset(name);
-                        }}
+                        onSelect={() =>
+                          updateThemePreset(presetThemeObject.name)
+                        }
                         className="flex items-center gap-4 py-2"
                       >
                         <ThemePresetColors
@@ -634,9 +632,9 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                     return (
                       <CommandItem
                         key={presetThemeObject.name}
-                        onSelect={() => {
-                          setPreset(name);
-                        }}
+                        onSelect={() =>
+                          updateThemePreset(presetThemeObject.name)
+                        }
                         className="flex items-center gap-4 py-2"
                       >
                         <ThemePresetColors
@@ -665,9 +663,9 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                     return (
                       <CommandItem
                         key={presetThemeObject.name}
-                        onSelect={() => {
-                          setPreset(name);
-                        }}
+                        onSelect={() =>
+                          updateThemePreset(presetThemeObject.name)
+                        }
                         className="flex items-center gap-4 py-2"
                       >
                         <ThemePresetColors

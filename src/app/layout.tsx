@@ -64,21 +64,21 @@ export default async function RootLayout({
 
       <body className={cn(`antialiased`)}>
         <NuqsAdapter>
-          <Suspense>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Suspense>
               {children}
-
-              <FontLoader />
               <ThemeSync />
-              <Toaster />
-              <ScreenDevTools />
-            </ThemeProvider>
-          </Suspense>
+            </Suspense>
+
+            <FontLoader />
+            <Toaster />
+            <ScreenDevTools />
+          </ThemeProvider>
         </NuqsAdapter>
         <Analytics />
       </body>
