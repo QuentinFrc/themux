@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Contrast, FileCode2, Shuffle } from "lucide-react";
+import { Contrast, FileCode2 } from "lucide-react";
 import { ComponentProps } from "react";
 import { ModeSwitcher } from "../mode-switcher";
 import { TooltipWrapper } from "../tooltip-wrapper";
@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
 import { CustomizerSettings } from "./customizer-settings";
+import { RandomizeButton } from "./randomize-button";
 import { ResetButton } from "./reset-button";
 
 interface ActionButtonsProps extends ComponentProps<"section"> {
@@ -34,12 +35,8 @@ export function ActionButtons({ className }: ActionButtonsProps) {
           <ModeSwitcher />
         </TooltipWrapper>
 
-        {/* TODO: Randomize button */}
         <TooltipWrapper label="Generate random theme" asChild>
-          <Button size="sm" variant="ghost" disabled>
-            <Shuffle />
-            <span className="sr-only">Get random theme</span>
-          </Button>
+          <RandomizeButton />
         </TooltipWrapper>
 
         <Separator
