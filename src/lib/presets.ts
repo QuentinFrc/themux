@@ -410,9 +410,9 @@ export const otherPresets: Record<OtherPresets, ThemeObject> = {
       "sidebar-ring": "oklch(.556 0 0)",
     },
   },
-  "matsu-ghibli": {
-    name: "matsu-ghibli",
-    label: "Matsu Ghibli",
+  "ghibli-studio": {
+    name: "ghibli-studio",
+    label: "Ghibli Studio",
     radius: "0.625rem",
     fonts: {
       sans: "Nunito, ui-sans-serif, sans-serif",

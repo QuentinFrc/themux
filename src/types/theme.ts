@@ -118,7 +118,7 @@ export type OtherPresets =
   | "bubblegum"
   | "tokyo-night"
   | "mono"
-  | "matsu-ghibli";
+  | "ghibli-studio";
 
 export type Preset = PresetV4 | ColorfulPreset | OtherPresets | (string & {});
 
