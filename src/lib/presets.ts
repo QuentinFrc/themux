@@ -214,7 +214,7 @@ export const otherPresets: Record<OtherPresets, ThemeObject> = {
       "primary-foreground": "#12242e",
       secondary: "#e4a2b1",
       "secondary-foreground": "#12242e",
-      muted: "#24272b",
+      muted: "#234254",
       "muted-foreground": "#e4a2b1",
       accent: "#c67b96",
       "accent-foreground": "#f3e3ea",
