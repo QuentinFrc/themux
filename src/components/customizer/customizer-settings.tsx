@@ -9,8 +9,15 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
-import { useSettings } from "@/hooks/use-settings";
-import { ColorFormat, TailwindVersion } from "@/types/theme";
+import {
+  useColorFormat,
+  useFontVars,
+  useModesInSync,
+  usePreferencesActions,
+  useShadowVars,
+  useShowTooltips,
+  useTailwindVersion,
+} from "@/store/preferences-store";
 import { RotateCcw, Settings } from "lucide-react";
 import { ComponentProps } from "react";
 import { ScrollArea } from "../ui/scroll-area";
@@ -26,16 +33,22 @@ export function CustomizerSettings({
   className,
   ...props
 }: ComponentProps<typeof Button>) {
+  const colorFormat = useColorFormat();
+  const tailwindVersion = useTailwindVersion();
+  const showFontVars = useFontVars();
+  const showShadowVars = useShadowVars();
+  const showTootips = useShowTooltips();
+  const modesInSync = useModesInSync();
+
   const {
-    modesInSync,
-    updateSettings,
+    setColorFormat,
+    setTailwindVersion,
+    setShowFontVars,
+    setShowShadowsVars,
+    setShowTooltips,
     resetSettings,
-    tailwindVersion,
-    colorFormat,
-    showTootips,
-    fontVars,
-    shadows,
-  } = useSettings();
+    setModesInSync,
+  } = usePreferencesActions();
 
   return (
     <Popover>
@@ -75,9 +88,7 @@ export function CustomizerSettings({
                 </div>
                 <Select
                   value={tailwindVersion}
-                  onValueChange={(v) =>
-                    updateSettings({ tailwindVersion: v as TailwindVersion })
-                  }
+                  onValueChange={setTailwindVersion}
                 >
                   <SelectTrigger className="h-fit min-w-18 px-2 text-xs">
                     <SelectValue placeholder="Version" className="h-fit p-0" />
@@ -100,12 +111,7 @@ export function CustomizerSettings({
                     For the generated CSS. Supports oklch, hsl, rbg and hex.
                   </span>
                 </div>
-                <Select
-                  value={colorFormat}
-                  onValueChange={(v) =>
-                    updateSettings({ colorFormat: v as ColorFormat })
-                  }
-                >
+                <Select value={colorFormat} onValueChange={setColorFormat}>
                   <SelectTrigger className="h-fit min-w-18 px-2 text-xs">
                     <SelectValue placeholder="Format" className="h-fit p-0" />
                   </SelectTrigger>
@@ -136,9 +142,7 @@ export function CustomizerSettings({
                 <Switch
                   className="ml-auto"
                   checked={showTootips}
-                  onCheckedChange={(isActive) =>
-                    updateSettings({ showTootips: isActive })
-                  }
+                  onCheckedChange={setShowTooltips}
                 />
               </div>
             </div>
@@ -160,9 +164,7 @@ export function CustomizerSettings({
                 <Switch
                   className="ml-auto"
                   checked={modesInSync}
-                  onCheckedChange={(isActive) =>
-                    updateSettings({ modesInSync: isActive })
-                  }
+                  onCheckedChange={setModesInSync}
                 />
               </div>
               <div className="flex items-center justify-between gap-4 rounded-lg">
@@ -174,10 +176,8 @@ export function CustomizerSettings({
                 </div>
                 <Switch
                   className="ml-auto"
-                  checked={fontVars}
-                  onCheckedChange={(isActive) =>
-                    updateSettings({ fontVars: isActive })
-                  }
+                  checked={showFontVars}
+                  onCheckedChange={setShowFontVars}
                 />
               </div>
               <div className="flex items-center justify-between gap-4 rounded-lg">
@@ -189,10 +189,8 @@ export function CustomizerSettings({
                 </div>
                 <Switch
                   className="ml-auto"
-                  checked={shadows}
-                  onCheckedChange={(isActive) =>
-                    updateSettings({ shadows: isActive })
-                  }
+                  checked={showShadowVars}
+                  onCheckedChange={setShowShadowsVars}
                 />
               </div>
             </div>

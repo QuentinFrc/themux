@@ -1,8 +1,8 @@
 "use client";
 
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
-import { useSettings } from "@/hooks/use-settings";
 import { cn } from "@/lib/utils";
+import { useColorFormat } from "@/store/preferences-store";
 import { ColorProperty } from "@/types/theme";
 import { colorFormatter } from "@/utils/color-converter";
 import { Check, Clipboard } from "lucide-react";
@@ -46,7 +46,7 @@ export function TokenInfo({
 }) {
   const { isCopied, copyToClipboard } = useCopyToClipboard();
 
-  const { colorFormat } = useSettings();
+  const colorFormat = useColorFormat();
   const colorValue = colorFormatter(color, colorFormat, "4");
 
   const handleCopyColor = () => {

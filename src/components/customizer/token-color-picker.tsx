@@ -1,7 +1,7 @@
 "use client";
 
-import { useSettings } from "@/hooks/use-settings";
 import { useThemeConfig } from "@/hooks/use-theme-config";
+import { useColorFormat, useModesInSync } from "@/store/preferences-store";
 import { ColorProperty, ThemeMode } from "@/types/theme";
 import {
   colorFormatter,
@@ -38,7 +38,7 @@ export function TokenColorPicker({
 }: TokenColorPickerProps) {
   const [currentColor, setCurrentColor] = useState(color);
   const hexColor = convertToHex(color);
-  const { modesInSync } = useSettings();
+  const modesInSync = useModesInSync();
 
   const resolvedModesInSync = syncModes !== undefined ? syncModes : modesInSync; // allows overriding the global sync mode
 
@@ -102,7 +102,7 @@ export function TokenColorPicker({
 }
 
 function ColorOklchValue({ currentColor }: { currentColor: string }) {
-  const { colorFormat } = useSettings();
+  const colorFormat = useColorFormat();
   const colorValue = colorFormatter(currentColor, colorFormat, "4");
 
   return (

@@ -1,10 +1,16 @@
 "use client";
 
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
-import { useSettings } from "@/hooks/use-settings";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { cn } from "@/lib/utils";
-import { ColorFormat, TailwindVersion } from "@/types/theme";
+import {
+  useColorFormat,
+  useFontVars,
+  usePreferencesActions,
+  useShadowVars,
+  useTailwindVersion,
+} from "@/store/preferences-store";
+import { TailwindVersion } from "@/types/theme";
 import { generateThemeCode } from "@/utils/theme-style-generator";
 import { Check, Clipboard, Code } from "lucide-react";
 import React, { useMemo } from "react";
@@ -33,8 +39,6 @@ export function CopyCodeButtonDialog({
   className,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { colorFormat, tailwindVersion } = useSettings();
-
   return (
     <>
       {/* A Drawer trigger for smaller screens */}
@@ -63,10 +67,7 @@ export function CopyCodeButtonDialog({
             <GeneratedCodeOptions />
           </div>
 
-          <CustomizerCode
-            colorFormat={colorFormat}
-            tailwindVersion={tailwindVersion}
-          />
+          <CustomizerCode />
         </DrawerContent>
       </Drawer>
 
@@ -95,10 +96,7 @@ export function CopyCodeButtonDialog({
 
           <GeneratedCodeOptions />
 
-          <CustomizerCode
-            colorFormat={colorFormat}
-            tailwindVersion={tailwindVersion}
-          />
+          <CustomizerCode />
         </DialogContent>
       </Dialog>
     </>
@@ -106,32 +104,23 @@ export function CopyCodeButtonDialog({
 }
 
 function GeneratedCodeOptions() {
-  const { colorFormat, tailwindVersion, updateSettings, fontVars, shadows } =
-    useSettings();
+  const colorFormat = useColorFormat();
+  const tailwindVersion = useTailwindVersion();
+  const showFontVars = useFontVars();
+  const showShadowVars = useShadowVars();
 
-  const changeColorFormat = (colorFormat: ColorFormat) => {
-    if (!colorFormat) return;
-    updateSettings({ colorFormat: colorFormat });
-  };
+  const {
+    setColorFormat,
+    setTailwindVersion,
+    setShowFontVars,
+    setShowShadowsVars,
+  } = usePreferencesActions();
 
   const changeTailwindVersion = (tailwindVersion: TailwindVersion) => {
-    if (!tailwindVersion) return;
+    setTailwindVersion(tailwindVersion);
 
-    tailwindVersion === "4"
-      ? updateSettings({
-          tailwindVersion: tailwindVersion,
-          colorFormat: "oklch",
-        })
-      : updateSettings({
-          tailwindVersion: tailwindVersion,
-          colorFormat: "hsl",
-        });
-  };
-
-  const togleFontVars = (isActive: boolean) => {
-    if (!isActive) return;
-
-    updateSettings({ fontVars: isActive });
+    if (tailwindVersion === "4") setColorFormat("oklch");
+    else if (tailwindVersion === "3") setColorFormat("hsl");
   };
 
   return (
@@ -143,7 +132,7 @@ function GeneratedCodeOptions() {
             className="border shadow-sm"
             type="single"
             value={colorFormat}
-            onValueChange={changeColorFormat}
+            onValueChange={setColorFormat}
           >
             <ToggleGroupItem
               value="oklch"
@@ -205,8 +194,8 @@ function GeneratedCodeOptions() {
           <ToggleGroup
             className="border shadow-sm"
             type="single"
-            value={fontVars ? "on" : "off"}
-            onValueChange={(v) => updateSettings({ fontVars: v === "on" })}
+            value={showFontVars ? "on" : "off"}
+            onValueChange={(v) => setShowFontVars(v === "on")}
           >
             <ToggleGroupItem
               value="on"
@@ -229,8 +218,8 @@ function GeneratedCodeOptions() {
           <ToggleGroup
             className="border shadow-sm"
             type="single"
-            value={shadows ? "on" : "off"}
-            onValueChange={(v) => updateSettings({ shadows: v === "on" })}
+            value={showShadowVars ? "on" : "off"}
+            onValueChange={(v) => setShowShadowsVars(v === "on")}
           >
             <ToggleGroupItem
               value="on"
@@ -252,17 +241,14 @@ function GeneratedCodeOptions() {
   );
 }
 
-function CustomizerCode({
-  className,
-  colorFormat,
-  tailwindVersion,
-}: React.ComponentProps<"div"> & {
-  colorFormat: ColorFormat;
-  tailwindVersion: TailwindVersion;
-}) {
+function CustomizerCode({ className }: React.ComponentProps<"div">) {
   const { config } = useThemeConfig();
   const { isCopied, copyToClipboard } = useCopyToClipboard();
-  const { fontVars, shadows } = useSettings();
+
+  const colorFormat = useColorFormat();
+  const tailwindVersion = useTailwindVersion();
+  const showFontVars = useFontVars();
+  const showShadowsVars = useShadowVars();
 
   const themeCode = useMemo(
     () =>
@@ -271,11 +257,11 @@ function CustomizerCode({
         colorFormat,
         tailwindVersion,
         tailwindInlineOptions: {
-          fontVars: fontVars,
-          shadowVars: shadows,
+          fontVars: showFontVars,
+          shadowVars: showShadowsVars,
         },
       }),
-    [config, colorFormat, tailwindVersion, fontVars, shadows],
+    [config, colorFormat, tailwindVersion, showFontVars, showShadowsVars],
   );
 
   const handleCopyThemeStylesCode = () => {

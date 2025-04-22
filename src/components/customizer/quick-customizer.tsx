@@ -1,9 +1,9 @@
 "use client";
 
 import { useMounted } from "@/hooks/use-mounted";
-import { useSettings } from "@/hooks/use-settings";
 import { useTokens } from "@/hooks/use-tokens";
 import { TAILWIND_SHADES, TailwindShadeKey } from "@/lib/palettes";
+import { useModesInSync } from "@/store/preferences-store";
 import {
   ClipboardPaste,
   Paintbrush,
@@ -30,10 +30,11 @@ import {
 import { MemoizedTailwindV4ColorPalette } from "./tailwind-v4-palette";
 
 export function QuickCustomizer() {
-  const { getColorToken, setPrimaryColorTokens } = useTokens();
-  const { modesInSync } = useSettings();
   const [shade, setShade] = useState<TailwindShadeKey>("500");
   const isMounted = useMounted();
+
+  const { getColorToken, setPrimaryColorTokens } = useTokens();
+  const modesInSync = useModesInSync();
 
   return (
     <div className="space-y-4">
