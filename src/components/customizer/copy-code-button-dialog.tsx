@@ -212,14 +212,14 @@ function GeneratedCodeOptions() {
               value="on"
               className="h-fit px-3 py-1.5 text-xs md:text-sm"
             >
-              ON
+              on
             </ToggleGroupItem>
 
             <ToggleGroupItem
               value="off"
               className="h-fit px-3 py-1.5 text-xs md:text-sm"
             >
-              OFF
+              off
             </ToggleGroupItem>
           </ToggleGroup>
         </div>
@@ -236,14 +236,14 @@ function GeneratedCodeOptions() {
               value="on"
               className="h-fit px-3 py-1.5 text-xs md:text-sm"
             >
-              ON
+              on
             </ToggleGroupItem>
 
             <ToggleGroupItem
               value="off"
               className="h-fit px-3 py-1.5 text-xs md:text-sm"
             >
-              OFF
+              off
             </ToggleGroupItem>
           </ToggleGroup>
         </div>
