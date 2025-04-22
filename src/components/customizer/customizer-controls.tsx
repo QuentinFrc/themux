@@ -173,7 +173,7 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
     getPlainSurfaceShades,
   } = useSurfaceShades();
 
-  const currentPresetPresetArray = [
+  const currentPresetShadesArray = [
     getDefaultSurfaceShades(),
     getInvertedSurfaceShades(),
     getPlainSurfaceShades(),
@@ -186,7 +186,7 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
           <CommandEmpty>No surface shades found.</CommandEmpty>
 
           <CommandGroup heading="Current preset">
-            {currentPresetPresetArray.map((bgShadesThemeObject) => {
+            {currentPresetShadesArray.map((bgShadesThemeObject) => {
               const properties = bgShadesThemeObject[resolvedTheme];
               const { name, label } = bgShadesThemeObject;
               const isActive = name === currentSurfacePreset;
