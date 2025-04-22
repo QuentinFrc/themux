@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { Palette } from "lucide-react";
 import { Label } from "../ui/label";
 import { ControlSection } from "./customizer-controls";
-import { Token } from "./token";
 import { TokenColorPicker } from "./token-color-picker";
 
 export function ColorTokens({ className }: React.ComponentProps<"div">) {
@@ -57,11 +56,13 @@ function TokensList({ className }: React.ComponentProps<"div">) {
           })}
           setColorTokens={setPrimaryColorTokens}
         />
-        <Token
+        <TokenColorPicker
           colorProperty="primary-foreground"
           color={getColorToken({
             property: "primary-foreground",
           })}
+          setColorTokens={setColorToken}
+          syncModes={false}
         />
       </ControlSection>
 
@@ -73,11 +74,13 @@ function TokensList({ className }: React.ComponentProps<"div">) {
           })}
           setColorTokens={setColorTokenWithForeground}
         />
-        <Token
+        <TokenColorPicker
           colorProperty="secondary-foreground"
           color={getColorToken({
             property: "secondary-foreground",
           })}
+          setColorTokens={setColorToken}
+          syncModes={false}
         />
       </ControlSection>
 
@@ -90,11 +93,13 @@ function TokensList({ className }: React.ComponentProps<"div">) {
           setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
-        <Token
+        <TokenColorPicker
           colorProperty="card-foreground"
           color={getColorToken({
             property: "card-foreground",
           })}
+          setColorTokens={setColorToken}
+          syncModes={false}
         />
       </ControlSection>
 
@@ -107,11 +112,13 @@ function TokensList({ className }: React.ComponentProps<"div">) {
           setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
-        <Token
+        <TokenColorPicker
           colorProperty="popover-foreground"
           color={getColorToken({
             property: "popover-foreground",
           })}
+          setColorTokens={setColorToken}
+          syncModes={false}
         />
       </ControlSection>
 
@@ -143,11 +150,13 @@ function TokensList({ className }: React.ComponentProps<"div">) {
           setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
-        <Token
+        <TokenColorPicker
           colorProperty="accent-foreground"
           color={getColorToken({
             property: "accent-foreground",
           })}
+          setColorTokens={setColorToken}
+          syncModes={false}
         />
       </ControlSection>
 
@@ -238,11 +247,13 @@ function TokensList({ className }: React.ComponentProps<"div">) {
           setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
-        <Token
+        <TokenColorPicker
           colorProperty="sidebar-foreground"
           color={getColorToken({
             property: "sidebar-foreground",
           })}
+          setColorTokens={setColorToken}
+          syncModes={false}
         />
         <TokenColorPicker
           colorProperty="sidebar-primary"
@@ -250,13 +261,14 @@ function TokensList({ className }: React.ComponentProps<"div">) {
             property: "sidebar-primary",
           })}
           setColorTokens={setColorTokenWithForeground}
-          syncModes={false}
         />
-        <Token
+        <TokenColorPicker
           colorProperty="sidebar-primary-foreground"
           color={getColorToken({
             property: "sidebar-primary-foreground",
           })}
+          setColorTokens={setColorToken}
+          syncModes={false}
         />
         <TokenColorPicker
           colorProperty="sidebar-accent"
@@ -266,11 +278,13 @@ function TokensList({ className }: React.ComponentProps<"div">) {
           setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
-        <Token
+        <TokenColorPicker
           colorProperty="sidebar-accent-foreground"
           color={getColorToken({
             property: "sidebar-accent-foreground",
           })}
+          setColorTokens={setColorToken}
+          syncModes={false}
         />
         <TokenColorPicker
           colorProperty="sidebar-border"
