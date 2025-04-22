@@ -3,6 +3,7 @@ import { initialThemeConfig } from "@/lib/themes";
 import {
   ColorProperty,
   OklchValue,
+  Preset,
   SurfaceShadesThemeObject,
   ThemeMode,
   ThemeProperty,
@@ -116,6 +117,32 @@ export function useTokens() {
     },
     [currentThemeObject, mode],
   );
+
+  const createTokenGetterForPreset = useCallback((preset: Preset) => {
+    const presetThemeObject = allPresetsArray.find(
+      (theme) => theme.name === preset,
+    );
+
+    if (!presetThemeObject) {
+      throw new Error(`Preset "${preset}" not found`);
+    }
+
+    return ({
+      property,
+      mode,
+    }: {
+      property: ThemeProperty;
+      mode: ThemeMode;
+    }) => {
+      const color = presetThemeObject[mode][property];
+
+      if (!color) {
+        throw new Error(`Color token "${property}" not found in theme object`);
+      }
+
+      return color;
+    };
+  }, []);
 
   const setColorToken = ({
     property,
@@ -342,5 +369,6 @@ export function useTokens() {
     setSurfaceShadesColorTokens,
     getActiveSurfaceShades,
     getActiveThemeColorToken,
+    createTokenGetterForPreset,
   };
 }

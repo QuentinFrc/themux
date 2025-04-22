@@ -1,163 +1,171 @@
-import { SurfaceShades, SurfaceShadesThemeObject } from "@/types/theme";
+import { Preset, SurfaceShades, SurfaceShadesThemeObject } from "@/types/theme";
+import { useThemeConfig } from "./use-theme-config";
 import { useTokens } from "./use-tokens";
 
 export function useSurfaceShades() {
-  const { getActiveThemeColorToken } = useTokens();
+  const { createTokenGetterForPreset } = useTokens();
+  const { currentPresetName } = useThemeConfig();
 
-  const getDefaultSurfaceShades = (): SurfaceShadesThemeObject => {
+  const getDefaultSurfaceShades = (
+    preset?: Preset,
+  ): SurfaceShadesThemeObject => {
+    const getPresetToken = preset
+      ? createTokenGetterForPreset(preset)
+      : createTokenGetterForPreset(currentPresetName);
+
     const lightDefaultSurfaceShades: SurfaceShades = {
-      background: getActiveThemeColorToken({
+      background: getPresetToken({
         property: "background",
         mode: "light",
       }),
-      foreground: getActiveThemeColorToken({
+      foreground: getPresetToken({
         property: "foreground",
         mode: "light",
       }),
 
-      card: getActiveThemeColorToken({
+      card: getPresetToken({
         property: "card",
         mode: "light",
       }),
-      "card-foreground": getActiveThemeColorToken({
+      "card-foreground": getPresetToken({
         property: "card-foreground",
         mode: "light",
       }),
 
-      popover: getActiveThemeColorToken({
+      popover: getPresetToken({
         property: "popover",
         mode: "light",
       }),
-      "popover-foreground": getActiveThemeColorToken({
+      "popover-foreground": getPresetToken({
         property: "popover-foreground",
         mode: "light",
       }),
 
-      muted: getActiveThemeColorToken({
+      muted: getPresetToken({
         property: "muted",
         mode: "light",
       }),
-      "muted-foreground": getActiveThemeColorToken({
+      "muted-foreground": getPresetToken({
         property: "muted-foreground",
         mode: "light",
       }),
 
-      accent: getActiveThemeColorToken({
+      accent: getPresetToken({
         property: "accent",
         mode: "light",
       }),
-      "accent-foreground": getActiveThemeColorToken({
+      "accent-foreground": getPresetToken({
         property: "accent-foreground",
         mode: "light",
       }),
 
-      border: getActiveThemeColorToken({
+      border: getPresetToken({
         property: "border",
         mode: "light",
       }),
-      input: getActiveThemeColorToken({
+      input: getPresetToken({
         property: "input",
         mode: "light",
       }),
 
-      sidebar: getActiveThemeColorToken({
+      sidebar: getPresetToken({
         property: "sidebar",
         mode: "light",
       }),
-      "sidebar-foreground": getActiveThemeColorToken({
+      "sidebar-foreground": getPresetToken({
         property: "sidebar-foreground",
         mode: "light",
       }),
 
-      "sidebar-accent": getActiveThemeColorToken({
+      "sidebar-accent": getPresetToken({
         property: "sidebar-accent",
         mode: "light",
       }),
-      "sidebar-accent-foreground": getActiveThemeColorToken({
+      "sidebar-accent-foreground": getPresetToken({
         property: "sidebar-accent-foreground",
         mode: "light",
       }),
 
-      "sidebar-border": getActiveThemeColorToken({
+      "sidebar-border": getPresetToken({
         property: "sidebar-border",
         mode: "light",
       }),
     };
 
     const darkDefaultSurfaceShades: SurfaceShades = {
-      background: getActiveThemeColorToken({
+      background: getPresetToken({
         property: "background",
         mode: "dark",
       }),
-      foreground: getActiveThemeColorToken({
+      foreground: getPresetToken({
         property: "foreground",
         mode: "dark",
       }),
 
-      card: getActiveThemeColorToken({
+      card: getPresetToken({
         property: "card",
         mode: "dark",
       }),
-      "card-foreground": getActiveThemeColorToken({
+      "card-foreground": getPresetToken({
         property: "card-foreground",
         mode: "dark",
       }),
 
-      popover: getActiveThemeColorToken({
+      popover: getPresetToken({
         property: "popover",
         mode: "dark",
       }),
-      "popover-foreground": getActiveThemeColorToken({
+      "popover-foreground": getPresetToken({
         property: "popover-foreground",
         mode: "dark",
       }),
 
-      muted: getActiveThemeColorToken({
+      muted: getPresetToken({
         property: "muted",
         mode: "dark",
       }),
-      "muted-foreground": getActiveThemeColorToken({
+      "muted-foreground": getPresetToken({
         property: "muted-foreground",
         mode: "dark",
       }),
 
-      accent: getActiveThemeColorToken({
+      accent: getPresetToken({
         property: "accent",
         mode: "dark",
       }),
-      "accent-foreground": getActiveThemeColorToken({
+      "accent-foreground": getPresetToken({
         property: "accent-foreground",
         mode: "dark",
       }),
 
-      border: getActiveThemeColorToken({
+      border: getPresetToken({
         property: "border",
         mode: "dark",
       }),
-      input: getActiveThemeColorToken({
+      input: getPresetToken({
         property: "input",
         mode: "dark",
       }),
 
-      sidebar: getActiveThemeColorToken({
+      sidebar: getPresetToken({
         property: "sidebar",
         mode: "dark",
       }),
-      "sidebar-foreground": getActiveThemeColorToken({
+      "sidebar-foreground": getPresetToken({
         property: "sidebar-foreground",
         mode: "dark",
       }),
 
-      "sidebar-accent": getActiveThemeColorToken({
+      "sidebar-accent": getPresetToken({
         property: "sidebar-accent",
         mode: "dark",
       }),
-      "sidebar-accent-foreground": getActiveThemeColorToken({
+      "sidebar-accent-foreground": getPresetToken({
         property: "sidebar-accent-foreground",
         mode: "dark",
       }),
 
-      "sidebar-border": getActiveThemeColorToken({
+      "sidebar-border": getPresetToken({
         property: "sidebar-border",
         mode: "dark",
       }),
@@ -173,160 +181,166 @@ export function useSurfaceShades() {
     return surfaceThemeObject;
   };
 
-  const getInvertedSurfaceShades = (): SurfaceShadesThemeObject => {
+  const getInvertedSurfaceShades = (
+    preset?: Preset,
+  ): SurfaceShadesThemeObject => {
+    const getColorToken = preset
+      ? createTokenGetterForPreset(preset)
+      : createTokenGetterForPreset(currentPresetName);
+
     const lightInvertedSurfaceShades: SurfaceShades = {
-      background: getActiveThemeColorToken({
+      background: getColorToken({
         property: "sidebar",
         mode: "light",
       }),
-      foreground: getActiveThemeColorToken({
+      foreground: getColorToken({
         property: "sidebar-foreground",
         mode: "light",
       }),
 
-      card: getActiveThemeColorToken({
+      card: getColorToken({
         property: "background",
         mode: "light",
       }),
-      "card-foreground": getActiveThemeColorToken({
+      "card-foreground": getColorToken({
         property: "foreground",
         mode: "light",
       }),
 
-      popover: getActiveThemeColorToken({
+      popover: getColorToken({
         property: "card",
         mode: "light",
       }),
-      "popover-foreground": getActiveThemeColorToken({
+      "popover-foreground": getColorToken({
         property: "card-foreground",
         mode: "light",
       }),
 
-      muted: getActiveThemeColorToken({
+      muted: getColorToken({
         property: "muted",
         mode: "light",
       }),
-      "muted-foreground": getActiveThemeColorToken({
+      "muted-foreground": getColorToken({
         property: "muted-foreground",
         mode: "light",
       }),
 
-      accent: getActiveThemeColorToken({
+      accent: getColorToken({
         property: "sidebar-accent",
         mode: "light",
       }),
-      "accent-foreground": getActiveThemeColorToken({
+      "accent-foreground": getColorToken({
         property: "sidebar-accent-foreground",
         mode: "light",
       }),
 
-      border: getActiveThemeColorToken({
+      border: getColorToken({
         property: "sidebar-border",
         mode: "light",
       }),
-      input: getActiveThemeColorToken({
+      input: getColorToken({
         property: "input",
         mode: "light",
       }),
 
-      sidebar: getActiveThemeColorToken({
+      sidebar: getColorToken({
         property: "background",
         mode: "light",
       }),
-      "sidebar-foreground": getActiveThemeColorToken({
+      "sidebar-foreground": getColorToken({
         property: "foreground",
         mode: "light",
       }),
 
-      "sidebar-accent": getActiveThemeColorToken({
+      "sidebar-accent": getColorToken({
         property: "accent",
         mode: "light",
       }),
-      "sidebar-accent-foreground": getActiveThemeColorToken({
+      "sidebar-accent-foreground": getColorToken({
         property: "accent-foreground",
         mode: "light",
       }),
 
-      "sidebar-border": getActiveThemeColorToken({
+      "sidebar-border": getColorToken({
         property: "border",
         mode: "light",
       }),
     };
 
     const darkInvertedSurfaceShades: SurfaceShades = {
-      background: getActiveThemeColorToken({
+      background: getColorToken({
         property: "sidebar",
         mode: "dark",
       }),
-      foreground: getActiveThemeColorToken({
+      foreground: getColorToken({
         property: "sidebar-foreground",
         mode: "dark",
       }),
 
-      card: getActiveThemeColorToken({
+      card: getColorToken({
         property: "background",
         mode: "dark",
       }),
-      "card-foreground": getActiveThemeColorToken({
+      "card-foreground": getColorToken({
         property: "foreground",
         mode: "dark",
       }),
 
-      popover: getActiveThemeColorToken({
+      popover: getColorToken({
         property: "card",
         mode: "dark",
       }),
-      "popover-foreground": getActiveThemeColorToken({
+      "popover-foreground": getColorToken({
         property: "card-foreground",
         mode: "dark",
       }),
 
-      muted: getActiveThemeColorToken({
+      muted: getColorToken({
         property: "muted",
         mode: "dark",
       }),
-      "muted-foreground": getActiveThemeColorToken({
+      "muted-foreground": getColorToken({
         property: "muted-foreground",
         mode: "dark",
       }),
 
-      accent: getActiveThemeColorToken({
+      accent: getColorToken({
         property: "sidebar-accent",
         mode: "dark",
       }),
-      "accent-foreground": getActiveThemeColorToken({
+      "accent-foreground": getColorToken({
         property: "sidebar-accent-foreground",
         mode: "dark",
       }),
 
-      border: getActiveThemeColorToken({
+      border: getColorToken({
         property: "sidebar-border",
         mode: "dark",
       }),
-      input: getActiveThemeColorToken({
+      input: getColorToken({
         property: "input",
         mode: "dark",
       }),
 
-      sidebar: getActiveThemeColorToken({
+      sidebar: getColorToken({
         property: "background",
         mode: "dark",
       }),
-      "sidebar-foreground": getActiveThemeColorToken({
+      "sidebar-foreground": getColorToken({
         property: "foreground",
         mode: "dark",
       }),
 
-      "sidebar-accent": getActiveThemeColorToken({
+      "sidebar-accent": getColorToken({
         property: "accent",
         mode: "dark",
       }),
-      "sidebar-accent-foreground": getActiveThemeColorToken({
+      "sidebar-accent-foreground": getColorToken({
         property: "accent-foreground",
         mode: "dark",
       }),
 
-      "sidebar-border": getActiveThemeColorToken({
+      "sidebar-border": getColorToken({
         property: "border",
         mode: "dark",
       }),
@@ -342,160 +356,164 @@ export function useSurfaceShades() {
     return surfaceThemeObject;
   };
 
-  const getPlainSurfaceShades = (): SurfaceShadesThemeObject => {
+  const getPlainSurfaceShades = (preset?: Preset): SurfaceShadesThemeObject => {
+    const getColorToken = preset
+      ? createTokenGetterForPreset(preset)
+      : createTokenGetterForPreset(currentPresetName);
+
     const lightPlainSurfaceShades: SurfaceShades = {
-      background: getActiveThemeColorToken({
+      background: getColorToken({
         property: "background",
         mode: "light",
       }),
-      foreground: getActiveThemeColorToken({
+      foreground: getColorToken({
         property: "foreground",
         mode: "light",
       }),
 
-      card: getActiveThemeColorToken({
+      card: getColorToken({
         property: "background",
         mode: "light",
       }),
-      "card-foreground": getActiveThemeColorToken({
+      "card-foreground": getColorToken({
         property: "foreground",
         mode: "light",
       }),
 
-      popover: getActiveThemeColorToken({
+      popover: getColorToken({
         property: "background",
         mode: "light",
       }),
-      "popover-foreground": getActiveThemeColorToken({
+      "popover-foreground": getColorToken({
         property: "foreground",
         mode: "light",
       }),
 
-      muted: getActiveThemeColorToken({
+      muted: getColorToken({
         property: "muted",
         mode: "light",
       }),
-      "muted-foreground": getActiveThemeColorToken({
+      "muted-foreground": getColorToken({
         property: "muted-foreground",
         mode: "light",
       }),
 
-      accent: getActiveThemeColorToken({
+      accent: getColorToken({
         property: "accent",
         mode: "light",
       }),
-      "accent-foreground": getActiveThemeColorToken({
+      "accent-foreground": getColorToken({
         property: "accent-foreground",
         mode: "light",
       }),
 
-      border: getActiveThemeColorToken({
+      border: getColorToken({
         property: "border",
         mode: "light",
       }),
-      input: getActiveThemeColorToken({
+      input: getColorToken({
         property: "input",
         mode: "light",
       }),
 
-      sidebar: getActiveThemeColorToken({
+      sidebar: getColorToken({
         property: "background",
         mode: "light",
       }),
-      "sidebar-foreground": getActiveThemeColorToken({
+      "sidebar-foreground": getColorToken({
         property: "foreground",
         mode: "light",
       }),
 
-      "sidebar-accent": getActiveThemeColorToken({
+      "sidebar-accent": getColorToken({
         property: "accent",
         mode: "light",
       }),
-      "sidebar-accent-foreground": getActiveThemeColorToken({
+      "sidebar-accent-foreground": getColorToken({
         property: "accent-foreground",
         mode: "light",
       }),
 
-      "sidebar-border": getActiveThemeColorToken({
+      "sidebar-border": getColorToken({
         property: "border",
         mode: "light",
       }),
     };
 
     const darkPlainSurfaceShades: SurfaceShades = {
-      background: getActiveThemeColorToken({
+      background: getColorToken({
         property: "background",
         mode: "dark",
       }),
-      foreground: getActiveThemeColorToken({
+      foreground: getColorToken({
         property: "foreground",
         mode: "dark",
       }),
 
-      card: getActiveThemeColorToken({
+      card: getColorToken({
         property: "background",
         mode: "dark",
       }),
-      "card-foreground": getActiveThemeColorToken({
+      "card-foreground": getColorToken({
         property: "foreground",
         mode: "dark",
       }),
 
-      popover: getActiveThemeColorToken({
+      popover: getColorToken({
         property: "background",
         mode: "dark",
       }),
-      "popover-foreground": getActiveThemeColorToken({
+      "popover-foreground": getColorToken({
         property: "foreground",
         mode: "dark",
       }),
 
-      muted: getActiveThemeColorToken({
+      muted: getColorToken({
         property: "muted",
         mode: "dark",
       }),
-      "muted-foreground": getActiveThemeColorToken({
+      "muted-foreground": getColorToken({
         property: "muted-foreground",
         mode: "dark",
       }),
 
-      accent: getActiveThemeColorToken({
+      accent: getColorToken({
         property: "accent",
         mode: "dark",
       }),
-      "accent-foreground": getActiveThemeColorToken({
+      "accent-foreground": getColorToken({
         property: "accent-foreground",
         mode: "dark",
       }),
 
-      border: getActiveThemeColorToken({
+      border: getColorToken({
         property: "border",
         mode: "dark",
       }),
-      input: getActiveThemeColorToken({
+      input: getColorToken({
         property: "input",
         mode: "dark",
       }),
 
-      sidebar: getActiveThemeColorToken({
+      sidebar: getColorToken({
         property: "background",
         mode: "dark",
       }),
-      "sidebar-foreground": getActiveThemeColorToken({
+      "sidebar-foreground": getColorToken({
         property: "foreground",
         mode: "dark",
       }),
 
-      "sidebar-accent": getActiveThemeColorToken({
+      "sidebar-accent": getColorToken({
         property: "accent",
         mode: "dark",
       }),
-      "sidebar-accent-foreground": getActiveThemeColorToken({
+      "sidebar-accent-foreground": getColorToken({
         property: "accent-foreground",
         mode: "dark",
       }),
 
-      "sidebar-border": getActiveThemeColorToken({
+      "sidebar-border": getColorToken({
         property: "border",
         mode: "dark",
       }),
