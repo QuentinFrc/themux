@@ -79,6 +79,11 @@ export const sansFonts = {
     value: "Nunito, ui-sans-serif, sans-serif",
     href: "https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700&display=swap",
   },
+  "Space Grotesk": {
+    key: "Space Grotesk",
+    value: "Space Grotesk, ui-sans-serif, sans-serif",
+    href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap",
+  },
 } as const;
 
 export const sansFontsArray = Object.values(sansFonts);

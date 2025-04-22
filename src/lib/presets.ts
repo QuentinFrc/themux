@@ -499,6 +499,94 @@ export const otherPresets: Record<OtherPresets, ThemeObject> = {
       "shadow-color": "oklch(0.474 0.043 95.769)",
     },
   },
+  neutralist: {
+    name: "neutralist",
+    label: "Neutralist",
+    radius: "0rem",
+    fonts: {
+      sans: sansFonts["Space Grotesk"].value,
+      serif: sansFonts["Space Grotesk"].value,
+      mono: monoFonts["Space Mono"].value,
+    },
+    light: {
+      radius: "0rem",
+      background: "#e5e7eb", // Cool Gray 200
+      foreground: "#111827", // Gray 900
+      card: "#f9fafb", // Gray 50
+      "card-foreground": "#111827", // Gray 900
+      popover: "#ffffff",
+      "popover-foreground": "#111827", // Gray 900
+      primary: "#4b5563", // Gray 600
+      "primary-foreground": "#ffffff",
+      secondary: "#9ca3af", // Gray 400
+      "secondary-foreground": "#030712", // Gray 950
+      muted: "#9ca3af", // Gray 400
+      "muted-foreground": "#364153", // Gray 700
+      accent: "#9ca3af", // Gray 400
+      "accent-foreground": "#ffffff",
+      destructive: "#000000",
+      "destructive-foreground": "#ffffff",
+      border: "#111827", // Gray 900 (Black)
+      input: "#d1d5db", // Gray 300
+      ring: "#4b5563", // Gray 600
+      "chart-1": "#4b5563", // Gray 600
+      "chart-2": "#6b7280", // Gray 500
+      "chart-3": "#9ca3af", // Gray 400
+      "chart-4": "#d1d5db", // Gray 300
+      "chart-5": "#111827", // Gray 900
+      sidebar: "#d1d5db", // Gray 300
+      "sidebar-foreground": "#111827", // Gray 900
+      "sidebar-primary": "#4b5563", // Gray 600
+      "sidebar-primary-foreground": "#ffffff",
+      "sidebar-accent": "#9ca3af", // Gray 400
+      "sidebar-accent-foreground": "#111827", // Gray 900
+      "sidebar-border": "#111827", // Gray 900 (Black)
+      "sidebar-ring": "#4b5563", // Gray 600
+
+      "shadow-color": "#111111",
+      "shadow-opacity": "1",
+      "shadow-blur": "0px",
+      "shadow-spread": "0px",
+      "shadow-offset-x": "4px",
+      "shadow-offset-y": "4px",
+    },
+    dark: {
+      background: "#18181b", // Zinc 900
+      foreground: "#fafafa", // Zinc 50
+      card: "#27272a", // Zinc 800
+      "card-foreground": "#fafafa", // Zinc 50
+      popover: "#18181b", // Zinc 900
+      "popover-foreground": "#fafafa", // Zinc 50
+      primary: "#9f9fa9", // Zinc 400
+      "primary-foreground": "#09090b", // Zinc 950
+      secondary: "#52525c", // Zinc 600
+      "secondary-foreground": "#fafafa", // Zinc 50
+      muted: "#18181b", // Zinc 900
+      "muted-foreground": "#9f9fa9", // Zinc 400
+      accent: "#52525c", // Zinc 600
+      "accent-foreground": "#fafafa", // Zinc 50
+      destructive: "#882222",
+      "destructive-foreground": "#ffffff",
+      border: "#e4e4e7", // Zinc 200
+      input: "#52525c", // Zinc 600
+      ring: "#9f9fa9", // Zinc 400
+      "chart-1": "#9f9fa9", // Zinc 400
+      "chart-2": "#71717b", // Zinc 500
+      "chart-3": "#52525c", // Zinc 600
+      "chart-4": "#3f3f46", // Zinc 700
+      "chart-5": "#fafafa", // Zinc 50
+      sidebar: "#27272a", // Zinc 800
+      "sidebar-foreground": "#fafafa", // Zinc 50
+      "sidebar-primary": "#9f9fa9", // Zinc 400
+      "sidebar-primary-foreground": "#09090b", // Zinc 950
+      "sidebar-accent": "#52525c", // Zinc 600
+      "sidebar-accent-foreground": "#fafafa", // Zinc 50
+      "sidebar-border": "#e4e4e7", // Zinc 200
+      "sidebar-ring": "#9f9fa9", // Zinc 400
+
+      "shadow-color": "#c1c1c1",
+    },
+  },
 };
 
 export const otherPresetsArray = Object.values(otherPresets);
