@@ -31,7 +31,7 @@ export default async function ShadcnThemesLayout({
   return (
     <TooltipProvider>
       <SidebarProvider
-        defaultOpen={false}
+        defaultOpen={true}
         style={{
           "--sidebar-width": SIDEBAR_WIDTH,
           "--sidebar-width-mobile": SIDEBAR_WIDTH_MOBILE,

@@ -1,9 +1,5 @@
 import { CardsDemo } from "@/components/cards-demo";
 import { ActionButtons } from "@/components/customizer/action-buttons";
-import {
-  CollapsibleCustomizer,
-  CollapsibleCustomizerTrigger,
-} from "@/components/customizer/collapsible-customizer";
 
 import { QuickCustomizer } from "@/components/customizer/quick-customizer";
 import { DashboardDemo } from "@/components/dashboard-demo";
@@ -17,7 +13,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
-import { CollapsibleCustomizerProvider } from "@/hooks/use-collapsible-customizer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -55,14 +50,10 @@ export default function ShadcnThemesPage() {
 
       <Separator />
 
-      <CollapsibleCustomizerProvider>
-        <ContainerWrapper withCane className="@container pt-4 pb-8">
-          <QuickCustomizer />
-          <ActionButtons className="pt-4" />
-          <CollapsibleCustomizer />
-          <CollapsibleCustomizerTrigger className="bg-background absolute bottom-1 left-1/2 -translate-x-1/2 translate-y-1/2 backdrop-blur" />
-        </ContainerWrapper>
-      </CollapsibleCustomizerProvider>
+      <ContainerWrapper withCane className="@container py-4">
+        <ActionButtons className="pb-4" />
+        <QuickCustomizer />
+      </ContainerWrapper>
 
       <Separator />
 

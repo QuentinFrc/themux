@@ -5,7 +5,6 @@ import { useSettings } from "@/hooks/use-settings";
 import { useTokens } from "@/hooks/use-tokens";
 import { TAILWIND_SHADES, TailwindShadeKey } from "@/lib/palettes";
 import {
-  BrickWall,
   ClipboardPaste,
   Paintbrush,
   PaintBucket,
@@ -27,7 +26,6 @@ import {
   AllPresetsControl,
   PasteColorControl,
   RadiusControls,
-  SurfaceShadesControl,
 } from "./customizer-controls";
 import { MemoizedTailwindV4ColorPalette } from "./tailwind-v4-palette";
 
@@ -47,6 +45,21 @@ export function QuickCustomizer() {
           <AllPresetsControl />
           <span className="text-muted-foreground truncate text-xs">
             {`Complete theme presets`}
+          </span>
+        </section>
+
+        {/* Paste your primary color */}
+        <section className="max-w-82 min-w-62 space-y-1.5 max-sm:w-full max-sm:max-w-full sm:flex-1">
+          <Label className="flex items-center gap-1 pb-2">
+            <ClipboardPaste className="size-4" /> Paste your primary color
+          </Label>
+          <PasteColorControl
+            setColorTokens={setPrimaryColorTokens}
+            modesInSync={modesInSync}
+            property={"primary"}
+          />
+          <span className="text-muted-foreground text-xs">
+            {`oklch(), hsl(), rbg() and #hex`}
           </span>
         </section>
 
@@ -100,39 +113,12 @@ export function QuickCustomizer() {
           </span>
         </section>
 
-        {/* Paste your primary color */}
-        <section className="max-w-82 min-w-50 flex-1 space-y-1.5 max-sm:w-full max-sm:max-w-full">
-          <Label className="flex items-center gap-1 pb-2">
-            <ClipboardPaste className="size-4" /> Paste your primary color
-          </Label>
-          <PasteColorControl
-            setColorTokens={setPrimaryColorTokens}
-            modesInSync={modesInSync}
-            property={"primary"}
-          />
-          <span className="text-muted-foreground text-xs">
-            {`oklch(), hsl(), rbg() and #hex`}
-          </span>
-        </section>
-
-        {/* Surface shades */}
-        <section className="relative max-w-82 min-w-72 flex-1 space-y-1.5 max-sm:w-full max-sm:max-w-full">
-          <Label className="flex items-center gap-1 pb-2">
-            <BrickWall className="size-4" />
-            Surface shades
-          </Label>
-          <SurfaceShadesControl />
-          <span className="text-muted-foreground truncate text-xs">
-            For background, card, popover, muted, etc.
-          </span>
-        </section>
-
         {/* Radius */}
-        <section className="relative space-y-1.5 max-sm:w-full max-sm:max-w-full">
+        <section className="min-w-62 space-y-1.5 max-sm:w-full max-sm:max-w-full sm:flex-1">
           <Label className="flex items-center gap-1 pb-2">
             <SquareRoundCorner className="size-4" /> Radius
           </Label>
-          <RadiusControls className="grid w-auto grid-cols-6 gap-2 @6xl:grid-cols-3" />
+          <RadiusControls className="flex flex-wrap gap-2 @max-lg:[&>*]:flex-1" />
         </section>
       </div>
     </div>

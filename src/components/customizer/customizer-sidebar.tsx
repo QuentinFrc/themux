@@ -23,8 +23,10 @@ import { ComingSoon } from "./coming-soon";
 import {
   AllPresetsControl,
   ControlSection,
+  ControlsSkeleton,
   RadiusSliderControl,
   ShadowsControl,
+  SurfaceShadesControl,
 } from "./customizer-controls";
 import { Typography } from "./typography";
 
@@ -38,14 +40,19 @@ export function CustomizerSidebar({
     return (
       <Sidebar className="overflow-hidden" {...props}>
         <SidebarContent className="scrollbar-thin @container relative flex max-h-svh flex-col py-2 group-data-[collapsible=icon]:invisible [&>button]:hidden">
-          <div className="px-4">
-            <Skeleton className="h-10" />
+          <div className="px-2 pr-3">
+            <Skeleton className="bg-muted h-9" />
           </div>
-          <div className="grow p-4">
-            <Skeleton className="h-full" />
+          <div className="flex grow flex-col space-y-6 overflow-hidden px-2 py-4 pr-3 pb-2">
+            <ControlsSkeleton className="h-10" />
+
+            <div className="grow overflow-hidden">
+              <ControlsSkeleton className="h-200" />
+            </div>
           </div>
-          <div className="px-4">
-            <Skeleton className="h-10" />
+          <div className="space-y-2 px-2 pr-3">
+            <Skeleton className="bg-muted h-8" />
+            <Skeleton className="bg-muted h-8" />
           </div>
         </SidebarContent>
         <SidebarRail />
@@ -96,6 +103,13 @@ export function CustomizerSidebar({
                     <SlidersHorizontal className="size-4" /> Other tokens
                   </Label>
 
+                  <ControlSection title="Surface" expanded className="p-0">
+                    <SurfaceShadesControl className="bg-transparent" />
+                    <div className="text-muted-foreground mb-3 truncate px-3 text-xs">
+                      For background, card, popover, muted, accent...
+                    </div>
+                  </ControlSection>
+
                   <ControlSection title="Radius" expanded>
                     <RadiusSliderControl />
                   </ControlSection>
@@ -118,7 +132,7 @@ export function CustomizerSidebar({
         </SidebarContent>
       </Tabs>
 
-      <SidebarFooter>
+      <SidebarFooter className="px-2 pr-3">
         <ActionButtons />
       </SidebarFooter>
       <SidebarRail />
