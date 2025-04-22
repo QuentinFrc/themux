@@ -3,13 +3,16 @@ import { useThemeConfig } from "@/hooks/use-theme-config";
 import { cn } from "@/lib/utils";
 import { monoFontsArray, sansFontsArray, serifFontsArray } from "@/utils/fonts";
 import { Check, Ligature } from "lucide-react";
-import { ControlSection } from "./customizer-controls";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
+  CommandInput,
   CommandItem,
+  CommandSeparator,
 } from "../ui/command";
+import { ScrollArea } from "../ui/scroll-area";
+import { ControlSection } from "./customizer-controls";
 
 export function Typography({ className }: React.ComponentProps<"div">) {
   const { setConfig, currentFonts } = useThemeConfig();
@@ -21,13 +24,14 @@ export function Typography({ className }: React.ComponentProps<"div">) {
       </Label>
 
       <ControlSection title="Sans font" id="sans-font" className="p-0" expanded>
-        <Command className={cn("", className)}>
-          <CommandEmpty>No theme presets found.</CommandEmpty>
-          <CommandGroup className="scrollbar-thin bg-background max-h-56 w-full overflow-y-auto font-sans">
-            <section className="font-sans">
-              <Label className="text-muted-foreground px-2 py-1 text-xs">
-                Sans fonts
-              </Label>
+        <Command className={cn("bg-background", className)}>
+          <CommandInput />
+
+          <ScrollArea className="flex max-h-72 flex-col">
+            <CommandEmpty>
+              <span className="text-muted-foreground">No fonts found.</span>
+            </CommandEmpty>
+            <CommandGroup className="font-sans" heading="Sans fonts">
               {sansFontsArray.map((font) => {
                 const isActive = font.value === currentFonts?.sans;
                 return (
@@ -50,7 +54,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                     <span className="text-nowrap">{font.key}</span>
                     <span
                       className={cn(
-                        "text-muted-foreground/80 justify-end truncate text-xs text-nowrap opacity-0 transition",
+                        "text-muted-foreground/80 line-clamp-1 text-xs opacity-0 transition",
                         "group-hover/item:opacity-100",
                       )}
                     >
@@ -65,12 +69,11 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                   </CommandItem>
                 );
               })}
-            </section>
+            </CommandGroup>
 
-            <section className="font-serif">
-              <Label className="text-muted-foreground px-2 py-1 text-xs">
-                Serif fonts
-              </Label>
+            <CommandSeparator />
+
+            <CommandGroup className="w-full font-serif" heading="Serif fonts">
               {serifFontsArray.map((font) => {
                 const isActive = font.value === currentFonts?.sans;
                 return (
@@ -93,7 +96,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                     <span className="text-nowrap">{font.key}</span>
                     <span
                       className={cn(
-                        "text-muted-foreground/80 justify-end truncate text-xs text-nowrap opacity-0 transition",
+                        "text-muted-foreground/80 line-clamp-1 text-xs opacity-0 transition",
                         "group-hover/item:opacity-100",
                       )}
                     >
@@ -108,12 +111,11 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                   </CommandItem>
                 );
               })}
-            </section>
+            </CommandGroup>
 
-            <section className="font-mono">
-              <Label className="text-muted-foreground px-2 py-1 text-xs">
-                Mono fonts
-              </Label>
+            <CommandSeparator />
+
+            <CommandGroup className="font-mono" heading="Mono fonts">
               {monoFontsArray.map((font) => {
                 const isActive = font.value === currentFonts?.sans;
                 return (
@@ -136,7 +138,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                     <span className="text-nowrap">{font.key}</span>
                     <span
                       className={cn(
-                        "text-muted-foreground/80 justify-end truncate text-xs text-nowrap opacity-0 transition",
+                        "text-muted-foreground/80 line-clamp-1 text-xs opacity-0 transition",
                         "group-hover/item:opacity-100",
                       )}
                     >
@@ -151,8 +153,8 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                   </CommandItem>
                 );
               })}
-            </section>
-          </CommandGroup>
+            </CommandGroup>
+          </ScrollArea>
         </Command>
       </ControlSection>
 
@@ -161,47 +163,53 @@ export function Typography({ className }: React.ComponentProps<"div">) {
         id="serif-font"
         className="p-0 font-serif"
       >
-        <Command className={cn("", className)}>
-          <CommandEmpty>No theme presets found.</CommandEmpty>
-          <CommandGroup className="scrollbar-thin bg-background max-h-56 w-full overflow-y-auto">
-            {serifFontsArray.map((font) => {
-              const isActive = font.value === currentFonts?.serif;
-              return (
-                <CommandItem
-                  key={font.key}
-                  onSelect={() =>
-                    setConfig((prev) => {
-                      return {
-                        ...prev,
-                        fonts: {
-                          ...prev.fonts,
-                          serif: font.value,
-                        },
-                      };
-                    })
-                  }
-                  className="group/item flex items-center gap-4 py-2 font-serif"
-                  style={{ "--font-serif": font.value }}
-                >
-                  <span className="text-nowrap">{font.key}</span>
-                  <span
-                    className={cn(
-                      "text-muted-foreground/80 justify-end truncate text-xs text-nowrap opacity-0 transition",
-                      "group-hover/item:opacity-100",
-                    )}
+        <Command className={cn("bg-background", className)}>
+          <CommandInput />
+
+          <ScrollArea className="flex max-h-47 flex-col">
+            <CommandEmpty>
+              <span className="text-muted-foreground">No fonts found.</span>
+            </CommandEmpty>
+            <CommandGroup>
+              {serifFontsArray.map((font) => {
+                const isActive = font.value === currentFonts?.serif;
+                return (
+                  <CommandItem
+                    key={font.key}
+                    onSelect={() =>
+                      setConfig((prev) => {
+                        return {
+                          ...prev,
+                          fonts: {
+                            ...prev.fonts,
+                            serif: font.value,
+                          },
+                        };
+                      })
+                    }
+                    className="group/item flex items-center gap-4 py-2 font-serif"
+                    style={{ "--font-serif": font.value }}
                   >
-                    This is just sample text
-                  </span>
-                  <Check
-                    className={cn(
-                      "ml-auto size-4 shrink-0 transition",
-                      isActive ? "opacity-100" : "opacity-0",
-                    )}
-                  />
-                </CommandItem>
-              );
-            })}
-          </CommandGroup>
+                    <span className="text-nowrap">{font.key}</span>
+                    <span
+                      className={cn(
+                        "text-muted-foreground/80 line-clamp-1 text-xs opacity-0 transition",
+                        "group-hover/item:opacity-100",
+                      )}
+                    >
+                      This is just sample text
+                    </span>
+                    <Check
+                      className={cn(
+                        "ml-auto size-4 shrink-0 transition",
+                        isActive ? "opacity-100" : "opacity-0",
+                      )}
+                    />
+                  </CommandItem>
+                );
+              })}
+            </CommandGroup>
+          </ScrollArea>
         </Command>
       </ControlSection>
 
@@ -210,47 +218,53 @@ export function Typography({ className }: React.ComponentProps<"div">) {
         id="mono-font"
         className="p-0 font-mono"
       >
-        <Command className={cn("", className)}>
-          <CommandEmpty>No theme presets found.</CommandEmpty>
-          <CommandGroup className="scrollbar-thin bg-background max-h-56 w-full overflow-y-auto">
-            {monoFontsArray.map((font) => {
-              const isActive = font.value === currentFonts?.mono;
-              return (
-                <CommandItem
-                  key={font.key}
-                  onSelect={() =>
-                    setConfig((prev) => {
-                      return {
-                        ...prev,
-                        fonts: {
-                          ...prev.fonts,
-                          mono: font.value,
-                        },
-                      };
-                    })
-                  }
-                  className="group/item flex items-center gap-4 py-2 font-mono"
-                  style={{ "--font-mono": font.value }}
-                >
-                  <span className="text-nowrap">{font.key}</span>
-                  <span
-                    className={cn(
-                      "text-muted-foreground/80 justify-end truncate text-xs text-nowrap opacity-0 transition",
-                      "group-hover/item:opacity-100",
-                    )}
+        <Command className={cn("bg-background", className)}>
+          <CommandInput />
+
+          <ScrollArea className="flex max-h-47 flex-col">
+            <CommandEmpty>
+              <span className="text-muted-foreground">No fonts found.</span>
+            </CommandEmpty>
+            <CommandGroup>
+              {monoFontsArray.map((font) => {
+                const isActive = font.value === currentFonts?.mono;
+                return (
+                  <CommandItem
+                    key={font.key}
+                    onSelect={() =>
+                      setConfig((prev) => {
+                        return {
+                          ...prev,
+                          fonts: {
+                            ...prev.fonts,
+                            mono: font.value,
+                          },
+                        };
+                      })
+                    }
+                    className="group/item relative flex w-full items-center gap-4 py-2 font-mono"
+                    style={{ "--font-mono": font.value }}
                   >
-                    let sampleText = "Hello!";
-                  </span>
-                  <Check
-                    className={cn(
-                      "ml-auto size-4 shrink-0 transition",
-                      isActive ? "opacity-100" : "opacity-0",
-                    )}
-                  />
-                </CommandItem>
-              );
-            })}
-          </CommandGroup>
+                    <span className="text-nowrap">{font.key}</span>
+                    <span
+                      className={cn(
+                        "text-muted-foreground/80 line-clamp-1 text-xs opacity-0 transition",
+                        "group-hover/item:opacity-100",
+                      )}
+                    >
+                      echo "hello world"
+                    </span>
+                    <Check
+                      className={cn(
+                        "ml-auto size-4 shrink-0 transition",
+                        isActive ? "opacity-100" : "opacity-0",
+                      )}
+                    />
+                  </CommandItem>
+                );
+              })}
+            </CommandGroup>
+          </ScrollArea>
         </Command>
       </ControlSection>
     </section>

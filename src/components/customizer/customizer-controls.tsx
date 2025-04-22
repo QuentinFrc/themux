@@ -220,6 +220,8 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
             })}
           </CommandGroup>
 
+          <CommandSeparator />
+
           <CommandGroup heading="Neutralize">
             {surfaceShadesPresetArray.map((bgShadesThemeObject) => {
               const properties = bgShadesThemeObject[resolvedTheme];
@@ -469,15 +471,19 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
         </div>
       </PopoverTrigger>
 
-      <PopoverContent className="overflow-hidden p-0" align="start">
+      <PopoverContent className="p-0" align="start">
         <Command className={cn(className)}>
           <CommandInput />
-          <ScrollArea className="h-96">
+
+          <ScrollArea className="flex max-h-81 flex-col">
+            <CommandEmpty>
+              <span className="text-muted-foreground">
+                No theme presets found.
+              </span>
+            </CommandEmpty>
             {isMounted && (
               <>
-                <CommandEmpty>No theme presets found.</CommandEmpty>
-
-                <CommandGroup heading="Other">
+                <CommandGroup heading="Community">
                   {otherPresets.map((presetThemeObject) => {
                     const properties = presetThemeObject[resolvedTheme];
                     const { name, label } = presetThemeObject;

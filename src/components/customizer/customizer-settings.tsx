@@ -59,10 +59,7 @@ export function CustomizerSettings({
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent
-        className="min-h-0 w-auto max-w-full overflow-hidden p-0"
-        align="end"
-      >
+      <PopoverContent className="isolate w-auto max-w-full p-0" align="end">
         <header className="text-muted-foreground/80 flex items-center justify-between px-4 py-1 text-sm font-semibold">
           <span>Customizer settings</span>
           <Button variant="ghost" onClick={resetSettings}>
@@ -73,7 +70,7 @@ export function CustomizerSettings({
 
         <Separator />
 
-        <ScrollArea className="h-84 overflow-hidden">
+        <ScrollArea className="flex max-h-84 flex-col">
           <section className="grid px-4 pt-2 pb-4">
             <Label className="text-muted-foreground/80 py-1 text-xs">
               Preferences
@@ -82,7 +79,7 @@ export function CustomizerSettings({
               <div className="flex items-center justify-between gap-4 rounded-lg">
                 <div className="flex flex-col gap-1">
                   <span className="text-sm">Tailwind version</span>
-                  <span className="text-muted-foreground/80 w-[32ch] text-xs">
+                  <span className="text-muted-foreground/80 hidden w-[32ch] text-xs sm:inline-flex">
                     For the generated CSS. Supports v3 and v4.
                   </span>
                 </div>
@@ -107,7 +104,7 @@ export function CustomizerSettings({
               <div className="flex items-center justify-between gap-4 rounded-lg">
                 <div className="flex flex-col gap-1">
                   <span className="text-sm">Color format</span>
-                  <span className="text-muted-foreground/80 w-[32ch] text-xs">
+                  <span className="text-muted-foreground/80 hidden w-[32ch] text-xs sm:inline-flex">
                     For the generated CSS. Supports oklch, hsl, rbg and hex.
                   </span>
                 </div>
@@ -135,7 +132,7 @@ export function CustomizerSettings({
               <div className="flex items-center justify-between gap-4 rounded-lg">
                 <div className="flex flex-col gap-1">
                   <span className="text-sm">Show tooltips</span>
-                  <span className="text-muted-foreground/80 w-[32ch] text-xs">
+                  <span className="text-muted-foreground/80 hidden w-[32ch] text-xs sm:inline-flex">
                     Enable or disable tooltips throughout the app.
                   </span>
                 </div>
@@ -156,7 +153,7 @@ export function CustomizerSettings({
               <div className="flex items-center rounded-lg">
                 <div className="flex flex-col gap-1">
                   <span className="text-sm">Sync both modes</span>
-                  <span className="text-muted-foreground/80 w-[32ch] text-xs">
+                  <span className="text-muted-foreground/80 hidden w-[32ch] text-xs sm:inline-flex">
                     Brand tokens will be in sync in light and dark modes.
                     Presets are always synced.
                   </span>
@@ -170,7 +167,7 @@ export function CustomizerSettings({
               <div className="flex items-center justify-between gap-4 rounded-lg">
                 <div className="flex flex-col gap-1">
                   <span className="text-sm">Show font variables</span>
-                  <span className="text-muted-foreground/80 w-[32ch] text-xs">
+                  <span className="text-muted-foreground/80 hidden w-[32ch] text-xs sm:inline-flex">
                     Keep this OFF if you handle fonts separately.
                   </span>
                 </div>
@@ -183,7 +180,7 @@ export function CustomizerSettings({
               <div className="flex items-center justify-between gap-4 rounded-lg">
                 <div className="flex flex-col gap-1">
                   <span className="text-sm">Show shadow variables</span>
-                  <span className="text-muted-foreground/80 w-[32ch] text-xs">
+                  <span className="text-muted-foreground/80 hidden w-[32ch] text-xs sm:inline-flex">
                     Show shadow variables in the generated CSS.
                   </span>
                 </div>
