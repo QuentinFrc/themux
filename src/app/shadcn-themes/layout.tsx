@@ -21,7 +21,6 @@ export const metadata: Metadata = {
 };
 
 const SIDEBAR_WIDTH = "21rem";
-const SIDEBAR_WIDTH_MOBILE = "21rem";
 
 export default async function ShadcnThemesLayout({
   children,
@@ -34,7 +33,6 @@ export default async function ShadcnThemesLayout({
         defaultOpen={true}
         style={{
           "--sidebar-width": SIDEBAR_WIDTH,
-          "--sidebar-width-mobile": SIDEBAR_WIDTH_MOBILE,
         }}
       >
         <CustomizerSidebar variant="inset" />
