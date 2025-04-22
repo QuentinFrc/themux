@@ -892,9 +892,9 @@ export const surfaceShadesPresets: Record<
   SurfaceShadesPreset,
   SurfaceShadesThemeObject
 > = {
-  neutral: {
-    name: "neutral",
-    label: "Neutral",
+  neutro: {
+    name: "neutro",
+    label: "Neutro",
     light: {
       background: "oklch(1 0 0)", // --color-white
       foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)

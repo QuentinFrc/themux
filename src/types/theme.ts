@@ -140,7 +140,7 @@ export type ThemeConfig = {
 
 // Surface shades
 export type SurfaceShadesPreset =
-  | "neutral"
+  | "neutro"
   | "grayish"
   | "boring"
   | (string & {});
