@@ -1008,59 +1008,59 @@ export const surfaceShadesPresets: Record<
       "sidebar-border": "oklch(0.985 0 0 / 10%)",
     },
   },
-  gray: {
-    name: "gray",
-    label: "Gray",
+  boring: {
+    name: "boring",
+    label: "Boring",
     light: {
-      background: "oklch(0.932 0 0)", // a little lighter than --color-neutral-200
+      background: "oklch(0.97 0 0)", // --color-neutral-100
       foreground: "oklch(0.145 0 0)", // --color-neutral-950
 
-      card: "oklch(0.905 0 0)", // a little darker than --color-neutral-200
+      card: "oklch(0.985 0 0)", // --color-neutral-50
       "card-foreground": "oklch(0.145 0 0)", // --color-neutral-950
 
-      popover: "oklch(0.905 0 0)", // a little darker than --color-neutral-200
+      popover: "oklch(0.985 0 0)", // --color-neutral-50
       "popover-foreground": "oklch(0.145 0 0)", // --color-neutral-950
 
-      muted: "oklch(0.95 0 0)", // a little darker than --color-neutral-100
+      muted: "oklch(0.87 0 0)", // --color-neutral-300
       "muted-foreground": "oklch(0.442 0.017 285.786)", // --color-zinc-600
 
-      accent: "oklch(0.95 0 0)", // a little darker than --color-neutral-100
+      accent: "oklch(0.922 0 0)", // --color-neutral-200
       "accent-foreground": "oklch(0.145 0 0)", // --color-neutral-950
 
-      border: "oklch(0.83 0 0)", // a little darker than --color-neutral-100
-      input: "oklch(0.83 0 0)", // a little darker than --color-neutral-300
+      border: "oklch(0.922 0 0)", // --color-neutral-200
+      input: "oklch(0.922 0 0)", // --color-neutral-200
 
-      sidebar: "oklch(0.905 0 0)", // a little darker than --color-neutral-200
+      sidebar: "oklch(0.94 0 0)", // a little lighter than --color-neutral-200
       "sidebar-foreground": "oklch(0.145 0 0)", // --color-neutral-950
 
-      "sidebar-accent": "oklch(0.95 0 0)", // a little darker than --color-neutral-300
+      "sidebar-accent": "oklch(0.922 0 0)", // --color-neutral-200
       "sidebar-accent-foreground": "oklch(0.145 0 0)", // --color-neutral-950
 
-      "sidebar-border": "oklch(0.83 0 0)", // a little darker than --color-neutral-300
+      "sidebar-border": "oklch(0.87 0 0)", // --color-neutral-300
     },
     dark: {
       background: "oklch(0.269 0 0)", // --color-neutral-800
       foreground: "oklch(0.985 0 0)", // --color-neutral-50
 
-      card: "oklch(0.31 0 0)", // a little lighter than --color-neutral-800
+      card: "oklch(0.205 0 0)", // --color-neutral-900
       "card-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
-      popover: "oklch(0.31 0 0)", // a little lighter than --color-neutral-800
+      popover: "oklch(0.205 0 0)", // --color-neutral-900
       "popover-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
-      muted: "oklch(0.269 0 0)", // --color-neutral-800
+      muted: "oklch(0.371 0 0)", // --color-neutral-700
       "muted-foreground": "oklch(0.861 0.006 286.286)", // --color-neutral-300
 
-      accent: "oklch(0.269 0 0)", // --color-neutral-800
+      accent: "oklch(0.371 0 0)", // --color-neutral-700
       "accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
       border: "oklch(0.985 0 0 / 12%)",
-      input: "oklch(0.985 0 0 / 17%)",
+      input: "oklch(0.985 0 0 / 15%)",
 
-      sidebar: "oklch(0.31 0 0)", // a little lighter than --color-neutral-800
+      sidebar: "oklch(0.205 0 0)", // --color-neutral-900
       "sidebar-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
-      "sidebar-accent": "oklch(0.269 0 0)", // --color-neutral-800
+      "sidebar-accent": "oklch(0.371 0 0)", // --color-neutral-700
       "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
       "sidebar-border": "oklch(0.985 0 0 / 12%)",
