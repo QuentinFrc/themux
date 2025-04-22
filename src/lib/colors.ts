@@ -892,9 +892,9 @@ export const surfaceShadesPresets: Record<
   SurfaceShadesPreset,
   SurfaceShadesThemeObject
 > = {
-  default: {
-    name: "default",
-    label: "Default",
+  neutral: {
+    name: "neutral",
+    label: "Neutral",
     light: {
       background: "oklch(1 0 0)", // --color-white
       foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
@@ -948,64 +948,6 @@ export const surfaceShadesPresets: Record<
       "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
       "sidebar-border": "oklch(1 0 0 / 10%)", // --color-white
-    },
-  },
-  plain: {
-    name: "plain",
-    label: "Plain",
-    light: {
-      background: "oklch(1 0 0)", // --color-white
-      foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-
-      card: "oklch(1 0 0)", // --color-white
-      "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-
-      popover: "oklch(1 0 0)", // --color-white
-      "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-
-      muted: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
-      "muted-foreground": "oklch(0.552 0.016 285.938)", // --color-zinc-500 (from zinc)
-
-      accent: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
-      "accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
-
-      border: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
-      input: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
-
-      sidebar: "oklch(1 0 0)", // --color-white
-      "sidebar-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950 (from zinc)
-
-      "sidebar-accent": "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
-      "sidebar-accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
-
-      "sidebar-border": "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)}
-    },
-    dark: {
-      background: "oklch(0.145 0 0)", // --color-neutral-950
-      foreground: "oklch(0.985 0 0)", // --color-neutral-50
-
-      card: "oklch(0.145 0 0)", // --color-neutral-950
-      "card-foreground": "oklch(0.985 0 0)", // --color-neutral-50
-
-      popover: "oklch(0.145 0 0)", // --color-neutral-950
-      "popover-foreground": "oklch(0.985 0 0)", // --color-neutral-50
-
-      muted: "oklch(0.205 0 0)", // --color-neutral-900
-      "muted-foreground": "oklch(0.708 0 0)", // --color-neutral-400
-
-      accent: "oklch(0.205 0 0)", // --color-neutral-900
-      "accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
-
-      border: "oklch(1 0 0 / 12.5%)", // --color-white
-      input: "oklch(1 0 0 / 15%)", // --color-white
-
-      sidebar: "oklch(0.145 0 0)", // --color-neutral-950
-      "sidebar-foreground": "oklch(0.985 0 0)", // --color-neutral-50
-
-      "sidebar-accent": "oklch(0.205 0 0)", // --color-neutral-900
-      "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
-
-      "sidebar-border": "oklch(1 0 0 / 12.5%)", // --color-white
     },
   },
   grayish: {
@@ -1122,64 +1064,6 @@ export const surfaceShadesPresets: Record<
       "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
 
       "sidebar-border": "oklch(0.985 0 0 / 12%)",
-    },
-  },
-  inverted: {
-    name: "inverted",
-    label: "Inverted",
-    light: {
-      background: "oklch(0.967 0.001 286.375)", // --color-zinc-100
-      foreground: "oklch(0.141 0.005 285.823)", // --color-zinc-950
-
-      card: "oklch(0.985 0 0)", // --color-zinc-50
-      "card-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
-
-      popover: "oklch(0.985 0 0)", // --color-zinc-50
-      "popover-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
-
-      muted: "oklch(0.92 0.004 286.32)", // --color-zinc-200
-      "muted-foreground": "oklch(0.442 0.017 285.786)", // --color-zinc-600
-
-      accent: "oklch(0.92 0.004 286.32)", // --color-zinc-200
-      "accent-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
-
-      border: "oklch(0.871 0.006 286.286)", // --color-zinc-300
-      input: "oklch(0.871 0.006 286.286)", // --color-zinc-300
-
-      sidebar: "oklch(0.985 0 0)", // --color-zinc-50
-      "sidebar-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
-
-      "sidebar-accent": "oklch(0.92 0.004 286.32)", // --color-zinc-200
-      "sidebar-accent-foreground": "oklch(0.141 0.005 285.823)", // --color-zinc-950
-
-      "sidebar-border": "oklch(0.871 0.006 286.286)", // --color-zinc-300
-    },
-    dark: {
-      background: "oklch(0.21 0.006 285.885)", // --color-zinc-900
-      foreground: "oklch(0.985 0 0)", // --color-zinc-50
-
-      card: "oklch(0.141 0.005 285.823)", // --color-zinc-950
-      "card-foreground": "oklch(0.985 0 0)", // --color-zinc-50
-
-      popover: "oklch(0.141 0.005 285.823)", // --color-zinc-950
-      "popover-foreground": "oklch(0.985 0 0)", // --color-zinc-50
-
-      muted: "oklch(0.274 0.006 286.033)", // --color-zinc-800
-      "muted-foreground": "oklch(0.705 0.015 286.067)", // --color-zinc-400
-
-      accent: "oklch(0.274 0.006 286.033)", // --color-zinc-800
-      "accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50
-
-      border: "oklch(0.985 0 0 / 10%)",
-      input: "oklch(0.985 0 0 / 15%)",
-
-      sidebar: "oklch(0.141 0.005 285.823)", // --color-zinc-950
-      "sidebar-foreground": "oklch(0.985 0 0)", // --color-zinc-50
-
-      "sidebar-accent": "oklch(0.274 0.006 286.033)", // --color-zinc-800
-      "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50
-
-      "sidebar-border": "oklch(0.985 0 0 / 10%)",
     },
   },
 };
