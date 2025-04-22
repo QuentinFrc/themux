@@ -1,4 +1,5 @@
 import { allPresetsArray, surfaceShadesPresets } from "@/lib/colors";
+import { initialThemeConfig } from "@/lib/themes";
 import {
   ColorProperty,
   OklchValue,
@@ -10,7 +11,6 @@ import { getOptimalForegroundColor, isValidColor } from "@/utils/colors";
 import { useTheme } from "next-themes";
 import { useCallback } from "react";
 import { useThemeConfig } from "./use-theme-config";
-import { initialThemeConfig } from "@/lib/themes";
 
 export function useTokens() {
   const { resolvedTheme } = useTheme();
@@ -100,7 +100,7 @@ export function useTokens() {
   );
 
   const getActiveThemeColorToken = useCallback(
-    ({ property }: { property: ColorProperty }) => {
+    ({ property, mode }: { property: ColorProperty; mode: ThemeMode }) => {
       const activeThemeObject = allPresetsArray.find(
         (theme) => theme.name === currentThemeObject.name,
       );

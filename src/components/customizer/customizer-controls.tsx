@@ -2,6 +2,7 @@
 
 import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
 import { useMounted } from "@/hooks/use-mounted";
+import { useSurfaceShades } from "@/hooks/use-surface-shades";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { useTokens } from "@/hooks/use-tokens";
 import {
@@ -14,16 +15,16 @@ import { otherPresetsArray } from "@/lib/presets";
 import { cn } from "@/lib/utils";
 import {
   ColorProperty,
+  SurfaceShades,
   SurfaceShadesPreset,
   ThemeMode,
-  ThemeObject,
   ThemeProperties,
 } from "@/types/theme";
 import { getOptimalForegroundColor, isValidColor } from "@/utils/colors";
 import { RADIUS_VALUES } from "@/utils/constants";
 import { Check, ChevronDown, ChevronUp, SendHorizontal } from "lucide-react";
 import { useTheme } from "next-themes";
-import React, {
+import {
   ChangeEvent,
   ComponentProps,
   FormEvent,
@@ -155,239 +156,116 @@ export function PasteColorControl({
 }
 
 export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
-  const { getColorToken, setSurfaceShadesColorTokens, getActiveSurfaceShades } =
-    useTokens();
+  const { setSurfaceShadesColorTokens, getActiveSurfaceShades } = useTokens();
+  const { currentSurfacePreset } = useThemeConfig();
 
   const isMounted = useMounted();
   const resolvedTheme = useTheme().resolvedTheme as ThemeMode;
-  const activePresetName = getActiveSurfaceShades()?.name;
-  const activePresetLabel = getActiveSurfaceShades()?.label;
 
   const setSelectedBackgroundShadePreset = (preset: SurfaceShadesPreset) => {
     const bgShadesThemeObject = surfaceShadesPresets[preset];
     setSurfaceShadesColorTokens({ bgShadesThemeObject, modesInSync: true });
   };
 
-  return (
-    <Popover>
-      <PopoverTrigger asChild className="rounded-lg border shadow">
-        <div className="group/control bg-background hover:bg-muted/40 flex h-10 w-full cursor-pointer items-center justify-between gap-4 p-2.5 transition-colors duration-300 ease-in-out *:shrink-0">
-          <div className="flex items-center gap-2">
-            <div className="flex">
-              <Color
-                color={
-                  isMounted ? getColorToken({ property: "background" }) : ""
-                }
-                className="pointer-events-none"
-              />
-              <Color
-                color={isMounted ? getColorToken({ property: "card" }) : ""}
-                className="pointer-events-none"
-              />
-              <Color
-                color={isMounted ? getColorToken({ property: "popover" }) : ""}
-                className="pointer-events-none"
-              />
-              <Color
-                color={isMounted ? getColorToken({ property: "muted" }) : ""}
-                className="pointer-events-none"
-              />
-              <Color
-                color={isMounted ? getColorToken({ property: "sidebar" }) : ""}
-                className="pointer-events-none"
-              />
-            </div>
-            <h3
-              className={cn(
-                "group-hover/control:text-foreground text-muted-foreground min-w-16 text-sm font-medium",
-                activePresetName !== "custom" && "text-foreground",
-              )}
-            >
-              {!isMounted ? (
-                <Skeleton className="h-4" />
-              ) : activePresetLabel ? (
-                activePresetLabel
-              ) : (
-                "Preset"
-              )}
-            </h3>
-          </div>
+  const {
+    getDefaultSurfaceShades,
+    getInvertedSurfaceShades,
+    getPlainSurfaceShades,
+  } = useSurfaceShades();
 
-          <button
-            type="button"
-            className="text-muted-foreground group-hover/control:text-foreground transition-colors"
-            aria-label="Expand section"
-          >
-            <ChevronDown className="h-4 w-4" />
-          </button>
-        </div>
-      </PopoverTrigger>
-
-      <PopoverContent className="overflow-hidden p-0" align="start">
-        <Command className={cn(className)}>
-          {isMounted && (
-            <>
-              <CommandEmpty>No surface shades found.</CommandEmpty>
-              <CommandGroup>
-                {surfaceShadesPresetArray.map((bgShadesThemeObject) => {
-                  const properties = bgShadesThemeObject[resolvedTheme];
-                  const { name, label } = bgShadesThemeObject;
-                  const isActive = name === activePresetName;
-                  return (
-                    <CommandItem
-                      key={bgShadesThemeObject.name}
-                      onSelect={() => setSelectedBackgroundShadePreset(name)}
-                      className="flex items-center gap-2 py-2"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="min-w-16 text-sm">{label}</span>
-                        <div className="pointer-events-none flex">
-                          <Color
-                            color={properties["background"]}
-                            className="pointer-events-none"
-                          />
-                          <Color
-                            color={properties["card"]}
-                            className="pointer-events-none"
-                          />
-                          <Color
-                            color={properties["popover"]}
-                            className="pointer-events-none"
-                          />
-                          <Color
-                            color={properties["muted"]}
-                            className="pointer-events-none"
-                          />
-                          <Color
-                            color={properties["sidebar"]}
-                            className="pointer-events-none"
-                          />
-                        </div>
-                      </div>
-
-                      <Check
-                        className={cn(
-                          "ml-auto size-4 shrink-0 transition",
-                          isActive ? "opacity-100" : "opacity-0",
-                        )}
-                      />
-                    </CommandItem>
-                  );
-                })}
-              </CommandGroup>
-            </>
-          )}
-        </Command>
-      </PopoverContent>
-    </Popover>
-  );
-}
-
-export function ShadcnPresetsControls({
-  className,
-  ...props
-}: ComponentProps<"div">) {
-  const { currentThemeObject } = useThemeConfig();
+  const currentPresetPresetArray = [
+    getDefaultSurfaceShades(),
+    getInvertedSurfaceShades(),
+    getPlainSurfaceShades(),
+  ];
 
   return (
-    <div className={cn("", className)} {...props}>
-      {/* Default shadcn/ui presets */}
-      {basePresetsV4Array.map((themeObject) => {
-        const isActive = currentThemeObject.name === themeObject.name;
+    <Command className={cn(className)}>
+      {isMounted && (
+        <>
+          <CommandEmpty>No surface shades found.</CommandEmpty>
 
-        return (
-          <PresetButton
-            showLabel
-            isActive={isActive}
-            themeObject={themeObject}
-            key={themeObject.name}
-            className="bg-card w-full max-w-[75px] pr-1.5 @max-md:max-w-full"
-          >
-            {themeObject.label}
-          </PresetButton>
-        );
-      })}
-      {/* Colorful presets */}
-      {colorfulPresetsArray.map((themeObject) => {
-        const isActive = currentThemeObject.name === themeObject.name;
+          <CommandGroup heading="Current preset">
+            {currentPresetPresetArray.map((bgShadesThemeObject) => {
+              const properties = bgShadesThemeObject[resolvedTheme];
+              const { name, label } = bgShadesThemeObject;
+              const isActive = name === currentSurfacePreset;
 
-        return (
-          <PresetButton
-            showLabel
-            isActive={isActive}
-            themeObject={themeObject}
-            key={themeObject.name}
-            className="w-full max-w-full @md:max-w-[75px] @md:pr-1.5"
-          >
-            {themeObject.label}
-          </PresetButton>
-        );
-      })}
-    </div>
-  );
-}
+              return (
+                <CommandItem
+                  key={bgShadesThemeObject.name}
+                  onSelect={() =>
+                    setSurfaceShadesColorTokens({
+                      bgShadesThemeObject: bgShadesThemeObject,
+                      modesInSync: true,
+                    })
+                  }
+                  className="flex items-center gap-2 py-2"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="pointer-events-none flex">
+                      <SurfaceColorTokens properties={properties} />
+                    </div>
+                    <span className="min-w-18 text-sm">{label}</span>
+                  </div>
 
-const BUTTON_CLASSES = cn(
-  "ring-border h-fit cursor-pointer p-1 text-xs ring rounded-lg shadow",
-);
+                  <Check
+                    className={cn(
+                      "ml-auto size-4 shrink-0 transition",
+                      isActive ? "opacity-100" : "opacity-0",
+                    )}
+                  />
+                </CommandItem>
+              );
+            })}
+          </CommandGroup>
 
-function PresetButton({
-  themeObject,
-  isActive,
-  className,
-  children,
-  showLabel = false,
-  ...props
-}: {
-  themeObject: ThemeObject;
-  isActive: boolean;
-  showLabel?: boolean;
-} & React.ComponentProps<typeof Button>) {
-  const { setConfig } = useThemeConfig();
-  const { resolvedTheme: mode } = useTheme();
+          <CommandGroup heading="Neutralize">
+            {surfaceShadesPresetArray.map((bgShadesThemeObject) => {
+              const properties = bgShadesThemeObject[resolvedTheme];
+              const { name, label } = bgShadesThemeObject;
+              const isActive = name === currentSurfacePreset;
+              return (
+                <CommandItem
+                  key={bgShadesThemeObject.name}
+                  onSelect={() => setSelectedBackgroundShadePreset(name)}
+                  className="flex items-center gap-2 py-2"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="pointer-events-none flex">
+                      <SurfaceColorTokens properties={properties} />
+                    </div>
+                    <span className="min-w-18 text-sm">{label}</span>
+                  </div>
 
-  const setThemeConfig = () => {
-    setConfig((prev) => ({
-      ...prev,
-      radius: themeObject.radius ?? prev.radius,
-      themeObject,
-    }));
-  };
-
-  return (
-    <Button
-      variant={"ghost"}
-      key={themeObject.name}
-      onClick={setThemeConfig}
-      className={cn(
-        BUTTON_CLASSES,
-        "text-muted-foreground flex max-w-[75px] items-center justify-start gap-1",
-        isActive &&
-          "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
-        showLabel && "min-w-[75px]",
-        className,
+                  <Check
+                    className={cn(
+                      "ml-auto size-4 shrink-0 transition",
+                      isActive ? "opacity-100" : "opacity-0",
+                    )}
+                  />
+                </CommandItem>
+              );
+            })}
+          </CommandGroup>
+        </>
       )}
-      style={
-        {
-          "--primary": `${mode === "dark" ? themeObject.dark.primary : themeObject.light.primary}`,
-          "--secondary": `${mode === "dark" ? themeObject.dark.secondary : themeObject.light.secondary}`,
-          "--background": `${mode === "dark" ? themeObject.dark.background : themeObject.light.background}`,
-        } as React.CSSProperties
-      }
-      {...props}
-    >
-      <span
-        className={cn(
-          "bg-primary ring-border flex size-4 shrink-0 items-center justify-center overflow-hidden rounded-lg ring",
-          "from-primary to-secondary -bg-linear-45 from-50% to-50%",
-        )}
-      />
-      <span
-        className={cn("leading-tight", !showLabel && "hidden @md:inline-flex")}
-      >
-        {children}
-      </span>
-    </Button>
+    </Command>
+  );
+}
+
+function SurfaceColorTokens({ properties }: { properties: SurfaceShades }) {
+  return (
+    <>
+      <Color color={properties["background"]} className="pointer-events-none" />
+      <Color color={properties["foreground"]} className="pointer-events-none" />
+      <Color color={properties["card"]} className="pointer-events-none" />
+      <Color color={properties["popover"]} className="pointer-events-none" />
+      <Color color={properties["muted"]} className="pointer-events-none" />
+      <Color color={properties["accent"]} className="pointer-events-none" />
+      <Color color={properties["border"]} className="pointer-events-none" />
+      <Color color={properties["sidebar"]} className="pointer-events-none" />
+    </>
   );
 }
 
@@ -408,7 +286,7 @@ export function RadiusControls({ className, ...props }: ComponentProps<"div">) {
               size="sm"
               key={value}
               className={cn(
-                BUTTON_CLASSES,
+                "ring-border h-fit cursor-pointer rounded-lg p-1 text-xs shadow ring",
                 "w-full max-w-[75px] pr-1.5 @max-md:max-w-full",
               )}
               style={{
@@ -435,7 +313,7 @@ export function RadiusControls({ className, ...props }: ComponentProps<"div">) {
               });
             }}
             className={cn(
-              BUTTON_CLASSES,
+              "ring-border h-fit cursor-pointer rounded-lg p-1 text-xs shadow ring",
               "w-full max-w-[75px] pr-1.5 @max-md:max-w-full",
               isActive &&
                 "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
@@ -511,7 +389,10 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                 <Color
                   color={
                     isMounted
-                      ? getActiveThemeColorToken({ property: "primary" })
+                      ? getActiveThemeColorToken({
+                          property: "primary",
+                          mode: resolvedTheme,
+                        })
                       : ""
                   }
                   className="pointer-events-none"
@@ -519,7 +400,10 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                 <Color
                   color={
                     isMounted
-                      ? getActiveThemeColorToken({ property: "background" })
+                      ? getActiveThemeColorToken({
+                          property: "background",
+                          mode: resolvedTheme,
+                        })
                       : ""
                   }
                   className="pointer-events-none"
@@ -527,7 +411,10 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                 <Color
                   color={
                     isMounted
-                      ? getActiveThemeColorToken({ property: "secondary" })
+                      ? getActiveThemeColorToken({
+                          property: "secondary",
+                          mode: resolvedTheme,
+                        })
                       : ""
                   }
                   className="pointer-events-none"
@@ -535,7 +422,10 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                 <Color
                   color={
                     isMounted
-                      ? getActiveThemeColorToken({ property: "muted" })
+                      ? getActiveThemeColorToken({
+                          property: "muted",
+                          mode: resolvedTheme,
+                        })
                       : ""
                   }
                   className="pointer-events-none"
@@ -543,7 +433,10 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                 <Color
                   color={
                     isMounted
-                      ? getActiveThemeColorToken({ property: "card" })
+                      ? getActiveThemeColorToken({
+                          property: "card",
+                          mode: resolvedTheme,
+                        })
                       : ""
                   }
                   className="pointer-events-none"
@@ -764,14 +657,14 @@ export function ControlSection({
   );
 }
 
-export function ControlsSkeleton() {
+export function ControlsSkeleton({ className }: ComponentProps<"div">) {
   return (
     <div className="space-y-3.5">
       <div className="flex items-center gap-1">
-        <Skeleton className="size-4" />
-        <Skeleton className="h-4 w-24" />
+        <Skeleton className="bg-muted size-4" />
+        <Skeleton className="bg-muted h-4 w-24" />
       </div>
-      <Skeleton className="h-48" />
+      <Skeleton className={cn("bg-muted h-48", className)} />
     </div>
   );
 }

@@ -27,7 +27,7 @@ export function useThemeConfig() {
   const updateThemeConfig = (themeObject: ThemeObject) => {
     setConfig((prev) => ({
       ...prev,
-      surface: "custom",
+      surface: "default",
       fonts: { ...prev.fonts, ...themeObject.fonts },
       radius: themeObject.radius ?? prev.radius,
       themeObject,
@@ -48,6 +48,7 @@ export function useThemeConfig() {
     setConfig((prev) => {
       return {
         ...prev,
+        surface: "default",
         fonts: currentPresetThemeObject.fonts ?? prev.fonts,
         radius: currentPresetThemeObject.radius ?? prev.radius,
         themeObject: {
@@ -100,5 +101,7 @@ export function useThemeConfig() {
     resetToLatestThemePreset,
     hasDefaultThemeChanged,
     hasCurrentPresetChanged,
+    currentPresetName,
+    currentPresetThemeObject,
   };
 }
