@@ -33,6 +33,7 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
       accent: "oklch(0.97 0 0)", // --color-neutral-100
       "accent-foreground": "oklch(0.205 0 0)", // --color-neutral-900
       destructive: "oklch(0.577 0.245 27.325)", // --color-red-600
+      "destructive-foreground": "oklch(1 0 0)", // color-white
       border: "oklch(0.922 0 0)", // --color-neutral-200
       input: "oklch(0.922 0 0)", // --color-neutral-200
       ring: "oklch(0.708 0 0)", // --color-neutral-400
@@ -66,6 +67,7 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
       accent: "oklch(0.269 0 0)", // --color-neutral-800
       "accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
       destructive: "oklch(0.704 0.191 22.216)", // --color-red-400
+      "destructive-foreground": "oklch(0.145 0 0)", // --color-neutral-950
       border: "oklch(1 0 0 / 10%)", // --color-white
       input: "oklch(1 0 0 / 15%)", // --color-white
       ring: "oklch(0.556 0 0)", // --color-neutral-500
@@ -107,6 +109,7 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
       accent: "oklch(0.967 0.001 286.375)", // --color-zinc-100
       "accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900
       destructive: "oklch(0.577 0.245 27.325)", // --color-red-600
+      "destructive-foreground": "oklch(1 0 0)", // color-white
       border: "oklch(0.92 0.004 286.32)", // --color-zinc-200
       input: "oklch(0.92 0.004 286.32)", // --color-zinc-200
       ring: "oklch(0.705 0.015 286.067)", // --color-zinc-400
@@ -140,6 +143,7 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
       accent: "oklch(0.274 0.006 286.033)", // --color-zinc-800
       "accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50
       destructive: "oklch(0.704 0.191 22.216)", // --color-red-400
+      "destructive-foreground": "oklch(0.145 0 0)", // --color-neutral-950
       border: "oklch(1 0 0 / 10%)", // --color-white
       input: "oklch(1 0 0 / 15%)", // --color-white
       ring: "oklch(0.552 0.016 285.938)", // --color-zinc-500
@@ -181,6 +185,7 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
       accent: "oklch(0.97 0.001 106.424)", // --color-stone-100
       "accent-foreground": "oklch(0.216 0.006 56.043)", // --color-stone-900
       destructive: "oklch(0.577 0.245 27.325)", // --color-red-600
+      "destructive-foreground": "oklch(1 0 0)", // color-white
       border: "oklch(0.923 0.003 48.717)", // --color-stone-200
       input: "oklch(0.923 0.003 48.717)", // --color-stone-200
       ring: "oklch(0.709 0.01 56.259)", // --color-stone-400
@@ -214,6 +219,7 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
       accent: "oklch(0.268 0.007 34.298)", // --color-stone-800
       "accent-foreground": "oklch(0.985 0.001 106.423)", // --color-stone-50
       destructive: "oklch(0.704 0.191 22.216)", // --color-red-500
+      "destructive-foreground": "oklch(0.145 0 0)", // --color-neutral-950
       border: "oklch(1 0 0 / 10%)", // --color-white
       input: "oklch(1 0 0 / 15%)", // --color-white
       ring: "oklch(0.553 0.013 58.071)", // --color-stone-500
@@ -255,6 +261,7 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
       accent: "oklch(0.967 0.003 264.542)", // --color-gray-100
       "accent-foreground": "oklch(0.21 0.034 264.665)", // --color-gray-900
       destructive: "oklch(0.577 0.245 27.325)", // --color-red-600
+      "destructive-foreground": "oklch(1 0 0)", // color-white
       border: "oklch(0.928 0.006 264.531)", // --color-gray-200
       input: "oklch(0.928 0.006 264.531)", // --color-gray-200
       ring: "oklch(0.707 0.022 261.325)", // --color-gray-400
@@ -288,6 +295,7 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
       accent: "oklch(0.278 0.033 256.848)", // --color-gray-800
       "accent-foreground": "oklch(0.985 0.002 247.839)", // --color-gray-50
       destructive: "oklch(0.704 0.191 22.216)", // --color-red-400
+      "destructive-foreground": "oklch(0.145 0 0)", // --color-neutral-950
       border: "oklch(1 0 0 / 10%)", // --color-white
       input: "oklch(1 0 0 / 15%)", // --color-white
       ring: "oklch(0.551 0.027 264.364)", // --color-gray-500
@@ -329,6 +337,7 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
       accent: "oklch(0.968 0.007 247.896)", // --color-slate-100
       "accent-foreground": "oklch(0.208 0.042 265.755)", // --color-slate-900
       destructive: "oklch(0.577 0.245 27.325)", // --color-red-600
+      "destructive-foreground": "oklch(1 0 0)", // color-white
       border: "oklch(0.929 0.013 255.508)", // --color-slate-200
       input: "oklch(0.929 0.013 255.508)", // --color-slate-200
       ring: "oklch(0.704 0.04 256.788)", // --color-slate-400
@@ -362,6 +371,7 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
       accent: "oklch(0.279 0.041 260.031)", // --color-slate-800
       "accent-foreground": "oklch(0.984 0.003 247.858)", // --color-slate-50
       destructive: "oklch(0.704 0.191 22.216)", // --color-red-400
+      "destructive-foreground": "oklch(0.145 0 0)", // --color-neutral-950
       border: "oklch(1 0 0 / 10%)", // --color-white
       input: "oklch(1 0 0 / 15%)", // --color-white
       ring: "oklch(0.551 0.027 264.364)", // --color-slate-500
@@ -405,6 +415,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       accent: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
       "accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
       destructive: "oklch(0.577 0.245 27.325)", // --color-red-600 (from zinc)
+      "destructive-foreground": "oklch(1 0 0)", // --color-white (from zinc)
       border: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
       input: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
       ring: "oklch(0.637 0.237 25.331)", // --color-red-500 (approx HSL 0 72.2% 50.6%)
@@ -438,6 +449,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       accent: "oklch(0.274 0.006 286.033)", // --color-zinc-800 (from zinc)
       "accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
       destructive: "oklch(0.704 0.191 22.216)", // --color-red-400 (from zinc)
+      "destructive-foreground": "oklch(0.145 0 0)", // --color-neutral-950 (from zinc)
       border: "oklch(1 0 0 / 10%)", // --color-white (from zinc)
       input: "oklch(1 0 0 / 15%)", // --color-white (from zinc)
       ring: "oklch(0.637 0.237 25.331)", // --color-red-500 (approx HSL 0 72.2% 50.6%)
@@ -476,6 +488,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       "accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
       destructive: "oklch(0.577 0.245 27.325)", // --color-red-600 (from zinc)
       border: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
+      "destructive-foreground": "oklch(1 0 0)", // color-white
       input: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
       ring: "oklch(0.645 0.246 16.439)", // --color-rose-500 (approx HSL 346.8 77.2% 49.8%)
       "chart-1": "oklch(0.646 0.222 41.116)", // --color-orange-600 (from zinc)
@@ -508,6 +521,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       accent: "oklch(0.274 0.006 286.033)", // --color-zinc-800 (from zinc)
       "accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
       destructive: "oklch(0.704 0.191 22.216)", // --color-red-400 (from zinc)
+      "destructive-foreground": "oklch(0 0 0)", // color-black
       border: "oklch(1 0 0 / 10%)", // --color-white (from zinc)
       input: "oklch(1 0 0 / 15%)", // --color-white (from zinc)
       ring: "oklch(0.645 0.246 16.439)", // --color-rose-500 (approx HSL 346.8 77.2% 49.8%)
@@ -545,6 +559,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       accent: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
       "accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
       destructive: "oklch(0.577 0.245 27.325)", // --color-red-600 (from zinc)
+      "destructive-foreground": "oklch(1 0 0)", // color-white
       border: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
       input: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
       ring: "oklch(0.705 0.213 47.604)", // --color-orange-500 (approx HSL 24.6 95% 53.1%)
@@ -578,6 +593,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       accent: "oklch(0.274 0.006 286.033)", // --color-zinc-800 (from zinc)
       "accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
       destructive: "oklch(0.704 0.191 22.216)", // --color-red-400 (from zinc)
+      "destructive-foreground": "oklch(0 0 0)", // color-black
       border: "oklch(1 0 0 / 10%)", // --color-white (from zinc)
       input: "oklch(1 0 0 / 15%)", // --color-white (from zinc)
       ring: "oklch(0.646 0.222 41.116)", // --color-orange-600 (approx HSL 20.5 90.2% 48.2%)
@@ -615,6 +631,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       accent: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
       "accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
       destructive: "oklch(0.577 0.245 27.325)", // --color-red-600 (from zinc)
+      "destructive-foreground": "oklch(1 0 0)", // color-white
       border: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
       input: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
       ring: "oklch(0.723 0.219 149.579)", // --color-green-500 (approx HSL 142.1 76.2% 36.3%)
@@ -648,6 +665,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       accent: "oklch(0.274 0.006 286.033)", // --color-zinc-800 (from zinc)
       "accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
       destructive: "oklch(0.704 0.191 22.216)", // --color-red-400 (from zinc)
+      "destructive-foreground": "oklch(0 0 0)", // color-black
       border: "oklch(1 0 0 / 10%)", // --color-white (from zinc)
       input: "oklch(1 0 0 / 15%)", // --color-white (from zinc)
       ring: "oklch(0.527 0.154 150.069)", // --color-green-700 (approx HSL 142.4 71.8% 29.2%)
@@ -685,6 +703,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       accent: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
       "accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
       destructive: "oklch(0.577 0.245 27.325)", // --color-red-600 (from zinc)
+      "destructive-foreground": "oklch(1 0 0)", // color-white
       border: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
       input: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
       ring: "oklch(0.623 0.214 259.815)", // --color-blue-500 (approx HSL 221.2 83.2% 53.3%)
@@ -718,6 +737,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       accent: "oklch(0.274 0.006 286.033)", // --color-zinc-800 (from zinc)
       "accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
       destructive: "oklch(0.704 0.191 22.216)", // --color-red-400 (from zinc)
+      "destructive-foreground": "oklch(0 0 0)", // color-black
       border: "oklch(1 0 0 / 10%)", // --color-white (from zinc)
       input: "oklch(1 0 0 / 15%)", // --color-white (from zinc)
       ring: "oklch(0.488 0.243 264.376)", // --color-blue-700 (approx HSL 224.3 76.3% 48%)
@@ -755,6 +775,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       accent: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
       "accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
       destructive: "oklch(0.577 0.245 27.325)", // --color-red-600 (from zinc)
+      "destructive-foreground": "oklch(1 0 0)", // color-white
       border: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
       input: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
       ring: "oklch(0.795 0.184 86.047)", // --color-yellow-500 (approx HSL 47.9 95.8% 53.1%)
@@ -788,6 +809,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       accent: "oklch(0.274 0.006 286.033)", // --color-zinc-800 (from zinc)
       "accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
       destructive: "oklch(0.704 0.191 22.216)", // --color-red-400 (from zinc)
+      "destructive-foreground": "oklch(0 0 0)", // color-black
       border: "oklch(1 0 0 / 10%)", // --color-white (from zinc)
       input: "oklch(1 0 0 / 15%)", // --color-white (from zinc)
       ring: "oklch(0.554 0.135 66.442)", // --color-yellow-700 (approx HSL 35.5 91.7% 32.9%)
@@ -825,6 +847,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       accent: "oklch(0.967 0.001 286.375)", // --color-zinc-100 (from zinc)
       "accent-foreground": "oklch(0.21 0.006 285.885)", // --color-zinc-900 (from zinc)
       destructive: "oklch(0.577 0.245 27.325)", // --color-red-600 (from zinc)
+      "destructive-foreground": "oklch(1 0 0)", // color-white
       border: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
       input: "oklch(0.92 0.004 286.32)", // --color-zinc-200 (from zinc)
       ring: "oklch(0.606 0.25 292.717)", // --color-violet-500 (approx HSL 262.1 83.3% 57.8%)
@@ -858,6 +881,7 @@ export const colorfulPresets: Record<ColorfulPreset, ThemeObject> = {
       accent: "oklch(0.274 0.006 286.033)", // --color-zinc-800 (from zinc)
       "accent-foreground": "oklch(0.985 0 0)", // --color-zinc-50 (from zinc)
       destructive: "oklch(0.704 0.191 22.216)", // --color-red-400 (from zinc)
+      "destructive-foreground": "oklch(0 0 0)", // color-black
       border: "oklch(1 0 0 / 10%)", // --color-white (from zinc)
       input: "oklch(1 0 0 / 15%)", // --color-white (from zinc)
       ring: "oklch(0.541 0.281 293.009)", // --color-violet-600 (approx HSL 263.4 70% 50.4%)
