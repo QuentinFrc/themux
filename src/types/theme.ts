@@ -91,6 +91,7 @@ export type ThemeProperties = {
   "shadow-offset-x"?: string;
   "shadow-offset-y"?: string;
   spacing?: string;
+  "letter-spacing"?: string;
 };
 export type ThemeProperty = keyof ThemeProperties;
 
