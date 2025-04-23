@@ -169,6 +169,18 @@ function TokensList({ className }: React.ComponentProps<"div">) {
           setColorTokens={setColorToken}
           syncModes={false}
         />
+        {getColorToken({
+          property: "destructive-foreground",
+        }) && (
+          <TokenColorPicker
+            colorProperty="destructive-foreground"
+            color={getColorToken({
+              property: "destructive-foreground",
+            })}
+            setColorTokens={setColorToken}
+            syncModes={false}
+          />
+        )}
       </ControlSection>
 
       <ControlSection

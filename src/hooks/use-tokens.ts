@@ -92,7 +92,8 @@ export function useTokens() {
       const color = currentThemeObject[mode][property];
 
       if (!color) {
-        throw new Error(`Color token "${property}" not found in theme object`);
+        console.error(`Color token "${property}" not found in theme object`);
+        return "";
       }
 
       return color;
