@@ -45,7 +45,7 @@ export function CopyCodeButtonDialog({
       <Drawer>
         <DrawerTrigger asChild>
           <Button
-            className={cn("flex cursor-pointer sm:hidden", className)}
+            className={cn("flex cursor-pointer md:hidden", className)}
             {...props}
           >
             <Code className="text-primary" />
@@ -75,7 +75,7 @@ export function CopyCodeButtonDialog({
       <Dialog>
         <DialogTrigger asChild>
           <Button
-            className={cn("hidden cursor-pointer sm:flex", className)}
+            className={cn("hidden cursor-pointer md:flex", className)}
             {...props}
           >
             <Code className="text-primary" />
