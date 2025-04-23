@@ -215,7 +215,7 @@ export function ContrastChecker({
           <Button
             size="sm"
             variant="ghost"
-            className={cn(className)}
+            className={cn("flex cursor-pointer md:hidden", className)}
             {...props}
           >
             <Contrast />
@@ -262,7 +262,7 @@ export function ContrastChecker({
           <Button
             size="sm"
             variant="ghost"
-            className={cn(className)}
+            className={cn("hidden cursor-pointer md:flex", className)}
             {...props}
           >
             <Contrast />

@@ -7,7 +7,7 @@ import { ModeSwitcher } from "../mode-switcher";
 import { TooltipWrapper } from "../tooltip-wrapper";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
-import { ContrastChecker } from "./constrast-checker";
+import { ContrastChecker } from "./contrast-checker";
 import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
 import { CustomizerSettings } from "./customizer-settings";
 import { RandomizeButton } from "./randomize-button";
