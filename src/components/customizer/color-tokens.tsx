@@ -166,7 +166,7 @@ function TokensList({ className }: React.ComponentProps<"div">) {
           color={getColorToken({
             property: "destructive",
           })}
-          setColorTokens={setColorToken}
+          setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
         {getColorToken({
