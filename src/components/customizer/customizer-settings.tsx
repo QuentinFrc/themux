@@ -59,7 +59,10 @@ export function CustomizerSettings({
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="isolate w-auto max-w-full p-0" align="end">
+      <PopoverContent
+        className="isolate w-72 max-w-full p-0 sm:w-auto"
+        align="end"
+      >
         <header className="text-muted-foreground/80 flex items-center justify-between px-4 py-1 text-sm font-semibold">
           <span>Customizer settings</span>
           <Button variant="ghost" onClick={resetSettings}>
