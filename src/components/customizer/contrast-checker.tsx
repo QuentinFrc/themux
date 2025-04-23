@@ -252,6 +252,7 @@ export function ContrastChecker({
           <ContrastCheckerResults
             groupedPairs={groupedPairs}
             getContrastResult={getContrastResult}
+            className="max-h-[450px]"
           />
         </DrawerContent>
       </Drawer>
@@ -350,15 +351,23 @@ function ActionButtons({
   );
 }
 
+interface ContrastCheckerResultsProps extends React.ComponentProps<"div"> {
+  groupedPairs: GroupPair[];
+  getContrastResult: (pairId: string) => any;
+}
+
 function ContrastCheckerResults({
   groupedPairs,
   getContrastResult,
-}: {
-  groupedPairs: GroupPair[];
-  getContrastResult: (pairId: string) => any;
-}) {
+  className,
+}: ContrastCheckerResultsProps) {
   return (
-    <div className="bg-card relative h-[500px] w-full overflow-hidden rounded-lg border shadow">
+    <div
+      className={cn(
+        "bg-card relative h-[500px] w-full overflow-hidden rounded-lg border shadow",
+        className,
+      )}
+    >
       <ScrollArea className="h-full">
         <div className="space-y-6 p-4">
           {groupedPairs.map((group) => (

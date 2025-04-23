@@ -67,7 +67,7 @@ export function CopyCodeButtonDialog({
             <GeneratedCodeOptions />
           </div>
 
-          <CustomizerCode />
+          <CustomizerCode className="max-h-[375px] sm:max-h-[450px]" />
         </DrawerContent>
       </Drawer>
 
