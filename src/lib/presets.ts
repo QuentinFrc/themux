@@ -95,7 +95,7 @@ export const otherPresets: Record<OtherPresets, ThemeObject> = {
       "muted-foreground": "hsl(327 77% 38%)",
       accent: "hsl(314.7 61.6% 85.7%)",
       "accent-foreground": "hsl(295.8 40.9% 34.5%)",
-      destructive: "hsl(335 94% 50%)",
+      destructive: "hsl(335.025 100% 38.627%)",
       "destructive-foreground": "hsl(0 0% 100%)",
       border: "hsl(304.8 61% 83.9%)", // --chat-border
       input: "hsl(317.4 44.2% 83.1%)",
@@ -108,12 +108,12 @@ export const otherPresets: Record<OtherPresets, ThemeObject> = {
       radius: "0.5rem",
       sidebar: "hsl(293.7 46.3% 92%)",
       "sidebar-foreground": "hsl(240 10% 30%)",
-      "sidebar-primary": "hsl(240 10% 30%)",
+      "sidebar-primary": "hsl(332.824 79.439% 41.961%)",
       "sidebar-primary-foreground": "hsl(0 0% 98%)",
       "sidebar-accent": "hsl(60 5% 97%)",
       "sidebar-accent-foreground": "hsl(240 10% 30%)",
       "sidebar-border": "hsl(304.8 61% 81.9%)",
-      "sidebar-ring": "hsl(333.3 71.4% 50.6%)",
+      "sidebar-ring": "hsl(332.824 79.439% 41.961%)",
     },
     dark: {
       background: "hsl(270 16.13% 12.16% )", // --chat-backgound, actual --background = hsl(313.8 24.5% 10.4%)
@@ -142,12 +142,12 @@ export const otherPresets: Record<OtherPresets, ThemeObject> = {
       "chart-5": "hsl(340 75% 55%)",
       sidebar: "hsl(313 19% 9%)",
       "sidebar-foreground": "hsl(240 4.8% 95.9%)",
-      "sidebar-primary": "hsl(224.3 76.3% 48%)",
+      "sidebar-primary": "hsl(332.055 100% 28.627%)",
       "sidebar-primary-foreground": "hsl(0 0% 100%)",
       "sidebar-accent": "hsl(318.5 20.6% 12.4%)",
       "sidebar-accent-foreground": "hsl(240 4.8% 95.9%)",
       "sidebar-border": "hsl(325 15.385% 15.294%)",
-      "sidebar-ring": "hsl(333.3 71.4% 50.6%)",
+      "sidebar-ring": "hsl(332.055 100% 28.627%)",
     },
   },
   bubblegum: {
