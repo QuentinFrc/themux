@@ -142,16 +142,14 @@ function generateThemeVariables(
 }
 
 type ThemeVarsOptions = {
-  themeConfig: ThemeConfig;
   fontVars?: boolean | undefined;
   shadowVars?: boolean | undefined;
 };
 
-function generateTailwindV4ThemeInline({
-  themeConfig,
-  fontVars = false,
-  shadowVars = false,
-}: ThemeVarsOptions): string {
+function generateTailwindV4ThemeInline(
+  themeConfig: ThemeConfig,
+  { fontVars = false, shadowVars = false }: ThemeVarsOptions,
+): string {
   const colorVarsInline = `--color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
@@ -241,7 +239,6 @@ export function generateThemeCode({
     colorFormat,
     tailwindVersion,
     {
-      themeConfig,
       fontVars: tailwindInlineOptions?.fontVars,
       shadowVars: tailwindInlineOptions?.shadowVars,
     },
@@ -252,7 +249,6 @@ export function generateThemeCode({
     colorFormat,
     tailwindVersion,
     {
-      themeConfig,
       fontVars: tailwindInlineOptions?.fontVars,
       shadowVars: tailwindInlineOptions?.shadowVars,
     },
@@ -265,7 +261,7 @@ export function generateThemeCode({
   }
 
   if (tailwindVersion === "4") {
-    return `${lightTheme}\n\n${darkTheme}\n\n${generateTailwindV4ThemeInline({ ...v4Options, themeConfig })}`;
+    return `${lightTheme}\n\n${darkTheme}\n\n${generateTailwindV4ThemeInline(themeConfig, { ...v4Options })}`;
   }
 
   return `${lightTheme}\n\n${darkTheme}`;
