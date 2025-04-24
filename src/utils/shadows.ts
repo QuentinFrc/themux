@@ -8,25 +8,33 @@ import {
 import { colorFormatter } from "./color-converter";
 import { setStyleProperty } from "./set-attribute-to-element";
 
-export const getShadowMap = (themeObject: ThemeObject, mode: ThemeMode) => {
-  const getShadowProperty = (property: ThemeProperty) => {
-    return (
-      themeObject[mode][property] ||
-      themeObject.light[property] ||
-      initialThemeConfig.themeObject[mode][property] ||
-      initialThemeConfig.themeObject.light[property]
-    );
-  };
+export function getShadowProperty(
+  themeObject: ThemeObject,
+  property: ThemeProperty,
+  mode: ThemeMode,
+) {
+  return (
+    themeObject[mode][property] ||
+    themeObject.light[property] ||
+    initialThemeConfig.themeObject[mode][property] ||
+    initialThemeConfig.themeObject.light[property]
+  );
+}
 
+export function getShadowMap(
+  themeObject: ThemeObject,
+  mode: ThemeMode,
+  { varOutput } = { varOutput: false },
+) {
   const styles: Partial<ThemeProperties> = {
     ...initialThemeConfig.themeObject[mode],
     ...themeObject[mode],
-    "shadow-color": getShadowProperty("shadow-color"),
-    "shadow-opacity": getShadowProperty("shadow-opacity"),
-    "shadow-blur": getShadowProperty("shadow-blur"),
-    "shadow-spread": getShadowProperty("shadow-spread"),
-    "shadow-offset-x": getShadowProperty("shadow-offset-x"),
-    "shadow-offset-y": getShadowProperty("shadow-offset-y"),
+    "shadow-color": getShadowProperty(themeObject, "shadow-color", mode),
+    "shadow-opacity": getShadowProperty(themeObject, "shadow-opacity", mode),
+    "shadow-blur": getShadowProperty(themeObject, "shadow-blur", mode),
+    "shadow-spread": getShadowProperty(themeObject, "shadow-spread", mode),
+    "shadow-offset-x": getShadowProperty(themeObject, "shadow-offset-x", mode),
+    "shadow-offset-y": getShadowProperty(themeObject, "shadow-offset-y", mode),
   };
 
   const shadowColor = styles["shadow-color"];
@@ -36,16 +44,26 @@ export const getShadowMap = (themeObject: ThemeObject, mode: ThemeMode) => {
   const blur = styles["shadow-blur"];
   const spread = styles["shadow-spread"];
   const opacity = parseFloat(styles["shadow-opacity"]!);
-  const color = (opacityMultiplier: number) =>
-    `hsl(${hsl} / ${(opacity * opacityMultiplier).toFixed(2)})`;
+
+  const colorConvertedToHsl = (opacityMultiplier: number) => {
+    // This is the default implementation, where the color gets embedded in the shadow
+    // as an HSL value with the opacity applied.
+    return `hsl(${hsl} / ${opacity * opacityMultiplier})`;
+  };
+
+  const colorVarWithOpacity = (opacityMultiplier: number) => {
+    // This is the implementation for varOutput, where the color is set as a CSS variable
+    // and the opacity is applied to the variable.
+    // the shadow var looks like => 1px 2px 0px 0px rgb(from var(--shadow-color) r g b / 1)
+    return `rgb(from var(--shadow-color) r g b / ${opacity * opacityMultiplier})`;
+  };
+
+  const color = varOutput ? colorVarWithOpacity : colorConvertedToHsl;
 
   const secondLayer = (fixedOffsetY: string, fixedBlur: string): string => {
-    // Use the same offsetX as the first layer
-    const offsetX2 = offsetX;
-    // Use the fixed offsetY specific to the shadow size
-    const offsetY2 = fixedOffsetY;
-    // Use the fixed blur specific to the shadow size
-    const blur2 = fixedBlur;
+    const offsetX2 = offsetX; // Use the same offsetX as the first layer
+    const offsetY2 = fixedOffsetY; // Use the fixed offsetY specific to the shadow size
+    const blur2 = fixedBlur; // Use the fixed blur specific to the shadow size
     // Calculate spread relative to the first layer's spread variable
     const spread2 =
       (parseFloat(spread?.replace("px", "") ?? "0") - 1).toString() + "px";
@@ -60,7 +78,7 @@ export const getShadowMap = (themeObject: ThemeObject, mode: ThemeMode) => {
     // Single layer shadows - use base variables directly
     "shadow-2xs": `${offsetX} ${offsetY} ${blur} ${spread} ${color(0.5)}`, // Assumes vars set appropriately (e.g., y=1, blur=0, spread=0)
     "shadow-xs": `${offsetX} ${offsetY} ${blur} ${spread} ${color(0.5)}`, // Assumes vars set appropriately (e.g., y=1, blur=2, spread=0)
-    "shadow-2xl": `${offsetX} ${offsetY} ${blur} ${spread} ${color(2.5)}`, // Assumes vars set appropriately (e.g., y=25, blur=50, spread=-12)
+    "shadow-2xl": `${offsetX} ${offsetY} ${blur} ${spread} ${color(1.0)}`, // Assumes vars set appropriately (e.g., y=25, blur=50, spread=-12)
 
     // Two layer shadows - use base vars for layer 1, mix fixed/calculated for layer 2
     "shadow-sm": `${offsetX} ${offsetY} ${blur} ${spread} ${color(
@@ -85,7 +103,7 @@ export const getShadowMap = (themeObject: ThemeObject, mode: ThemeMode) => {
   };
 
   return shadowMap;
-};
+}
 
 // Function to set shadow CSS variables
 export function setShadowVariables(
@@ -93,7 +111,10 @@ export function setShadowVariables(
   themeObject: ThemeObject,
   mode: ThemeMode,
 ) {
-  const shadows = getShadowMap(themeObject, mode);
+  // I'll leave the 'varOutput' set to true for now. In case this brings issues to
+  // browser compatibility, we can always change it to false o remove the 3rd argument.
+  // for it to work as it did before.
+  const shadows = getShadowMap(themeObject, mode, { varOutput: true });
   Object.entries(shadows).forEach(([name, value]) => {
     setStyleProperty({ element, key: `--${name}`, value });
   });
