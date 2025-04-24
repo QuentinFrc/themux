@@ -3,16 +3,10 @@ import { ActionButtons } from "@/components/customizer/action-buttons";
 
 import { QuickCustomizer } from "@/components/customizer/quick-customizer";
 import { DashboardDemo } from "@/components/dashboard-demo";
-import { FrameHighlight } from "@/components/frame-highlight";
 import { MailDemo } from "@/components/mail-demo";
-import {
-  PageHeader,
-  PageHeaderDescription,
-  PageHeaderHeading,
-} from "@/components/page-header";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
+import { ContainerWrapper } from "@/components/wrappers";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -22,34 +16,6 @@ export const metadata: Metadata = {
 export default function ShadcnThemesPage() {
   return (
     <>
-      <ContainerWrapper withCane>
-        <SectionWrapper className="@container">
-          <PageHeader className="grow">
-            <PageHeaderHeading>
-              shadcn/ui customizer supporting
-              <FrameHighlight>Tailwind v4</FrameHighlight>
-            </PageHeaderHeading>
-            <PageHeaderDescription>
-              Generate a theme for your app and copy-paste the css variables.
-              Compatible with
-              <FrameHighlight className="font-semibold">
-                Tailwind v3
-              </FrameHighlight>
-              and supports{" "}
-              <code className="font-mono font-semibold">oklch</code>
-              {", "}
-              <code className="font-mono font-semibold">hsl</code>
-              {", "}
-              <code className="font-mono font-semibold">rbg</code>
-              {" and "}
-              <code className="font-mono font-semibold">hex</code>.
-            </PageHeaderDescription>
-          </PageHeader>
-        </SectionWrapper>
-      </ContainerWrapper>
-
-      <Separator />
-
       <ContainerWrapper withCane className="@container py-4">
         <ActionButtons className="pb-4" />
         <QuickCustomizer />

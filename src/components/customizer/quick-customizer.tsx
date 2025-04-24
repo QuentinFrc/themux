@@ -39,7 +39,7 @@ export function QuickCustomizer() {
   return (
     <div className="space-y-4">
       <div className="@container flex flex-wrap items-start gap-x-6 gap-y-4 sm:flex-row">
-        <section className="max-w-82 min-w-72 flex-1 space-y-1.5 max-sm:w-full max-sm:max-w-full">
+        <section className="max-w-80 min-w-72 flex-1 space-y-1.5 max-sm:w-full max-sm:max-w-full">
           <Label className="flex items-center gap-1 pb-2">
             <PaintBucket className="size-4" /> Theme presets
           </Label>
@@ -65,7 +65,7 @@ export function QuickCustomizer() {
         </section>
 
         {/* Primary color */}
-        <section className="max-w-82 min-w-72 flex-2 space-y-1.5 max-sm:w-full max-sm:max-w-full">
+        <section className="max-w-80 min-w-72 flex-2 space-y-1.5 max-sm:w-full max-sm:max-w-full">
           <div className="flex items-start justify-between gap-2 pb-1">
             <Label className="flex items-center gap-1">
               <Paintbrush className="size-4" /> Primary color

@@ -81,7 +81,7 @@ export function BlockViewer({
         className={cn(
           "flex flex-col overflow-clip rounded-lg border shadow",
           isFullscreen
-            ? "bg-background fixed inset-0 z-100 h-svh scale-95 shadow-2xl"
+            ? "bg-background fixed inset-0 z-100 max-h-svh scale-95 shadow-2xl"
             : "overflow-clip",
         )}
       >
@@ -242,7 +242,7 @@ function BlockViewerView({
         id={name}
         data-name={name.toLowerCase()}
         className={cn(
-          "grid w-full grow scroll-mt-16 gap-4 overflow-clip md:pr-1",
+          "grid w-full grow gap-4 overflow-clip md:pr-1",
           className,
         )}
         {...props}
