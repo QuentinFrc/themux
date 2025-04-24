@@ -12,8 +12,10 @@ import {
 } from "@/store/preferences-store";
 import { TailwindVersion } from "@/types/theme";
 import { generateThemeCode } from "@/utils/theme-style-generator";
-import { Check, Clipboard, Code } from "lucide-react";
+import { Check, Clipboard, Code, Terminal } from "lucide-react";
 import React, { useMemo } from "react";
+import { TooltipWrapper } from "../tooltip-wrapper";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -34,6 +36,7 @@ import {
 import { Label } from "../ui/label";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
+import { CopyThemeCLI } from "./copy-theme-cli";
 
 export function CopyCodeButtonDialog({
   className,
@@ -48,7 +51,7 @@ export function CopyCodeButtonDialog({
             className={cn("flex cursor-pointer md:hidden", className)}
             {...props}
           >
-            <Code className="text-primary" />
+            <Code className="text-primary-foreground" />
             Copy
           </Button>
         </DrawerTrigger>
@@ -63,7 +66,15 @@ export function CopyCodeButtonDialog({
             </DrawerDescription>
           </DrawerHeader>
 
-          <div className="px-4 pb-4">
+          <div className="space-y-4 px-4 pb-4">
+            <Alert className="bg-muted">
+              <Terminal className="h-4 w-4" />
+              <AlertTitle>You need to know...</AlertTitle>
+              <AlertDescription>
+                Soon, custom themes will be supported through the shadcn CLI.
+                For now, apply manually.
+              </AlertDescription>
+            </Alert>
             <GeneratedCodeOptions />
           </div>
 
@@ -78,7 +89,7 @@ export function CopyCodeButtonDialog({
             className={cn("hidden cursor-pointer md:flex", className)}
             {...props}
           >
-            <Code className="text-primary" />
+            <Code className="text-primary-foreground" />
             Copy code
           </Button>
         </DialogTrigger>
@@ -93,6 +104,15 @@ export function CopyCodeButtonDialog({
               Copy and paste the following code into your CSS file.
             </DialogDescription>
           </DialogHeader>
+
+          <Alert className="bg-muted">
+            <Terminal className="h-4 w-4" />
+            <AlertTitle>You need to know...</AlertTitle>
+            <AlertDescription>
+              Soon, custom themes will be supported through the shadcn CLI. For
+              now, apply manually.
+            </AlertDescription>
+          </Alert>
 
           <GeneratedCodeOptions />
 
@@ -124,7 +144,7 @@ function GeneratedCodeOptions() {
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+    <div className="flex flex-wrap items-baseline-last gap-x-4 gap-y-2">
       <div className="flex items-center gap-4">
         <div className="flex flex-col items-start gap-1">
           <Label className="text-muted-foreground text-xs">Color format</Label>
@@ -237,6 +257,10 @@ function GeneratedCodeOptions() {
           </ToggleGroup>
         </div>
       </div>
+
+      <TooltipWrapper label="View shadcn CLI registry command" asChild>
+        <CopyThemeCLI size="sm" variant="outline" className="grow" />
+      </TooltipWrapper>
     </div>
   );
 }
@@ -271,7 +295,7 @@ function CustomizerCode({ className }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "bg-card relative h-[500px] w-full overflow-hidden rounded-lg border",
+        "bg-card relative h-[450px] w-full overflow-hidden rounded-lg border",
         className,
       )}
     >

@@ -71,8 +71,10 @@ const usePreferencesStore = create<PreferencesStore>()(
         setShowShadowsVars: (showShadowsVars: boolean) =>
           set({ showShadowsVars }),
 
-        setPackageManager: (packageManager: PackageManager) =>
-          set({ packageManager }),
+        setPackageManager: (packageManager: PackageManager) => {
+          if (!packageManager) return;
+          set({ packageManager });
+        },
         setShowTooltips: (showTooltips: boolean) => set({ showTooltips }),
 
         resetSettings: () => set(initialPreferencesState),

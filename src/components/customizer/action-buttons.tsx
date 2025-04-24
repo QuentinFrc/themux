@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { ContrastChecker } from "./contrast-checker";
 import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
+import { CopyThemeCLI } from "./copy-theme-cli";
 import { CustomizerSettings } from "./customizer-settings";
 import { RandomizeButton } from "./randomize-button";
 import { ResetButton } from "./reset-button";
@@ -25,9 +26,16 @@ export function ActionButtons({ className }: ActionButtonsProps) {
         className,
       )}
     >
-      <section className="flex flex-1 items-center gap-2">
+      <section className="flex grow items-center gap-2">
         <TooltipWrapper label="View generated code" asChild>
-          <CopyCodeButtonDialog size="sm" className="grow" variant="outline" />
+          <CopyCodeButtonDialog
+            size="sm"
+            className="flex-2"
+            variant="default"
+          />
+        </TooltipWrapper>
+        <TooltipWrapper label="View shadcn CLI registry command" asChild>
+          <CopyThemeCLI size="sm" variant="outline" className="" />
         </TooltipWrapper>
       </section>
 
