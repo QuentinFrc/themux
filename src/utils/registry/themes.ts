@@ -1,6 +1,6 @@
 import path from "path";
 
-import { initialThemeConfig } from "@/lib/themes";
+import { DEFAULT_FONTS, initialThemeConfig } from "@/lib/themes";
 import {
   ColorFormat,
   Preset,
@@ -16,12 +16,13 @@ import { RegistryItem, registryItemSchema } from "shadcn/registry";
 import { writeToRegistry } from ".";
 
 const FALLBACKS = {
-  "font-sans": "Inter, ui-sans-serif, sans-serif",
-  "font-serif": "ui-serif, serif",
-  "font-mono": "ui-monospace, monospace",
+  "font-sans": DEFAULT_FONTS["font-sans"],
+  "font-serif": DEFAULT_FONTS["font-serif"],
+  "font-mono": DEFAULT_FONTS["font-mono"],
   radius: "0.5rem",
   spacing: "0.25rem",
   "letter-spacing": "0em",
+  "shadow-color": "#000000",
 } satisfies Partial<Record<ThemeProperty, string>>;
 
 const THEMES_DIR = path.join(process.cwd(), "public", "r", "themes");
@@ -47,10 +48,10 @@ function getThemeValue(
 // Convert theme styles to registry format
 function convertThemeStyles(themeObject: ThemeObject) {
   const { light, dark } = themeObject;
+  const convertColor = (color?: string) => convertToRegistryColor(color!);
 
-  const convertTheme = (theme: ThemeProperties): ThemeProperties => {
+  const convertBaseThemeProps = (theme: ThemeProperties): ThemeProperties => {
     const result: ThemeProperties = theme;
-    const convertColor = (color?: string) => convertToRegistryColor(color!);
 
     // Convert all color values
     result.background = convertColor(theme.background);
@@ -100,38 +101,43 @@ function convertThemeStyles(themeObject: ThemeObject) {
   return {
     light: {
       ...initialThemeConfig.themeObject.light,
-      ...convertTheme(light as ThemeProperties),
-    },
+      ...{
+        "font-sans": themeObject.fonts?.sans || FALLBACKS["font-sans"],
+        "font-serif": themeObject.fonts?.serif || FALLBACKS["font-serif"],
+        "font-mono": themeObject.fonts?.mono || FALLBACKS["font-mono"],
+      },
+      ...convertBaseThemeProps(light as ThemeProperties),
+      "shadow-color": convertColor(
+        light["shadow-color"] ?? FALLBACKS["shadow-color"],
+      ),
+    } satisfies ThemeProperties,
     dark: {
       ...initialThemeConfig.themeObject.dark,
-      ...convertTheme(dark as ThemeProperties),
-    },
+      ...convertBaseThemeProps(dark as ThemeProperties),
+      "shadow-color": convertColor(
+        dark["shadow-color"] ?? FALLBACKS["shadow-color"],
+      ),
+    } satisfies ThemeProperties,
   };
 }
 
 // TODO: Adjust the right (and only the necessary) variables
+// Maybe pass the object to Zod and let it do the work?
 function buildThemeRegistryItem(themeObject: ThemeObject) {
   const { light, dark } = convertThemeStyles(themeObject);
 
   // Generate shadow variables for both light and dark modes
-  const lightShadows = getShadowMap(themeObject, "light");
-  const darkShadows = getShadowMap(themeObject, "dark");
+  const lightShadows = getShadowMap(themeObject, "light", { varOutput: true });
 
   const registryItem = {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
     name: themeObject.name,
     type: "registry:style",
-    dependencies: [],
-    registryDependencies: [],
     cssVars: {
       theme: {
-        "font-sans":
-          getThemeValue(dark, light, "font-sans") || FALLBACKS["font-sans"],
-        "font-serif":
-          getThemeValue(dark, light, "font-serif") || FALLBACKS["font-serif"],
-        "font-mono":
-          getThemeValue(dark, light, "font-mono") || FALLBACKS["font-mono"],
-        radius: getThemeValue(dark, light, "radius") || FALLBACKS.radius,
+        "font-sans": themeObject.fonts?.sans || FALLBACKS["font-sans"],
+        "font-serif": themeObject.fonts?.serif || FALLBACKS["font-serif"],
+        "font-mono": themeObject.fonts?.mono || FALLBACKS["font-mono"],
         "tracking-tighter": "calc(var(--tracking-normal) - 0.05em)",
         "tracking-tight": "calc(var(--tracking-normal) - 0.025em)",
         "tracking-wide": "calc(var(--tracking-normal) + 0.025em)",
@@ -139,7 +145,7 @@ function buildThemeRegistryItem(themeObject: ThemeObject) {
         "tracking-widest": "calc(var(--tracking-normal) + 0.1em)",
       },
       light: {
-        ...light,
+        ...cleanUpLightModeStyles(light),
         "shadow-2xs": lightShadows["shadow-2xs"],
         "shadow-xs": lightShadows["shadow-xs"],
         "shadow-sm": lightShadows["shadow-sm"],
@@ -154,22 +160,7 @@ function buildThemeRegistryItem(themeObject: ThemeObject) {
           FALLBACKS["letter-spacing"],
       },
       dark: {
-        ...dark,
-        "shadow-2xs": darkShadows["shadow-2xs"],
-        "shadow-xs": darkShadows["shadow-xs"],
-        "shadow-sm": darkShadows["shadow-sm"],
-        shadow: darkShadows["shadow"],
-        "shadow-md": darkShadows["shadow-md"],
-        "shadow-lg": darkShadows["shadow-lg"],
-        "shadow-xl": darkShadows["shadow-xl"],
-        "shadow-2xl": darkShadows["shadow-2xl"],
-      },
-    },
-    css: {
-      "@layer base": {
-        a: {
-          "letter-spacing": "var(--tracking-normal)",
-        },
+        ...cleanUpDarkModeStyles(dark),
       },
     },
   } satisfies RegistryItem;
@@ -184,6 +175,42 @@ function buildThemeRegistryItem(themeObject: ThemeObject) {
 
   const validRegistryItem = parsedRegistryItem.data;
   return validRegistryItem;
+}
+
+function cleanUpLightModeStyles(light: ThemeProperties): ThemeProperties {
+  const {
+    "shadow-opacity": shadowOpacity,
+    "shadow-blur": shadowBlur,
+    "shadow-spread": shadowSpread,
+    "shadow-offset-x": shadowOffsetX,
+    "shadow-offset-y": shadowOffsetY,
+    ...restLight
+  } = light;
+
+  return {
+    radius: restLight.radius,
+    "font-sans": restLight["font-sans"],
+    "font-serif": restLight["font-serif"],
+    "font-mono": restLight["font-mono"],
+    ...restLight,
+  };
+}
+
+function cleanUpDarkModeStyles(dark: ThemeProperties): ThemeProperties {
+  const {
+    "shadow-opacity": shadowOpacity,
+    "shadow-blur": shadowBlur,
+    "shadow-spread": shadowSpread,
+    "shadow-offset-x": shadowOffsetX,
+    "shadow-offset-y": shadowOffsetY,
+    radius,
+    "font-sans": fontSans,
+    "font-serif": fontSerif,
+    "font-mono": fontMono,
+    ...restDark
+  } = dark;
+
+  return restDark;
 }
 
 // Generate the theme registry item based on an **existing** preset

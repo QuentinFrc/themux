@@ -2,14 +2,11 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "claude",
   "type": "registry:style",
-  "dependencies": [],
-  "registryDependencies": [],
   "cssVars": {
     "theme": {
-      "font-sans": "Inter, ui-sans-serif, sans-serif",
-      "font-serif": "ui-serif, serif",
-      "font-mono": "ui-monospace, monospace",
-      "radius": "0.5rem",
+      "font-sans": "ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',\n    'Noto Color Emoji'",
+      "font-serif": "ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif",
+      "font-mono": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',\n    monospace",
       "tracking-tighter": "calc(var(--tracking-normal) - 0.05em)",
       "tracking-tight": "calc(var(--tracking-normal) - 0.025em)",
       "tracking-wide": "calc(var(--tracking-normal) + 0.025em)",
@@ -17,6 +14,10 @@
       "tracking-widest": "calc(var(--tracking-normal) + 0.1em)"
     },
     "light": {
+      "radius": "0.5rem",
+      "font-sans": "ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',\n    'Noto Color Emoji'",
+      "font-serif": "ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif",
+      "font-mono": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',\n    monospace",
       "background": "oklch(0.982 0.005 95.099)",
       "foreground": "oklch(0.344 0.027 95.723)",
       "card": "oklch(0.982 0.005 95.099)",
@@ -49,21 +50,15 @@
       "sidebar-accent-foreground": "oklch(0.325 0 0)",
       "sidebar-border": "oklch(0.928 0 0)",
       "sidebar-ring": "oklch(0.686 0.195 37.865)",
-      "shadow-color": "hsl(0 0% 0%)",
-      "shadow-opacity": "0.1",
-      "shadow-blur": "3px",
-      "shadow-spread": "0px",
-      "shadow-offset-x": "0",
-      "shadow-offset-y": "1px",
-      "radius": "0.5rem",
-      "shadow-2xs": "0 1px 3px 0px hsl(0 0% 0% / 0.05)",
-      "shadow-xs": "0 1px 3px 0px hsl(0 0% 0% / 0.05)",
-      "shadow-sm": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10)",
-      "shadow": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10)",
-      "shadow-md": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10)",
-      "shadow-lg": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10)",
-      "shadow-xl": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10)",
-      "shadow-2xl": "0 1px 3px 0px hsl(0 0% 0% / 0.25)",
+      "shadow-color": "oklch(0 0 0)",
+      "shadow-2xs": "0 1px 3px 0px rgb(from var(--shadow-color) r g b / 0.05)",
+      "shadow-xs": "0 1px 3px 0px rgb(from var(--shadow-color) r g b / 0.05)",
+      "shadow-sm": "0 1px 3px 0px rgb(from var(--shadow-color) r g b / 0.1), 0 1px 2px -1px rgb(from var(--shadow-color) r g b / 0.1)",
+      "shadow": "0 1px 3px 0px rgb(from var(--shadow-color) r g b / 0.1), 0 1px 2px -1px rgb(from var(--shadow-color) r g b / 0.1)",
+      "shadow-md": "0 1px 3px 0px rgb(from var(--shadow-color) r g b / 0.1), 0 2px 4px -1px rgb(from var(--shadow-color) r g b / 0.1)",
+      "shadow-lg": "0 1px 3px 0px rgb(from var(--shadow-color) r g b / 0.1), 0 4px 6px -1px rgb(from var(--shadow-color) r g b / 0.1)",
+      "shadow-xl": "0 1px 3px 0px rgb(from var(--shadow-color) r g b / 0.1), 0 8px 10px -1px rgb(from var(--shadow-color) r g b / 0.1)",
+      "shadow-2xl": "0 1px 3px 0px rgb(from var(--shadow-color) r g b / 0.1)",
       "spacing": "0.25rem",
       "tracking-normal": "0em"
     },
@@ -100,22 +95,7 @@
       "sidebar-accent-foreground": "oklch(0.807 0.014 93.014)",
       "sidebar-border": "oklch(0.313 0 0)",
       "sidebar-ring": "oklch(0.785 0.129 39.49)",
-      "shadow-color": "hsl(0 0% 0%)",
-      "shadow-2xs": "0 1px 3px 0px hsl(0 0% 0% / 0.05)",
-      "shadow-xs": "0 1px 3px 0px hsl(0 0% 0% / 0.05)",
-      "shadow-sm": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10)",
-      "shadow": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10)",
-      "shadow-md": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10)",
-      "shadow-lg": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10)",
-      "shadow-xl": "0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10)",
-      "shadow-2xl": "0 1px 3px 0px hsl(0 0% 0% / 0.25)"
-    }
-  },
-  "css": {
-    "@layer base": {
-      "a": {
-        "letter-spacing": "var(--tracking-normal)"
-      }
+      "shadow-color": "oklch(0 0 0)"
     }
   }
 }
