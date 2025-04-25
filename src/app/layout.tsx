@@ -3,7 +3,6 @@ import { ReactScan } from "@/components/devtools/react-scan";
 import { ScreenDevTools } from "@/components/devtools/screen-devtools";
 import { FontLoader } from "@/components/font-loader";
 import { LoadTheme } from "@/components/load-theme";
-import { LoadingComponent } from "@/components/loading-component";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeSync } from "@/components/theme-sync";
 import { Toaster } from "@/components/ui/sonner";

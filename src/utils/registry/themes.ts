@@ -101,6 +101,7 @@ function convertThemeStyles(themeObject: ThemeObject) {
   return {
     light: {
       ...initialThemeConfig.themeObject.light,
+      radius: themeObject.radius || FALLBACKS.radius,
       ...{
         "font-sans": themeObject.fonts?.sans || FALLBACKS["font-sans"],
         "font-serif": themeObject.fonts?.serif || FALLBACKS["font-serif"],

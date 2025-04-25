@@ -1,8 +1,8 @@
-import { otherPresets } from "@/lib/presets";
+import { allPresets } from "@/lib/colors";
 import { generateThemeRegistryFromPreset } from "@/utils/registry/themes";
 
 function execute() {
-  const presets = otherPresets;
+  const presets = allPresets;
 
   // Generate registry files for presets
   Object.keys(presets).forEach((preset) => {
