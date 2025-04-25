@@ -123,7 +123,7 @@ function convertThemeStyles(themeObject: ThemeObject) {
 
 // TODO: Adjust the right (and only the necessary) variables
 // Maybe pass the object to Zod and let it do the work?
-function buildThemeRegistryItem(themeObject: ThemeObject) {
+export function buildThemeRegistryItem(themeObject: ThemeObject) {
   const { light, dark } = convertThemeStyles(themeObject);
 
   // Generate shadow variables for both light and dark modes
@@ -226,4 +226,5 @@ export function generateThemeRegistryFromPreset(preset: Preset) {
 export function generateThemeRegistryFromThemeObject(themeObject: ThemeObject) {
   const registryItem = buildThemeRegistryItem(themeObject);
   writeToRegistry(THEMES_DIR, registryItem);
+  return registryItem;
 }
