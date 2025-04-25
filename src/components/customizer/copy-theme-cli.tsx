@@ -30,6 +30,7 @@ import { toast } from "sonner";
 import { CopyToClipboardButton } from "../copy-to-clipboard-button";
 import { ExternalLink } from "../external-link";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 export function CopyThemeCLI({
   className,
@@ -136,50 +137,59 @@ export function CopyThemeCLI({
 
 function CopyThemeCLITabs() {
   const themeRegistryUrl = process.env.NEXT_PUBLIC_THEME_REGISTRY_URL;
+  const themeRegistryApiUrl = process.env.NEXT_PUBLIC_THEME_REGISTRY_API_URL;
 
   const packageManager = usePackageManager();
   const { setPackageManager } = usePreferencesActions();
   const { currentThemeObject, hasCurrentPresetChanged } = useThemeConfig();
+
   const [isLoading, startTransition] = useTransition();
+  const [baseUrlType, setBaseUrlType] = useState<"public" | "api">("public");
   const [themeName, setThemeName] = useState(currentThemeObject.name);
+
+  const baseUrl =
+    baseUrlType === "public" ? themeRegistryUrl : themeRegistryApiUrl;
+  const themeNameUrl =
+    baseUrlType === "public" ? `${themeName}.json` : themeName;
+  const themeRegistryItemUrl = `${baseUrl}/${themeNameUrl}`;
+
+  const getBaseCliCommand = () => {
+    const pmPrefixes = {
+      npm: "npx",
+      pnpm: "pnpm dlx",
+      bun: "bunx",
+      yarn: "yarn dlx",
+    };
+    const prefixPM = pmPrefixes[packageManager] || "npx";
+    return `${prefixPM} shadcn@latest add `;
+  };
+
+  const fullCliCommand = `${getBaseCliCommand()} ${themeRegistryItemUrl}`;
 
   const generateCLICommandForCurrentThemeObject = () => {
     startTransition(async () => {
-      const promise = new Promise(async (resolve, reject) => {
-        const res =
+      // Since the async function is a Server Action, ir order for the toast to catch the error,
+      // i had to manually create a promise and resolve/reject it based on the result of the action.
+      const promise = new Promise(async (res, rej) => {
+        const response =
           await generateThemeRegistryItemFromThemeObject(currentThemeObject);
-        if (res.success) {
-          resolve(res.data);
-        } else {
-          reject(res.error);
-        }
+        if (response.success) res(response.data);
+        else rej(response.error);
       });
 
       toast.promise(promise, {
         loading: "Generating theme registry item...",
         success: (name) => {
+          setBaseUrlType("api");
           setThemeName(name as string);
           return `Theme registry item has been created!`;
         },
         error: (error) => {
-          return error;
+          return error || "An error occurred";
         },
       });
     });
   };
-
-  const getThemeRegistryCommandBase = () => {
-    const shadcnAddThemeRegistryCommand = `shadcn@latest add ${themeRegistryUrl}/`;
-    let commandPrefix = `npx`;
-    if (packageManager === "npm") commandPrefix = `npx`;
-    else if (packageManager === "pnpm") commandPrefix = `pnpm dlx`;
-    else if (packageManager === "bun") commandPrefix = `bunx`;
-    else if (packageManager === "yarn") commandPrefix = `yarn dlx`;
-
-    return `${commandPrefix} ${shadcnAddThemeRegistryCommand}`;
-  };
-
-  const shadcnCommandBase = getThemeRegistryCommandBase();
 
   return (
     <>
@@ -201,52 +211,44 @@ function CopyThemeCLITabs() {
             value={packageManager}
             onValueChange={setPackageManager}
           >
-            <ToggleGroupItem
-              value="npm"
-              className="text-muted-foreground h-8 p-0 px-2 font-mono text-xs shadow-none first:rounded-none md:text-sm"
-            >
-              npm
-            </ToggleGroupItem>
-
-            <ToggleGroupItem
-              value="pnpm"
-              className="text-muted-foreground h-8 p-0 px-2 font-mono text-xs shadow-none md:text-sm"
-            >
-              pnpm
-            </ToggleGroupItem>
-
-            <ToggleGroupItem
-              value="bun"
-              className="text-muted-foreground h-8 p-0 px-2 font-mono text-xs shadow-none md:text-sm"
-            >
-              bun
-            </ToggleGroupItem>
-
-            <ToggleGroupItem
-              value="yarn"
-              className="text-muted-foreground h-8 p-0 px-2 font-mono text-xs shadow-none last:rounded-none md:text-sm"
-            >
-              yarn
-            </ToggleGroupItem>
+            {["npm", "pnpm", "bun", "yarn"].map((pm) => (
+              <ToggleGroupItem
+                key={pm}
+                value={pm}
+                className="text-muted-foreground h-8 p-0 px-2 font-mono text-xs shadow-none first:rounded-none last:rounded-none md:text-sm"
+              >
+                {pm}
+              </ToggleGroupItem>
+            ))}
           </ToggleGroup>
+
           <CopyToClipboardButton
-            text={`${shadcnCommandBase}${themeName}.json`}
+            text={fullCliCommand}
             className="mr-1 size-6"
             disabled={isLoading}
           />
         </div>
 
-        <div className="bg-muted w-full px-2 py-1">
-          <code className={cn("truncate font-mono text-xs md:text-sm")}>
-            <span>{shadcnCommandBase}</span>
+        <ScrollArea className="bg-muted scrollbar-thin w-full overflow-x-auto px-2 py-2">
+          <code
+            className={cn(
+              "font-mono text-xs whitespace-nowrap md:text-sm",
+              isLoading && "pointer-events-none",
+            )}
+          >
+            <span>{getBaseCliCommand()}</span>
             <span
               className={cn(
-                "text-primary transition-all",
-                isLoading && "text-foreground animate-pulse",
+                "transition-all",
+                isLoading && "text-primary animate-pulse",
               )}
-            >{`${themeName}.json`}</span>
+            >
+              {themeRegistryItemUrl}
+            </span>
           </code>
-        </div>
+
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </div>
     </>
   );

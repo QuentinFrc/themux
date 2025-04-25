@@ -1,20 +1,22 @@
 "use server";
 
+import { createRegistryItem } from "@/data/r/themes";
 import { ThemeObject } from "@/types/theme";
-import { generateThemeRegistryFromThemeObject } from "@/utils/registry/themes";
+import { buildThemeRegistryItem } from "@/utils/registry/themes";
 
 export async function generateThemeRegistryItemFromThemeObject(
   themeObject: ThemeObject,
 ) {
-  // Mutate the name to make it unique
+  // Name needs to be a UUID to be unique, hence I use this as the ID in the database
   const randomId = crypto.randomUUID();
-  themeObject.name = `${themeObject.name}-${randomId}`;
+  themeObject.name = randomId;
 
   try {
-    const registryItem = generateThemeRegistryFromThemeObject(themeObject);
+    const registryItem = buildThemeRegistryItem(themeObject);
+    const registryItemName = await createRegistryItem(registryItem);
     return {
       success: true,
-      data: registryItem.name,
+      data: registryItemName,
     };
   } catch (e) {
     return {
