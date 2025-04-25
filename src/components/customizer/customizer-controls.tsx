@@ -118,7 +118,7 @@ export function PasteColorControl({
   return (
     <div className={cn("rounded-lg shadow", className)} {...props}>
       <form
-        className="relative flex h-10 items-center gap-1 overflow-hidden rounded-lg border p-0.5"
+        className="relative flex items-center"
         onSubmit={handleSubmitColorPaste}
       >
         <Input
@@ -126,7 +126,7 @@ export function PasteColorControl({
           id="pasted-color"
           onChange={handleInputChange}
           className={cn(
-            "h-fit font-mono lowercase outline transition",
+            "border-border relative h-10 bg-transparent px-0 py-2 pr-10 pl-2 font-mono lowercase shadow outline transition dark:bg-transparent",
             !isValidColor && "outline-destructive",
           )}
           placeholder={placeholder}
@@ -136,10 +136,8 @@ export function PasteColorControl({
           variant="ghost"
           size="sm"
           className={cn(
-            "mr-0.5 size-7 transition",
-            isValidPastedColor
-              ? "bg-(--pasted-color) text-(--pasted-color-foreground) inset-ring-2 inset-ring-(--pasted-color)"
-              : "",
+            "absolute right-2 size-6 rounded-lg transition",
+            isValidPastedColor ? "text-(--pasted-color)" : "",
           )}
           style={{
             "--pasted-color": isValidPastedColor ? pastedColor : "",
@@ -148,7 +146,7 @@ export function PasteColorControl({
               : "",
           }}
         >
-          <SendHorizontal className="size-3.5" />
+          <SendHorizontal className="size-4" />
         </Button>
       </form>
     </div>

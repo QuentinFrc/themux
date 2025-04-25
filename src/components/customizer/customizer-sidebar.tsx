@@ -82,9 +82,12 @@ export function CustomizerSidebar({
           </TabsList>
         </SidebarHeader>
 
-        <SidebarContent className="@container relative my-0 max-h-svh py-2 group-data-[collapsible=icon]:invisible [&>button]:hidden">
-          <ScrollArea className="flex flex-col overflow-hidden px-2 pr-3">
-            <TabsContent value="palette" className="flex flex-col space-y-4">
+        <SidebarContent className="@container relative my-0 max-h-svh pt-2 pb-0 group-data-[collapsible=icon]:invisible [&>button]:hidden">
+          <ScrollArea className="flex flex-col overflow-hidden px-2 pr-1">
+            <TabsContent
+              value="palette"
+              className="mr-2 mb-2 flex flex-col space-y-4"
+            >
               <section className="flex-1 space-y-1.5 max-sm:w-full max-sm:max-w-full">
                 <Label className="flex items-center gap-1 pb-2">
                   <PaintBucket className="size-4" /> Theme presets
@@ -95,7 +98,7 @@ export function CustomizerSidebar({
               <ColorTokens />
             </TabsContent>
 
-            <TabsContent value="tokens">
+            <TabsContent value="tokens" className="mr-2 mb-2">
               <section className="space-y-1.5">
                 <Label className="flex items-center gap-1 pb-2">
                   <SlidersHorizontal className="size-4" /> Other tokens
@@ -122,7 +125,7 @@ export function CustomizerSidebar({
               </section>
             </TabsContent>
 
-            <TabsContent value="typography">
+            <TabsContent value="typography" className="mr-2 mb-2">
               <Typography />
             </TabsContent>
           </ScrollArea>

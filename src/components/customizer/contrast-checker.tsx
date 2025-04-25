@@ -439,7 +439,7 @@ function ContrastCheckerResults({
                                 style={{
                                   backgroundColor: pair.background ?? "#000000",
                                 }}
-                                className="h-10 w-10 flex-shrink-0 rounded-md border shadow-sm"
+                                className="h-10 w-10 flex-shrink-0 rounded-md border"
                               />
                               <div className="flex flex-col">
                                 <span className="text-xs font-medium">
@@ -456,7 +456,7 @@ function ContrastCheckerResults({
                                 style={{
                                   backgroundColor: pair.foreground ?? "#ffffff",
                                 }}
-                                className="h-10 w-10 flex-shrink-0 rounded-md border shadow-sm"
+                                className="h-10 w-10 flex-shrink-0 rounded-md border"
                               />
                               <div className="flex flex-col">
                                 <span className="text-xs font-medium">
@@ -473,7 +473,7 @@ function ContrastCheckerResults({
                             style={{
                               backgroundColor: pair.background ?? "transparent",
                             }}
-                            className="flex h-full min-h-[100px] flex-1 items-center justify-center overflow-hidden rounded-lg border shadow-sm"
+                            className="flex h-full min-h-[100px] flex-1 items-center justify-center overflow-hidden rounded-lg border"
                           >
                             {pair.foreground && pair.background ? (
                               <div className="flex h-full flex-col items-center gap-2 p-2 text-center">
