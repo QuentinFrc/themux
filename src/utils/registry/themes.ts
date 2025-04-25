@@ -101,13 +101,13 @@ function convertThemeStyles(themeObject: ThemeObject) {
   return {
     light: {
       ...initialThemeConfig.themeObject.light,
-      radius: themeObject.radius || FALLBACKS.radius,
       ...{
         "font-sans": themeObject.fonts?.sans || FALLBACKS["font-sans"],
         "font-serif": themeObject.fonts?.serif || FALLBACKS["font-serif"],
         "font-mono": themeObject.fonts?.mono || FALLBACKS["font-mono"],
       },
       ...convertBaseThemeProps(light as ThemeProperties),
+      radius: themeObject.radius || FALLBACKS.radius,
       "shadow-color": convertColor(
         light["shadow-color"] ?? FALLBACKS["shadow-color"],
       ),

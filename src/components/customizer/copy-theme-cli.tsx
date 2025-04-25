@@ -26,6 +26,7 @@ import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 
 import { generateThemeRegistryItemFromThemeObject } from "@/actions/registry";
 import { usePackageManager } from "@/store/preferences-store";
+import { ThemeObject } from "@/types/theme";
 import { toast } from "sonner";
 import { CopyToClipboardButton } from "../copy-to-clipboard-button";
 import { ExternalLink } from "../external-link";
@@ -141,7 +142,12 @@ function CopyThemeCLITabs() {
 
   const packageManager = usePackageManager();
   const { setPackageManager } = usePreferencesActions();
-  const { currentThemeObject, hasCurrentPresetChanged } = useThemeConfig();
+  const {
+    currentThemeObject,
+    currentFonts,
+    currentRadius,
+    hasCurrentPresetChanged,
+  } = useThemeConfig();
 
   const [isLoading, startTransition] = useTransition();
   const [baseUrlType, setBaseUrlType] = useState<"public" | "api">("public");
@@ -167,12 +173,22 @@ function CopyThemeCLITabs() {
   const fullCliCommand = `${getBaseCliCommand()} ${themeRegistryItemUrl}`;
 
   const generateCLICommandForCurrentThemeObject = () => {
+    // Build the themeObject with the "current" tokens
+    const themeObject: ThemeObject = {
+      ...currentThemeObject,
+      fonts: {
+        ...currentThemeObject.fonts,
+        ...currentFonts,
+      },
+      radius: currentRadius,
+    };
+
     startTransition(async () => {
       // Since the async function is a Server Action, ir order for the toast to catch the error,
       // i had to manually create a promise and resolve/reject it based on the result of the action.
       const promise = new Promise(async (res, rej) => {
         const response =
-          await generateThemeRegistryItemFromThemeObject(currentThemeObject);
+          await generateThemeRegistryItemFromThemeObject(themeObject);
         if (response.success) res(response.data);
         else rej(response.error);
       });
