@@ -24,6 +24,11 @@ export const sansFonts = {
     value: "Poppins, ui-sans-serif, sans-serif",
     href: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap",
   },
+  Figtree: {
+    key: "Figtree",
+    value: "Figtree, ui-sans-serif, sans-serif",
+    href: "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&display=swap",
+  },
   Montserrat: {
     key: "Montserrat",
     value: "Montserrat, ui-sans-serif, sans-serif",
@@ -89,6 +94,11 @@ export const sansFonts = {
 export const sansFontsArray = Object.values(sansFonts);
 
 export const serifFonts = {
+  Adamina: {
+    key: "Adamina",
+    value: "Adamina, ui-serif, serif",
+    href: "https://fonts.googleapis.com/css2?family=Adamina&display=swap",
+  },
   "IBM Plex Serif": {
     key: "IBM Plex Serif",
     value: "IBM Plex Serif, ui-serif, serif",

@@ -4,9 +4,9 @@
   "type": "registry:style",
   "cssVars": {
     "theme": {
-      "font-sans": "ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',\n    'Noto Color Emoji'",
+      "font-sans": "Figtree, ui-sans-serif, sans-serif",
       "font-serif": "ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif",
-      "font-mono": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',\n    monospace",
+      "font-mono": "JetBrains Mono, ui-monospace, monospace",
       "tracking-tighter": "calc(var(--tracking-normal) - 0.05em)",
       "tracking-tight": "calc(var(--tracking-normal) - 0.025em)",
       "tracking-wide": "calc(var(--tracking-normal) + 0.025em)",
@@ -15,9 +15,9 @@
     },
     "light": {
       "radius": "0.5rem",
-      "font-sans": "ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',\n    'Noto Color Emoji'",
+      "font-sans": "Figtree, ui-sans-serif, sans-serif",
       "font-serif": "ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif",
-      "font-mono": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',\n    monospace",
+      "font-mono": "JetBrains Mono, ui-monospace, monospace",
       "background": "oklch(0.982 0.01 325.65)",
       "foreground": "oklch(0.324 0.116 325.04)",
       "card": "oklch(0.973 0.013 321.095)",
@@ -29,7 +29,7 @@
       "secondary": "oklch(0.87 0.067 334.919)",
       "secondary-foreground": "oklch(0.445 0.134 324.776)",
       "muted": "oklch(0.803 0.091 345.833)",
-      "muted-foreground": "oklch(0.494 0.191 354.261)",
+      "muted-foreground": "oklch(0.414 0.103 347.247)",
       "accent": "oklch(0.87 0.067 334.919)",
       "accent-foreground": "oklch(0.445 0.134 324.776)",
       "destructive": "oklch(0.527 0.211 8.562)",
