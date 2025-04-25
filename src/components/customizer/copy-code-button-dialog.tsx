@@ -15,7 +15,7 @@ import { generateThemeCode } from "@/utils/theme-style-generator";
 import { Check, Clipboard, Code, Terminal } from "lucide-react";
 import React, { useMemo } from "react";
 import { TooltipWrapper } from "../tooltip-wrapper";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { Alert, AlertDescription } from "../ui/alert";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -69,10 +69,9 @@ export function CopyCodeButtonDialog({
           <div className="space-y-4 px-4 pb-4">
             <Alert className="bg-muted">
               <Terminal className="h-4 w-4" />
-              <AlertTitle>You need to know...</AlertTitle>
               <AlertDescription>
-                Soon, custom themes will be supported through the shadcn CLI.
-                For now, apply manually.
+                You can apply your custom theme styles with a command. Or do it
+                manually for more control.
               </AlertDescription>
             </Alert>
             <GeneratedCodeOptions />
@@ -107,10 +106,9 @@ export function CopyCodeButtonDialog({
 
           <Alert className="bg-muted">
             <Terminal className="h-4 w-4" />
-            <AlertTitle>You need to know...</AlertTitle>
             <AlertDescription>
-              Soon, custom themes will be supported through the shadcn CLI. For
-              now, apply manually.
+              You can apply your custom theme styles with a command. Or do it
+              manually for more control.
             </AlertDescription>
           </Alert>
 
