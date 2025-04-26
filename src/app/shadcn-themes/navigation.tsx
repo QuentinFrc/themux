@@ -44,7 +44,7 @@ export function MobileNavigation() {
   useClickOutside(mobileMenuRef, () => setIsOpen(false));
 
   return (
-    <>
+    <div ref={mobileMenuRef}>
       <Button
         variant="ghost"
         size="icon"
@@ -65,9 +65,8 @@ export function MobileNavigation() {
         />
       </Button>
       <div
-        ref={mobileMenuRef}
         className={cn(
-          "from-background to-sidebar absolute inset-x-0 top-full z-40 grid grid-rows-[0fr] gap-2 overflow-hidden bg-linear-180 transition-all duration-200 ease-out md:grid-rows-[0fr]",
+          "bg-background absolute inset-x-0 top-full z-40 grid grid-rows-[0fr] gap-2 overflow-hidden transition-all duration-200 ease-out md:grid-rows-[0fr]",
           isOpen && isMobile ? "grid-rows-[1fr] border-b" : "",
         )}
       >
@@ -93,7 +92,7 @@ export function MobileNavigation() {
           </div>
         </ContainerWrapper>
       </div>
-    </>
+    </div>
   );
 }
 
