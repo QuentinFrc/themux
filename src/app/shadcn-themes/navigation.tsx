@@ -4,13 +4,14 @@ import { FrameHighlight } from "@/components/frame-highlight";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { ContainerWrapper } from "@/components/wrappers";
+import { useClickOutside } from "@/hooks/use-click-outside";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function MainNavigation() {
   return (
@@ -28,9 +29,10 @@ export function MainNavigation() {
 }
 
 export function MobileNavigation() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const pathname = usePathname();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isMobile && isOpen) {
@@ -38,6 +40,8 @@ export function MobileNavigation() {
       setIsOpen(false);
     }
   }, [isMobile, isOpen]);
+
+  useClickOutside(mobileMenuRef, () => setIsOpen(false));
 
   return (
     <>
@@ -61,6 +65,7 @@ export function MobileNavigation() {
         />
       </Button>
       <div
+        ref={mobileMenuRef}
         className={cn(
           "from-background to-sidebar absolute inset-x-0 top-full z-40 grid grid-rows-[0fr] gap-2 overflow-hidden bg-linear-180 transition-all duration-200 ease-out md:grid-rows-[0fr]",
           isOpen && isMobile ? "grid-rows-[1fr] border-b" : "",
@@ -68,13 +73,13 @@ export function MobileNavigation() {
       >
         <ContainerWrapper className="overflow-hidden">
           <Label className="text-muted-foreground text-xs">Navigation</Label>
-          <div className="flex flex-col gap-2 pt-2 pb-4">
+          <div className="flex flex-col gap-2.5 pt-2 pb-4">
             {NAV_LINKS.map(({ href, title }) => {
               const isSamePathname = pathname === href;
               return (
                 <button
                   key={href}
-                  className="text-left"
+                  className="m-0 h-fit p-0 text-left"
                   onClick={() => {
                     if (isSamePathname) return;
                     // Only close the mobile menu if the link clicked has a different pathname
