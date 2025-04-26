@@ -37,7 +37,10 @@ export default function ShadcnThemesPage() {
             <TabsTrigger value="dashboard-demo" className="px-4">
               Dashboard
             </TabsTrigger>
-            <TabsTrigger value="mail-demo" className="px-4">
+            <TabsTrigger
+              value="mail-demo"
+              className="hidden px-4 lg:inline-flex"
+            >
               Mail
             </TabsTrigger>
           </TabsList>

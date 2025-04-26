@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { useShowTooltips } from "@/store/preferences-store";
 import { ComponentProps } from "react";

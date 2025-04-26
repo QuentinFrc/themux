@@ -1,10 +1,16 @@
 "use client";
 
 import { FrameHighlight } from "@/components/frame-highlight";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { ContainerWrapper } from "@/components/wrappers";
+import { useMediaQuery } from "@/hooks/use-media-query";
 import { NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export function MainNavigation() {
   return (
@@ -21,17 +27,86 @@ export function MainNavigation() {
   );
 }
 
+export function MobileNavigation() {
+  const [isOpen, setIsOpen] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!isMobile && isOpen) {
+      //  Close the mobile menu if the screen size gets larger and it's open
+      setIsOpen(false);
+    }
+  }, [isMobile, isOpen]);
+
+  return (
+    <>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="inline-flex md:hidden"
+        onClick={() => setIsOpen((prev) => !prev)}
+      >
+        <Menu
+          className={cn(
+            "size-4 transition duration-200",
+            isOpen ? "absolute scale-0" : "scale-100",
+          )}
+        />
+        <X
+          className={cn(
+            "size-4 transition duration-200",
+            !isOpen ? "absolute scale-0" : "scale-100",
+          )}
+        />
+      </Button>
+      <div
+        className={cn(
+          "from-background to-sidebar absolute inset-x-0 top-full z-40 grid grid-rows-[0fr] gap-2 overflow-hidden bg-linear-180 transition-all duration-200 ease-out md:grid-rows-[0fr]",
+          isOpen && isMobile ? "grid-rows-[1fr] border-b" : "",
+        )}
+      >
+        <ContainerWrapper className="overflow-hidden">
+          <Label className="text-muted-foreground text-xs">Navigation</Label>
+          <div className="flex flex-col gap-2 pt-2 pb-4">
+            {NAV_LINKS.map(({ href, title }) => {
+              const isSamePathname = pathname === href;
+              return (
+                <button
+                  key={href}
+                  className="text-left"
+                  onClick={() => {
+                    if (isSamePathname) return;
+                    // Only close the mobile menu if the link clicked has a different pathname
+                    setIsOpen(false);
+                  }}
+                >
+                  <NavLink href={href} title={title} />
+                </button>
+              );
+            })}
+          </div>
+        </ContainerWrapper>
+      </div>
+    </>
+  );
+}
+
 function NavLink({ href, title }: { href: string; title: string }) {
   const pathname = usePathname();
   const isActive = pathname === href;
+
   return (
     <Link
       key={href}
       href={href}
       className={cn(
-        "text-muted-foreground hover:text-foreground/80 relative px-1.5 py-0.5 text-sm transition-all ease-out",
+        "text-muted-foreground hover:text-accent-foreground relative text-sm transition-all ease-out",
         isActive && "text-foreground hover:text-foreground",
       )}
+      onNavigate={(e) => {
+        if (isActive) e.preventDefault();
+      }}
     >
       {isActive ? <FrameHighlight>{title}</FrameHighlight> : title}
     </Link>
