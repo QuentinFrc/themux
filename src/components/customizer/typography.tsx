@@ -25,7 +25,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
 
       <ControlSection title="Sans font" id="sans-font" className="p-0" expanded>
         <Command className={cn("bg-background", className)}>
-          <CommandInput />
+          <CommandInput className="text-base" />
 
           <ScrollArea className="flex max-h-72 flex-col">
             <CommandEmpty>
@@ -164,7 +164,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
         className="p-0 font-serif"
       >
         <Command className={cn("bg-background", className)}>
-          <CommandInput />
+          <CommandInput className="text-base" />
 
           <ScrollArea className="flex max-h-47 flex-col">
             <CommandEmpty>
@@ -219,7 +219,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
         className="p-0 font-mono"
       >
         <Command className={cn("bg-background", className)}>
-          <CommandInput />
+          <CommandInput className="text-base" />
 
           <ScrollArea className="flex max-h-47 flex-col">
             <CommandEmpty>

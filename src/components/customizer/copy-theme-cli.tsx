@@ -44,7 +44,7 @@ export function CopyThemeCLI({
     ? "Use the shadcn CLI"
     : "Theme preset has not changed";
   const alertDescription = hasCurrentPresetChanged()
-    ? `Make sure to generate the theme registry item, otherwise the command will apply the base styles for the current preset: ${currentPresetThemeObject?.label}.`
+    ? `Make sure to generate the registry item, otherwise the command will apply the base styles for the current preset: ${currentPresetThemeObject?.label}.`
     : `This command will apply the base styles for the current preset: ${currentPresetThemeObject?.label}.`;
 
   return (
@@ -57,6 +57,7 @@ export function CopyThemeCLI({
             {...props}
           >
             <Terminal className="text-primary" />
+            Command
           </Button>
         </DrawerTrigger>
         <DrawerContent>
@@ -85,7 +86,6 @@ export function CopyThemeCLI({
               <AlertTitle>{alertTitle}</AlertTitle>
               <AlertDescription>{alertDescription}</AlertDescription>
             </Alert>
-
             <CopyThemeCLITabs />
           </div>
         </DrawerContent>
@@ -213,7 +213,7 @@ function CopyThemeCLITabs() {
         <Button
           disabled={isLoading || !hasCurrentPresetChanged()}
           onClick={generateCLICommandForCurrentThemeObject}
-          className="font-semibold uppercase"
+          className="w-full font-semibold uppercase"
         >
           Generate theme registry item
         </Button>

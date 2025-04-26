@@ -35,40 +35,38 @@ export function ActionButtons({ className }: ActionButtonsProps) {
           />
         </TooltipWrapper>
         <TooltipWrapper label="View shadcn CLI registry command" asChild>
-          <CopyThemeCLI size="sm" variant="outline" className="" />
+          <CopyThemeCLI size="sm" variant="outline" className="flex-1" />
         </TooltipWrapper>
       </section>
 
+      <Separator
+        orientation="vertical"
+        className="hidden min-h-6 @xl:inline-flex"
+      />
+
       <section className="flex items-center justify-between gap-2 @max-[375px]:w-full">
-        <TooltipWrapper label="Toggle light/dark" asChild>
-          <ModeSwitcher />
+        <TooltipWrapper label="Options to reset tokens" asChild>
+          <ResetButton size="sm" variant="ghost" />
         </TooltipWrapper>
 
-        <TooltipWrapper label="Generate random theme" asChild>
-          <RandomizeButton />
-        </TooltipWrapper>
-
-        <Separator
-          orientation="vertical"
-          className="hidden min-h-6 @xl:inline-flex"
-        />
+        <div className="@md:hidden">
+          <TooltipWrapper label="Toggle light/dark" asChild>
+            <ModeSwitcher />
+          </TooltipWrapper>
+        </div>
 
         <TooltipWrapper label="Check contrast ratio" asChild>
           <ContrastChecker />
         </TooltipWrapper>
 
         {/* TODO: Import CSS variables button */}
-        <TooltipWrapper label="Bring your CSS variables" asChild>
+        {/* <TooltipWrapper label="Bring your CSS variables" asChild>
           <Button size="sm" variant="ghost" disabled>
             <FileCode2 />
             <span className="hidden @xl:inline-flex">Import</span>
             <span className="sr-only">Import CSS variables</span>
           </Button>
-        </TooltipWrapper>
-
-        <TooltipWrapper label="Options to reset tokens" asChild>
-          <ResetButton size="sm" variant="ghost" />
-        </TooltipWrapper>
+        </TooltipWrapper> */}
 
         <TooltipWrapper label="Configure the customizer" asChild>
           <CustomizerSettings variant="ghost" />

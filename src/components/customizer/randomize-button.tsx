@@ -1,3 +1,5 @@
+"use client";
+
 import { useSurfaceShades } from "@/hooks/use-surface-shades";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { useTokens } from "@/hooks/use-tokens";

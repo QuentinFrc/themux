@@ -211,8 +211,8 @@ function BlockViewerToolbar({
               </TooltipWrapper>
 
               <TooltipWrapper label="Open in new tab" asChild>
-                <Button size="icon" variant="ghost" className="size-7">
-                  <ExternalLink href={`${baseUrl}${internalUrl}`}>
+                <Button size="icon" variant="ghost" className="h-7">
+                  <ExternalLink href={`${baseUrl}${internalUrl}`} showIcon>
                     <span className="sr-only">Open in New Tab</span>
                     <Fullscreen className="size-4" />
                   </ExternalLink>
