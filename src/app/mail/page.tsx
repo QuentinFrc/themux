@@ -1,4 +1,4 @@
-import { MailPage } from "@/components/mail-demo";
+import { MailPage } from "@/components/demos/mail-demo";
 
 export default function Page() {
   return <MailPage />;

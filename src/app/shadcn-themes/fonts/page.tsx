@@ -1,3 +1,5 @@
+import { Metadata } from "next";
+
 import {
   PageHeader,
   PageHeaderDescription,
@@ -5,7 +7,6 @@ import {
 } from "@/components/page-header";
 import { Separator } from "@/components/ui/separator";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Fonts",

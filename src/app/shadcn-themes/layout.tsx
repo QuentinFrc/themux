@@ -1,3 +1,5 @@
+import { Metadata } from "next";
+
 import {
   CustomizerSidebar,
   CustomizerSidebarToggle,
@@ -12,7 +14,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ContainerWrapper } from "@/components/wrappers";
-import { Metadata } from "next";
 import { MainNavigation, MobileNavigation } from "./navigation";
 
 export const metadata: Metadata = {

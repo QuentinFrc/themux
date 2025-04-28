@@ -1,17 +1,14 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { FileCode2 } from "lucide-react";
 import { ComponentProps } from "react";
 import { ModeSwitcher } from "../mode-switcher";
 import { TooltipWrapper } from "../tooltip-wrapper";
-import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { ContrastChecker } from "./contrast-checker";
 import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
 import { CopyThemeCLI } from "./copy-theme-cli";
 import { CustomizerSettings } from "./customizer-settings";
-import { RandomizeButton } from "./randomize-button";
 import { ResetButton } from "./reset-button";
 
 interface ActionButtonsProps extends ComponentProps<"section"> {

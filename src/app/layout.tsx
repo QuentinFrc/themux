@@ -3,15 +3,13 @@ import { ReactScan } from "@/components/devtools/react-scan";
 import { ScreenDevTools } from "@/components/devtools/screen-devtools";
 import { FontLoader } from "@/components/font-loader";
 import { LoadTheme } from "@/components/load-theme";
-import { PostHogProvider } from "@/components/posthog-provider";
-import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeSync } from "@/components/theme-sync";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
-import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Suspense } from "react";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: {
@@ -61,26 +59,16 @@ export default async function RootLayout({
       <ReactScan options={{ enabled: true }} />
 
       <body className={cn(`antialiased`)}>
-        <PostHogProvider>
-          <NuqsAdapter>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <Suspense>
-                {children}
-                <ThemeSync />
-              </Suspense>
+        <Providers>
+          <Suspense>
+            {children}
+            <ThemeSync />
+          </Suspense>
 
-              <FontLoader />
-              <Toaster />
-
-              <ScreenDevTools />
-            </ThemeProvider>
-          </NuqsAdapter>
-        </PostHogProvider>
+          <FontLoader />
+          <Toaster />
+          <ScreenDevTools />
+        </Providers>
       </body>
     </html>
   );
