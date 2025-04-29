@@ -13,6 +13,10 @@ export function getCssVarsFromThemeObject(
   return cssVars;
 }
 
+export const DEFAULT_RADIUS = "0.625rem"; // 10px
+
+export const DEFAULT_SURFACE = "default";
+
 // from  @node_modules/tailwindcss/theme.css
 export const DEFAULT_FONTS = {
   "font-sans": `ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
@@ -34,8 +38,8 @@ export const DEFAULT_SHADOWS = {
 };
 
 export const initialThemeConfig: ThemeConfig = {
-  radius: "0.625rem",
-  surface: "default",
+  radius: DEFAULT_RADIUS,
+  surface: DEFAULT_SURFACE,
   fonts: {
     sans: basePresetsV4.neutral.fonts?.sans || DEFAULT_FONTS["font-sans"],
     serif: basePresetsV4.neutral.fonts?.serif || DEFAULT_FONTS["font-serif"],

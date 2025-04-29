@@ -1,6 +1,15 @@
 import { allPresetsArray } from "@/lib/colors";
-import { initialThemeConfig } from "@/lib/themes";
+import {
+  DEFAULT_FONTS,
+  DEFAULT_RADIUS,
+  DEFAULT_SURFACE,
+  initialThemeConfig,
+} from "@/lib/themes";
 import { ThemeObject } from "@/types/theme";
+import {
+  mergeThemeObjects,
+  mergeThemeObjectWithInitial,
+} from "@/utils/theme-config";
 import { isEqual } from "lodash";
 import React from "react";
 import { useConfig } from "./use-config";
@@ -25,12 +34,14 @@ export function useThemeConfig() {
   );
 
   const updateThemeConfig = (themeObject: ThemeObject) => {
+    const mergedThemeObject = mergeThemeObjectWithInitial(themeObject);
+
     setConfig((prev) => ({
       ...prev,
       surface: "default",
       fonts: { ...prev.fonts, ...themeObject.fonts },
       radius: themeObject.radius ?? prev.radius,
-      themeObject,
+      themeObject: mergedThemeObject,
     }));
   };
 
@@ -41,51 +52,70 @@ export function useThemeConfig() {
   const resetToLatestThemePreset = () => {
     if (!currentPresetThemeObject) return;
 
-    if (currentPresetName === "neutral") {
-      return;
-    }
-
     setConfig((prev) => {
+      const themeObject = mergeThemeObjects(
+        prev.themeObject,
+        currentPresetThemeObject,
+      );
+      const mergedThemeObject = mergeThemeObjectWithInitial(themeObject);
+
       return {
         ...prev,
-        surface: "default",
-        fonts: currentPresetThemeObject.fonts ?? prev.fonts,
-        radius: currentPresetThemeObject.radius ?? prev.radius,
-        themeObject: {
-          ...prev.themeObject,
-          ...currentPresetThemeObject,
+        surface: DEFAULT_SURFACE,
+        fonts: {
+          sans:
+            currentPresetThemeObject.fonts?.sans ?? DEFAULT_FONTS["font-sans"],
+          serif:
+            currentPresetThemeObject.fonts?.serif ??
+            DEFAULT_FONTS["font-serif"],
+          mono:
+            currentPresetThemeObject.fonts?.mono ?? DEFAULT_FONTS["font-mono"],
         },
+        radius: currentPresetThemeObject.radius ?? DEFAULT_RADIUS,
+        themeObject: mergedThemeObject,
       };
     });
   };
 
   const hasDefaultThemeChanged = () => {
-    const defaultThemeObject = initialThemeConfig.themeObject;
+    const initialThemeObject = initialThemeConfig.themeObject;
+    const initialThemeRadius = initialThemeConfig.radius;
+    const initialThemeFonts = initialThemeConfig.fonts;
 
-    const themeObjectIsEqual = isEqual(currentThemeObject, defaultThemeObject);
-    const radiusIsEqual = currentRadius === initialThemeConfig.radius;
-    const areFontsEqual = isEqual(currentFonts, defaultThemeObject.fonts);
+    const isThemeObjectEqual = isEqual(currentThemeObject, initialThemeObject);
+    const isRadiusEqual = currentRadius === initialThemeRadius;
+    const areFontsEqual = isEqual(currentFonts, initialThemeFonts);
 
-    return !themeObjectIsEqual || !radiusIsEqual || !areFontsEqual;
+    return !isThemeObjectEqual || !isRadiusEqual || !areFontsEqual;
   };
 
   const hasCurrentPresetChanged = () => {
-    if (currentPresetName === "neutral") {
-      return false;
-    }
+    const mergedThemeObjectWithDefaults = mergeThemeObjectWithInitial(
+      currentPresetThemeObject!,
+    );
 
-    const themeObjectIsEqual = isEqual(
-      currentPresetThemeObject,
+    const isThemeObjectEqual = isEqual(
+      mergedThemeObjectWithDefaults,
       currentThemeObject,
     );
-    const radiusIsEqual =
+
+    const isRadiusEqual =
       (currentPresetThemeObject?.radius ?? initialThemeConfig.radius) ===
       currentRadius;
+
+    const presetFonts = {
+      sans: currentPresetThemeObject?.fonts?.sans ?? DEFAULT_FONTS["font-sans"],
+      serif:
+        currentPresetThemeObject?.fonts?.serif ?? DEFAULT_FONTS["font-serif"],
+      mono: currentPresetThemeObject?.fonts?.mono ?? DEFAULT_FONTS["font-mono"],
+    };
     const areFontsEqual = currentPresetThemeObject?.fonts
-      ? isEqual(currentPresetThemeObject.fonts, currentFonts)
+      ? isEqual(presetFonts, currentFonts)
       : true;
 
-    return !themeObjectIsEqual || !radiusIsEqual || !areFontsEqual;
+    console.log(isThemeObjectEqual, isRadiusEqual, areFontsEqual);
+
+    return !isThemeObjectEqual || !isRadiusEqual || !areFontsEqual;
   };
 
   return {
