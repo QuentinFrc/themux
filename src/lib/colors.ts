@@ -37,11 +37,11 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
       border: "oklch(0.922 0 0)", // --color-neutral-200
       input: "oklch(0.922 0 0)", // --color-neutral-200
       ring: "oklch(0.708 0 0)", // --color-neutral-400
-      "chart-1": "oklch(0.646 0.222 41.116)", // --color-orange-600
-      "chart-2": "oklch(0.6 0.118 184.704)", // --color-teal-600
-      "chart-3": "oklch(0.398 0.07 227.392)", // --color-cyan-900
-      "chart-4": "oklch(0.828 0.189 84.429)", // --color-amber-400
-      "chart-5": "oklch(0.769 0.188 70.08)", // --color-amber-500
+      "chart-1": "oklch(0.81 0.10 252)", // --color-blue-300
+      "chart-2": "oklch(0.62 0.19 260)", // --color-blue-500
+      "chart-3": "oklch(0.55 0.22 263)", // --color-blue-600
+      "chart-4": "oklch(0.49 0.22 264)", // --color-blue-700
+      "chart-5": "oklch(0.42 0.18 266)", // --color-blue-800
       sidebar: "oklch(0.985 0 0)", // --color-neutral-50
       "sidebar-foreground": "oklch(0.145 0 0)", // --color-neutral-950
       "sidebar-primary": "oklch(0.205 0 0)", // --color-neutral-900
@@ -56,7 +56,7 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
       foreground: "oklch(0.985 0 0)", // --color-neutral-50
       card: "oklch(0.205 0 0)", // --color-neutral-900
       "card-foreground": "oklch(0.985 0 0)", // --color-neutral-50
-      popover: "oklch(0.205 0 0)", // --color-neutral-900
+      popover: "oklch(0.269 0 0)", // --color-neutral-800
       "popover-foreground": "oklch(0.985 0 0)", // --color-neutral-50
       primary: "oklch(0.922 0 0)", // --color-neutral-200
       "primary-foreground": "oklch(0.205 0 0)", // --color-neutral-900
@@ -64,26 +64,26 @@ export const basePresetsV4: Record<PresetV4, ThemeObject> = {
       "secondary-foreground": "oklch(0.985 0 0)", // --color-neutral-50
       muted: "oklch(0.269 0 0)", // --color-neutral-800
       "muted-foreground": "oklch(0.708 0 0)", // --color-neutral-400
-      accent: "oklch(0.269 0 0)", // --color-neutral-800
+      accent: "oklch(0.371 0 0)", // --color-neutral-700
       "accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
       destructive: "oklch(0.704 0.191 22.216)", // --color-red-400
       "destructive-foreground": "oklch(0.145 0 0)", // --color-neutral-950
-      border: "oklch(1 0 0 / 10%)", // --color-white
-      input: "oklch(1 0 0 / 15%)", // --color-white
+      border: "oklch(1 0 0 / 10%)", // --color-white/10%
+      input: "oklch(1 0 0 / 15%)", // --color-white/15%
       ring: "oklch(0.556 0 0)", // --color-neutral-500
-      "chart-1": "oklch(0.488 0.243 264.376)", // --color-blue-700
-      "chart-2": "oklch(0.696 0.17 162.48)", // --color-emerald-500
-      "chart-3": "oklch(0.769 0.188 70.08)", // --color-amber-500
-      "chart-4": "oklch(0.627 0.265 303.9)", // --color-purple-500
-      "chart-5": "oklch(0.645 0.246 16.439)", // --color-rose-500
+      "chart-1": "oklch(0.81 0.10 252)", // --color-blue-300
+      "chart-2": "oklch(0.62 0.19 260)", // --color-blue-500
+      "chart-3": "oklch(0.55 0.22 263)", // --color-blue-600
+      "chart-4": "oklch(0.49 0.22 264)", // --color-blue-700
+      "chart-5": "oklch(0.42 0.18 266)", // --color-blue-800
       sidebar: "oklch(0.205 0 0)", // --color-neutral-900
       "sidebar-foreground": "oklch(0.985 0 0)", // --color-neutral-50
       "sidebar-primary": "oklch(0.488 0.243 264.376)", // --color-blue-700
       "sidebar-primary-foreground": "oklch(0.985 0 0)", // --color-neutral-50
       "sidebar-accent": "oklch(0.269 0 0)", // --color-neutral-800
       "sidebar-accent-foreground": "oklch(0.985 0 0)", // --color-neutral-50
-      "sidebar-border": "oklch(1 0 0 / 10%)", // --color-white
-      "sidebar-ring": "oklch(0.556 0 0)", // --color-neutral-500
+      "sidebar-border": "oklch(1 0 0 / 10%)", // --color-white/10%
+      "sidebar-ring": "oklch(0.439 0 0)", // --color-neutral-600
     },
   },
   zinc: {
