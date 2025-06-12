@@ -496,6 +496,7 @@ function ContrastCheckerResults({
                                 style={{
                                   "--foreground": getOptimalForegroundColor(
                                     pair.background ?? "#000000",
+                                    pair.foreground ?? "#ffffff",
                                   ),
                                 }}
                               >

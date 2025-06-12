@@ -20,7 +20,7 @@ import {
   ThemeMode,
   ThemeProperties,
 } from "@/types/theme";
-import { getOptimalForegroundColor, isValidColor } from "@/utils/colors";
+import { isValidColor } from "@/utils/colors";
 import { RADIUS_VALUES } from "@/utils/constants";
 import { Check, ChevronDown, ChevronUp, SendHorizontal } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -141,9 +141,6 @@ export function PasteColorControl({
           )}
           style={{
             "--pasted-color": isValidPastedColor ? pastedColor : "",
-            "--pasted-color-foreground": isValidPastedColor
-              ? getOptimalForegroundColor(pastedColor)
-              : "",
           }}
         >
           <SendHorizontal className="size-4" />
@@ -154,7 +151,7 @@ export function PasteColorControl({
 }
 
 export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
-  const { setSurfaceShadesColorTokens, getActiveSurfaceShades } = useTokens();
+  const { setSurfaceShadesColorTokens } = useTokens();
   const { currentSurfacePreset } = useThemeConfig();
 
   const isMounted = useMounted();

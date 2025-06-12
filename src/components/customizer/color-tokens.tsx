@@ -1,9 +1,9 @@
 "use client";
 
+import { Label } from "@/components/ui/label";
 import { useTokens } from "@/hooks/use-tokens";
 import { cn } from "@/lib/utils";
 import { Palette } from "lucide-react";
-import { Label } from "../ui/label";
 import { ControlSection } from "./customizer-controls";
 import { TokenColorPicker } from "./token-color-picker";
 
@@ -20,12 +20,8 @@ export function ColorTokens({ className }: React.ComponentProps<"div">) {
 }
 
 function TokensList({ className }: React.ComponentProps<"div">) {
-  const {
-    getColorToken,
-    setPrimaryColorTokens,
-    setColorToken,
-    setColorTokenWithForeground,
-  } = useTokens();
+  const { getColorToken, setColorToken, setColorTokenWithForeground } =
+    useTokens();
 
   return (
     <div className={cn("space-y-2", className)}>
@@ -54,7 +50,7 @@ function TokensList({ className }: React.ComponentProps<"div">) {
           color={getColorToken({
             property: "primary",
           })}
-          setColorTokens={setPrimaryColorTokens}
+          setColorTokens={setColorTokenWithForeground}
         />
         <TokenColorPicker
           colorProperty="primary-foreground"

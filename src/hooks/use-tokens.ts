@@ -194,17 +194,19 @@ export function useTokens() {
 
   const setColorTokenWithForeground = ({
     property,
-    color,
+    bgColor,
+    fgColor,
     modesInSync = false,
   }: {
     property: ColorProperty;
-    color: OklchValue | string;
+    bgColor: OklchValue | string;
+    fgColor: OklchValue | string;
     modesInSync?: boolean;
   }) => {
-    const isValidPastedColor = isValidColor(color);
+    const isValidPastedColor = isValidColor(bgColor);
     if (!isValidPastedColor) return;
 
-    const foregroundColor = getOptimalForegroundColor(color);
+    const optimalFgColor = getOptimalForegroundColor(fgColor, bgColor);
     const propertyForeground =
       property === "background" ? "foreground" : property + "-foreground";
 
@@ -217,13 +219,13 @@ export function useTokens() {
             ...prev.themeObject,
             light: {
               ...prev.themeObject.light,
-              [property]: color,
-              [propertyForeground]: foregroundColor,
+              [property]: bgColor,
+              [propertyForeground]: optimalFgColor,
             },
             dark: {
               ...prev.themeObject.dark,
-              [property]: color,
-              [propertyForeground]: foregroundColor,
+              [property]: bgColor,
+              [propertyForeground]: optimalFgColor,
             },
           },
         };
@@ -238,8 +240,8 @@ export function useTokens() {
           ...prev.themeObject,
           [mode]: {
             ...prev.themeObject[mode],
-            [property]: color,
-            [propertyForeground]: foregroundColor,
+            [property]: bgColor,
+            [propertyForeground]: optimalFgColor,
           },
         },
       };
@@ -256,7 +258,11 @@ export function useTokens() {
     const isValidPastedColor = isValidColor(color);
     if (!isValidPastedColor) return;
 
-    const foregroundColor = getOptimalForegroundColor(color);
+    const primaryFgColor = getColorToken({
+      property: "primary-foreground",
+    });
+
+    const optimalFgColor = getOptimalForegroundColor(primaryFgColor, color);
 
     // Update both modes
     if (modesInSync) {
@@ -268,19 +274,19 @@ export function useTokens() {
             light: {
               ...prev.themeObject.light,
               primary: color,
-              "primary-foreground": foregroundColor,
+              "primary-foreground": optimalFgColor,
               ring: color,
               "sidebar-primary": color,
-              "sidebar-primary-foreground": foregroundColor,
+              "sidebar-primary-foreground": optimalFgColor,
               "sidebar-ring": color,
             },
             dark: {
               ...prev.themeObject.dark,
               primary: color,
-              "primary-foreground": foregroundColor,
+              "primary-foreground": optimalFgColor,
               ring: color,
               "sidebar-primary": color,
-              "sidebar-primary-foreground": foregroundColor,
+              "sidebar-primary-foreground": optimalFgColor,
               "sidebar-ring": color,
             },
           },
@@ -297,10 +303,10 @@ export function useTokens() {
           [mode]: {
             ...prev.themeObject[mode],
             primary: color,
-            "primary-foreground": foregroundColor,
+            "primary-foreground": optimalFgColor,
             ring: color,
             "sidebar-primary": color,
-            "sidebar-primary-foreground": foregroundColor,
+            "sidebar-primary-foreground": optimalFgColor,
             "sidebar-ring": color,
           },
         },
