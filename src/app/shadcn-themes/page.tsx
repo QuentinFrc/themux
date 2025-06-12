@@ -52,7 +52,7 @@ export default function ShadcnThemesPage() {
           withCane
           className="pointer-events-auto relative isolate py-8"
         >
-          <TabsContent value="cards-demo">
+          <TabsContent value="cards-demo" className="@container">
             <CardsDemo />
           </TabsContent>
 

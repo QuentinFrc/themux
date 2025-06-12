@@ -1,5 +1,7 @@
 "use client";
 
+import * as React from "react";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,8 +34,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { Check, Plus, Send } from "lucide-react";
-import * as React from "react";
+import { ArrowUpIcon, CheckIcon, PlusIcon } from "lucide-react";
 
 const users = [
   {
@@ -94,14 +95,14 @@ export function CardsChat() {
     <>
       <Card>
         <CardHeader className="flex flex-row items-center">
-          <div className="flex items-center space-x-4">
-            <Avatar>
+          <div className="flex items-center gap-4">
+            <Avatar className="border">
               <AvatarImage src="/avatars/01.png" alt="Image" />
-              <AvatarFallback>OM</AvatarFallback>
+              <AvatarFallback>S</AvatarFallback>
             </Avatar>
-            <div>
+            <div className="flex flex-col gap-0.5">
               <p className="text-sm leading-none font-medium">Sofia Davis</p>
-              <p className="text-muted-foreground text-sm">m@example.com</p>
+              <p className="text-muted-foreground text-xs">m@example.com</p>
             </div>
           </div>
           <TooltipProvider delayDuration={0}>
@@ -109,11 +110,11 @@ export function CardsChat() {
               <TooltipTrigger asChild>
                 <Button
                   size="icon"
-                  variant="outline"
-                  className="ml-auto rounded-full"
+                  variant="secondary"
+                  className="ml-auto size-8 rounded-full"
                   onClick={() => setOpen(true)}
                 >
-                  <Plus />
+                  <PlusIcon />
                   <span className="sr-only">New message</span>
                 </Button>
               </TooltipTrigger>
@@ -122,12 +123,12 @@ export function CardsChat() {
           </TooltipProvider>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="flex flex-col gap-4">
             {messages.map((message, index) => (
               <div
                 key={index}
                 className={cn(
-                  "flex w-full max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm",
+                  "flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm",
                   message.role === "user"
                     ? "bg-primary text-primary-foreground ml-auto"
                     : "bg-muted",
@@ -152,18 +153,23 @@ export function CardsChat() {
               ]);
               setInput("");
             }}
-            className="flex w-full items-center space-x-2"
+            className="relative w-full"
           >
             <Input
               id="message"
               placeholder="Type your message..."
-              className="flex-1"
+              className="flex-1 pr-10"
               autoComplete="off"
               value={input}
               onChange={(event) => setInput(event.target.value)}
             />
-            <Button type="submit" size="icon" disabled={inputLength === 0}>
-              <Send />
+            <Button
+              type="submit"
+              size="icon"
+              className="absolute top-1/2 right-2 size-6 -translate-y-1/2 rounded-full"
+              disabled={inputLength === 0}
+            >
+              <ArrowUpIcon className="size-3.5" />
               <span className="sr-only">Send</span>
             </Button>
           </form>
@@ -182,11 +188,12 @@ export function CardsChat() {
             <CommandInput placeholder="Search user..." />
             <CommandList>
               <CommandEmpty>No users found.</CommandEmpty>
-              <CommandGroup className="p-2">
+              <CommandGroup>
                 {users.map((user) => (
                   <CommandItem
                     key={user.email}
-                    className="flex items-center px-2"
+                    data-active={selectedUsers.includes(user)}
+                    className="data-[active=true]:opacity-50"
                     onSelect={() => {
                       if (selectedUsers.includes(user)) {
                         return setSelectedUsers(
@@ -203,7 +210,7 @@ export function CardsChat() {
                       );
                     }}
                   >
-                    <Avatar>
+                    <Avatar className="border">
                       <AvatarImage src={user.avatar} alt="Image" />
                       <AvatarFallback>{user.name[0]}</AvatarFallback>
                     </Avatar>
@@ -216,21 +223,18 @@ export function CardsChat() {
                       </p>
                     </div>
                     {selectedUsers.includes(user) ? (
-                      <Check className="text-primary ml-auto flex h-5 w-5" />
+                      <CheckIcon className="text-primary ml-auto flex size-4" />
                     ) : null}
                   </CommandItem>
                 ))}
               </CommandGroup>
             </CommandList>
           </Command>
-          <DialogFooter className="flex items-center border-t p-4 sm:justify-between">
+          <DialogFooter className="flex items-center border-t p-4 @2xl:justify-between">
             {selectedUsers.length > 0 ? (
               <div className="flex -space-x-2 overflow-hidden">
                 {selectedUsers.map((user) => (
-                  <Avatar
-                    key={user.email}
-                    className="border-background inline-block border-2"
-                  >
+                  <Avatar key={user.email} className="inline-block border">
                     <AvatarImage src={user.avatar} />
                     <AvatarFallback>{user.name[0]}</AvatarFallback>
                   </Avatar>
@@ -243,6 +247,7 @@ export function CardsChat() {
             )}
             <Button
               disabled={selectedUsers.length < 2}
+              size="sm"
               onClick={() => {
                 setOpen(false);
               }}

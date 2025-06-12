@@ -33,12 +33,16 @@ export function CardsReportIssue() {
           What area are you having problems with?
         </CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-6">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="grid gap-2">
+      <CardContent className="flex flex-col gap-6">
+        <div className="grid gap-4 @2xl:grid-cols-2">
+          <div className="flex flex-col gap-3">
             <Label htmlFor={`area-${id}`}>Area</Label>
             <Select defaultValue="billing">
-              <SelectTrigger id={`area-${id}`} aria-label="Area">
+              <SelectTrigger
+                id={`area-${id}`}
+                aria-label="Area"
+                className="w-full"
+              >
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
@@ -50,12 +54,12 @@ export function CardsReportIssue() {
               </SelectContent>
             </Select>
           </div>
-          <div className="grid gap-2">
+          <div className="flex flex-col gap-3">
             <Label htmlFor={`security-level-${id}`}>Security Level</Label>
             <Select defaultValue="2">
               <SelectTrigger
                 id={`security-level-${id}`}
-                className="line-clamp-1 w-full truncate"
+                className="w-full [&_span]:!block [&_span]:truncate"
                 aria-label="Security Level"
               >
                 <SelectValue placeholder="Select level" />
@@ -69,19 +73,20 @@ export function CardsReportIssue() {
             </Select>
           </div>
         </div>
-        <div className="grid gap-2">
+        <div className="flex flex-col gap-3">
           <Label htmlFor={`subject-${id}`}>Subject</Label>
           <Input id={`subject-${id}`} placeholder="I need help with..." />
         </div>
-        <div className="grid gap-2">
+        <div className="flex flex-col gap-3">
           <Label htmlFor={`description-${id}`}>Description</Label>
           <Textarea
             id={`description-${id}`}
             placeholder="Please include all information relevant to your issue."
+            className="min-h-28"
           />
         </div>
       </CardContent>
-      <CardFooter className="justify-between space-x-2">
+      <CardFooter className="justify-end gap-2">
         <Button variant="ghost" size="sm">
           Cancel
         </Button>

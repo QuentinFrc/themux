@@ -3,16 +3,16 @@
 import {
   ColumnDef,
   ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  SortingState,
   useReactTable,
+  VisibilityState,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { MoreHorizontalIcon } from "lucide-react";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -26,14 +26,12 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -67,6 +65,18 @@ const data: Payment[] = [
     amount: 721,
     status: "failed",
     email: "carmella@example.com",
+  },
+  {
+    id: "k9f2m3n4",
+    amount: 450,
+    status: "pending",
+    email: "jason78@example.com",
+  },
+  {
+    id: "p5q6r7s8",
+    amount: 1280,
+    status: "success",
+    email: "sarah23@example.com",
   },
 ];
 
@@ -109,17 +119,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown />
-        </Button>
-      );
-    },
+    header: "Email",
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
   {
@@ -146,9 +146,9 @@ export const columns: ColumnDef<Payment>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button variant="ghost" className="size-8 p-0">
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
+              <MoreHorizontalIcon />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -168,7 +168,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-export function CardsDataTable() {
+export function CardsPayments() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -202,43 +202,7 @@ export function CardsDataTable() {
         <CardTitle className="text-xl">Payments</CardTitle>
         <CardDescription>Manage your payments.</CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="mb-4 flex items-center gap-4">
-          <Input
-            placeholder="Filter emails..."
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("email")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="ml-auto">
-                Columns <ChevronDown />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+      <CardContent className="flex flex-col gap-4">
         <div className="rounded-md border">
           <Table>
             <TableHeader>
@@ -248,7 +212,8 @@ export function CardsDataTable() {
                     return (
                       <TableHead
                         key={header.id}
-                        className="[&:has([role=checkbox])]:pl-3"
+                        className="data-[name=actions]:w-10 data-[name=amount]:w-24 data-[name=select]:w-10 data-[name=status]:w-24 [&:has([role=checkbox])]:pl-3"
+                        data-name={header.id}
                       >
                         {header.isPlaceholder
                           ? null
@@ -272,7 +237,8 @@ export function CardsDataTable() {
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
                         key={cell.id}
-                        className="[&:has([role=checkbox])]:pl-3"
+                        className="data-[name=actions]:w-10 data-[name=amount]:w-24 data-[name=select]:w-10 data-[name=status]:w-24 [&:has([role=checkbox])]:pl-3"
+                        data-name={cell.column.id}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
@@ -295,12 +261,12 @@ export function CardsDataTable() {
             </TableBody>
           </Table>
         </div>
-        <div className="flex items-center justify-end space-x-2 pt-4">
+        <div className="flex items-center justify-end gap-2">
           <div className="text-muted-foreground flex-1 text-sm">
             {table.getFilteredSelectedRowModel().rows.length} of{" "}
             {table.getFilteredRowModel().rows.length} row(s) selected.
           </div>
-          <div className="space-x-2">
+          <div className="flex gap-2">
             <Button
               variant="outline"
               size="sm"

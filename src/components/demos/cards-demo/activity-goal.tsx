@@ -1,5 +1,9 @@
 "use client";
 
+import { MinusIcon, PlusIcon } from "lucide-react";
+import * as React from "react";
+import { Bar, BarChart } from "recharts";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,9 +14,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
-import { Minus, Plus } from "lucide-react";
-import * as React from "react";
-import { Bar, BarChart } from "recharts";
 
 const data = [
   {
@@ -71,53 +72,52 @@ export function CardsActivityGoal() {
   }
 
   return (
-    <Card>
-      <CardHeader className="pb-4">
+    <Card className="flex h-full flex-col">
+      <CardHeader>
         <CardTitle>Move Goal</CardTitle>
         <CardDescription>Set your daily activity goal.</CardDescription>
       </CardHeader>
-      <CardContent className="pb-2">
-        <div className="flex items-center justify-center space-x-2">
+      <CardContent className="flex flex-1 flex-col">
+        <div className="flex items-center justify-center gap-4">
           <Button
             variant="outline"
             size="icon"
-            className="h-8 w-8 shrink-0 rounded-full"
+            className="size-7 rounded-full"
             onClick={() => onClick(-10)}
             disabled={goal <= 200}
           >
-            <Minus />
+            <MinusIcon />
             <span className="sr-only">Decrease</span>
           </Button>
-          <div className="flex-1 text-center">
-            <div className="text-5xl font-bold tracking-tighter">{goal}</div>
-            <div className="text-muted-foreground text-[0.70rem] uppercase">
+          <div className="text-center">
+            <div className="text-4xl font-bold tracking-tighter tabular-nums">
+              {goal}
+            </div>
+            <div className="text-muted-foreground text-xs uppercase">
               Calories/day
             </div>
           </div>
           <Button
             variant="outline"
             size="icon"
-            className="h-8 w-8 shrink-0 rounded-full"
+            className="size-7 rounded-full"
             onClick={() => onClick(10)}
             disabled={goal >= 400}
           >
-            <Plus />
+            <PlusIcon />
             <span className="sr-only">Increase</span>
           </Button>
         </div>
-        <div className="my-3 h-[60px]">
-          <ChartContainer
-            config={chartConfig}
-            className="aspect-auto h-full w-full"
-          >
-            <BarChart data={data}>
-              <Bar dataKey="goal" radius={4} fill="var(--color-goal)" />
-            </BarChart>
-          </ChartContainer>
-        </div>
+        <ChartContainer config={chartConfig} className="max-h-20 w-full">
+          <BarChart data={data}>
+            <Bar dataKey="goal" radius={4} fill="var(--color-goal)" />
+          </BarChart>
+        </ChartContainer>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Set Goal</Button>
+        <Button className="w-full" variant="secondary">
+          Set Goal
+        </Button>
       </CardFooter>
     </Card>
   );
