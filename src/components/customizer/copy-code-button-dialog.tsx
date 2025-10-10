@@ -1,5 +1,6 @@
 "use client";
 
+import { updateTheme } from "@/actions/theme";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { cn } from "@/lib/utils";
@@ -13,7 +14,7 @@ import {
 import { TailwindVersion } from "@/types/theme";
 import { generateThemeCode } from "@/utils/theme-style-generator";
 import { Check, Clipboard, Code, Terminal } from "lucide-react";
-import React, { useMemo } from "react";
+import React, { useMemo, useTransition } from "react";
 import { TooltipWrapper } from "../tooltip-wrapper";
 import { Alert, AlertDescription } from "../ui/alert";
 import { Button } from "../ui/button";
@@ -271,6 +272,24 @@ function CustomizerCode({ className }: React.ComponentProps<"div">) {
   const tailwindVersion = useTailwindVersion();
   const showFontVars = useFontVars();
   const showShadowsVars = useShadowVars();
+  const [, startThemeUpdate] = useTransition();
+
+  const themeUpdatePayload = useMemo(
+    () => ({
+      themeConfig: config,
+      colorFormat,
+      tailwindVersion,
+      includeFontVars: showFontVars,
+      includeShadowVars: showShadowsVars,
+    }),
+    [
+      colorFormat,
+      config,
+      showFontVars,
+      showShadowsVars,
+      tailwindVersion,
+    ],
+  );
 
   const themeCode = useMemo(
     () =>
@@ -287,6 +306,10 @@ function CustomizerCode({ className }: React.ComponentProps<"div">) {
   );
 
   const handleCopyThemeStylesCode = () => {
+    startThemeUpdate(() => {
+      void updateTheme(themeUpdatePayload);
+    });
+
     copyToClipboard(themeCode);
   };
 

@@ -1,10 +1,17 @@
 "use client";
 
+import { updateTheme } from "@/actions/theme";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { cn } from "@/lib/utils";
-import { usePreferencesActions } from "@/store/preferences-store";
+import {
+  useColorFormat,
+  useFontVars,
+  usePreferencesActions,
+  useShadowVars,
+  useTailwindVersion,
+} from "@/store/preferences-store";
 import { Terminal } from "lucide-react";
-import React, { useState, useTransition } from "react";
+import React, { useMemo, useState, useTransition } from "react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -143,15 +150,37 @@ function CopyThemeCLITabs() {
   const packageManager = usePackageManager();
   const { setPackageManager } = usePreferencesActions();
   const {
+    config,
     currentThemeObject,
     currentFonts,
     currentRadius,
     hasCurrentPresetChanged,
   } = useThemeConfig();
+  const colorFormat = useColorFormat();
+  const tailwindVersion = useTailwindVersion();
+  const showFontVars = useFontVars();
+  const showShadowVars = useShadowVars();
 
   const [isLoading, startTransition] = useTransition();
   const [baseUrlType, setBaseUrlType] = useState<"public" | "api">("public");
   const [themeName, setThemeName] = useState(currentThemeObject.name);
+
+  const themeUpdatePayload = useMemo(
+    () => ({
+      themeConfig: config,
+      colorFormat,
+      tailwindVersion,
+      includeFontVars: showFontVars,
+      includeShadowVars: showShadowVars,
+    }),
+    [
+      colorFormat,
+      config,
+      showFontVars,
+      showShadowVars,
+      tailwindVersion,
+    ],
+  );
 
   const baseUrl =
     baseUrlType === "public" ? themeRegistryUrl : themeRegistryApiUrl;
@@ -184,6 +213,7 @@ function CopyThemeCLITabs() {
     };
 
     startTransition(async () => {
+      void updateTheme(themeUpdatePayload);
       // Since the async function is a Server Action, ir order for the toast to catch the error,
       // i had to manually create a promise and resolve/reject it based on the result of the action.
       const promise = new Promise(async (res, rej) => {

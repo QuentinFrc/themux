@@ -102,7 +102,7 @@ const generateShadowVariables = (
   return shadowVars;
 };
 
-function generateThemeVariables(
+export function generateThemeVariables(
   themeConfig: ThemeConfig,
   mode: ThemeMode,
   colorFormat: ColorFormat = "oklch",
@@ -141,7 +141,7 @@ function generateThemeVariables(
   return `.dark {\n  ${colorVars}${shadowVars}\n}`;
 }
 
-type ThemeVarsOptions = {
+export type ThemeVarsOptions = {
   fontVars?: boolean | undefined;
   shadowVars?: boolean | undefined;
 };
