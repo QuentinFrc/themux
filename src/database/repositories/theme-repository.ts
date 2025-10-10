@@ -50,8 +50,8 @@ export function createThemeVersionRepository(
       } satisfies ThemeVersionRecord;
     },
 
-    async listThemeVersions(themeName?: string) {
-      const rows = await queries.listThemeVersions(themeName);
+    async listThemeVersions() {
+      const rows = await queries.listThemeVersions();
 
       return rows.map((row) => ({
         id: row.id,
