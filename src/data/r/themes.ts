@@ -1,19 +1,21 @@
-import { db } from "@/lib/db";
+import { db } from "@/database/drizzle/client";
+import { getRegistryMutations } from "@/database/mutations/registry";
+import { getRegistryQueries } from "@/database/queries/registry";
 import {
   InsertRegistryTable,
-  registryTable,
   RegistryTable,
-} from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+} from "@/database/drizzle/schema";
 import { RegistryItem } from "shadcn/registry";
 
+const registryQueries = getRegistryQueries(db);
+const registryMutations = getRegistryMutations(db);
+
 export async function getRegistryItem(id: string): Promise<RegistryTable> {
-  const [row] = await db
-    .select()
-    .from(registryTable)
-    .where(eq(registryTable.id, id))
-    .limit(1)
-    .execute();
+  const row = await registryQueries.getRegistryItem(id);
+
+  if (!row) {
+    throw new Error("Registry item not found");
+  }
 
   return row;
 }
@@ -28,10 +30,11 @@ export async function createRegistryItem(
     registryItem: JSON.stringify(registryItem),
   };
 
-  const [createdRegistryItem] = await db
-    .insert(registryTable)
-    .values(newItem)
-    .returning();
+  const createdRegistryItem = await registryMutations.createRegistryItem(newItem);
+
+  if (!createdRegistryItem) {
+    throw new Error("Failed to create registry item");
+  }
 
   return createdRegistryItem.name;
 }
