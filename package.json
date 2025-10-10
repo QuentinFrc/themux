@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "registry:r-themes": "tsx src/scripts/generate-theme-registry.ts"
+    "registry:r-themes": "tsx src/scripts/generate-theme-registry.ts",
+    "db:migrate": "pnpm drizzle-kit migrate",
+    "db:generate": "pnpm drizzle-kit generate"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

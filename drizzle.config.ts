@@ -1,5 +1,7 @@
+import { config } from "dotenv";
+config({ path: ['.env.local', '.env'] });
+
 import { getNeonDatabaseUrl } from "./src/database/neon/config";
-import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({

@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 export function getNeonDatabaseUrl(): string {
   const databaseUrl = process.env.NEON_DATABASE_URL ?? process.env.DATABASE_URL;
 
