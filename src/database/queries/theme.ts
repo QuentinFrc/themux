@@ -15,4 +15,19 @@ export const getThemeQueries = (db: DatabaseClient) => ({
 
     return row;
   },
+
+  async listThemeVersions(themeName?: string): Promise<ThemeTable[]> {
+    let query = db.select().from(themeTable);
+
+    if (themeName) {
+      query = query.where(eq(themeTable.name, themeName));
+    }
+
+    const rows = await query.orderBy(
+      desc(themeTable.version),
+      desc(themeTable.createdAt),
+    );
+
+    return rows;
+  },
 });

@@ -42,6 +42,7 @@ export interface ThemeVersionRepository {
   createThemeVersion(
     input: CreateThemeVersionInput,
   ): Promise<ThemeVersionRecord>;
+  listThemeVersions(themeName?: string): Promise<ThemeVersionRecord[]>;
 }
 
 export type ThemeUpdateHandler = () => Promise<Status<ThemeVersionRecord>>;

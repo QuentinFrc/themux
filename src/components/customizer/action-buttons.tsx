@@ -6,10 +6,9 @@ import { ModeSwitcher } from "../mode-switcher";
 import { TooltipWrapper } from "../tooltip-wrapper";
 import { Separator } from "../ui/separator";
 import { ContrastChecker } from "./contrast-checker";
-import { CopyCodeButtonDialog } from "./copy-code-button-dialog";
-import { CopyThemeCLI } from "./copy-theme-cli";
 import { CustomizerSettings } from "./customizer-settings";
 import { ResetButton } from "./reset-button";
+import { UpdateThemeButton } from "./update-theme-button";
 
 interface ActionButtonsProps extends ComponentProps<"section"> {
   className?: string;
@@ -23,16 +22,13 @@ export function ActionButtons({ className }: ActionButtonsProps) {
         className,
       )}
     >
-      <section className="flex grow items-center gap-2">
-        <TooltipWrapper label="View generated code" asChild>
-          <CopyCodeButtonDialog
+      <section className="flex grow items-center">
+        <TooltipWrapper label="Persist the current theme" asChild>
+          <UpdateThemeButton
             size="sm"
-            className="flex-2"
             variant="default"
+            className="flex-1"
           />
-        </TooltipWrapper>
-        <TooltipWrapper label="View shadcn CLI registry command" asChild>
-          <CopyThemeCLI size="sm" variant="outline" className="flex-1" />
         </TooltipWrapper>
       </section>
 
