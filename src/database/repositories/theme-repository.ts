@@ -49,5 +49,17 @@ export function createThemeVersionRepository(
         createdAt: inserted.createdAt ?? new Date(),
       } satisfies ThemeVersionRecord;
     },
+
+    async listThemeVersions() {
+      const rows = await queries.listThemeVersions();
+
+      return rows.map((row) => ({
+        id: row.id,
+        name: row.name,
+        version: row.version,
+        config: row.config,
+        createdAt: row.createdAt ?? new Date(),
+      })) satisfies ThemeVersionRecord[];
+    },
   } satisfies ThemeVersionRepository;
 }

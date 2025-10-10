@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "registry:r-themes": "tsx src/scripts/generate-theme-registry.ts",
     "db:migrate": "pnpm drizzle-kit migrate",
     "db:generate": "pnpm drizzle-kit generate"
   },
