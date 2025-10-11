@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default async function ShadcnThemesPage({
   searchParams,
 }: {
-  searchParams?: PageSearchParams | Promise<PageSearchParams>;
+  searchParams?: Promise<PageSearchParams>;
 }) {
   const resolvedSearchParams = searchParams
     ? await searchParams

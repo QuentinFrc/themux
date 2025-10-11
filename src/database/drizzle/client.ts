@@ -3,8 +3,6 @@ import * as schema from "@/database/drizzle/schema";
 import { neon, neonConfig } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 
-neonConfig.fetchConnectionCache = true;
-
 export function createDatabaseClient() {
   const sql = neon(getNeonDatabaseUrl());
   return drizzle(sql, { schema });

@@ -51,7 +51,7 @@ export function UpdateThemeButton({ className, ...props }: UpdateThemeButtonProp
         setShowFontVars(payload.includeFontVars ?? false);
         setShowShadowsVars(payload.includeShadowVars ?? false);
 
-        toast.success(`Saved ${data.name} v${data.version}`);
+        toast.success(`Saved theme v${data.version}`);
         return;
       }
 
