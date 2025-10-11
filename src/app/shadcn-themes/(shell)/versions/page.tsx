@@ -9,8 +9,8 @@ import { createThemeVersionRepository } from "@/database/repositories/theme-repo
 import { ThemeVersionsTable } from "./theme-versions-table";
 
 export const metadata: Metadata = {
-  title: "Theme versions",
-  description: "Browse and restore saved theme configurations.",
+  title: "Theme history",
+  description: "Browse saved commits and restore previous theme configurations.",
 };
 
 export default async function VersionsPage() {
@@ -22,9 +22,9 @@ export default async function VersionsPage() {
       <ContainerWrapper withCane className="@container py-4">
         <SectionWrapper>
           <PageHeader>
-            <PageHeaderHeading>Saved theme versions</PageHeaderHeading>
+            <PageHeaderHeading>Theme history</PageHeaderHeading>
             <PageHeaderDescription>
-              Review previously saved configurations and restore them to continue customizing.
+              Review previous commits, inspect their details, and restore them to continue customizing.
             </PageHeaderDescription>
           </PageHeader>
         </SectionWrapper>
