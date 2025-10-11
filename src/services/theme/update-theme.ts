@@ -16,13 +16,11 @@ export function createThemeUpdateHandler({
 }: ThemeUpdateHandlerDependencies): ThemeUpdateHandler {
   return async () => {
     try {
-      const themeName = payload.themeConfig.themeObject.name;
       const snapshot = createThemeSnapshot(payload);
-      const latestVersion = await repository.getLatestThemeVersion(themeName);
+      const latestVersion = await repository.getLatestThemeVersion();
       const nextVersion = (latestVersion?.version ?? 0) + 1;
 
       const record = await repository.createThemeVersion({
-        themeName,
         version: nextVersion,
         snapshot,
       });

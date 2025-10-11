@@ -8,14 +8,39 @@ import { MailDemo } from "@/components/demos/mail-demo";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ContainerWrapper } from "@/components/wrappers";
+import { db } from "@/database/drizzle/client";
+import { createThemeVersionRepository } from "@/database/repositories/theme-repository";
+import { ThemeVersionRecord } from "@/types/theme-update";
+
+import { VersionPreviewInitializer } from "./version-preview-initializer";
+
+type PageSearchParams = { versionId?: string };
 
 export const metadata: Metadata = {
   title: "Theme Customizer",
 };
 
-export default function ShadcnThemesPage() {
+export default async function ShadcnThemesPage({
+  searchParams,
+}: {
+  searchParams?: PageSearchParams | Promise<PageSearchParams>;
+}) {
+  const resolvedSearchParams = searchParams
+    ? await searchParams
+    : undefined;
+  const versionId = resolvedSearchParams?.versionId;
+  let initialVersion: ThemeVersionRecord | null = null;
+
+  if (versionId) {
+    const repository = createThemeVersionRepository(db);
+    initialVersion = await repository.getThemeVersionById(versionId);
+  }
+
   return (
     <>
+      {initialVersion ? (
+        <VersionPreviewInitializer key={initialVersion.id} version={initialVersion} />
+      ) : null}
       <ContainerWrapper withCane className="@container py-4">
         <ActionButtons className="pb-4" />
         <QuickCustomizer />

@@ -25,23 +25,22 @@ export type ThemeUpdatePayload = {
 
 export type ThemeVersionRecord = {
   id: string;
-  name: string;
   version: number;
   config: ThemeSnapshot;
   createdAt: Date;
 };
 
 export type CreateThemeVersionInput = {
-  themeName: string;
   version: number;
   snapshot: ThemeSnapshot;
 };
 
 export interface ThemeVersionRepository {
-  getLatestThemeVersion(themeName: string): Promise<ThemeVersionRecord | null>;
+  getLatestThemeVersion(): Promise<ThemeVersionRecord | null>;
   createThemeVersion(
     input: CreateThemeVersionInput,
   ): Promise<ThemeVersionRecord>;
+  getThemeVersionById(id: string): Promise<ThemeVersionRecord | null>;
   listThemeVersions(): Promise<ThemeVersionRecord[]>;
 }
 

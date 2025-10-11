@@ -14,8 +14,8 @@ export function createThemeVersionRepository(
   const mutations = getThemeMutations(db);
 
   return {
-    async getLatestThemeVersion(themeName: string) {
-      const row = await queries.getLatestThemeVersion(themeName);
+    async getLatestThemeVersion() {
+      const row = await queries.getLatestThemeVersion();
 
       if (!row) {
         return null;
@@ -23,7 +23,6 @@ export function createThemeVersionRepository(
 
       return {
         id: row.id,
-        name: row.name,
         version: row.version,
         config: row.config,
         createdAt: row.createdAt ?? new Date(),
@@ -32,7 +31,6 @@ export function createThemeVersionRepository(
 
     async createThemeVersion(input: CreateThemeVersionInput) {
       const inserted = await mutations.createThemeVersion({
-        name: input.themeName,
         version: input.version,
         config: input.snapshot,
       });
@@ -43,10 +41,24 @@ export function createThemeVersionRepository(
 
       return {
         id: inserted.id,
-        name: inserted.name,
         version: inserted.version,
         config: inserted.config,
         createdAt: inserted.createdAt ?? new Date(),
+      } satisfies ThemeVersionRecord;
+    },
+
+    async getThemeVersionById(id: string) {
+      const row = await queries.getThemeVersionById(id);
+
+      if (!row) {
+        return null;
+      }
+
+      return {
+        id: row.id,
+        version: row.version,
+        config: row.config,
+        createdAt: row.createdAt ?? new Date(),
       } satisfies ThemeVersionRecord;
     },
 
@@ -55,7 +67,6 @@ export function createThemeVersionRepository(
 
       return rows.map((row) => ({
         id: row.id,
-        name: row.name,
         version: row.version,
         config: row.config,
         createdAt: row.createdAt ?? new Date(),
