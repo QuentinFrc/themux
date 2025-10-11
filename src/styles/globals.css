@@ -142,7 +142,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply min-h-screen bg-background text-foreground;
     content-visibility: auto;
   }
   button:not(:disabled),

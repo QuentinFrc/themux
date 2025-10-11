@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import type { ComponentProps, ReactNode } from "react";
 
 import { AccordionDemo } from "@/components/demos/components-demo/accordion-demo";
 import { AlertDemo } from "@/components/demos/components-demo/alert-demo";
@@ -8,6 +9,7 @@ import { AvatarDemo } from "@/components/demos/components-demo/avatar-demo";
 import { BadgeDemo } from "@/components/demos/components-demo/badge-demo";
 import { BreadcrumbDemo } from "@/components/demos/components-demo/breadcrumb-demo";
 import { ButtonDemo } from "@/components/demos/components-demo/button-demo";
+import { ButtonGroupDemo } from "@/components/demos/components-demo/button-group-demo";
 import { CalendarDemo } from "@/components/demos/components-demo/calendar-demo";
 import { CardDemo } from "@/components/demos/components-demo/card-demo";
 import { CarouselDemo } from "@/components/demos/components-demo/carousel-demo";
@@ -22,11 +24,16 @@ import { DatePickerDemo } from "@/components/demos/components-demo/date-picker-d
 import { DialogDemo } from "@/components/demos/components-demo/dialog-demo";
 import { DrawerDemo } from "@/components/demos/components-demo/drawer-demo";
 import { DropdownMenuDemo } from "@/components/demos/components-demo/dropdown-menu-demo";
+import { EmptyDemo } from "@/components/demos/components-demo/empty-demo";
+import { FieldDemo } from "@/components/demos/components-demo/field-demo";
 import { FormDemo } from "@/components/demos/components-demo/form-demo";
 import { FormsDemo } from "@/components/demos/components-demo/forms-demo";
 import { HoverCardDemo } from "@/components/demos/components-demo/hover-card-demo";
 import { InputDemo } from "@/components/demos/components-demo/input-demo";
+import { InputGroupDemo } from "@/components/demos/components-demo/input-group-demo";
 import { InputOTPDemo } from "@/components/demos/components-demo/input-otp-demo";
+import { ItemDemo } from "@/components/demos/components-demo/item-demo";
+import { KbdDemo } from "@/components/demos/components-demo/kbd-demo";
 import { LabelDemo } from "@/components/demos/components-demo/label-demo";
 import { MenubarDemo } from "@/components/demos/components-demo/menubar-demo";
 import { NavigationMenuDemo } from "@/components/demos/components-demo/navigation-menu-demo";
@@ -42,6 +49,7 @@ import { SheetDemo } from "@/components/demos/components-demo/sheet-demo";
 import { SkeletonDemo } from "@/components/demos/components-demo/skeleton-demo";
 import { SliderDemo } from "@/components/demos/components-demo/slider-demo";
 import { SonnerDemo } from "@/components/demos/components-demo/sonner-demo";
+import { SpinnerDemo } from "@/components/demos/components-demo/spinner-demo";
 import { SwitchDemo } from "@/components/demos/components-demo/switch-demo";
 import { TableDemo } from "@/components/demos/components-demo/table-demo";
 import { TabsDemo } from "@/components/demos/components-demo/tabs-demo";
@@ -57,11 +65,85 @@ import {
 } from "@/components/page-header";
 import { Separator } from "@/components/ui/separator";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
+import { getComponentName } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Components",
   description: "A collection of components built with shadcn/ui.",
 };
+
+type WrapperProps = Omit<ComponentProps<typeof ComponentWrapper>, "name" | "children">;
+
+type ComponentSection = {
+  name: string;
+  element: ReactNode;
+  wrapperProps?: WrapperProps;
+};
+
+const componentSections: ComponentSection[] = [
+  { name: "button", element: <ButtonDemo /> },
+  { name: "button-group", element: <ButtonGroupDemo /> },
+  {
+    name: "form",
+    element: (
+      <div className="grid gap-6 lg:grid-cols-2">
+        <FormsDemo />
+        <FormDemo />
+      </div>
+    ),
+  },
+  { name: "field", element: <FieldDemo /> },
+  { name: "calendar", element: <CalendarDemo /> },
+  { name: "chart", element: <ChartDemo />, wrapperProps: { className: "w-full" } },
+  { name: "input", element: <InputDemo /> },
+  { name: "input-group", element: <InputGroupDemo /> },
+  { name: "input-otp", element: <InputOTPDemo /> },
+  { name: "label", element: <LabelDemo /> },
+  { name: "accordion", element: <AccordionDemo /> },
+  { name: "alert", element: <AlertDemo /> },
+  { name: "alert-dialog", element: <AlertDialogDemo /> },
+  { name: "aspect-ratio", element: <AspectRatioDemo /> },
+  { name: "avatar", element: <AvatarDemo /> },
+  { name: "badge", element: <BadgeDemo /> },
+  { name: "breadcrumb", element: <BreadcrumbDemo /> },
+  { name: "card", element: <CardDemo /> },
+  { name: "carousel", element: <CarouselDemo /> },
+  { name: "checkbox", element: <CheckboxDemo /> },
+  { name: "collapsible", element: <CollapsibleDemo /> },
+  { name: "combobox", element: <ComboboxDemo /> },
+  { name: "command", element: <CommandDemo /> },
+  { name: "context-menu", element: <ContextMenuDemo /> },
+  { name: "date-picker", element: <DatePickerDemo /> },
+  { name: "dialog", element: <DialogDemo /> },
+  { name: "drawer", element: <DrawerDemo /> },
+  { name: "dropdown-menu", element: <DropdownMenuDemo /> },
+  { name: "hover-card", element: <HoverCardDemo /> },
+  { name: "menubar", element: <MenubarDemo /> },
+  { name: "navigation-menu", element: <NavigationMenuDemo /> },
+  { name: "pagination", element: <PaginationDemo /> },
+  { name: "popover", element: <PopoverDemo /> },
+  { name: "progress", element: <ProgressDemo /> },
+  { name: "radio-group", element: <RadioGroupDemo /> },
+  { name: "resizable", element: <ResizableDemo /> },
+  { name: "scroll-area", element: <ScrollAreaDemo /> },
+  { name: "select", element: <SelectDemo /> },
+  { name: "separator", element: <SeparatorDemo /> },
+  { name: "sheet", element: <SheetDemo /> },
+  { name: "skeleton", element: <SkeletonDemo /> },
+  { name: "slider", element: <SliderDemo /> },
+  { name: "sonner", element: <SonnerDemo /> },
+  { name: "switch", element: <SwitchDemo /> },
+  { name: "table", element: <TableDemo /> },
+  { name: "tabs", element: <TabsDemo /> },
+  { name: "textarea", element: <TextareaDemo /> },
+  { name: "toggle", element: <ToggleDemo /> },
+  { name: "toggle-group", element: <ToggleGroupDemo /> },
+  { name: "tooltip", element: <TooltipDemo /> },
+  { name: "kbd", element: <KbdDemo /> },
+  { name: "item", element: <ItemDemo /> },
+  { name: "empty", element: <EmptyDemo /> },
+  { name: "spinner", element: <SpinnerDemo /> },
+];
 
 export default function ComponentsPage() {
   return (
@@ -89,153 +171,31 @@ export default function ComponentsPage() {
       <Separator />
 
       <ContainerWrapper withCane>
+        <nav className="scrollbar-thin -mx-4 overflow-x-auto border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/75 md:mx-0 md:rounded-t-xl">
+          <div className="flex items-center gap-2">
+            {componentSections.map((section) => (
+              <a
+                key={section.name}
+                href={`#${section.name}`}
+                className="text-muted-foreground whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                {getComponentName(section.name)}
+              </a>
+            ))}
+          </div>
+        </nav>
+      </ContainerWrapper>
+
+      <Separator />
+
+      <ContainerWrapper withCane>
         <SectionWrapper>
           <div className="@container grid flex-1 gap-4 space-y-8">
-            <ComponentWrapper name="button">
-              <ButtonDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="form">
-              <FormsDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="calendar">
-              <CalendarDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="chart" className="w-full">
-              <ChartDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="input">
-              <InputDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="input-otp">
-              <InputOTPDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="label">
-              <LabelDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="accordion">
-              <AccordionDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="alert">
-              <AlertDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="alert-dialog">
-              <AlertDialogDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="aspect-ratio">
-              <AspectRatioDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="avatar">
-              <AvatarDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="badge">
-              <BadgeDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="breadcrumb">
-              <BreadcrumbDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="card">
-              <CardDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="carousel">
-              <CarouselDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="checkbox">
-              <CheckboxDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="collapsible">
-              <CollapsibleDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="combobox">
-              <ComboboxDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="command">
-              <CommandDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="context-menu">
-              <ContextMenuDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="date-picker">
-              <DatePickerDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="dialog">
-              <DialogDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="drawer">
-              <DrawerDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="dropdown-menu">
-              <DropdownMenuDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="form">
-              <FormsDemo />
-              <FormDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="hover-card">
-              <HoverCardDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="menubar">
-              <MenubarDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="navigation-menu">
-              <NavigationMenuDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="pagination">
-              <PaginationDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="popover">
-              <PopoverDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="progress">
-              <ProgressDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="radio-group">
-              <RadioGroupDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="resizable">
-              <ResizableDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="scroll-area">
-              <ScrollAreaDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="select">
-              <SelectDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="separator">
-              <SeparatorDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="sheet">
-              <SheetDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="skeleton">
-              <SkeletonDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="slider">
-              <SliderDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="sonner">
-              <SonnerDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="switch">
-              <SwitchDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="table">
-              <TableDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="tabs">
-              <TabsDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="textarea">
-              <TextareaDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="toggle">
-              <ToggleDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="toggle-group">
-              <ToggleGroupDemo />
-            </ComponentWrapper>
-            <ComponentWrapper name="tooltip">
-              <TooltipDemo />
-            </ComponentWrapper>
+            {componentSections.map(({ name, element, wrapperProps }) => (
+              <ComponentWrapper key={name} name={name} {...wrapperProps}>
+                {element}
+              </ComponentWrapper>
+            ))}
           </div>
         </SectionWrapper>
       </ContainerWrapper>
