@@ -1,78 +1,52 @@
 "use client";
 
-import {
-  type ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  type SortingState,
-  useReactTable,
-} from "@tanstack/react-table";
+import { useEffect, useMemo, useState, useTransition } from "react";
+import { ColumnDef, SortingState, flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { format } from "date-fns";
 import isEqual from "lodash/isEqual";
-import { ArrowUpDown, GitCompare, RotateCcw } from "lucide-react";
-import { useMemo, useState, useTransition } from "react";
-import { toast } from "sonner";
 import { JsonDiffView } from "@/components/json-diff-view";
-import { Badge } from "@/components/ui/badge";
+import { ThemeCommitDialog } from "@/components/customizer/theme-commit-dialog";
+
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { useThemeConfig } from "@/hooks/use-theme-config";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useCommitAuthor } from "@/hooks/use-commit-author";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { GitCompare } from "lucide-react";
+import { ThemeVersionRecord } from "@/types/theme-update";
 import { cn } from "@/lib/utils";
+import { useThemeConfig } from "@/hooks/use-theme-config";
 import { usePreferencesActions } from "@/store/preferences-store";
-import type { ThemeVersionRecord } from "@/types/theme-update";
-
-export type ThemeVersionRow = ThemeVersionRecord;
-
-interface ThemeVersionsTableProps {
-  versions: ThemeVersionRow[];
-}
+import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
+import { ArrowUpDown, RotateCcw } from "lucide-react";
+import { updateTheme } from "@/actions/theme";
 
 function ViewDiffDialog({
-  snapshot,
-  name,
-  version,
+  record,
 }: {
-  snapshot: ThemeVersionRecord["config"];
-  name: string;
-  version: number;
+  record: ThemeVersionRecord
 }) {
   const { config: currentConfig } = useThemeConfig();
   const [isOpen, setIsOpen] = useState(false);
 
   const hasDifferences = useMemo(
-    () => !isEqual(snapshot.theme, currentConfig),
-    [snapshot.theme, currentConfig]
+    () => !isEqual(record.config.theme, currentConfig),
+    [record.config.theme, currentConfig]
   );
 
   const optionLabels = useMemo(() => {
     const labels = [] as string[];
-    if (snapshot.options.fontVars) {
+    if (record.config.options.fontVars) {
       labels.push("Font vars");
     }
-    if (snapshot.options.shadowVars) {
+    if (record.config.options.shadowVars) {
       labels.push("Shadow vars");
     }
     if (!labels.length) {
       labels.push("Default options");
     }
     return labels;
-  }, [snapshot.options.fontVars, snapshot.options.shadowVars]);
+  }, [record.config.options.fontVars, record.config.options.shadowVars]);
 
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
@@ -119,44 +93,118 @@ function ViewDiffDialog({
   );
 }
 
-function RestoreThemeButton({
-  version,
-  name,
-  snapshot,
-}: {
-  version: number;
-  name: string;
-  snapshot: ThemeVersionRecord["config"];
-}) {
+export type ThemeVersionRow = ThemeVersionRecord;
+
+interface ThemeVersionsTableProps {
+  versions: ThemeVersionRow[];
+}
+
+function RestoreThemeButton({ record }: { record: ThemeVersionRecord }) {
   const { setConfig } = useThemeConfig();
-  const {
-    setTailwindVersion,
-    setColorFormat,
-    setShowFontVars,
-    setShowShadowsVars,
-  } = usePreferencesActions();
+  const { setTailwindVersion, setColorFormat, setShowFontVars, setShowShadowsVars } =
+    usePreferencesActions();
+    const { author, setAuthor } = useCommitAuthor();
   const [isRestoring, startTransition] = useTransition();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [commitMessage, setCommitMessage] = useState("");
+  const [formError, setFormError] = useState<string | null>(null);
+
+  const defaultMessage = useMemo(
+    () => `Restore ${record.name} to ${record.commit.hash.slice(0, 7)}`,
+    [record.commit.hash, record.name],
+  );
+
+  useEffect(() => {
+    setCommitMessage(defaultMessage);
+  }, [defaultMessage]);
+
+  const handleDialogChange = (open: boolean) => {
+    setIsDialogOpen(open);
+
+    if (!open) {
+      setFormError(null);
+    }
+  };
+
+  const handleRestore = () => {
+    const trimmedName = author.name.trim();
+    const trimmedEmail = author.email.trim();
+    const trimmedMessage = commitMessage.trim();
+
+    if (!trimmedName) {
+      setFormError("Author name is required.");
+      return;
+    }
+
+    setFormError(null);
+
+    startTransition(async () => {
+      const result = await updateTheme({
+        themeConfig: record.config.theme,
+        colorFormat: record.config.colorFormat,
+        tailwindVersion: record.config.tailwindVersion,
+        includeFontVars: record.config.options.fontVars,
+        includeShadowVars: record.config.options.shadowVars,
+        snapshot: record.config,
+        commit: {
+          message: trimmedMessage,
+          author: {
+            name: trimmedName,
+            email: trimmedEmail ? trimmedEmail : undefined,
+          },
+        },
+      });
+
+      if (result.success) {
+        const { data } = result;
+        setConfig(record.config.theme);
+        setTailwindVersion(record.config.tailwindVersion);
+        setColorFormat(record.config.colorFormat);
+        setShowFontVars(record.config.options.fontVars);
+        setShowShadowsVars(record.config.options.shadowVars);
+        setAuthor({ name: trimmedName, email: trimmedEmail });
+        setIsDialogOpen(false);
+
+        toast.success(
+          `Restored ${data.name} (${data.commit.hash.slice(0, 7)})`,
+        );
+        return;
+      }
+
+      toast.error(result.error);
+    });
+  };
 
   return (
-    <Button
-      className="gap-1"
-      disabled={isRestoring}
-      onClick={() => {
-        startTransition(() => {
-          setConfig(snapshot.theme);
-          setTailwindVersion(snapshot.tailwindVersion);
-          setColorFormat(snapshot.colorFormat);
-          setShowFontVars(snapshot.options.fontVars);
-          setShowShadowsVars(snapshot.options.shadowVars);
-          toast.success(`Restored ${name} v${version}`);
-        });
-      }}
-      size="sm"
-      variant="ghost"
-    >
-      <RotateCcw className={cn("size-4", isRestoring && "animate-spin")} />
-      Restore
-    </Button>
+    <>
+      <Button
+        size="sm"
+        variant="ghost"
+        className="gap-1"
+        disabled={isRestoring}
+        onClick={() => handleDialogChange(true)}
+      >
+        <RotateCcw className={cn("size-4", isRestoring && "animate-spin")}
+        />
+        Restore
+      </Button>
+
+      <ThemeCommitDialog
+        open={isDialogOpen}
+        onOpenChange={handleDialogChange}
+        title="Restore theme"
+        description="Confirm the restoration commit. The message is generated automatically."
+        message={commitMessage}
+        onMessageChange={setCommitMessage}
+        author={author}
+        onAuthorChange={setAuthor}
+        onSubmit={handleRestore}
+        isSubmitting={isRestoring}
+        submitLabel="Restore"
+        error={formError}
+        messageReadOnly
+      />
+    </>
   );
 }
 
@@ -164,19 +212,15 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
   const columns = useMemo<ColumnDef<ThemeVersionRow>[]>(
     () => [
       {
-        accessorKey: "version",
-        header: ({ column }) => (
-          <Button
-            className="px-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            variant="ghost"
-          >
-            Version
-            <ArrowUpDown className="ml-2 size-4" />
-          </Button>
-        ),
+        accessorKey: "commit.hash",
+        header: "Commit",
         cell: ({ row }) => (
-          <span className="font-semibold">v{row.original.version}</span>
+          <div className="flex flex-col">
+            <span className="font-medium">{row.original.commit.message}</span>
+            <span className="text-muted-foreground text-xs">
+              {row.original.commit.hash.slice(0, 7)}
+            </span>
+          </div>
         ),
       },
       {
@@ -224,6 +268,34 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
         ),
       },
       {
+        accessorKey: "commit.author.name",
+        header: "Author",
+        cell: ({ row }) => (
+          <div className="flex flex-col">
+            <span className="font-medium">{row.original.commit.author.name}</span>
+            {row.original.commit.author.email ? (
+              <span className="text-muted-foreground text-xs">
+                {row.original.commit.author.email}
+              </span>
+            ) : null}
+          </div>
+        ),
+      },
+      {
+        accessorKey: "commit.author.name",
+        header: "Author",
+        cell: ({ row }) => (
+          <div className="flex flex-col">
+            <span className="font-medium">{row.original.commit.author.name}</span>
+            {row.original.commit.author.email ? (
+              <span className="text-muted-foreground text-xs">
+                {row.original.commit.author.email}
+              </span>
+            ) : null}
+          </div>
+        ),
+      },
+      {
         accessorKey: "createdAt",
         header: ({ column }) => (
           <Button
@@ -249,9 +321,7 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
               version={row.original.version}
             />
             <RestoreThemeButton
-              name={row.original.name}
-              snapshot={row.original.config}
-              version={row.original.version}
+              record={row.original}
             />
           </div>
         ),
@@ -261,7 +331,7 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
   );
 
   const [sorting, setSorting] = useState<SortingState>([
-    { id: "version", desc: true },
+    { id: "createdAt", desc: true },
   ]);
 
   const table = useReactTable({

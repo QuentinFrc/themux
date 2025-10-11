@@ -1,29 +1,48 @@
-import { desc, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import type { DatabaseClient } from "@/database/drizzle/client";
-import { type ThemeTable, themeTable } from "@/database/drizzle/schema";
+import { themeTable, authorTable } from "@/database/drizzle/schema";
 
 export const getThemeQueries = (db: DatabaseClient) => ({
-  async getLatestThemeVersion(
-    themeName: string
-  ): Promise<ThemeTable | undefined> {
-    const [row] = await db
-      .select()
-      .from(themeTable)
-      .where(eq(themeTable.name, themeName))
-      .orderBy(desc(themeTable.version))
-      .limit(1);
-
-    return row;
+  async getLatestThemeVersion(themeName: string) {
+    return db.query.themeTable.findFirst({
+      where: eq(themeTable.name, themeName),
+      orderBy: (theme, { desc: orderDesc }) => [orderDesc(theme.createdAt)],
+      with: {
+        commit: {
+          with: {
+            author: true,
+          },
+        },
+      },
+    });
   },
 
-  async listThemeVersions(): Promise<ThemeTable[]> {
-    const query = db.select().from(themeTable);
+  async listThemeVersions() {
+    return db.query.themeTable.findMany({
+      orderBy: (theme, { desc: orderDesc }) => [orderDesc(theme.createdAt)],
+      with: {
+        commit: {
+          with: {
+            author: true,
+          },
+        },
+      },
+    });
+  },
 
-    const rows = await query.orderBy(
-      desc(themeTable.version),
-      desc(themeTable.createdAt)
-    );
+  async listCommits() {
+    return db.query.commitTable.findMany({
+      orderBy: (commit, { desc: orderDesc }) => [orderDesc(commit.createdAt)],
+      with: {
+        author: true,
+        theme: true,
+      },
+    });
+  },
 
-    return rows;
+  async findAuthorByEmail(email: string) {
+    return db.query.authorTable.findFirst({
+      where: eq(authorTable.email, email),
+    });
   },
 });

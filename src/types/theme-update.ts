@@ -21,20 +21,49 @@ export type ThemeUpdatePayload = {
   tailwindVersion: TailwindVersion;
   includeFontVars?: boolean;
   includeShadowVars?: boolean;
+  commit: ThemeCommitInput;
+  snapshot?: ThemeSnapshot;
+};
+
+export type ThemeCommitAuthor = {
+  id: string;
+  name: string;
+  email?: string | null;
+};
+
+export type ThemeCommitRecord = {
+  hash: string;
+  message: string;
+  createdAt: Date;
+  author: ThemeCommitAuthor;
 };
 
 export type ThemeVersionRecord = {
   id: string;
   name: string;
-  version: number;
   config: ThemeSnapshot;
   createdAt: Date;
+  commit: ThemeCommitRecord;
+};
+
+export type ThemeCommitInput = {
+  message: string;
+  author: {
+    name: string;
+    email?: string;
+  };
 };
 
 export type CreateThemeVersionInput = {
-  themeName: string;
-  version: number;
   snapshot: ThemeSnapshot;
+  commit: ThemeCommitInput;
+};
+
+export type ThemeCommitRecordWithTheme = ThemeCommitRecord & {
+  theme?: {
+    id: string;
+    name: string;
+  };
 };
 
 export interface ThemeVersionRepository {
@@ -43,6 +72,7 @@ export interface ThemeVersionRepository {
     input: CreateThemeVersionInput
   ): Promise<ThemeVersionRecord>;
   listThemeVersions(): Promise<ThemeVersionRecord[]>;
+  listCommits(): Promise<ThemeCommitRecordWithTheme[]>;
 }
 
 export type ThemeUpdateHandler = () => Promise<Status<ThemeVersionRecord>>;
