@@ -3,21 +3,105 @@
 import { useMemo, useState, useTransition } from "react";
 import { ColumnDef, SortingState, flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { format } from "date-fns";
+import isEqual from "lodash/isEqual";
 
-import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ThemeVersionRecord } from "@/types/theme-update";
-import { cn } from "@/lib/utils";
-import { useThemeConfig } from "@/hooks/use-theme-config";
-import { usePreferencesActions } from "@/store/preferences-store";
-import { toast } from "sonner";
+import { JsonDiffView } from "@/components/json-diff-view";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpDown, RotateCcw } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useThemeConfig } from "@/hooks/use-theme-config";
+import { cn } from "@/lib/utils";
+import { ThemeVersionRecord } from "@/types/theme-update";
+import { usePreferencesActions } from "@/store/preferences-store";
+import { ArrowUpDown, GitCompare, RotateCcw } from "lucide-react";
+import { toast } from "sonner";
 
 export type ThemeVersionRow = ThemeVersionRecord;
 
 interface ThemeVersionsTableProps {
   versions: ThemeVersionRow[];
+}
+
+function ViewDiffDialog({
+  snapshot,
+  name,
+  version,
+}: {
+  snapshot: ThemeVersionRecord["config"];
+  name: string;
+  version: number;
+}) {
+  const { config: currentConfig } = useThemeConfig();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const hasDifferences = useMemo(
+    () => !isEqual(snapshot.theme, currentConfig),
+    [snapshot.theme, currentConfig],
+  );
+
+  const optionLabels = useMemo(() => {
+    const labels = [] as string[];
+    if (snapshot.options.fontVars) {
+      labels.push("Font vars");
+    }
+    if (snapshot.options.shadowVars) {
+      labels.push("Shadow vars");
+    }
+    if (!labels.length) {
+      labels.push("Default options");
+    }
+    return labels;
+  }, [snapshot.options.fontVars, snapshot.options.shadowVars]);
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button size="sm" variant="ghost" className="gap-1">
+          <GitCompare className="size-4" />
+          Diff
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-5xl space-y-4">
+        <DialogHeader>
+          <DialogTitle>Compare {name} v{version}</DialogTitle>
+          <DialogDescription>
+            {hasDifferences
+              ? "Review the JSON diff between this snapshot and your current theme configuration."
+              : "This snapshot matches your current theme configuration."}
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+          <Badge variant="outline" className="text-xs">
+            Format: {snapshot.colorFormat}
+          </Badge>
+          <Badge variant="outline" className="text-xs">
+            Tailwind: v{snapshot.tailwindVersion}
+          </Badge>
+          {optionLabels.map((label) => (
+            <Badge key={label} variant="outline" className="text-xs">
+              {label}
+            </Badge>
+          ))}
+        </div>
+
+        <JsonDiffView
+          original={snapshot.theme}
+          updated={currentConfig}
+          leftLabel={`${name} v${version}`}
+          rightLabel="Current theme"
+        />
+      </DialogContent>
+    </Dialog>
+  );
 }
 
 function RestoreThemeButton({ version, name, snapshot }: {
@@ -141,11 +225,18 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
         header: "",
         enableSorting: false,
         cell: ({ row }) => (
-          <RestoreThemeButton
-            name={row.original.name}
-            version={row.original.version}
-            snapshot={row.original.config}
-          />
+          <div className="flex items-center gap-2">
+            <ViewDiffDialog
+              name={row.original.name}
+              version={row.original.version}
+              snapshot={row.original.config}
+            />
+            <RestoreThemeButton
+              name={row.original.name}
+              version={row.original.version}
+              snapshot={row.original.config}
+            />
+          </div>
         ),
       },
     ],
