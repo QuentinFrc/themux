@@ -1,8 +1,6 @@
 import type { ReactNode } from "react";
 import { Metadata } from "next";
 
-import { CustomizerSidebar } from "@/components/customizer/customizer-sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
@@ -12,24 +10,10 @@ export const metadata: Metadata = {
   },
 };
 
-const SIDEBAR_WIDTH = "21rem";
-
 export default function ShadcnThemesLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  return (
-    <TooltipProvider>
-      <SidebarProvider
-        defaultOpen
-        style={{
-          "--sidebar-width": SIDEBAR_WIDTH,
-        }}
-      >
-        <CustomizerSidebar variant="inset" />
-        {children}
-      </SidebarProvider>
-    </TooltipProvider>
-  );
+  return <TooltipProvider>{children}</TooltipProvider>;
 }
