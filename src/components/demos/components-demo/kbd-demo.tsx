@@ -1,23 +1,21 @@
 "use client";
 
-import { Kbd } from "@/components/ui/kbd";
+import { KbdGroup, Kbd } from "@/components/ui/kbd";
 
 export function KbdDemo() {
   return (
-    <div className="flex flex-wrap items-center gap-4">
-      <div className="flex items-center gap-1 text-muted-foreground text-sm">
+    <div className="flex flex-col items-center gap-4">
+      <KbdGroup>
         <Kbd>⌘</Kbd>
-        <span>+</span>
-        <Kbd>K</Kbd>
-        <span className="sr-only">Open command palette</span>
-      </div>
-      <div className="flex items-center gap-1 text-muted-foreground text-sm">
         <Kbd>⇧</Kbd>
+        <Kbd>⌥</Kbd>
+        <Kbd>⌃</Kbd>
+      </KbdGroup>
+      <KbdGroup>
+        <Kbd>Ctrl</Kbd>
         <span>+</span>
-        <Kbd>P</Kbd>
-        <span className="sr-only">Switch profile</span>
-      </div>
-      <Kbd className="text-xs">Esc</Kbd>
+        <Kbd>B</Kbd>
+      </KbdGroup>
     </div>
-  );
+  )
 }

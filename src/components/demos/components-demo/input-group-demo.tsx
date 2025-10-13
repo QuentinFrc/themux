@@ -1,56 +1,98 @@
-"use client";
+import { IconCheck, IconInfoCircle, IconPlus } from "@tabler/icons-react"
+import { ArrowUpIcon, Search } from "lucide-react"
 
-import { Search, Share2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
-  InputGroupItem,
+  InputGroupInput,
   InputGroupText,
-} from "@/components/ui/input-group";
-import { Kbd } from "@/components/ui/kbd";
+  InputGroupTextarea,
+} from "@/components/ui/input-group"
+import { Separator } from "@/components/ui/separator"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export function InputGroupDemo() {
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="grid w-full max-w-sm gap-6">
       <InputGroup>
-        <InputGroupText>https://</InputGroupText>
-        <InputGroupItem>
-          <Input placeholder="themux.vercel.app" />
-        </InputGroupItem>
-        <InputGroupButton>
-          <Button size="sm" variant="secondary">
-            Check
-          </Button>
-        </InputGroupButton>
-      </InputGroup>
-
-      <InputGroup>
+        <InputGroupInput placeholder="Search..." />
         <InputGroupAddon>
-          <Search className="size-4" />
+          <Search />
         </InputGroupAddon>
-        <InputGroupItem>
-          <Input placeholder="Search components" />
-        </InputGroupItem>
-        <InputGroupText>
-          <Kbd>⌘</Kbd>
-          <Kbd>K</Kbd>
-        </InputGroupText>
+        <InputGroupAddon align="inline-end">12 results</InputGroupAddon>
       </InputGroup>
-
       <InputGroup>
-        <InputGroupItem>
-          <Input placeholder="Invite with email" type="email" />
-        </InputGroupItem>
-        <InputGroupButton>
-          <Button size="sm">
-            <Share2 className="mr-2 size-4" />
-            Share link
-          </Button>
-        </InputGroupButton>
+        <InputGroupInput placeholder="example.com" className="!pl-1" />
+        <InputGroupAddon>
+          <InputGroupText>https://</InputGroupText>
+        </InputGroupAddon>
+        <InputGroupAddon align="inline-end">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <InputGroupButton className="rounded-full" size="icon-xs">
+                <IconInfoCircle />
+              </InputGroupButton>
+            </TooltipTrigger>
+            <TooltipContent>This is content in a tooltip.</TooltipContent>
+          </Tooltip>
+        </InputGroupAddon>
+      </InputGroup>
+      <InputGroup>
+        <InputGroupTextarea placeholder="Ask, Search or Chat..." />
+        <InputGroupAddon align="block-end">
+          <InputGroupButton
+            variant="outline"
+            className="rounded-full"
+            size="icon-xs"
+          >
+            <IconPlus />
+          </InputGroupButton>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <InputGroupButton variant="ghost">Auto</InputGroupButton>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              side="top"
+              align="start"
+              className="[--radius:0.95rem]"
+            >
+              <DropdownMenuItem>Auto</DropdownMenuItem>
+              <DropdownMenuItem>Agent</DropdownMenuItem>
+              <DropdownMenuItem>Manual</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <InputGroupText className="ml-auto">52% used</InputGroupText>
+          <Separator orientation="vertical" className="!h-4" />
+          <InputGroupButton
+            variant="default"
+            className="rounded-full"
+            size="icon-xs"
+            disabled
+          >
+            <ArrowUpIcon />
+            <span className="sr-only">Send</span>
+          </InputGroupButton>
+        </InputGroupAddon>
+      </InputGroup>
+      <InputGroup>
+        <InputGroupInput placeholder="@shadcn" />
+        <InputGroupAddon align="inline-end">
+          <div className="bg-primary text-primary-foreground flex size-4 items-center justify-center rounded-full">
+            <IconCheck className="size-3" />
+          </div>
+        </InputGroupAddon>
       </InputGroup>
     </div>
-  );
+  )
 }
