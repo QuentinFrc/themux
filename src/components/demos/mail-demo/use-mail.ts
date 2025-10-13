@@ -1,5 +1,5 @@
-import { Mail, mails } from "@/components/demos/mail-demo/data";
 import { create } from "zustand";
+import { type Mail, mails } from "@/components/demos/mail-demo/data";
 
 interface Config {
   selected: Mail["id"] | null;

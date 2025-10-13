@@ -1,5 +1,5 @@
-import { ColorFormat, OklchValue, TailwindVersion } from "@/types/theme";
 import * as culori from "culori";
+import type { ColorFormat, OklchValue, TailwindVersion } from "@/types/theme";
 
 const formatNumber = (num?: number): number => {
   if (!num) return 0;
@@ -30,7 +30,7 @@ const formatAlphaForHex = (alpha: number | undefined): string | null => {
 export const colorFormatter = (
   colorValue: string, // Expected "oklch(L C H)" or "oklch(L C H / A)"
   format: ColorFormat,
-  tailwindVersion: TailwindVersion,
+  tailwindVersion: TailwindVersion
 ): string => {
   try {
     const parsedColor = culori.parse(colorValue);
@@ -57,15 +57,14 @@ export const colorFormatter = (
           return alphaPart
             ? `hsl(${h} ${s}% ${l}% ${alphaPart})`
             : `hsl(${h} ${s}% ${l}%)`;
-        } else {
-          // Tailwind v3 expects direct values "H S% L%" (alpha is omitted)
-          if (alphaPart) {
-            console.warn(
-              `Alpha channel ignored converting to HSL for Tailwind v3: ${colorValue}`,
-            );
-          }
-          return `${h} ${s}% ${l}%`;
         }
+        // Tailwind v3 expects direct values "H S% L%" (alpha is omitted)
+        if (alphaPart) {
+          console.warn(
+            `Alpha channel ignored converting to HSL for Tailwind v3: ${colorValue}`
+          );
+        }
+        return `${h} ${s}% ${l}%`;
       }
       case "rgb": {
         // Convert the 'color' object (parsed from oklch) to RGB

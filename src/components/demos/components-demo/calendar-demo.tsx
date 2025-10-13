@@ -1,8 +1,8 @@
 "use client";
 
-import * as React from "react";
 import { addDays } from "date-fns";
-import { type DateRange } from "react-day-picker";
+import * as React from "react";
+import type { DateRange } from "react-day-picker";
 
 import { Calendar } from "@/components/ui/calendar";
 
@@ -18,29 +18,29 @@ export function CalendarDemo() {
   });
 
   return (
-    <div className="flex flex-col flex-wrap items-start justify-center gap-2 @md:flex-row">
+    <div className="flex @md:flex-row flex-col flex-wrap items-start justify-center gap-2">
       <Calendar
+        className="rounded-md border shadow-sm"
         mode="single"
-        selected={date}
         onSelect={setDate}
-        className="rounded-md border shadow-sm"
+        selected={date}
       />
       <Calendar
-        mode="range"
+        className="rounded-md border shadow-sm"
         defaultMonth={dateRange?.from}
-        selected={dateRange}
-        onSelect={setDateRange}
-        numberOfMonths={2}
         disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-        className="rounded-md border shadow-sm"
+        mode="range"
+        numberOfMonths={2}
+        onSelect={setDateRange}
+        selected={dateRange}
       />
       <Calendar
-        mode="range"
+        className="@4xl:flex hidden rounded-md border shadow-sm [&>div]:gap-5"
         defaultMonth={range?.from}
-        selected={range}
-        onSelect={setRange}
+        mode="range"
         numberOfMonths={3}
-        className="hidden rounded-md border shadow-sm @4xl:flex [&>div]:gap-5"
+        onSelect={setRange}
+        selected={range}
       />
     </div>
   );

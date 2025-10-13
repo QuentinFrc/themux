@@ -1,14 +1,14 @@
-import { DatabaseClient } from "@/database/drizzle/client";
+import type { DatabaseClient } from "@/database/drizzle/client";
 import { getThemeMutations } from "@/database/mutations/theme";
 import { getThemeQueries } from "@/database/queries/theme";
-import {
+import type {
   CreateThemeVersionInput,
   ThemeVersionRecord,
   ThemeVersionRepository,
 } from "@/types/theme-update";
 
 export function createThemeVersionRepository(
-  db: DatabaseClient,
+  db: DatabaseClient
 ): ThemeVersionRepository {
   const queries = getThemeQueries(db);
   const mutations = getThemeMutations(db);

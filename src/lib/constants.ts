@@ -1,4 +1,4 @@
-import { Component, History, LucideIcon, Palette } from "lucide-react";
+import { Component, History, type LucideIcon, Palette } from "lucide-react";
 
 export const ACTIVE_THEME_NAME_COOKIE = "active_theme_name";
 export const ACTIVE_THEME_RADIUS_COOKIE = "active_theme_radius";

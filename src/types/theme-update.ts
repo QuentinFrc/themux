@@ -1,5 +1,5 @@
-import { ColorFormat, TailwindVersion, ThemeConfig } from "./theme";
-import { Status } from "./status";
+import type { Status } from "./status";
+import type { ColorFormat, TailwindVersion, ThemeConfig } from "./theme";
 
 export type ThemeSnapshot = {
   theme: ThemeConfig;
@@ -38,7 +38,7 @@ export type CreateThemeVersionInput = {
 export interface ThemeVersionRepository {
   getLatestThemeVersion(): Promise<ThemeVersionRecord | null>;
   createThemeVersion(
-    input: CreateThemeVersionInput,
+    input: CreateThemeVersionInput
   ): Promise<ThemeVersionRecord>;
   getThemeVersionById(id: string): Promise<ThemeVersionRecord | null>;
   listThemeVersions(): Promise<ThemeVersionRecord[]>;

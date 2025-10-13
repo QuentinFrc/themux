@@ -72,7 +72,10 @@ export const metadata: Metadata = {
   description: "A collection of components built with shadcn/ui.",
 };
 
-type WrapperProps = Omit<ComponentProps<typeof ComponentWrapper>, "name" | "children">;
+type WrapperProps = Omit<
+  ComponentProps<typeof ComponentWrapper>,
+  "name" | "children"
+>;
 
 type ComponentSection = {
   name: string;
@@ -94,7 +97,11 @@ const componentSections: ComponentSection[] = [
   },
   { name: "field", element: <FieldDemo /> },
   { name: "calendar", element: <CalendarDemo /> },
-  { name: "chart", element: <ChartDemo />, wrapperProps: { className: "w-full" } },
+  {
+    name: "chart",
+    element: <ChartDemo />,
+    wrapperProps: { className: "w-full" },
+  },
   { name: "input", element: <InputDemo /> },
   { name: "input-group", element: <InputGroupDemo /> },
   { name: "input-otp", element: <InputOTPDemo /> },
@@ -175,9 +182,9 @@ export default function ComponentsPage() {
           <div className="flex items-center gap-2">
             {componentSections.map((section) => (
               <a
-                key={section.name}
+                className="whitespace-nowrap rounded-md px-3 py-1 font-medium text-muted-foreground text-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 href={`#${section.name}`}
-                className="text-muted-foreground whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                key={section.name}
               >
                 {getComponentName(section.name)}
               </a>

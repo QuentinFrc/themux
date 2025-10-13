@@ -8,7 +8,7 @@ export function MailPage() {
 
 export function MailDemo() {
   return (
-    <BlockViewer name="mail" internalUrl={`/mail`}>
+    <BlockViewer internalUrl={"/mail"} name="mail">
       <MailPage />
     </BlockViewer>
   );

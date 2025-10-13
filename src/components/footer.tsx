@@ -11,7 +11,7 @@ export function Footer() {
             <CurrentDate />
             <ExternalLink href="https://github.com/llanesluis" showIcon>
               <span>
-                llanes<span className="text-primary font-semibold">luis</span>
+                llanes<span className="font-semibold text-primary">luis</span>
               </span>
             </ExternalLink>
           </div>
@@ -28,8 +28,8 @@ export function Footer() {
           {", "}
           heavily inspired by{" "}
           <ExternalLink
-            href={"https://ui.shadcn.com/"}
             className="font-semibold"
+            href={"https://ui.shadcn.com/"}
             showIcon
           >
             shadcn/ui

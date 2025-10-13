@@ -1,16 +1,13 @@
-import {
+import type {
   ColorFormat,
   TailwindVersion,
   ThemeConfig,
   ThemeMode,
 } from "@/types/theme";
-import {
-  ThemeSnapshot,
-  ThemeUpdatePayload,
-} from "@/types/theme-update";
+import type { ThemeSnapshot, ThemeUpdatePayload } from "@/types/theme-update";
 import {
   generateThemeVariables,
-  ThemeVarsOptions,
+  type ThemeVarsOptions,
 } from "./theme-style-generator";
 
 function buildThemeCss(
@@ -18,18 +15,20 @@ function buildThemeCss(
   mode: ThemeMode,
   colorFormat: ColorFormat,
   tailwindVersion: TailwindVersion,
-  options: ThemeVarsOptions,
+  options: ThemeVarsOptions
 ) {
   return generateThemeVariables(
     themeConfig,
     mode,
     colorFormat,
     tailwindVersion,
-    options,
+    options
   );
 }
 
-export function createThemeSnapshot(payload: ThemeUpdatePayload): ThemeSnapshot {
+export function createThemeSnapshot(
+  payload: ThemeUpdatePayload
+): ThemeSnapshot {
   const options: ThemeVarsOptions = {
     fontVars: Boolean(payload.includeFontVars),
     shadowVars: Boolean(payload.includeShadowVars),
@@ -40,7 +39,7 @@ export function createThemeSnapshot(payload: ThemeUpdatePayload): ThemeSnapshot 
     "light",
     payload.colorFormat,
     payload.tailwindVersion,
-    options,
+    options
   );
 
   const darkCss = buildThemeCss(
@@ -48,7 +47,7 @@ export function createThemeSnapshot(payload: ThemeUpdatePayload): ThemeSnapshot 
     "dark",
     payload.colorFormat,
     payload.tailwindVersion,
-    options,
+    options
   );
 
   return {

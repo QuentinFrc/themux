@@ -5,7 +5,6 @@ import { useMemo, useState, useTransition } from "react";
 import { ColumnDef, SortingState, flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { format } from "date-fns";
 import isEqual from "lodash/isEqual";
-
 import { JsonDiffView } from "@/components/json-diff-view";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,11 +16,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ThemeVersionRecord } from "@/types/theme-update";
-import { cn } from "@/lib/utils";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useThemeConfig } from "@/hooks/use-theme-config";
+import { cn } from "@/lib/utils";
 import { usePreferencesActions } from "@/store/preferences-store";
+import type { ThemeVersionRecord } from "@/types/theme-update";
 import { toast } from "sonner";
 import { diffThemeSnapshots, ThemeDiffEntry } from "@/utils/theme-diff";
 import { ArrowUpDown, GitCompare, RotateCcw } from "lucide-react";
@@ -46,7 +52,7 @@ function ViewDiffDialog({
 
   const hasDifferences = useMemo(
     () => !isEqual(snapshot.theme, currentConfig),
-    [snapshot.theme, currentConfig],
+    [snapshot.theme, currentConfig]
   );
 
   const optionLabels = useMemo(() => {
@@ -64,16 +70,18 @@ function ViewDiffDialog({
   }, [snapshot.options.fontVars, snapshot.options.shadowVars]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" variant="ghost" className="gap-1">
+        <Button className="gap-1" size="sm" variant="ghost">
           <GitCompare className="size-4" />
           Diff
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-5xl space-y-4">
         <DialogHeader>
-          <DialogTitle>Compare {name} v{version}</DialogTitle>
+          <DialogTitle>
+            Compare {name} v{version}
+          </DialogTitle>
           <DialogDescription>
             {hasDifferences
               ? "Review the JSON diff between this snapshot and your current theme configuration."
@@ -81,25 +89,25 @@ function ViewDiffDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-          <Badge variant="outline" className="text-xs">
+        <div className="flex flex-wrap items-center gap-2 text-muted-foreground text-xs">
+          <Badge className="text-xs" variant="outline">
             Format: {snapshot.colorFormat}
           </Badge>
-          <Badge variant="outline" className="text-xs">
+          <Badge className="text-xs" variant="outline">
             Tailwind: v{snapshot.tailwindVersion}
           </Badge>
           {optionLabels.map((label) => (
-            <Badge key={label} variant="outline" className="text-xs">
+            <Badge className="text-xs" key={label} variant="outline">
               {label}
             </Badge>
           ))}
         </div>
 
         <JsonDiffView
-          original={snapshot.theme}
-          updated={currentConfig}
           leftLabel={`${name} v${version}`}
+          original={snapshot.theme}
           rightLabel="Current theme"
+          updated={currentConfig}
         />
       </DialogContent>
     </Dialog>
@@ -116,14 +124,16 @@ function RestoreThemeButton({
   snapshot: ThemeVersionRecord["config"];
 }) {
   const { setConfig } = useThemeConfig();
-  const { setTailwindVersion, setColorFormat, setShowFontVars, setShowShadowsVars } =
-    usePreferencesActions();
+  const {
+    setTailwindVersion,
+    setColorFormat,
+    setShowFontVars,
+    setShowShadowsVars,
+  } = usePreferencesActions();
   const [isRestoring, startTransition] = useTransition();
 
   return (
     <Button
-      size="sm"
-      variant="ghost"
       className="gap-1"
       disabled={isRestoring}
       onClick={() => {
@@ -136,9 +146,10 @@ function RestoreThemeButton({
           toast.success(`Restored ${label} v${version}`);
         });
       }}
+      size="sm"
+      variant="ghost"
     >
-      <RotateCcw className={cn("size-4", isRestoring && "animate-spin")}
-      />
+      <RotateCcw className={cn("size-4", isRestoring && "animate-spin")} />
       Restore
     </Button>
   );
@@ -244,11 +255,9 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
         accessorKey: "version",
         header: ({ column }) => (
           <Button
-            variant="ghost"
             className="px-0"
-            onClick={() =>
-              column.toggleSorting(column.getIsSorted() === "asc")
-            }
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            variant="ghost"
           >
             Version
             <ArrowUpDown className="ml-2 size-4" />
@@ -293,19 +302,19 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
             {row.original.config.options.fontVars && (
-              <Badge variant="outline" className="text-xs">
+              <Badge className="text-xs" variant="outline">
                 Font vars
               </Badge>
             )}
             {row.original.config.options.shadowVars && (
-              <Badge variant="outline" className="text-xs">
+              <Badge className="text-xs" variant="outline">
                 Shadow vars
               </Badge>
             )}
-            {!row.original.config.options.fontVars &&
-              !row.original.config.options.shadowVars && (
-                <span className="text-muted-foreground text-xs">Default</span>
-              )}
+            {!(
+              row.original.config.options.fontVars ||
+              row.original.config.options.shadowVars
+            ) && <span className="text-muted-foreground text-xs">Default</span>}
           </div>
         ),
       },
@@ -313,18 +322,15 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
         accessorKey: "createdAt",
         header: ({ column }) => (
           <Button
-            variant="ghost"
             className="px-0"
-            onClick={() =>
-              column.toggleSorting(column.getIsSorted() === "asc")
-            }
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            variant="ghost"
           >
             Created at
             <ArrowUpDown className="ml-2 size-4" />
           </Button>
         ),
-        cell: ({ row }) =>
-          format(row.original.createdAt, "PPpp"),
+        cell: ({ row }) => format(row.original.createdAt, "PPpp"),
       },
       {
         id: "actions",
@@ -355,7 +361,7 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
         },
       },
     ],
-    [],
+    []
   );
 
   const [sorting, setSorting] = useState<SortingState>([
@@ -384,7 +390,7 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext(),
+                          header.getContext()
                         )}
                   </TableHead>
                 ))}
@@ -399,7 +405,7 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}
@@ -407,7 +413,10 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  className="h-24 text-center"
+                  colSpan={columns.length}
+                >
                   No theme versions saved yet.
                 </TableCell>
               </TableRow>

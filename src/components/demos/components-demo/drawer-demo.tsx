@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { Minus, Plus } from "lucide-react";
+import * as React from "react";
 import { Bar, BarChart, ResponsiveContainer } from "recharts";
 
 import { Button } from "@/components/ui/button";
@@ -89,36 +89,36 @@ function DrawerBottom() {
           <div className="p-4 pb-0">
             <div className="flex items-center justify-center space-x-2">
               <Button
-                variant="outline"
-                size="icon"
                 className="h-8 w-8 shrink-0 rounded-full"
-                onClick={() => onClick(-10)}
                 disabled={goal <= 200}
+                onClick={() => onClick(-10)}
+                size="icon"
+                variant="outline"
               >
                 <Minus />
                 <span className="sr-only">Decrease</span>
               </Button>
               <div className="flex-1 text-center">
-                <div className="text-7xl font-bold tracking-tighter">
+                <div className="font-bold text-7xl tracking-tighter">
                   {goal}
                 </div>
-                <div className="text-muted-foreground text-[0.70rem] uppercase">
+                <div className="text-[0.70rem] text-muted-foreground uppercase">
                   Calories/day
                 </div>
               </div>
               <Button
-                variant="outline"
-                size="icon"
                 className="h-8 w-8 shrink-0 rounded-full"
-                onClick={() => onClick(10)}
                 disabled={goal >= 400}
+                onClick={() => onClick(10)}
+                size="icon"
+                variant="outline"
               >
                 <Plus />
                 <span className="sr-only">Increase</span>
               </Button>
             </div>
             <div className="mt-3 h-[120px]">
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer height="100%" width="100%">
                 <BarChart data={data}>
                   <Bar
                     dataKey="goal"
@@ -157,9 +157,9 @@ function DrawerScrollableContent() {
           <DrawerDescription>Set your daily activity goal.</DrawerDescription>
         </DrawerHeader>
         <div className="overflow-y-auto px-4 text-sm">
-          <h4 className="mb-4 text-lg leading-none font-medium">Lorem Ipsum</h4>
+          <h4 className="mb-4 font-medium text-lg leading-none">Lorem Ipsum</h4>
           {Array.from({ length: 10 }).map((_, index) => (
-            <p key={index} className="mb-4 leading-normal">
+            <p className="mb-4 leading-normal" key={index}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -187,9 +187,9 @@ function DrawerDirections() {
   return (
     <>
       {directions.map((direction) => (
-        <Drawer key={direction} direction={direction}>
+        <Drawer direction={direction} key={direction}>
           <DrawerTrigger asChild>
-            <Button variant="outline" className="capitalize">
+            <Button className="capitalize" variant="outline">
               {direction}
             </Button>
           </DrawerTrigger>
@@ -202,7 +202,7 @@ function DrawerDirections() {
             </DrawerHeader>
             <div className="overflow-y-auto px-4 text-sm">
               {Array.from({ length: 10 }).map((_, index) => (
-                <p key={index} className="mb-4 leading-normal">
+                <p className="mb-4 leading-normal" key={index}>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco

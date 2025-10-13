@@ -25,25 +25,25 @@ export function ButtonDemo() {
       </div>
       <div className="flex flex-wrap items-center gap-2 md:flex-row">
         <Button size="sm">Small</Button>
-        <Button variant="outline" size="sm">
+        <Button size="sm" variant="outline">
           Outline
         </Button>
-        <Button variant="ghost" size="sm">
+        <Button size="sm" variant="ghost">
           Ghost
         </Button>
-        <Button variant="destructive" size="sm">
+        <Button size="sm" variant="destructive">
           Destructive
         </Button>
-        <Button variant="secondary" size="sm">
+        <Button size="sm" variant="secondary">
           Secondary
         </Button>
-        <Button variant="link" size="sm">
+        <Button size="sm" variant="link">
           Link
         </Button>
-        <Button variant="outline" size="sm">
+        <Button size="sm" variant="outline">
           <SendIcon /> Send
         </Button>
-        <Button variant="outline" size="sm">
+        <Button size="sm" variant="outline">
           Learn More <ArrowRightIcon />
         </Button>
         <Button disabled size="sm" variant="outline">
@@ -53,25 +53,25 @@ export function ButtonDemo() {
       </div>
       <div className="flex flex-wrap items-center gap-2 md:flex-row">
         <Button size="lg">Large</Button>
-        <Button variant="outline" size="lg">
+        <Button size="lg" variant="outline">
           Outline
         </Button>
-        <Button variant="ghost" size="lg">
+        <Button size="lg" variant="ghost">
           Ghost
         </Button>
-        <Button variant="destructive" size="lg">
+        <Button size="lg" variant="destructive">
           Destructive
         </Button>
-        <Button variant="secondary" size="lg">
+        <Button size="lg" variant="secondary">
           Secondary
         </Button>
-        <Button variant="link" size="lg">
+        <Button size="lg" variant="link">
           Link
         </Button>
-        <Button variant="outline" size="lg">
+        <Button size="lg" variant="outline">
           <SendIcon /> Send
         </Button>
-        <Button variant="outline" size="lg">
+        <Button size="lg" variant="outline">
           Learn More <ArrowRightIcon />
         </Button>
         <Button disabled size="lg" variant="outline">

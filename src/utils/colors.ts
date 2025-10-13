@@ -5,7 +5,7 @@ import { getContrastRatio } from "./contrast-checker";
 
 export function getOptimalForegroundColor(
   baseForegroundColor: string,
-  baseBackgroundColor: string,
+  baseBackgroundColor: string
 ): string {
   const CONTRAST_RATIO_THRESHOLD = 4.5;
   const MAX_RECURSION_DEPTH = 4;
@@ -22,8 +22,8 @@ export function getOptimalForegroundColor(
     const bgColorInHsl = colorFormatter(bg, "hsl", "4");
     const fgColorInHsl = colorFormatter(fg, "hsl", "4");
 
-    const contrastRatio = parseFloat(
-      getContrastRatio(bgColorInHsl, fgColorInHsl),
+    const contrastRatio = Number.parseFloat(
+      getContrastRatio(bgColorInHsl, fgColorInHsl)
     );
 
     if (contrastRatio >= CONTRAST_RATIO_THRESHOLD) return fgColorInHsl;

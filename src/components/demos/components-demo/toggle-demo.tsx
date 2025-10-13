@@ -16,10 +16,10 @@ export function ToggleDemo() {
       <Toggle aria-label="Toggle italic" variant="default">
         <UnderlineIcon />
       </Toggle>
-      <Toggle aria-label="Toggle italic" variant="default" disabled>
+      <Toggle aria-label="Toggle italic" disabled variant="default">
         Disabled
       </Toggle>
-      <Toggle variant="outline" aria-label="Toggle italic">
+      <Toggle aria-label="Toggle italic" variant="outline">
         <ItalicIcon />
         Italic
       </Toggle>
@@ -29,10 +29,10 @@ export function ToggleDemo() {
       >
         <BookmarkIcon />
       </Toggle>
-      <Toggle variant="outline" aria-label="Toggle italic" size="sm">
+      <Toggle aria-label="Toggle italic" size="sm" variant="outline">
         Small
       </Toggle>
-      <Toggle variant="outline" aria-label="Toggle italic" size="lg">
+      <Toggle aria-label="Toggle italic" size="lg" variant="outline">
         Large
       </Toggle>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
+import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
-import { ComponentProps } from "react";
 import { ModeSwitcher } from "../mode-switcher";
 import { TooltipWrapper } from "../tooltip-wrapper";
 import { Separator } from "../ui/separator";
@@ -19,36 +19,32 @@ export function ActionButtons({ className }: ActionButtonsProps) {
     <div
       className={cn(
         "@container flex min-h-0 w-full flex-wrap items-center justify-between gap-2",
-        className,
+        className
       )}
     >
       <section className="flex grow items-center">
-        <TooltipWrapper label="Persist the current theme" asChild>
-          <UpdateThemeButton
-            size="sm"
-            variant="default"
-            className="flex-1"
-          />
+        <TooltipWrapper asChild label="Persist the current theme">
+          <UpdateThemeButton className="flex-1" size="sm" variant="default" />
         </TooltipWrapper>
       </section>
 
       <Separator
+        className="@xl:inline-flex hidden min-h-6"
         orientation="vertical"
-        className="hidden min-h-6 @xl:inline-flex"
       />
 
-      <section className="flex items-center justify-between gap-2 @max-[375px]:w-full">
-        <TooltipWrapper label="Options to reset tokens" asChild>
+      <section className="flex @max-[375px]:w-full items-center justify-between gap-2">
+        <TooltipWrapper asChild label="Options to reset tokens">
           <ResetButton size="sm" variant="ghost" />
         </TooltipWrapper>
 
         <div className="@md:hidden">
-          <TooltipWrapper label="Toggle light/dark" asChild>
+          <TooltipWrapper asChild label="Toggle light/dark">
             <ModeSwitcher />
           </TooltipWrapper>
         </div>
 
-        <TooltipWrapper label="Check contrast ratio" asChild>
+        <TooltipWrapper asChild label="Check contrast ratio">
           <ContrastChecker />
         </TooltipWrapper>
 
@@ -61,7 +57,7 @@ export function ActionButtons({ className }: ActionButtonsProps) {
           </Button>
         </TooltipWrapper> */}
 
-        <TooltipWrapper label="Configure the customizer" asChild>
+        <TooltipWrapper asChild label="Configure the customizer">
           <CustomizerSettings variant="ghost" />
         </TooltipWrapper>
       </section>

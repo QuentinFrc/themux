@@ -1,5 +1,5 @@
+import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
-import { ComponentProps } from "react";
 
 function PageHeader({
   className,
@@ -17,8 +17,8 @@ function PageHeaderHeading({ className, ...props }: ComponentProps<"h1">) {
   return (
     <h1
       className={cn(
-        "text-2xl leading-tight font-bold tracking-tighter sm:text-3xl md:text-4xl lg:leading-[1.1]",
-        className,
+        "font-bold text-2xl leading-tight tracking-tighter sm:text-3xl md:text-4xl lg:leading-[1.1]",
+        className
       )}
       {...props}
     />
@@ -29,8 +29,8 @@ function PageHeaderDescription({ className, ...props }: ComponentProps<"p">) {
   return (
     <p
       className={cn(
-        "text-muted-foreground max-w-3xl text-sm font-light text-balance sm:text-base",
-        className,
+        "max-w-3xl text-balance font-light text-muted-foreground text-sm sm:text-base",
+        className
       )}
       {...props}
     />
@@ -42,7 +42,7 @@ function PageActions({ className, ...props }: ComponentProps<"div">) {
     <div
       className={cn(
         "flex w-full items-center justify-start gap-2 pt-2",
-        className,
+        className
       )}
       {...props}
     />

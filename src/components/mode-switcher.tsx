@@ -1,9 +1,9 @@
 "use client";
 
-import { META_THEME_COLORS, useMetaColor } from "@/hooks/use-meta-colors";
 import { Check, Monitor, Moon, MoonIcon, Sun, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import * as React from "react";
+import { META_THEME_COLORS, useMetaColor } from "@/hooks/use-meta-colors";
 import { Button } from "./ui/button";
 import {
   ContextMenu,
@@ -25,7 +25,7 @@ export function ModeSwitcher({
     setMetaColor(
       resolvedTheme === "dark"
         ? META_THEME_COLORS.light
-        : META_THEME_COLORS.dark,
+        : META_THEME_COLORS.dark
     );
   }, [resolvedTheme, setTheme, setMetaColor]);
 
@@ -33,10 +33,10 @@ export function ModeSwitcher({
     <ContextMenu modal={false}>
       <ContextMenuTrigger asChild>
         <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleTheme}
           className={className}
+          onClick={toggleTheme}
+          size="icon"
+          variant="ghost"
           {...props}
         >
           <SunIcon className="hidden size-4 [html.dark_&]:block" />

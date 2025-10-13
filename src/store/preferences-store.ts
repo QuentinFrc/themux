@@ -80,8 +80,8 @@ const usePreferencesStore = create<PreferencesStore>()(
         resetSettings: () => set(initialPreferencesState),
       }),
     }),
-    { name: PREFERENCES_STORAGE_KEY },
-  ),
+    { name: PREFERENCES_STORAGE_KEY }
+  )
 );
 
 export const useModesInSync = () =>
@@ -105,6 +105,5 @@ export const usePackageManager = () =>
 export const useShowTooltips = () =>
   usePreferencesStore((state) => state.showTooltips);
 
-export const usePreferencesActions = () => {
-  return usePreferencesStore((state) => state.actions)();
-};
+export const usePreferencesActions = () =>
+  usePreferencesStore((state) => state.actions)();

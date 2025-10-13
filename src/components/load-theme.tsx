@@ -1,9 +1,9 @@
 "use client";
 
+import { preconnect } from "react-dom";
 import { initialThemeConfig } from "@/lib/themes";
 import { LOCAL_STORAGE_KEYS } from "@/utils/constants";
 import { monoFontsArray, sansFontsArray, serifFontsArray } from "@/utils/fonts";
-import { preconnect } from "react-dom";
 
 export function LoadTheme() {
   preconnect("https://fonts.gstatic.com", { crossOrigin: "anonymous" });
@@ -13,10 +13,10 @@ export function LoadTheme() {
     const root = document.documentElement;
 
     const defaultLightStyles = ${JSON.stringify(
-      initialThemeConfig.themeObject.light,
+      initialThemeConfig.themeObject.light
     )};
     const defaultDarkStyles = ${JSON.stringify(
-      initialThemeConfig.themeObject.dark,
+      initialThemeConfig.themeObject.dark
     )};
     const defaultRadius = ${JSON.stringify(initialThemeConfig.radius)};
     const defaultFonts = ${JSON.stringify(initialThemeConfig.fonts)};

@@ -1,9 +1,9 @@
+import { MoveLeft } from "lucide-react";
 import { Footer } from "@/components/footer";
 import { FrameHighlight } from "@/components/frame-highlight";
 import { GoBackButton } from "@/components/go-back-button";
 import { Separator } from "@/components/ui/separator";
 import { ContainerWrapper } from "@/components/wrappers";
-import { MoveLeft } from "lucide-react";
 
 export default function RootNotFound() {
   return (
@@ -13,7 +13,7 @@ export default function RootNotFound() {
 
       <ContainerWrapper className="flex-1">
         <div className="grid size-full place-content-center gap-4 font-mono max-sm:place-items-start sm:text-center">
-          <p className="text-2xl font-bold sm:text-4xl">
+          <p className="font-bold text-2xl sm:text-4xl">
             <FrameHighlight>Not Found</FrameHighlight>
           </p>
           <p className="text-muted-foreground">

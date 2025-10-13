@@ -40,11 +40,11 @@ function DialogWithForm() {
           <div className="grid gap-4">
             <div className="grid gap-3">
               <Label htmlFor="name-1">Name</Label>
-              <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
+              <Input defaultValue="Pedro Duarte" id="name-1" name="name" />
             </div>
             <div className="grid gap-3">
               <Label htmlFor="username-1">Username</Label>
-              <Input id="username-1" name="username" defaultValue="@peduarte" />
+              <Input defaultValue="@peduarte" id="username-1" name="username" />
             </div>
           </div>
           <DialogFooter>
@@ -73,9 +73,9 @@ function DialogScrollableContent() {
           </DialogDescription>
         </DialogHeader>
         <div className="-mx-6 max-h-[500px] overflow-y-auto px-6 text-sm">
-          <h4 className="mb-4 text-lg leading-none font-medium">Lorem Ipsum</h4>
+          <h4 className="mb-4 font-medium text-lg leading-none">Lorem Ipsum</h4>
           {Array.from({ length: 10 }).map((_, index) => (
-            <p key={index} className="mb-4 leading-normal">
+            <p className="mb-4 leading-normal" key={index}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -105,9 +105,9 @@ function DialogWithStickyFooter() {
           </DialogDescription>
         </DialogHeader>
         <div className="-mx-6 max-h-[500px] overflow-y-auto px-6 text-sm">
-          <h4 className="mb-4 text-lg leading-none font-medium">Lorem Ipsum</h4>
+          <h4 className="mb-4 font-medium text-lg leading-none">Lorem Ipsum</h4>
           {Array.from({ length: 10 }).map((_, index) => (
-            <p key={index} className="mb-4 leading-normal">
+            <p className="mb-4 leading-normal" key={index}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris

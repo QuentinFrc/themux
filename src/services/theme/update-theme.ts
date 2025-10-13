@@ -1,9 +1,9 @@
-import { createThemeSnapshot } from "@/utils/theme-snapshot";
-import {
+import type {
   ThemeUpdateHandler,
   ThemeUpdatePayload,
   ThemeVersionRepository,
 } from "@/types/theme-update";
+import { createThemeSnapshot } from "@/utils/theme-snapshot";
 
 export type ThemeUpdateHandlerDependencies = {
   repository: ThemeVersionRepository;
