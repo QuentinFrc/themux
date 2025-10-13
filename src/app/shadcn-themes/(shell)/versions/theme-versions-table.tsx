@@ -26,11 +26,13 @@ import {
 } from "@/components/ui/table";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { cn } from "@/lib/utils";
-import { usePreferencesActions } from "@/store/preferences-store";
+import { usePreferencesActions, useColorFormat, useTailwindVersion, useFontVars, useShadowVars } from "@/store/preferences-store";
 import type { ThemeVersionRecord } from "@/types/theme-update";
 import { toast } from "sonner";
 import { diffThemeSnapshots, ThemeDiffEntry } from "@/utils/theme-diff";
 import { ArrowUpDown, GitCompare, RotateCcw } from "lucide-react";
+import { createThemeSnapshot } from "@/utils/theme-snapshot";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export type ThemeVersionRow = ThemeVersionRecord;
 
