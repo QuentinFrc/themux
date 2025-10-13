@@ -3,9 +3,8 @@ import type { DatabaseClient } from "@/database/drizzle/client";
 import { themeTable, authorTable } from "@/database/drizzle/schema";
 
 export const getThemeQueries = (db: DatabaseClient) => ({
-  async getLatestThemeVersion(themeName: string) {
+  async getLatestThemeVersion() {
     return db.query.themeTable.findFirst({
-      where: eq(themeTable.name, themeName),
       orderBy: (theme, { desc: orderDesc }) => [orderDesc(theme.createdAt)],
       with: {
         commit: {
@@ -15,6 +14,16 @@ export const getThemeQueries = (db: DatabaseClient) => ({
         },
       },
     });
+  },
+
+  async getThemeVersionById(id: string): Promise<ThemeTable | undefined> {
+    const [row] = await db
+      .select()
+      .from(themeTable)
+      .where(eq(themeTable.id, id))
+      .limit(1);
+
+    return row;
   },
 
   async listThemeVersions() {

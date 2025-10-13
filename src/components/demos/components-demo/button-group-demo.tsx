@@ -3,7 +3,8 @@
 import { Bold, Italic, Underline } from "lucide-react";
 import * as React from "react";
 
-import { ButtonGroup, ButtonGroupItem } from "@/components/ui/button-group";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 
 const OPTIONS = [
   { value: "bold", icon: Bold, label: "Bold" },
@@ -18,14 +19,14 @@ export function ButtonGroupDemo() {
     <div className="flex flex-col items-start gap-3">
       <ButtonGroup aria-label="Toggle text formatting">
         {OPTIONS.map((option) => (
-          <ButtonGroupItem
+          <Button
             aria-label={option.label}
-            isActive={value === option.value}
+            variant={value === option.value ? "default" : "outline"}
             key={option.value}
             onClick={() => setValue(option.value)}
           >
-            <option.icon className="size-4" />
-          </ButtonGroupItem>
+            <option.icon />
+          </Button>
         ))}
       </ButtonGroup>
 

@@ -1,31 +1,44 @@
-"use client";
+import { BadgeCheckIcon, ChevronRightIcon } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Item } from "@/components/ui/item";
+import { Button } from "@/components/ui/button"
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item"
 
 export function ItemDemo() {
   return (
-    <div className="w-full space-y-3">
-      <Item>
-        <div>
-          <p className="font-semibold leading-none">Team workspace</p>
-          <p className="text-muted-foreground text-xs">
-            Collaborate with up to 10 people
-          </p>
-        </div>
-        <Badge variant="secondary">Active</Badge>
+    <div className="flex w-full max-w-md flex-col gap-6">
+      <Item variant="outline">
+        <ItemContent>
+          <ItemTitle>Basic Item</ItemTitle>
+          <ItemDescription>
+            A simple item with title and description.
+          </ItemDescription>
+        </ItemContent>
+        <ItemActions>
+          <Button variant="outline" size="sm">
+            Action
+          </Button>
+        </ItemActions>
       </Item>
-
-      <Item>
-        <div>
-          <p className="font-semibold leading-none">Pro plan</p>
-          <p className="text-muted-foreground text-xs">
-            $29 per month, billed yearly
-          </p>
-        </div>
-        <Button size="sm">Upgrade</Button>
+      <Item variant="outline" size="sm" asChild>
+        <a href="#">
+          <ItemMedia>
+            <BadgeCheckIcon className="size-5" />
+          </ItemMedia>
+          <ItemContent>
+            <ItemTitle>Your profile has been verified.</ItemTitle>
+          </ItemContent>
+          <ItemActions>
+            <ChevronRightIcon className="size-4" />
+          </ItemActions>
+        </a>
       </Item>
     </div>
-  );
+  )
 }

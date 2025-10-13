@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState, useTransition } from "react";
 import { ColumnDef, SortingState, flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { format } from "date-fns";
@@ -9,13 +10,10 @@ import { ThemeCommitDialog } from "@/components/customizer/theme-commit-dialog";
 
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useCommitAuthor } from "@/hooks/use-commit-author";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { GitCompare } from "lucide-react";
-import { ThemeVersionRecord } from "@/types/theme-update";
-import { cn } from "@/lib/utils";
 import { useThemeConfig } from "@/hooks/use-theme-config";
-import { usePreferencesActions } from "@/store/preferences-store";
+import { cn } from "@/lib/utils";
+import { usePreferencesActions, useColorFormat, useTailwindVersion, useFontVars, useShadowVars } from "@/store/preferences-store";
+import type { ThemeVersionRecord } from "@/types/theme-update";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { ArrowUpDown, RotateCcw } from "lucide-react";
@@ -208,6 +206,99 @@ function RestoreThemeButton({ record }: { record: ThemeVersionRecord }) {
   );
 }
 
+function DiffThemeButton({
+  snapshot,
+  version,
+  label,
+}: {
+  snapshot: ThemeVersionRecord["config"];
+  version: number;
+  label: string;
+}) {
+  const { config } = useThemeConfig();
+  const colorFormat = useColorFormat();
+  const tailwindVersion = useTailwindVersion();
+  const showFontVars = useFontVars();
+  const showShadowVars = useShadowVars();
+  const [open, setOpen] = useState(false);
+
+  const currentSnapshot = useMemo(
+    () =>
+      createThemeSnapshot({
+        themeConfig: config,
+        colorFormat,
+        tailwindVersion,
+        includeFontVars: showFontVars,
+        includeShadowVars: showShadowVars,
+      }),
+    [config, colorFormat, tailwindVersion, showFontVars, showShadowVars],
+  );
+
+  const differences = useMemo<ThemeDiffEntry[]>(
+    () => diffThemeSnapshots(currentSnapshot, snapshot),
+    [currentSnapshot, snapshot],
+  );
+
+  const formatValue = (value: unknown) => {
+    if (value === undefined) return "undefined";
+    if (typeof value === "string") return value;
+    return JSON.stringify(value, null, 2);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button size="sm" variant="ghost" className="gap-1">
+          <GitCompare className="size-4" />
+          Diff
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-h-[80vh] max-w-3xl">
+        <DialogHeader>
+          <DialogTitle>Differences with v{version}</DialogTitle>
+          <DialogDescription>
+            Comparing your current configuration with {label} v{version}.
+          </DialogDescription>
+        </DialogHeader>
+        <ScrollArea className="h-[60vh]">
+          {differences.length ? (
+            <div className="space-y-4 pr-2">
+              {differences.map((entry) => (
+                <div
+                  key={entry.path}
+                  className="rounded-md border bg-muted/30 p-3"
+                >
+                  <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                    {entry.path}
+                  </p>
+                  <div className="mt-2 grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <h4 className="text-sm font-semibold">Current</h4>
+                      <pre className="bg-background mt-1 max-h-48 overflow-auto rounded border p-2 text-xs">
+                        {formatValue(entry.current)}
+                      </pre>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-semibold">Version v{version}</h4>
+                      <pre className="bg-background mt-1 max-h-48 overflow-auto rounded border p-2 text-xs">
+                        {formatValue(entry.selected)}
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-muted-foreground text-sm">
+              Your current configuration already matches this version.
+            </p>
+          )}
+        </ScrollArea>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
   const columns = useMemo<ColumnDef<ThemeVersionRow>[]>(
     () => [
@@ -224,16 +315,23 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
         ),
       },
       {
-        accessorKey: "name",
+        id: "theme",
         header: "Theme",
-        cell: ({ row }) => (
-          <div className="flex flex-col">
-            <span className="font-medium capitalize">{row.original.name}</span>
-            <span className="text-muted-foreground text-xs">
-              {row.original.config.theme.themeObject.label}
-            </span>
-          </div>
-        ),
+        cell: ({ row }) => {
+          const themeObject = row.original.config.theme.themeObject;
+          const themeLabel = themeObject.label ?? themeObject.name ?? "Theme";
+
+          return (
+            <div className="flex flex-col">
+              <span className="font-medium capitalize">{themeLabel}</span>
+              {themeObject.name ? (
+                <span className="text-muted-foreground text-xs">
+                  {themeObject.name}
+                </span>
+              ) : null}
+            </div>
+          );
+        },
       },
       {
         accessorKey: "config.colorFormat",
@@ -313,18 +411,29 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
         id: "actions",
         header: "",
         enableSorting: false,
-        cell: ({ row }) => (
-          <div className="flex items-center gap-2">
-            <ViewDiffDialog
-              name={row.original.name}
-              snapshot={row.original.config}
-              version={row.original.version}
-            />
-            <RestoreThemeButton
-              record={row.original}
-            />
-          </div>
-        ),
+        cell: ({ row }) => {
+          const themeObject = row.original.config.theme.themeObject;
+          const themeLabel = themeObject.label ?? themeObject.name ?? "Theme";
+          const versionHref = `/shadcn-themes?versionId=${encodeURIComponent(row.original.id)}`;
+
+          return (
+            <div className="flex flex-wrap items-center gap-2">
+              <Button asChild size="sm" variant="outline">
+                <Link href={versionHref}>View</Link>
+              </Button>
+              <ViewDiffDialog
+                name={themeLabel}
+                version={row.original.version}
+                snapshot={row.original.config}
+              />
+              <RestoreThemeButton
+                label={themeLabel}
+                version={row.original.version}
+                snapshot={row.original.config}
+              />
+            </div>
+          );
+        },
       },
     ],
     []

@@ -58,8 +58,8 @@ export function createThemeVersionRepository(
   const mutations = getThemeMutations(db);
 
   return {
-    async getLatestThemeVersion(themeName: string) {
-      const row = await queries.getLatestThemeVersion(themeName);
+    async getLatestThemeVersion() {
+      const row = await queries.getLatestThemeVersion();
 
       if (!row) {
         return null;
@@ -107,6 +107,21 @@ export function createThemeVersionRepository(
         ...inserted,
         commit: { ...commit, author },
       } as ThemeRowWithRelations);
+    },
+
+    async getThemeVersionById(id: string) {
+      const row = await queries.getThemeVersionById(id);
+
+      if (!row) {
+        return null;
+      }
+
+      return {
+        id: row.id,
+        version: row.version,
+        config: row.config,
+        createdAt: row.createdAt ?? new Date(),
+      } satisfies ThemeVersionRecord;
     },
 
     async listThemeVersions() {
