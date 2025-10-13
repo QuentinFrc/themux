@@ -1,54 +1,9 @@
 {
-  "id": "4ddd330e-fb67-4750-9759-72fd38c007ae",
+  "id": "388a8eb3-0aa3-4939-841e-438eed395f61",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.registry": {
-      "name": "registry",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "type": {
-          "name": "type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "registry_item": {
-          "name": "registry_item",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.author": {
       "name": "author",
       "schema": "",
@@ -123,16 +78,15 @@
         "commit_author_id_author_id_fk": {
           "name": "commit_author_id_author_id_fk",
           "tableFrom": "commit",
+          "tableTo": "author",
           "columnsFrom": [
             "author_id"
           ],
-          "tableTo": "author",
           "columnsTo": [
             "id"
           ],
           "onDelete": "cascade",
-          "onUpdate": "no action",
-          "match": "simple"
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -183,16 +137,15 @@
         "theme_commit_hash_commit_hash_fk": {
           "name": "theme_commit_hash_commit_hash_fk",
           "tableFrom": "theme",
+          "tableTo": "commit",
           "columnsFrom": [
             "commit_hash"
           ],
-          "tableTo": "commit",
           "columnsTo": [
             "hash"
           ],
           "onDelete": "cascade",
-          "onUpdate": "no action",
-          "match": "simple"
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},

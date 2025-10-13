@@ -40,7 +40,6 @@ export type ThemeCommitRecord = {
 
 export type ThemeVersionRecord = {
   id: string;
-  version: number;
   config: ThemeSnapshot;
   createdAt: Date;
   commit: ThemeCommitRecord;

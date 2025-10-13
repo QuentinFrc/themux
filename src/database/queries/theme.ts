@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import type { DatabaseClient } from "@/database/drizzle/client";
-import { themeTable, authorTable } from "@/database/drizzle/schema";
+import { themeTable, authorTable, ThemeTable, commitTable } from "@/database/drizzle/schema";
 
 export const getThemeQueries = (db: DatabaseClient) => ({
   async getLatestThemeVersion() {
@@ -17,11 +17,16 @@ export const getThemeQueries = (db: DatabaseClient) => ({
   },
 
   async getThemeVersionById(id: string): Promise<ThemeTable | undefined> {
-    const [row] = await db
-      .select()
-      .from(themeTable)
-      .where(eq(themeTable.id, id))
-      .limit(1);
+    const row = await db.query.themeTable.findFirst({
+      with: {
+        commit: {
+          with: {
+            author: true,
+          },
+        },
+      },
+      where: eq(themeTable.id, id),
+    });
 
     return row;
   },

@@ -24,7 +24,9 @@ export const getThemeMutations = (db: DatabaseClient) => ({
 
   async createThemeVersion(
     values: InsertThemeTable
-  ): Promise<ThemeTable | undefined> {
+  ): Promise<Omit<ThemeTable, 'commit'> | undefined> {
+
+    
     const [createdTheme] = await db
       .insert(themeTable)
       .values(values)

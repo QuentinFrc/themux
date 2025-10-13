@@ -101,7 +101,7 @@ export function UpdateThemeButton({
         setIsDialogOpen(false);
 
         toast.success(
-          `Saved ${data.name} (${data.commit.hash.slice(0, 7)})`,
+          `Saved ${data.commit.hash.slice(0, 7)}`,
         );
         return;
       }

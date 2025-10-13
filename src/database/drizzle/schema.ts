@@ -56,9 +56,13 @@ export const themeRelations = relations(themeTable, ({ one }) => ({
   }),
 }));
 
-export type ThemeTable = typeof themeTable.$inferSelect;
+export type ThemeTable = typeof themeTable.$inferSelect & {
+  commit: CommitTable;
+};
 export type InsertThemeTable = typeof themeTable.$inferInsert;
-export type CommitTable = typeof commitTable.$inferSelect;
+export type CommitTable = typeof commitTable.$inferSelect & {
+  author: AuthorTable;
+};
 export type InsertCommitTable = typeof commitTable.$inferInsert;
 export type AuthorTable = typeof authorTable.$inferSelect;
 export type InsertAuthorTable = typeof authorTable.$inferInsert;

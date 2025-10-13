@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition, version } from "react";
 import { ColumnDef, SortingState, flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { format } from "date-fns";
 import isEqual from "lodash/isEqual";
@@ -16,8 +16,14 @@ import { usePreferencesActions, useColorFormat, useTailwindVersion, useFontVars,
 import type { ThemeVersionRecord } from "@/types/theme-update";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpDown, RotateCcw } from "lucide-react";
+import { ArrowUpDown, GitCompare, RotateCcw } from "lucide-react";
 import { updateTheme } from "@/actions/theme";
+import { useCommitAuthor } from "@/hooks/use-commit-author";
+import { createThemeSnapshot } from "@/utils/theme-snapshot";
+import { diffThemeSnapshots, ThemeDiffEntry } from "@/utils/theme-diff";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { snapshot } from "node:test";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 function ViewDiffDialog({
   record,
@@ -57,7 +63,7 @@ function ViewDiffDialog({
       <DialogContent className="max-w-5xl space-y-4">
         <DialogHeader>
           <DialogTitle>
-            Compare {name} v{version}
+            Compare v{record.commit.hash.slice(0, 7)}
           </DialogTitle>
           <DialogDescription>
             {hasDifferences
@@ -68,10 +74,10 @@ function ViewDiffDialog({
 
         <div className="flex flex-wrap items-center gap-2 text-muted-foreground text-xs">
           <Badge className="text-xs" variant="outline">
-            Format: {snapshot.colorFormat}
+            Format: {record.config.colorFormat}
           </Badge>
           <Badge className="text-xs" variant="outline">
-            Tailwind: v{snapshot.tailwindVersion}
+            Tailwind: v{record.config.tailwindVersion}
           </Badge>
           {optionLabels.map((label) => (
             <Badge className="text-xs" key={label} variant="outline">
@@ -81,8 +87,8 @@ function ViewDiffDialog({
         </div>
 
         <JsonDiffView
-          leftLabel={`${name} v${version}`}
-          original={snapshot.theme}
+          leftLabel={`${record.commit.hash.slice(0, 7)}`}
+          original={record.config.theme}
           rightLabel="Current theme"
           updated={currentConfig}
         />
@@ -108,8 +114,8 @@ function RestoreThemeButton({ record }: { record: ThemeVersionRecord }) {
   const [formError, setFormError] = useState<string | null>(null);
 
   const defaultMessage = useMemo(
-    () => `Restore ${record.name} to ${record.commit.hash.slice(0, 7)}`,
-    [record.commit.hash, record.name],
+    () => `Restore to ${record.commit.hash.slice(0, 7)}`,
+    [record.commit.hash],
   );
 
   useEffect(() => {
@@ -164,7 +170,7 @@ function RestoreThemeButton({ record }: { record: ThemeVersionRecord }) {
         setIsDialogOpen(false);
 
         toast.success(
-          `Restored ${data.name} (${data.commit.hash.slice(0, 7)})`,
+          `Restored ${data.commit.hash.slice(0, 7)}`,
         );
         return;
       }
@@ -203,99 +209,6 @@ function RestoreThemeButton({ record }: { record: ThemeVersionRecord }) {
         messageReadOnly
       />
     </>
-  );
-}
-
-function DiffThemeButton({
-  snapshot,
-  version,
-  label,
-}: {
-  snapshot: ThemeVersionRecord["config"];
-  version: number;
-  label: string;
-}) {
-  const { config } = useThemeConfig();
-  const colorFormat = useColorFormat();
-  const tailwindVersion = useTailwindVersion();
-  const showFontVars = useFontVars();
-  const showShadowVars = useShadowVars();
-  const [open, setOpen] = useState(false);
-
-  const currentSnapshot = useMemo(
-    () =>
-      createThemeSnapshot({
-        themeConfig: config,
-        colorFormat,
-        tailwindVersion,
-        includeFontVars: showFontVars,
-        includeShadowVars: showShadowVars,
-      }),
-    [config, colorFormat, tailwindVersion, showFontVars, showShadowVars],
-  );
-
-  const differences = useMemo<ThemeDiffEntry[]>(
-    () => diffThemeSnapshots(currentSnapshot, snapshot),
-    [currentSnapshot, snapshot],
-  );
-
-  const formatValue = (value: unknown) => {
-    if (value === undefined) return "undefined";
-    if (typeof value === "string") return value;
-    return JSON.stringify(value, null, 2);
-  };
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button size="sm" variant="ghost" className="gap-1">
-          <GitCompare className="size-4" />
-          Diff
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-h-[80vh] max-w-3xl">
-        <DialogHeader>
-          <DialogTitle>Differences with v{version}</DialogTitle>
-          <DialogDescription>
-            Comparing your current configuration with {label} v{version}.
-          </DialogDescription>
-        </DialogHeader>
-        <ScrollArea className="h-[60vh]">
-          {differences.length ? (
-            <div className="space-y-4 pr-2">
-              {differences.map((entry) => (
-                <div
-                  key={entry.path}
-                  className="rounded-md border bg-muted/30 p-3"
-                >
-                  <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                    {entry.path}
-                  </p>
-                  <div className="mt-2 grid gap-3 sm:grid-cols-2">
-                    <div>
-                      <h4 className="text-sm font-semibold">Current</h4>
-                      <pre className="bg-background mt-1 max-h-48 overflow-auto rounded border p-2 text-xs">
-                        {formatValue(entry.current)}
-                      </pre>
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-semibold">Version v{version}</h4>
-                      <pre className="bg-background mt-1 max-h-48 overflow-auto rounded border p-2 text-xs">
-                        {formatValue(entry.selected)}
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-muted-foreground text-sm">
-              Your current configuration already matches this version.
-            </p>
-          )}
-        </ScrollArea>
-      </DialogContent>
-    </Dialog>
   );
 }
 
@@ -421,16 +334,8 @@ export function ThemeVersionsTable({ versions }: ThemeVersionsTableProps) {
               <Button asChild size="sm" variant="outline">
                 <Link href={versionHref}>View</Link>
               </Button>
-              <ViewDiffDialog
-                name={themeLabel}
-                version={row.original.version}
-                snapshot={row.original.config}
-              />
-              <RestoreThemeButton
-                label={themeLabel}
-                version={row.original.version}
-                snapshot={row.original.config}
-              />
+              <ViewDiffDialog record={row.original} />
+              <RestoreThemeButton record={row.original} />
             </div>
           );
         },

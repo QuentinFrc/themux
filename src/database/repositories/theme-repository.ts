@@ -40,7 +40,6 @@ function toThemeVersionRecord(row: ThemeRowWithRelations): ThemeVersionRecord {
 
   return {
     id: row.id,
-    name: row.name,
     config: row.config,
     createdAt: row.createdAt ?? new Date(),
     commit: toCommitRecord({ ...row.commit, author: row.commit.author }),
@@ -118,9 +117,9 @@ export function createThemeVersionRepository(
 
       return {
         id: row.id,
-        version: row.version,
         config: row.config,
         createdAt: row.createdAt ?? new Date(),
+        commit: toCommitRecord({ ...row.commit, author: row.commit.author }),
       } satisfies ThemeVersionRecord;
     },
 
