@@ -1,5 +1,5 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Metadata } from "next";
 
 import { CustomizerSidebar } from "@/components/customizer/customizer-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";

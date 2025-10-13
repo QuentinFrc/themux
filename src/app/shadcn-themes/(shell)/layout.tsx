@@ -12,11 +12,7 @@ import { SidebarInset } from "@/components/ui/sidebar";
 import { ContainerWrapper } from "@/components/wrappers";
 import { MainNavigation, MobileNavigation } from "../navigation";
 
-export default function ShellLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function ShellLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarInset className="relative isolate max-h-svh overflow-hidden peer-data-[variant=inset]:max-h-[calc(100svh-1rem)]">
       <header className="isolate z-20 flex shrink-0 items-center gap-2 border-b md:z-10">
@@ -30,11 +26,16 @@ export default function ShellLayout({
           </div>
 
           <div className="flex items-center justify-center">
-            <TooltipWrapper label="Generate random theme" asChild>
+            <TooltipWrapper asChild label="Generate random theme">
               <RandomizeButton />
             </TooltipWrapper>
             <ModeSwitcher />
-            <Button asChild variant="ghost" size="icon" className="group/toggle">
+            <Button
+              asChild
+              className="group/toggle"
+              size="icon"
+              variant="ghost"
+            >
               <ExternalLink href="https://github.com/llanesluis/themux">
                 <GitHub />
               </ExternalLink>

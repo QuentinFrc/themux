@@ -1,14 +1,13 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import * as React from "react";
-
 import { usePresetSyncUrl } from "@/hooks/use-preset-sync-url";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { getCssVarsFromThemeObject } from "@/lib/themes";
-import { ThemeMode, ThemeProperties } from "@/types/theme";
+import type { ThemeMode, ThemeProperties } from "@/types/theme";
 import { setStyleProperty } from "@/utils/set-attribute-to-element";
 import { setShadowVariables } from "@/utils/shadows";
-import { useTheme } from "next-themes";
 
 export function ThemeSync() {
   const {
@@ -40,7 +39,7 @@ export function ThemeSync() {
     const cssVars = getCssVarsFromThemeObject(themeProperties);
 
     for (const [key, value] of Object.entries(cssVars)) {
-      setStyleProperty({ element: root, key: key, value });
+      setStyleProperty({ element: root, key, value });
     }
 
     // Sync shadow tokens based on --shadow-[x] variables

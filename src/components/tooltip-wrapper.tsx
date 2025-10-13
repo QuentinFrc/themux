@@ -1,8 +1,8 @@
 "use client";
 
+import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 import { useShowTooltips } from "@/store/preferences-store";
-import { ComponentProps } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function TooltipWrapper({
@@ -16,7 +16,7 @@ export function TooltipWrapper({
   const showTootips = useShowTooltips();
 
   return (
-    <Tooltip delayDuration={500} key={label} defaultOpen={false}>
+    <Tooltip defaultOpen={false} delayDuration={500} key={label}>
       <TooltipTrigger className={cn(className)} {...props}>
         {children}
       </TooltipTrigger>

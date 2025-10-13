@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useTransition } from "react";
 import { Loader2, Save } from "lucide-react";
+import { useMemo, useTransition } from "react";
 import { toast } from "sonner";
 
 import { updateTheme } from "@/actions/theme";
@@ -18,14 +18,21 @@ import { Button } from "../ui/button";
 
 export type UpdateThemeButtonProps = React.ComponentProps<typeof Button>;
 
-export function UpdateThemeButton({ className, ...props }: UpdateThemeButtonProps) {
+export function UpdateThemeButton({
+  className,
+  ...props
+}: UpdateThemeButtonProps) {
   const { config } = useThemeConfig();
   const colorFormat = useColorFormat();
   const tailwindVersion = useTailwindVersion();
   const showFontVars = useFontVars();
   const showShadowVars = useShadowVars();
-  const { setTailwindVersion, setColorFormat, setShowFontVars, setShowShadowsVars } =
-    usePreferencesActions();
+  const {
+    setTailwindVersion,
+    setColorFormat,
+    setShowFontVars,
+    setShowShadowsVars,
+  } = usePreferencesActions();
 
   const [isPending, startTransition] = useTransition();
 
@@ -37,7 +44,7 @@ export function UpdateThemeButton({ className, ...props }: UpdateThemeButtonProp
       includeFontVars: showFontVars,
       includeShadowVars: showShadowVars,
     }),
-    [colorFormat, config, showFontVars, showShadowVars, tailwindVersion],
+    [colorFormat, config, showFontVars, showShadowVars, tailwindVersion]
   );
 
   const handleUpdateTheme = () => {

@@ -5,7 +5,7 @@ export function TextareaDemo() {
   return (
     <div className="flex w-full flex-col gap-10">
       <Textarea placeholder="Type your message here." />
-      <Textarea placeholder="Type your message here." aria-invalid="true" />
+      <Textarea aria-invalid="true" placeholder="Type your message here." />
       <div className="grid gap-3">
         <Label htmlFor="textarea-demo-message">Label</Label>
         <Textarea
@@ -30,9 +30,9 @@ export function TextareaDemo() {
       <div className="grid gap-3">
         <Label htmlFor="textarea-demo-disabled">Disabled</Label>
         <Textarea
+          disabled
           id="textarea-demo-disabled"
           placeholder="Type your message here."
-          disabled
         />
       </div>
     </div>

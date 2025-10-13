@@ -1,5 +1,12 @@
-import { ThemeSnapshot } from "@/types/theme-update";
-import { integer, jsonb, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import {
+  integer,
+  jsonb,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+} from "drizzle-orm/pg-core";
+import type { ThemeSnapshot } from "@/types/theme-update";
 
 export const themeTable = pgTable("theme", {
   id: uuid("id").defaultRandom().primaryKey(),

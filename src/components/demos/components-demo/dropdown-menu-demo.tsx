@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import {
   BadgeCheckIcon,
   BellIcon,
@@ -16,6 +15,7 @@ import {
   TrashIcon,
   UserIcon,
 } from "lucide-react";
+import * as React from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -143,8 +143,8 @@ function DropdownMenuCheckboxes() {
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
             checked={showActivityBar}
-            onCheckedChange={setShowActivityBar}
             disabled
+            onCheckedChange={setShowActivityBar}
           >
             Activity Bar
           </DropdownMenuCheckboxItem>
@@ -177,10 +177,10 @@ function DropdownMenuRadioGroupDemo() {
       <DropdownMenuContent align="start" className="w-56">
         <DropdownMenuLabel inset>Panel Position</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+          <DropdownMenuRadioGroup onValueChange={setPosition} value={position}>
             <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="right" disabled>
+            <DropdownMenuRadioItem disabled value="right">
               Right
             </DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
@@ -195,35 +195,35 @@ function DropdownMenuWithAvatar() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
           className="h-12 justify-start px-2 md:max-w-[200px]"
+          variant="outline"
         >
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="Shadcn" />
+            <AvatarImage alt="Shadcn" src="https://github.com/shadcn.png" />
             <AvatarFallback className="rounded-lg">CN</AvatarFallback>
           </Avatar>
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-semibold">shadcn</span>
-            <span className="text-muted-foreground truncate text-xs">
+            <span className="truncate text-muted-foreground text-xs">
               shadcn@example.com
             </span>
           </div>
-          <ChevronsUpDownIcon className="text-muted-foreground ml-auto" />
+          <ChevronsUpDownIcon className="ml-auto text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-(--radix-dropdown-menu-trigger-width) min-w-56"
         align="start"
+        className="w-(--radix-dropdown-menu-trigger-width) min-w-56"
       >
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="Shadcn" />
+              <AvatarImage alt="Shadcn" src="https://github.com/shadcn.png" />
               <AvatarFallback className="rounded-lg">CN</AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-semibold">shadcn</span>
-              <span className="text-muted-foreground truncate text-xs">
+              <span className="truncate text-muted-foreground text-xs">
                 shadcn@example.com
               </span>
             </div>
@@ -266,28 +266,28 @@ function DropdownMenuAvatarOnly() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
           className="size-8 rounded-full border-none p-0"
+          variant="outline"
         >
           <Avatar>
-            <AvatarImage src="https://github.com/leerob.png" alt="leerob" />
+            <AvatarImage alt="leerob" src="https://github.com/leerob.png" />
             <AvatarFallback className="rounded-lg">LR</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-(--radix-dropdown-menu-trigger-width) min-w-56"
         align="start"
+        className="w-(--radix-dropdown-menu-trigger-width) min-w-56"
       >
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <Avatar>
-              <AvatarImage src="https://github.com/leerob.png" alt="leerob" />
+              <AvatarImage alt="leerob" src="https://github.com/leerob.png" />
               <AvatarFallback className="rounded-lg">LR</AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-semibold">leerob</span>
-              <span className="text-muted-foreground truncate text-xs">
+              <span className="truncate text-muted-foreground text-xs">
                 leerob@example.com
               </span>
             </div>
@@ -329,7 +329,7 @@ function DropdownMenuIconColor() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button size="icon" variant="ghost">
           <MoreHorizontalIcon />
           <span className="sr-only">Toggle menu</span>
         </Button>

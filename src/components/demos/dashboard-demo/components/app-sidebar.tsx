@@ -17,7 +17,7 @@ import {
   IconSettings,
   IconUsers,
 } from "@tabler/icons-react";
-import * as React from "react";
+import type * as React from "react";
 
 import { NavDocuments } from "@/components/demos/dashboard-demo/components/nav-documents";
 import { NavMain } from "@/components/demos/dashboard-demo/components/nav-main";
@@ -162,7 +162,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="font-semibold text-base">Acme Inc.</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -171,7 +171,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
         <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavSecondary className="mt-auto" items={data.navSecondary} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

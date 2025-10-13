@@ -1,10 +1,5 @@
 {
-  "cSpell.words": [
-    "Customizer",
-    "oklch",
-    "Shadcn",
-    "themux"
-  ],
+  "cSpell.words": ["Customizer", "oklch", "Shadcn", "themux"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"

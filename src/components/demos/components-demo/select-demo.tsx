@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   ChartBarIcon,
   ChartLineIcon,
@@ -29,7 +28,7 @@ export function SelectDemo() {
             <SelectItem value="apple">Apple</SelectItem>
             <SelectItem value="banana">Banana</SelectItem>
             <SelectItem value="blueberry">Blueberry</SelectItem>
-            <SelectItem value="grapes" disabled>
+            <SelectItem disabled value="grapes">
               Grapes
             </SelectItem>
             <SelectItem value="pineapple">Pineapple</SelectItem>
@@ -56,7 +55,7 @@ export function SelectDemo() {
           <SelectItem value="apple">Apple</SelectItem>
           <SelectItem value="banana">Banana</SelectItem>
           <SelectItem value="blueberry">Blueberry</SelectItem>
-          <SelectItem value="grapes" disabled>
+          <SelectItem disabled value="grapes">
             Grapes
           </SelectItem>
           <SelectItem value="pineapple">Pineapple</SelectItem>

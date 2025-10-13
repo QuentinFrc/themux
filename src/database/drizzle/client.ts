@@ -1,7 +1,7 @@
-import { getNeonDatabaseUrl } from "@/database/neon/config";
-import * as schema from "@/database/drizzle/schema";
 import { neon, neonConfig } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
+import * as schema from "@/database/drizzle/schema";
+import { getNeonDatabaseUrl } from "@/database/neon/config";
 
 neonConfig.fetchConnectionCache = true;
 

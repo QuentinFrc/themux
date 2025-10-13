@@ -22,7 +22,7 @@ export function TooltipDemo() {
         {["top", "right", "bottom", "left"].map((side) => (
           <Tooltip key={side}>
             <TooltipTrigger asChild>
-              <Button variant="outline" className="capitalize">
+              <Button className="capitalize" variant="outline">
                 {side}
               </Button>
             </TooltipTrigger>
@@ -34,7 +34,7 @@ export function TooltipDemo() {
       </div>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="ghost" size="icon">
+          <Button size="icon" variant="ghost">
             <InfoIcon />
             <span className="sr-only">Info</span>
           </Button>

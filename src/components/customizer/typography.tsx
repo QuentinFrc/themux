@@ -1,8 +1,8 @@
+import { Check, Ligature } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { cn } from "@/lib/utils";
 import { monoFontsArray, sansFontsArray, serifFontsArray } from "@/utils/fonts";
-import { Check, Ligature } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -23,7 +23,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
         <Ligature className="size-4" /> Typography
       </Label>
 
-      <ControlSection title="Sans font" id="sans-font" className="p-0" expanded>
+      <ControlSection className="p-0" expanded id="sans-font" title="Sans font">
         <Command className={cn("bg-background", className)}>
           <CommandInput className="text-base" />
 
@@ -36,26 +36,24 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                 const isActive = font.value === currentFonts?.sans;
                 return (
                   <CommandItem
+                    className="group/item flex items-center gap-4 py-2 font-sans"
                     key={font.key}
                     onSelect={() =>
-                      setConfig((prev) => {
-                        return {
-                          ...prev,
-                          fonts: {
-                            ...prev.fonts,
-                            sans: font.value,
-                          },
-                        };
-                      })
+                      setConfig((prev) => ({
+                        ...prev,
+                        fonts: {
+                          ...prev.fonts,
+                          sans: font.value,
+                        },
+                      }))
                     }
-                    className="group/item flex items-center gap-4 py-2 font-sans"
                     style={{ "--font-sans": font.value }}
                   >
                     <span className="text-nowrap">{font.key}</span>
                     <span
                       className={cn(
-                        "text-muted-foreground/80 line-clamp-1 text-xs opacity-0 transition",
-                        "group-hover/item:opacity-100",
+                        "line-clamp-1 text-muted-foreground/80 text-xs opacity-0 transition",
+                        "group-hover/item:opacity-100"
                       )}
                     >
                       This is just sample text
@@ -63,7 +61,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                     <Check
                       className={cn(
                         "ml-auto size-4 shrink-0 transition",
-                        isActive ? "opacity-100" : "opacity-0",
+                        isActive ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </CommandItem>
@@ -78,26 +76,24 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                 const isActive = font.value === currentFonts?.sans;
                 return (
                   <CommandItem
+                    className="group/item flex items-center gap-4 py-2 font-sans"
                     key={font.key}
                     onSelect={() =>
-                      setConfig((prev) => {
-                        return {
-                          ...prev,
-                          fonts: {
-                            ...prev.fonts,
-                            sans: font.value,
-                          },
-                        };
-                      })
+                      setConfig((prev) => ({
+                        ...prev,
+                        fonts: {
+                          ...prev.fonts,
+                          sans: font.value,
+                        },
+                      }))
                     }
-                    className="group/item flex items-center gap-4 py-2 font-sans"
                     style={{ "--font-sans": font.value }}
                   >
                     <span className="text-nowrap">{font.key}</span>
                     <span
                       className={cn(
-                        "text-muted-foreground/80 line-clamp-1 text-xs opacity-0 transition",
-                        "group-hover/item:opacity-100",
+                        "line-clamp-1 text-muted-foreground/80 text-xs opacity-0 transition",
+                        "group-hover/item:opacity-100"
                       )}
                     >
                       This is just sample text
@@ -105,7 +101,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                     <Check
                       className={cn(
                         "ml-auto size-4 shrink-0 transition",
-                        isActive ? "opacity-100" : "opacity-0",
+                        isActive ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </CommandItem>
@@ -120,26 +116,24 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                 const isActive = font.value === currentFonts?.sans;
                 return (
                   <CommandItem
+                    className="group/item flex items-center gap-4 py-2 font-mono"
                     key={font.key}
                     onSelect={() =>
-                      setConfig((prev) => {
-                        return {
-                          ...prev,
-                          fonts: {
-                            ...prev.fonts,
-                            sans: font.value,
-                          },
-                        };
-                      })
+                      setConfig((prev) => ({
+                        ...prev,
+                        fonts: {
+                          ...prev.fonts,
+                          sans: font.value,
+                        },
+                      }))
                     }
-                    className="group/item flex items-center gap-4 py-2 font-mono"
                     style={{ "--font-mono": font.value }}
                   >
                     <span className="text-nowrap">{font.key}</span>
                     <span
                       className={cn(
-                        "text-muted-foreground/80 line-clamp-1 text-xs opacity-0 transition",
-                        "group-hover/item:opacity-100",
+                        "line-clamp-1 text-muted-foreground/80 text-xs opacity-0 transition",
+                        "group-hover/item:opacity-100"
                       )}
                     >
                       let sampleText = "Hello!";
@@ -147,7 +141,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                     <Check
                       className={cn(
                         "ml-auto size-4 shrink-0 transition",
-                        isActive ? "opacity-100" : "opacity-0",
+                        isActive ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </CommandItem>
@@ -159,9 +153,9 @@ export function Typography({ className }: React.ComponentProps<"div">) {
       </ControlSection>
 
       <ControlSection
-        title="Serif font"
-        id="serif-font"
         className="p-0 font-serif"
+        id="serif-font"
+        title="Serif font"
       >
         <Command className={cn("bg-background", className)}>
           <CommandInput className="text-base" />
@@ -175,26 +169,24 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                 const isActive = font.value === currentFonts?.serif;
                 return (
                   <CommandItem
+                    className="group/item flex items-center gap-4 py-2 font-serif"
                     key={font.key}
                     onSelect={() =>
-                      setConfig((prev) => {
-                        return {
-                          ...prev,
-                          fonts: {
-                            ...prev.fonts,
-                            serif: font.value,
-                          },
-                        };
-                      })
+                      setConfig((prev) => ({
+                        ...prev,
+                        fonts: {
+                          ...prev.fonts,
+                          serif: font.value,
+                        },
+                      }))
                     }
-                    className="group/item flex items-center gap-4 py-2 font-serif"
                     style={{ "--font-serif": font.value }}
                   >
                     <span className="text-nowrap">{font.key}</span>
                     <span
                       className={cn(
-                        "text-muted-foreground/80 line-clamp-1 text-xs opacity-0 transition",
-                        "group-hover/item:opacity-100",
+                        "line-clamp-1 text-muted-foreground/80 text-xs opacity-0 transition",
+                        "group-hover/item:opacity-100"
                       )}
                     >
                       This is just sample text
@@ -202,7 +194,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                     <Check
                       className={cn(
                         "ml-auto size-4 shrink-0 transition",
-                        isActive ? "opacity-100" : "opacity-0",
+                        isActive ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </CommandItem>
@@ -214,9 +206,9 @@ export function Typography({ className }: React.ComponentProps<"div">) {
       </ControlSection>
 
       <ControlSection
-        title="Mono font"
-        id="mono-font"
         className="p-0 font-mono"
+        id="mono-font"
+        title="Mono font"
       >
         <Command className={cn("bg-background", className)}>
           <CommandInput className="text-base" />
@@ -230,26 +222,24 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                 const isActive = font.value === currentFonts?.mono;
                 return (
                   <CommandItem
+                    className="group/item relative flex w-full items-center gap-4 py-2 font-mono"
                     key={font.key}
                     onSelect={() =>
-                      setConfig((prev) => {
-                        return {
-                          ...prev,
-                          fonts: {
-                            ...prev.fonts,
-                            mono: font.value,
-                          },
-                        };
-                      })
+                      setConfig((prev) => ({
+                        ...prev,
+                        fonts: {
+                          ...prev.fonts,
+                          mono: font.value,
+                        },
+                      }))
                     }
-                    className="group/item relative flex w-full items-center gap-4 py-2 font-mono"
                     style={{ "--font-mono": font.value }}
                   >
                     <span className="text-nowrap">{font.key}</span>
                     <span
                       className={cn(
-                        "text-muted-foreground/80 line-clamp-1 text-xs opacity-0 transition",
-                        "group-hover/item:opacity-100",
+                        "line-clamp-1 text-muted-foreground/80 text-xs opacity-0 transition",
+                        "group-hover/item:opacity-100"
                       )}
                     >
                       echo "hello world"
@@ -257,7 +247,7 @@ export function Typography({ className }: React.ComponentProps<"div">) {
                     <Check
                       className={cn(
                         "ml-auto size-4 shrink-0 transition",
-                        isActive ? "opacity-100" : "opacity-0",
+                        isActive ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </CommandItem>

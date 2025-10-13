@@ -1,6 +1,10 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
-import { PageHeader, PageHeaderDescription, PageHeaderHeading } from "@/components/page-header";
+import {
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+} from "@/components/page-header";
 import { Separator } from "@/components/ui/separator";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
 import { db } from "@/database/drizzle/client";
@@ -19,12 +23,13 @@ export default async function VersionsPage() {
 
   return (
     <>
-      <ContainerWrapper withCane className="@container py-4">
+      <ContainerWrapper className="@container py-4" withCane>
         <SectionWrapper>
           <PageHeader>
             <PageHeaderHeading>Saved theme versions</PageHeaderHeading>
             <PageHeaderDescription>
-              Review previously saved configurations and restore them to continue customizing.
+              Review previously saved configurations and restore them to
+              continue customizing.
             </PageHeaderDescription>
           </PageHeader>
         </SectionWrapper>
@@ -32,7 +37,7 @@ export default async function VersionsPage() {
 
       <Separator />
 
-      <ContainerWrapper withCane className="py-6">
+      <ContainerWrapper className="py-6" withCane>
         <ThemeVersionsTable versions={versions} />
       </ContainerWrapper>
     </>

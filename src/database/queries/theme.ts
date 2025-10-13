@@ -1,10 +1,10 @@
-import { DatabaseClient } from "@/database/drizzle/client";
-import { themeTable, ThemeTable } from "@/database/drizzle/schema";
 import { desc, eq } from "drizzle-orm";
+import type { DatabaseClient } from "@/database/drizzle/client";
+import { type ThemeTable, themeTable } from "@/database/drizzle/schema";
 
 export const getThemeQueries = (db: DatabaseClient) => ({
   async getLatestThemeVersion(
-    themeName: string,
+    themeName: string
   ): Promise<ThemeTable | undefined> {
     const [row] = await db
       .select()
@@ -17,11 +17,11 @@ export const getThemeQueries = (db: DatabaseClient) => ({
   },
 
   async listThemeVersions(): Promise<ThemeTable[]> {
-    let query = db.select().from(themeTable);
+    const query = db.select().from(themeTable);
 
     const rows = await query.orderBy(
       desc(themeTable.version),
-      desc(themeTable.createdAt),
+      desc(themeTable.createdAt)
     );
 
     return rows;

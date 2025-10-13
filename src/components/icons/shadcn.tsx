@@ -1,23 +1,23 @@
-import { cn } from "@/lib/utils";
 import type { SVGProps } from "react";
+import { cn } from "@/lib/utils";
 
 export function Shadcn({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
+      className={cn(className)}
+      height="1em"
       viewBox="0 0 256 256"
       width="1em"
-      height="1em"
-      className={cn(className)}
+      xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path fill="none" d="M0 0h256v256H0z" />
+      <path d="M0 0h256v256H0z" fill="none" />
       <path
+        d="M208 128l-80 80M192 40L40 192"
         fill="none"
         stroke="currentColor"
-        strokeWidth={25}
         strokeLinecap="round"
-        d="M208 128l-80 80M192 40L40 192"
+        strokeWidth={25}
       />
     </svg>
   );

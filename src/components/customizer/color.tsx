@@ -1,13 +1,13 @@
 "use client";
 
+import { Check, Clipboard } from "lucide-react";
+import type { ComponentProps } from "react";
+import { toast } from "sonner";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
-import { ColorFormat } from "@/types/theme";
+import type { ColorFormat } from "@/types/theme";
 import { colorFormatter } from "@/utils/color-converter";
-import { Check, Clipboard } from "lucide-react";
-import { ComponentProps } from "react";
-import { toast } from "sonner";
 import { Button } from "../ui/button";
 import {
   ContextMenu,
@@ -36,12 +36,12 @@ export function Color({
   if (!isMounted) {
     return (
       <Button
-        variant={"ghost"}
         className={cn("size-fit cursor-pointer rounded-lg p-0.5")}
+        variant={"ghost"}
       >
         <Skeleton
           className={cn(
-            "bg-muted ring-border relative flex size-3.5 shrink-0 items-center justify-center overflow-hidden rounded-lg ring",
+            "relative flex size-3.5 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted ring ring-border"
           )}
         />
       </Button>
@@ -52,20 +52,20 @@ export function Color({
     <ContextMenu modal={false}>
       <ContextMenuTrigger asChild>
         <Button
-          variant={"ghost"}
           className={cn(
             "size-fit cursor-pointer rounded-lg p-0.5",
             className,
             isActive &&
-              "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
+              "border-primary/50 text-foreground ring-[2px] ring-primary/50"
           )}
-          style={{ "--primary": color }}
           onClick={onClick}
+          style={{ "--primary": color }}
+          variant={"ghost"}
           {...props}
         >
           <span
             className={cn(
-              "bg-primary ring-foreground/20 relative flex size-3.5 shrink-0 items-center justify-center overflow-hidden rounded-lg shadow-xs ring",
+              "relative flex size-3.5 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary shadow-xs ring ring-foreground/20"
             )}
           />
         </Button>
@@ -73,7 +73,7 @@ export function Color({
 
       <ContextMenuContent>
         <ContextMenuItem
-          className="hover:bg-accent flex items-center justify-between transition"
+          className="flex items-center justify-between transition hover:bg-accent"
           onClick={() => handleCopyColor("oklch")}
         >
           oklch
@@ -81,19 +81,19 @@ export function Color({
             <Clipboard
               className={cn(
                 "size-4 transition duration-200",
-                isCopied ? "absolute scale-0" : "scale-100",
+                isCopied ? "absolute scale-0" : "scale-100"
               )}
             />
             <Check
               className={cn(
                 "size-4 transition duration-200",
-                !isCopied ? "absolute scale-0" : "scale-100",
+                isCopied ? "scale-100" : "absolute scale-0"
               )}
             />
           </>
         </ContextMenuItem>
         <ContextMenuItem
-          className="hover:bg-accent flex items-center justify-between transition"
+          className="flex items-center justify-between transition hover:bg-accent"
           onClick={() => handleCopyColor("hsl")}
         >
           hsl
@@ -101,19 +101,19 @@ export function Color({
             <Clipboard
               className={cn(
                 "size-4 transition duration-200",
-                isCopied ? "absolute scale-0" : "scale-100",
+                isCopied ? "absolute scale-0" : "scale-100"
               )}
             />
             <Check
               className={cn(
                 "size-4 transition duration-200",
-                !isCopied ? "absolute scale-0" : "scale-100",
+                isCopied ? "scale-100" : "absolute scale-0"
               )}
             />
           </>
         </ContextMenuItem>
         <ContextMenuItem
-          className="hover:bg-accent flex items-center justify-between transition"
+          className="flex items-center justify-between transition hover:bg-accent"
           onClick={() => handleCopyColor("rgb")}
         >
           rgb
@@ -121,19 +121,19 @@ export function Color({
             <Clipboard
               className={cn(
                 "size-4 transition duration-200",
-                isCopied ? "absolute scale-0" : "scale-100",
+                isCopied ? "absolute scale-0" : "scale-100"
               )}
             />
             <Check
               className={cn(
                 "size-4 transition duration-200",
-                !isCopied ? "absolute scale-0" : "scale-100",
+                isCopied ? "scale-100" : "absolute scale-0"
               )}
             />
           </>
         </ContextMenuItem>
         <ContextMenuItem
-          className="hover:bg-accent flex items-center justify-between transition"
+          className="flex items-center justify-between transition hover:bg-accent"
           onClick={() => handleCopyColor("hex")}
         >
           hex
@@ -141,13 +141,13 @@ export function Color({
             <Clipboard
               className={cn(
                 "size-4 transition duration-200",
-                isCopied ? "absolute scale-0" : "scale-100",
+                isCopied ? "absolute scale-0" : "scale-100"
               )}
             />
             <Check
               className={cn(
                 "size-4 transition duration-200",
-                !isCopied ? "absolute scale-0" : "scale-100",
+                isCopied ? "scale-100" : "absolute scale-0"
               )}
             />
           </>

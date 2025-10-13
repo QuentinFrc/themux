@@ -1,9 +1,13 @@
-import { DatabaseClient } from "@/database/drizzle/client";
-import { InsertThemeTable, themeTable, ThemeTable } from "@/database/drizzle/schema";
+import type { DatabaseClient } from "@/database/drizzle/client";
+import {
+  type InsertThemeTable,
+  type ThemeTable,
+  themeTable,
+} from "@/database/drizzle/schema";
 
 export const getThemeMutations = (db: DatabaseClient) => ({
   async createThemeVersion(
-    values: InsertThemeTable,
+    values: InsertThemeTable
   ): Promise<ThemeTable | undefined> {
     const [createdTheme] = await db
       .insert(themeTable)

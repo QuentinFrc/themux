@@ -6,10 +6,15 @@ import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
@@ -36,13 +41,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 const items = [
   {
@@ -132,8 +131,8 @@ export function FormDemo() {
       <CardContent>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
             className="grid w-full max-w-sm gap-6"
+            onSubmit={form.handleSubmit(onSubmit)}
           >
             <FormField
               control={form.control}
@@ -158,8 +157,8 @@ export function FormDemo() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <Select
-                    onValueChange={field.onChange}
                     defaultValue={field.value}
+                    onValueChange={field.onChange}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -191,8 +190,8 @@ export function FormDemo() {
                   <FormLabel>Bio</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Tell us a little bit about yourself"
                       className="resize-none"
+                      placeholder="Tell us a little bit about yourself"
                       {...field}
                     />
                   </FormControl>
@@ -211,9 +210,9 @@ export function FormDemo() {
                   <FormLabel>Notify me about...</FormLabel>
                   <FormControl>
                     <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
                       className="flex flex-col gap-3"
+                      defaultValue={field.value}
+                      onValueChange={field.onChange}
                     >
                       <FormItem className="flex items-center gap-2">
                         <FormControl>
@@ -280,38 +279,33 @@ export function FormDemo() {
                   <div className="flex flex-col gap-2">
                     {items.map((item) => (
                       <FormField
-                        key={item.id}
                         control={form.control}
+                        key={item.id}
                         name="items"
-                        render={({ field }) => {
-                          return (
-                            <FormItem
-                              key={item.id}
-                              className="flex items-start gap-3"
-                            >
-                              <FormControl>
-                                <Checkbox
-                                  checked={field.value?.includes(item.id)}
-                                  onCheckedChange={(checked) => {
-                                    return checked
-                                      ? field.onChange([
-                                          ...field.value,
-                                          item.id,
-                                        ])
-                                      : field.onChange(
-                                          field.value?.filter(
-                                            (value) => value !== item.id,
-                                          ),
-                                        );
-                                  }}
-                                />
-                              </FormControl>
-                              <FormLabel className="text-sm leading-tight font-normal">
-                                {item.label}
-                              </FormLabel>
-                            </FormItem>
-                          );
-                        }}
+                        render={({ field }) => (
+                          <FormItem
+                            className="flex items-start gap-3"
+                            key={item.id}
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(item.id)}
+                                onCheckedChange={(checked) =>
+                                  checked
+                                    ? field.onChange([...field.value, item.id])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== item.id
+                                        )
+                                      )
+                                }
+                              />
+                            </FormControl>
+                            <FormLabel className="font-normal text-sm leading-tight">
+                              {item.label}
+                            </FormLabel>
+                          </FormItem>
+                        )}
                       />
                     ))}
                   </div>
@@ -329,11 +323,11 @@ export function FormDemo() {
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
-                          variant={"outline"}
                           className={cn(
                             "w-[240px] pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground",
+                            !field.value && "text-muted-foreground"
                           )}
+                          variant={"outline"}
                         >
                           {field.value ? (
                             format(field.value, "PPP")
@@ -344,15 +338,15 @@ export function FormDemo() {
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent align="start" className="w-auto p-0">
                       <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
                         disabled={(date) =>
                           date > new Date() || date < new Date("1900-01-01")
                         }
                         initialFocus
+                        mode="single"
+                        onSelect={field.onChange}
+                        selected={field.value}
                       />
                     </PopoverContent>
                   </Popover>
@@ -364,7 +358,7 @@ export function FormDemo() {
               )}
             />
             <div>
-              <h3 className="mb-4 text-lg font-medium">Email Notifications</h3>
+              <h3 className="mb-4 font-medium text-lg">Email Notifications</h3>
               <div className="flex flex-col gap-4">
                 <FormField
                   control={form.control}
@@ -403,10 +397,10 @@ export function FormDemo() {
                       </div>
                       <FormControl>
                         <Switch
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                          disabled
                           aria-readonly
+                          checked={field.value}
+                          disabled
+                          onCheckedChange={field.onChange}
                         />
                       </FormControl>
                     </FormItem>

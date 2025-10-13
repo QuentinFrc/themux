@@ -92,9 +92,9 @@ export function AlertDemo() {
           The selected emails have been marked as spam.
         </AlertTitle>
         <Button
+          className="absolute top-2.5 right-3 h-6 shadow-none"
           size="sm"
           variant="outline"
-          className="absolute top-2.5 right-3 h-6 shadow-none"
         >
           Undo
         </Button>

@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { Bold, Italic, Underline } from "lucide-react";
+import * as React from "react";
 
 import { ButtonGroup, ButtonGroupItem } from "@/components/ui/button-group";
 
@@ -19,10 +19,10 @@ export function ButtonGroupDemo() {
       <ButtonGroup aria-label="Toggle text formatting">
         {OPTIONS.map((option) => (
           <ButtonGroupItem
-            key={option.value}
-            isActive={value === option.value}
-            onClick={() => setValue(option.value)}
             aria-label={option.label}
+            isActive={value === option.value}
+            key={option.value}
+            onClick={() => setValue(option.value)}
           >
             <option.icon className="size-4" />
           </ButtonGroupItem>
@@ -30,7 +30,8 @@ export function ButtonGroupDemo() {
       </ButtonGroup>
 
       <p className="text-muted-foreground text-sm">
-        Active style: <span className="font-medium text-foreground capitalize">{value}</span>
+        Active style:{" "}
+        <span className="font-medium text-foreground capitalize">{value}</span>
       </p>
     </div>
   );

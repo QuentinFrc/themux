@@ -1,7 +1,7 @@
 "use client";
 
+import { type Change, diffLines } from "diff";
 import * as React from "react";
-import { diffLines, Change } from "diff";
 
 import { cn } from "@/lib/utils";
 
@@ -104,12 +104,12 @@ export function JsonDiffView({
 }: JsonDiffViewProps) {
   const diffRows = React.useMemo(
     () => buildDiffRows(stringify(original), stringify(updated)),
-    [original, updated],
+    [original, updated]
   );
 
   return (
     <div className="overflow-hidden rounded-lg border">
-      <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] border-b bg-muted/50 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+      <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] border-b bg-muted/50 font-medium text-muted-foreground text-xs uppercase tracking-wide">
         <div className="flex items-center gap-2 border-r px-4 py-2">
           <span className="text-muted-foreground/80">{leftLabel}</span>
         </div>
@@ -121,7 +121,10 @@ export function JsonDiffView({
         <table className="w-full table-fixed border-separate border-spacing-0 font-mono text-[0.75rem] sm:text-sm">
           <tbody>
             {diffRows.map((row, index) => (
-              <tr key={`${row.leftLineNumber}-${row.rightLineNumber}-${index}`} className="border-b last:border-b-0">
+              <tr
+                className="border-b last:border-b-0"
+                key={`${row.leftLineNumber}-${row.rightLineNumber}-${index}`}
+              >
                 <td className="w-12 select-none border-r bg-muted/40 px-2 text-right text-muted-foreground">
                   {row.leftLineNumber ?? ""}
                 </td>
@@ -129,7 +132,7 @@ export function JsonDiffView({
                   className={cn(
                     "w-1/2 whitespace-pre-wrap border-r px-3 align-top",
                     row.leftChange === "removed" &&
-                      "bg-destructive/15 text-destructive",
+                      "bg-destructive/15 text-destructive"
                   )}
                 >
                   {row.leftText ?? ""}
@@ -141,7 +144,7 @@ export function JsonDiffView({
                   className={cn(
                     "w-1/2 whitespace-pre-wrap px-3 align-top",
                     row.rightChange === "added" &&
-                      "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300",
+                      "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300"
                   )}
                 >
                   {row.rightText ?? ""}

@@ -1,7 +1,8 @@
 "use client";
 
 import { Search, Share2 } from "lucide-react";
-
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   InputGroup,
   InputGroupAddon,
@@ -9,8 +10,6 @@ import {
   InputGroupItem,
   InputGroupText,
 } from "@/components/ui/input-group";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Kbd } from "@/components/ui/kbd";
 
 export function InputGroupDemo() {
@@ -22,7 +21,7 @@ export function InputGroupDemo() {
           <Input placeholder="themux.vercel.app" />
         </InputGroupItem>
         <InputGroupButton>
-          <Button variant="secondary" size="sm">
+          <Button size="sm" variant="secondary">
             Check
           </Button>
         </InputGroupButton>

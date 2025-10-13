@@ -1,4 +1,4 @@
-import { RemValue } from "@/types/theme";
+import type { RemValue } from "@/types/theme";
 
 export const QUERY_PARAMS_KEYS = {
   preset: "preset",
