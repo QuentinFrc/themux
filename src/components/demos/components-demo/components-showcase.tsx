@@ -1,5 +1,3 @@
-import { Metadata } from "next";
-
 import { AccordionDemo } from "@/components/demos/components-demo/accordion-demo";
 import { AlertDemo } from "@/components/demos/components-demo/alert-demo";
 import { AlertDialogDemo } from "@/components/demos/components-demo/alert-dialog-demo";
@@ -58,12 +56,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
 
-export const metadata: Metadata = {
-  title: "Components",
-  description: "A collection of components built with shadcn/ui.",
-};
-
-export default function ComponentsPage() {
+export function ComponentsShowcase() {
   return (
     <>
       <ContainerWrapper className="@container" withCane>
