@@ -4,6 +4,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import { ActionButtons } from "@/components/customizer/action-buttons";
 import { QuickCustomizer } from "@/components/customizer/quick-customizer";
 import { CardsDemo } from "@/components/demos/cards-demo";
+import { ComponentsShowcase } from "@/components/demos/components-demo/components-showcase";
 import { DashboardDemo } from "@/components/demos/dashboard-demo";
 import { MailDemo } from "@/components/demos/mail-demo";
 import { Separator } from "@/components/ui/separator";
@@ -73,6 +74,9 @@ export default async function ShadcnThemesPage({
             >
               Mail
             </TabsTrigger>
+            <TabsTrigger value="components" className="px-4">
+              Components
+            </TabsTrigger>
           </TabsList>
         </ContainerWrapper>
 
@@ -92,6 +96,10 @@ export default async function ShadcnThemesPage({
 
           <TabsContent value="mail-demo">
             <MailDemo />
+          </TabsContent>
+
+          <TabsContent value="components">
+            <ComponentsShowcase />
           </TabsContent>
         </ContainerWrapper>
       </Tabs>

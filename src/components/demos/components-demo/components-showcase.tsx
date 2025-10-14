@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import type { ComponentProps, ReactNode } from "react";
 
 import { AccordionDemo } from "@/components/demos/components-demo/accordion-demo";
@@ -66,11 +65,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
 import { getComponentName } from "@/lib/utils";
-
-export const metadata: Metadata = {
-  title: "Components",
-  description: "A collection of components built with shadcn/ui.",
-};
 
 type WrapperProps = Omit<
   ComponentProps<typeof ComponentWrapper>,
@@ -152,7 +146,7 @@ const componentSections: ComponentSection[] = [
   { name: "spinner", element: <SpinnerDemo /> },
 ];
 
-export default function ComponentsPage() {
+export function ComponentsShowcase() {
   return (
     <>
       <ContainerWrapper className="@container" withCane>
