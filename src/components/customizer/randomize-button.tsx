@@ -1,5 +1,7 @@
 "use client";
 
+import { Shuffle } from "lucide-react";
+import { type ComponentProps, useCallback } from "react";
 import { useSurfaceShades } from "@/hooks/use-surface-shades";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { useTokens } from "@/hooks/use-tokens";
@@ -9,8 +11,6 @@ import { otherPresetsArray } from "@/lib/presets";
 import { getRandomIndex } from "@/lib/utils";
 import { RADIUS_VALUES } from "@/utils/constants";
 import { monoFontsArray, sansFontsArray, serifFontsArray } from "@/utils/fonts";
-import { Shuffle } from "lucide-react";
-import { ComponentProps, useCallback } from "react";
 import { Button } from "../ui/button";
 
 interface RandomizeButtonProps extends ComponentProps<typeof Button> {}
@@ -61,19 +61,17 @@ export function RandomizeButton({ className, ...props }: RandomizeButtonProps) {
     const randomPresetShades = getRandomIndex(allPresetShadesArray);
     const randomSurfaceShades = allPresetShadesArray[randomPresetShades];
 
-    setConfig((prev) => {
-      return {
-        ...prev,
-        radius: randomRadius,
-        surface: randomSurfaceShades.name,
-        fonts: {
-          sans: randomSansFont,
-          serif: randomSerifFont,
-          mono: randomMonoFont,
-        },
-        themeObject: randomPreset,
-      };
-    });
+    setConfig((prev) => ({
+      ...prev,
+      radius: randomRadius,
+      surface: randomSurfaceShades.name,
+      fonts: {
+        sans: randomSansFont,
+        serif: randomSerifFont,
+        mono: randomMonoFont,
+      },
+      themeObject: randomPreset,
+    }));
 
     setSurfaceShadesColorTokens({
       bgShadesThemeObject: randomSurfaceShades,
@@ -85,7 +83,7 @@ export function RandomizeButton({ className, ...props }: RandomizeButtonProps) {
       baseShadcnPresetsArray.some((item) => item.name === randomPreset.name)
     ) {
       const randomPrimaryColorIndex = getRandomIndex(
-        Object.entries(TAILWIND_PALETTE_V4),
+        Object.entries(TAILWIND_PALETTE_V4)
       );
 
       // I want the random color to be only in the shades 300, 400, 500, 600
@@ -97,7 +95,7 @@ export function RandomizeButton({ className, ...props }: RandomizeButtonProps) {
       ] as const;
 
       const randomTailwindPaletteShadeIndex = getRandomIndex(
-        selectableTailwindPaleteShades as any,
+        selectableTailwindPaleteShades as any
       );
 
       const randomTailwindPaletteShade =
@@ -117,9 +115,9 @@ export function RandomizeButton({ className, ...props }: RandomizeButtonProps) {
 
   return (
     <Button
+      className={className}
       size="sm"
       variant="ghost"
-      className={className}
       {...props}
       onClick={randomize}
     >

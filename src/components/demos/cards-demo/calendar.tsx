@@ -9,12 +9,12 @@ const start = new Date(2025, 5, 5);
 
 export function CardsCalendar() {
   return (
-    <Card className="hidden p-0 @2xl:flex">
+    <Card className="@2xl:flex hidden p-0">
       <CardContent className="p-0">
         <Calendar
-          numberOfMonths={1}
-          mode="range"
           defaultMonth={start}
+          mode="range"
+          numberOfMonths={1}
           selected={{
             from: start,
             to: addDays(start, 8),

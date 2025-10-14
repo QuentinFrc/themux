@@ -1,6 +1,6 @@
-import * as React from "react";
-import Link from "next/link";
 import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from "lucide-react";
+import Link from "next/link";
+import type * as React from "react";
 
 import {
   NavigationMenu,
@@ -52,7 +52,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function NavigationMenuDemo() {
   return (
-    <div className="hidden w-full flex-col items-center justify-center gap-6 @xl:flex">
+    <div className="@xl:flex hidden w-full flex-col items-center justify-center gap-6">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
@@ -62,10 +62,10 @@ export function NavigationMenuDemo() {
                 <li className="row-span-3">
                   <NavigationMenuLink asChild>
                     <a
-                      className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
+                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-linear-to-b from-muted/50 to-muted p-6 no-underline outline-hidden focus:shadow-md"
                       href="/"
                     >
-                      <div className="mt-4 mb-2 text-lg font-medium">
+                      <div className="mt-4 mb-2 font-medium text-lg">
                         shadcn/ui
                       </div>
                       <p className="text-muted-foreground text-sm leading-tight">
@@ -92,9 +92,9 @@ export function NavigationMenuDemo() {
               <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                 {components.map((component) => (
                   <ListItem
+                    href={component.href}
                     key={component.title}
                     title={component.title}
-                    href={component.href}
                   >
                     {component.description}
                   </ListItem>
@@ -179,19 +179,19 @@ export function NavigationMenuDemo() {
               <ul className="grid w-[200px] gap-4">
                 <li>
                   <NavigationMenuLink asChild>
-                    <Link href="#" className="flex-row items-center gap-2">
+                    <Link className="flex-row items-center gap-2" href="#">
                       <CircleHelpIcon />
                       Backlog
                     </Link>
                   </NavigationMenuLink>
                   <NavigationMenuLink asChild>
-                    <Link href="#" className="flex-row items-center gap-2">
+                    <Link className="flex-row items-center gap-2" href="#">
                       <CircleIcon />
                       To Do
                     </Link>
                   </NavigationMenuLink>
                   <NavigationMenuLink asChild>
-                    <Link href="#" className="flex-row items-center gap-2">
+                    <Link className="flex-row items-center gap-2" href="#">
                       <CircleCheckIcon />
                       Done
                     </Link>
@@ -216,8 +216,8 @@ function ListItem({
     <li {...props}>
       <NavigationMenuLink asChild>
         <Link href={href}>
-          <div className="text-sm leading-none font-medium">{title}</div>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+          <div className="font-medium text-sm leading-none">{title}</div>
+          <p className="line-clamp-2 text-muted-foreground text-sm leading-snug">
             {children}
           </p>
         </Link>

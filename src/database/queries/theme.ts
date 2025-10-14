@@ -1,36 +1,62 @@
-import { DatabaseClient } from "@/database/drizzle/client";
-import { themeTable, ThemeTable } from "@/database/drizzle/schema";
-import { desc, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
+import type { DatabaseClient } from "@/database/drizzle/client";
+import { themeTable, authorTable, ThemeTable, commitTable } from "@/database/drizzle/schema";
 
 export const getThemeQueries = (db: DatabaseClient) => ({
-  async getLatestThemeVersion(): Promise<ThemeTable | undefined> {
-    const [row] = await db
-      .select()
-      .from(themeTable)
-      .orderBy(desc(themeTable.version))
-      .limit(1);
-
-    return row;
+  async getLatestThemeVersion() {
+    return db.query.themeTable.findFirst({
+      orderBy: (theme, { desc: orderDesc }) => [orderDesc(theme.createdAt)],
+      with: {
+        commit: {
+          with: {
+            author: true,
+          },
+        },
+      },
+    });
   },
 
   async getThemeVersionById(id: string): Promise<ThemeTable | undefined> {
-    const [row] = await db
-      .select()
-      .from(themeTable)
-      .where(eq(themeTable.id, id))
-      .limit(1);
+    const row = await db.query.themeTable.findFirst({
+      with: {
+        commit: {
+          with: {
+            author: true,
+          },
+        },
+      },
+      where: eq(themeTable.id, id),
+    });
 
     return row;
   },
 
-  async listThemeVersions(): Promise<ThemeTable[]> {
-    let query = db.select().from(themeTable);
+  async listThemeVersions() {
+    return db.query.themeTable.findMany({
+      orderBy: (theme, { desc: orderDesc }) => [orderDesc(theme.createdAt)],
+      with: {
+        commit: {
+          with: {
+            author: true,
+          },
+        },
+      },
+    });
+  },
 
-    const rows = await query.orderBy(
-      desc(themeTable.version),
-      desc(themeTable.createdAt),
-    );
+  async listCommits() {
+    return db.query.commitTable.findMany({
+      orderBy: (commit, { desc: orderDesc }) => [orderDesc(commit.createdAt)],
+      with: {
+        author: true,
+        theme: true,
+      },
+    });
+  },
 
-    return rows;
+  async findAuthorByEmail(email: string) {
+    return db.query.authorTable.findFirst({
+      where: eq(authorTable.email, email),
+    });
   },
 });

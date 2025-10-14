@@ -1,8 +1,8 @@
-import { ThemeConfig, ThemeProperties } from "@/types/theme";
+import type { ThemeConfig, ThemeProperties } from "@/types/theme";
 import { basePresetsV4 } from "./colors";
 
 export function getCssVarsFromThemeObject(
-  themeProperties: Partial<ThemeProperties>,
+  themeProperties: Partial<ThemeProperties>
 ) {
   const cssVars = {} as Record<string, string>;
 
@@ -29,12 +29,12 @@ export const DEFAULT_FONTS = {
 // from  @node_modules/tailwindcss/theme.css
 // --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 export const DEFAULT_SHADOWS = {
-  "shadow-color": `hsl(0 0% 0%)`, // Base color from rgb(0 0 0 / 0.1)
-  "shadow-opacity": `0.1`, // Opacity from rgb(0 0 0 / 0.1)
-  "shadow-blur": `3px`, // Blur radius
-  "shadow-spread": `0px`, // Spread radius
-  "shadow-offset-x": `0`, // X offset
-  "shadow-offset-y": `1px`, // Y offset
+  "shadow-color": "hsl(0 0% 0%)", // Base color from rgb(0 0 0 / 0.1)
+  "shadow-opacity": "0.1", // Opacity from rgb(0 0 0 / 0.1)
+  "shadow-blur": "3px", // Blur radius
+  "shadow-spread": "0px", // Spread radius
+  "shadow-offset-x": "0", // X offset
+  "shadow-offset-y": "1px", // Y offset
 };
 
 export const initialThemeConfig: ThemeConfig = {

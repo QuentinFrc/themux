@@ -1,17 +1,17 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { Eye, EyeOff, Info, Settings } from "lucide-react";
-import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
+import { useTheme } from "next-themes";
 import {
   createContext,
-  ReactNode,
+  type ReactNode,
   use,
   useEffect,
   useMemo,
   useState,
 } from "react";
+import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import {
@@ -129,11 +129,11 @@ function InternalScreenDevTools() {
 
   const positionClassNames = useMemo(() => {
     if (preferences.position.currentValue === "top-left") return "top-5 left-5";
-    else if (preferences.position.currentValue === "top-right")
+    if (preferences.position.currentValue === "top-right")
       return "top-5 right-5";
-    else if (preferences.position.currentValue === "bottom-left")
+    if (preferences.position.currentValue === "bottom-left")
       return "bottom-5 left-5";
-    else if (preferences.position.currentValue === "bottom-right")
+    if (preferences.position.currentValue === "bottom-right")
       return "bottom-5 right-5";
   }, [preferences.position.currentValue]);
 
@@ -142,18 +142,18 @@ function InternalScreenDevTools() {
       <div
         className={cn(
           "pointer-events-auto fixed isolate z-50 flex flex-col border border-transparent text-sm transition-all",
-          positionClassNames,
+          positionClassNames
         )}
       >
         <div className="relative overflow-hidden rounded-full">
           <div className="absolute inset-0 size-full animate-spin bg-conic/decreasing from-violet-700 via-lime-300 to-violet-700 blur-lg" />
           <Button
+            className="relative isolate cursor-pointer"
+            onClick={() => setIsShown(true)}
             size={"icon"}
             variant={"ghost"}
-            onClick={() => setIsShown(true)}
-            className="relative isolate cursor-pointer"
           >
-            <div className="bg-background absolute inset-0.5 z-[-1] rounded-full shadow" />
+            <div className="absolute inset-0.5 z-[-1] rounded-full bg-background shadow" />
             <Eye />
           </Button>
         </div>
@@ -163,8 +163,8 @@ function InternalScreenDevTools() {
   return (
     <Card
       className={cn(
-        "bg-background pointer-events-auto fixed isolate z-50 flex flex-col gap-0 overflow-hidden p-0 text-sm shadow-md transition-all",
-        positionClassNames,
+        "pointer-events-auto fixed isolate z-50 flex flex-col gap-0 overflow-hidden bg-background p-0 text-sm shadow-md transition-all",
+        positionClassNames
       )}
     >
       <CardHeader className="flex px-3 py-2">
@@ -188,23 +188,23 @@ function InternalScreenDevTools() {
         )}
 
         {Array.from(Object.values(tools)).every((i) => i === false) && (
-          <div className="text-muted-foreground flex items-center gap-2 p-1.5">
-            <Info className="text-muted-foreground size-3" />
+          <div className="flex items-center gap-2 p-1.5 text-muted-foreground">
+            <Info className="size-3 text-muted-foreground" />
             <span>No tools active</span>
           </div>
         )}
       </CardContent>
 
-      <CardFooter className="bg-card isolate flex flex-row justify-between gap-1 p-0">
+      <CardFooter className="isolate flex flex-row justify-between gap-1 bg-card p-0">
         <SettingsDialog
-          preferences={preferences}
           positionClassNames={positionClassNames}
+          preferences={preferences}
         />
 
         <Button
+          onClick={() => setIsShown(false)}
           size={"icon"}
           variant={"ghost"}
-          onClick={() => setIsShown(false)}
         >
           <EyeOff />
         </Button>
@@ -242,23 +242,23 @@ function SettingsDialog({
       <DialogContent
         className={cn(
           "w-fit min-w-82 gap-0 p-0 text-sm",
-          "top-[unset] left-[unset] translate-[unset]",
-          positionClassNames,
+          "translate-[unset] top-[unset] left-[unset]",
+          positionClassNames
         )}
       >
-        <DialogTitle className="p-2 py-3.5 text-sm font-semibold">
+        <DialogTitle className="p-2 py-3.5 font-semibold text-sm">
           Settings
         </DialogTitle>
 
         <Separator />
 
         <section className="grid p-2">
-          <Label className="text-muted-foreground py-1 text-xs">Tools</Label>
+          <Label className="py-1 text-muted-foreground text-xs">Tools</Label>
           <div className="flex items-center rounded-lg p-1.5">
             <span>Screen width</span>
             <Switch
-              className="ml-auto"
               checked={tools["screen-size"]}
+              className="ml-auto"
               onCheckedChange={(isActive) =>
                 setAciveTool("screen-size", isActive)
               }
@@ -267,8 +267,8 @@ function SettingsDialog({
           <div className="flex items-center rounded-lg p-1.5">
             <span>Theme switcher</span>
             <Switch
-              className="ml-auto"
               checked={tools["theme-preference"]}
+              className="ml-auto"
               onCheckedChange={(isActive) =>
                 setAciveTool("theme-preference", isActive)
               }
@@ -277,17 +277,17 @@ function SettingsDialog({
         </section>
 
         <section className="grid p-2">
-          <Label className="text-muted-foreground py-1 text-xs">
+          <Label className="py-1 text-muted-foreground text-xs">
             Preferences
           </Label>
 
           <PreferenceSelect
-            settingPreference={preferences.position}
             onSelect={handleSelectPosition}
+            settingPreference={preferences.position}
           />
           <PreferenceSelect
-            settingPreference={preferences.cssUnit}
             onSelect={handleSelectCssUnt}
+            settingPreference={preferences.cssUnit}
           />
         </section>
       </DialogContent>
@@ -311,20 +311,20 @@ function PreferenceSelect<T extends keyof Preferences>({
     >
       <div className="flex flex-col gap-1">
         <span>{label}</span>
-        <span className="text-muted-foreground w-[20ch] text-xs">
+        <span className="w-[20ch] text-muted-foreground text-xs">
           {description}
         </span>
       </div>
 
-      <Select value={currentValue} onValueChange={onSelect}>
+      <Select onValueChange={onSelect} value={currentValue}>
         <SelectTrigger className="h-fit min-w-30 px-2 text-xs">
-          <SelectValue placeholder={label} className="h-fit p-0" />
+          <SelectValue className="h-fit p-0" placeholder={label} />
         </SelectTrigger>
         <SelectContent className="p-0">
           {items.map((item) => {
             const { label, value } = item;
             return (
-              <SelectItem value={value} className="text-xs" key={label}>
+              <SelectItem className="text-xs" key={label} value={value}>
                 {label}
               </SelectItem>
             );
@@ -347,7 +347,7 @@ function ScreenSize({ cssUnit }: { cssUnit: Unit }) {
       const remPixels = styles.fontSize;
       const resolvedWindowWidth =
         cssUnit === "rem"
-          ? +(_windowWidth / parseInt(remPixels)).toFixed(2)
+          ? +(_windowWidth / Number.parseInt(remPixels)).toFixed(2)
           : _windowWidth;
 
       setWindowWidth(resolvedWindowWidth);
@@ -365,7 +365,7 @@ function ScreenSize({ cssUnit }: { cssUnit: Unit }) {
   return (
     <div
       className={cn(
-        "bg-card inline-flex min-w-26 flex-row items-center justify-between gap-1 rounded-lg border px-1.5 py-1",
+        "inline-flex min-w-26 flex-row items-center justify-between gap-1 rounded-lg border bg-card px-1.5 py-1"
       )}
     >
       <div className="w-6 text-center font-semibold">
@@ -390,53 +390,53 @@ function ThemeSelector() {
 
   return (
     <div
-      className="bg-card inline-flex h-fit min-w-26 flex-row items-center justify-between gap-1 overflow-hidden rounded-lg border p-1"
+      className="inline-flex h-fit min-w-26 flex-row items-center justify-between gap-1 overflow-hidden rounded-lg border bg-card p-1"
       role="radiogroup"
     >
       <Button
-        onClick={() => setTheme("system")}
         aria-checked={theme === "system"}
         aria-label="Switch to system theme"
-        variant={"ghost"}
-        size={"icon"}
         className={cn(
           "size-6",
-          theme === "system" && "bg-muted hover:bg-muted!",
+          theme === "system" && "bg-muted hover:bg-muted!"
         )}
         data-theme-switcher="true"
+        onClick={() => setTheme("system")}
         role="radio"
+        size={"icon"}
         type="button"
+        variant={"ghost"}
       >
         <SystemThemeIcon />
       </Button>
 
       <Button
-        onClick={() => setTheme("light")}
         aria-checked={theme === "light"}
         aria-label="Switch to light theme"
-        variant={"ghost"}
-        size={"icon"}
         className={cn(
           "size-6",
-          theme === "light" && "bg-muted hover:bg-muted!",
+          theme === "light" && "bg-muted hover:bg-muted!"
         )}
         data-theme-switcher="true"
+        onClick={() => setTheme("light")}
         role="radio"
+        size={"icon"}
         type="button"
+        variant={"ghost"}
       >
         <LightThemeIcon />
       </Button>
 
       <Button
-        onClick={() => setTheme("dark")}
         aria-checked={theme === "dark"}
         aria-label="Switch to dark theme"
-        variant={"ghost"}
-        size={"icon"}
         className={cn("size-6", theme === "dark" && "bg-muted hover:bg-muted!")}
         data-theme-switcher="true"
+        onClick={() => setTheme("dark")}
         role="radio"
+        size={"icon"}
         type="button"
+        variant={"ghost"}
       >
         <DarkThemeIcon />
       </Button>
@@ -462,7 +462,7 @@ const DEVTOOLS_LS_KEYS = {
 function useProviderSettings() {
   const [preferences, setPreferences] = useState(() => {
     const storedPreferences = localStorage.getItem(
-      DEVTOOLS_LS_KEYS.PREFERENCES,
+      DEVTOOLS_LS_KEYS.PREFERENCES
     );
     return storedPreferences
       ? (JSON.parse(storedPreferences) as typeof defaultPreferences)
@@ -483,7 +483,7 @@ function useProviderSettings() {
 
       localStorage.setItem(
         DEVTOOLS_LS_KEYS.PREFERENCES,
-        JSON.stringify(currentPreferences),
+        JSON.stringify(currentPreferences)
       );
 
       return currentPreferences;
@@ -499,7 +499,7 @@ function useProviderSettings() {
 
       localStorage.setItem(
         DEVTOOLS_LS_KEYS.PREFERENCES,
-        JSON.stringify(currentPreferences),
+        JSON.stringify(currentPreferences)
       );
 
       return currentPreferences;
@@ -512,7 +512,7 @@ function useProviderSettings() {
 
       localStorage.setItem(
         DEVTOOLS_LS_KEYS.ACTIVE_TOOLS,
-        JSON.stringify(currentTools),
+        JSON.stringify(currentTools)
       );
 
       return currentTools;
@@ -547,19 +547,19 @@ function LightThemeIcon() {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
+      style={{ color: "currentcolor", width: "16px", height: "16px" }}
       viewBox="0 0 24 24"
       width="24"
-      style={{ color: "currentcolor", width: "16px", height: "16px" }}
     >
-      <circle cx="12" cy="12" r="5"></circle>
-      <path d="M12 1v2"></path>
-      <path d="M12 21v2"></path>
-      <path d="M4.22 4.22l1.42 1.42"></path>
-      <path d="M18.36 18.36l1.42 1.42"></path>
-      <path d="M1 12h2"></path>
-      <path d="M21 12h2"></path>
-      <path d="M4.22 19.78l1.42-1.42"></path>
-      <path d="M18.36 5.64l1.42-1.42"></path>
+      <circle cx="12" cy="12" r="5" />
+      <path d="M12 1v2" />
+      <path d="M12 21v2" />
+      <path d="M4.22 4.22l1.42 1.42" />
+      <path d="M18.36 18.36l1.42 1.42" />
+      <path d="M1 12h2" />
+      <path d="M21 12h2" />
+      <path d="M4.22 19.78l1.42-1.42" />
+      <path d="M18.36 5.64l1.42-1.42" />
     </svg>
   );
 }
@@ -573,13 +573,13 @@ function SystemThemeIcon() {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
+      style={{ color: "currentcolor", width: "16px", height: "16px" }}
       viewBox="0 0 24 24"
       width="24"
-      style={{ color: "currentcolor", width: "16px", height: "16px" }}
     >
-      <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-      <path d="M8 21h8"></path>
-      <path d="M12 17v4"></path>
+      <rect height="14" rx="2" ry="2" width="20" x="2" y="3" />
+      <path d="M8 21h8" />
+      <path d="M12 17v4" />
     </svg>
   );
 }
@@ -593,11 +593,11 @@ function DarkThemeIcon() {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2"
+      style={{ color: "currentcolor", width: "16px", height: "16px" }}
       viewBox="0 0 24 24"
       width="24"
-      style={{ color: "currentcolor", width: "16px", height: "16px" }}
     >
-      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
     </svg>
   );
 }

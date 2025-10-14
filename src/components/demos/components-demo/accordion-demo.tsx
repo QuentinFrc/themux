@@ -8,7 +8,7 @@ import {
 export function AccordionDemo() {
   return (
     <div className="grid w-full max-w-xl gap-4">
-      <Accordion type="single" collapsible className="w-full">
+      <Accordion className="w-full" collapsible type="single">
         <AccordionItem value="item-1">
           <AccordionTrigger>Is it accessible?</AccordionTrigger>
           <AccordionContent>
@@ -30,7 +30,7 @@ export function AccordionDemo() {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-      <Accordion type="single" collapsible className="w-full">
+      <Accordion className="w-full" collapsible type="single">
         <AccordionItem value="item-1">
           <AccordionTrigger>
             What are the key considerations when implementing a comprehensive

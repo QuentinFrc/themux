@@ -51,7 +51,12 @@ export default function ShellLayout({
             ) : null}
             <ModeSwitcher />
             {isCustomizer ? (
-              <Button asChild variant="ghost" size="icon" className="group/toggle">
+              <Button
+              className="group/toggle"
+              size="icon"
+              variant="ghost"
+              asChild
+            >
                 <ExternalLink href="https://github.com/llanesluis/themux">
                   <GitHub />
                 </ExternalLink>

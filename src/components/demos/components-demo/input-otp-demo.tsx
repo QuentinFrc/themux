@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
+import * as React from "react";
 
 import {
   InputOTP,
@@ -70,8 +70,8 @@ function InputOTPWithSeparator() {
       <InputOTP
         id="with-separator"
         maxLength={6}
-        value={value}
         onChange={setValue}
+        value={value}
       >
         <InputOTPGroup>
           <InputOTPSlot index={0} />
@@ -98,10 +98,10 @@ function InputOTPWithSpacing() {
       <Label htmlFor="with-spacing">With Spacing</Label>
       <InputOTP id="with-spacing" maxLength={6}>
         <InputOTPGroup className="gap-2 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border">
-          <InputOTPSlot index={0} aria-invalid="true" />
-          <InputOTPSlot index={1} aria-invalid="true" />
-          <InputOTPSlot index={2} aria-invalid="true" />
-          <InputOTPSlot index={3} aria-invalid="true" />
+          <InputOTPSlot aria-invalid="true" index={0} />
+          <InputOTPSlot aria-invalid="true" index={1} />
+          <InputOTPSlot aria-invalid="true" index={2} />
+          <InputOTPSlot aria-invalid="true" index={3} />
         </InputOTPGroup>
       </InputOTP>
     </div>

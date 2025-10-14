@@ -1,5 +1,5 @@
 import { monoFonts, sansFonts } from "@/utils/fonts";
-import {
+import type {
   ColorfulPreset,
   PresetV4,
   SurfaceShadesPreset,

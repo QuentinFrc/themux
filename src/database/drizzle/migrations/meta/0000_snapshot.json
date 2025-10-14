@@ -1,11 +1,11 @@
 {
-  "id": "4ddd330e-fb67-4750-9759-72fd38c007ae",
+  "id": "388a8eb3-0aa3-4939-841e-438eed395f61",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.registry": {
-      "name": "registry",
+    "public.author": {
+      "name": "author",
       "schema": "",
       "columns": {
         "id": {
@@ -21,15 +21,47 @@
           "primaryKey": false,
           "notNull": true
         },
-        "type": {
-          "name": "type",
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.commit": {
+      "name": "commit",
+      "schema": "",
+      "columns": {
+        "hash": {
+          "name": "hash",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "message": {
+          "name": "message",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "registry_item": {
-          "name": "registry_item",
-          "type": "jsonb",
+        "author_id": {
+          "name": "author_id",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -42,7 +74,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "commit_author_id_author_id_fk": {
+          "name": "commit_author_id_author_id_fk",
+          "tableFrom": "commit",
+          "tableTo": "author",
+          "columnsFrom": [
+            "author_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -66,9 +112,9 @@
           "primaryKey": false,
           "notNull": true
         },
-        "version": {
-          "name": "version",
-          "type": "integer",
+        "commit_hash": {
+          "name": "commit_hash",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -87,7 +133,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "theme_commit_hash_commit_hash_fk": {
+          "name": "theme_commit_hash_commit_hash_fk",
+          "tableFrom": "theme",
+          "tableTo": "commit",
+          "columnsFrom": [
+            "commit_hash"
+          ],
+          "columnsTo": [
+            "hash"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},

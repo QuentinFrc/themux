@@ -1,5 +1,5 @@
 import { DEFAULT_FONTS } from "@/lib/themes";
-import {
+import type {
   ColorFormat,
   TailwindVersion,
   ThemeConfig,
@@ -14,7 +14,7 @@ function generateColorVariables(
   themeObject: ThemeObject,
   mode: ThemeMode,
   colorFormat: ColorFormat,
-  tailwindVersion: TailwindVersion = "4",
+  tailwindVersion: TailwindVersion = "4"
 ): string {
   const styles = themeObject[mode] as ThemeProperties;
 
@@ -40,7 +40,7 @@ function generateColorVariables(
   ${
     styles["destructive-foreground"] && tailwindVersion === "3"
       ? `--destructive-foreground: ${formatColor(styles["destructive-foreground"])};`
-      : ``
+      : ""
   }
   --border: ${formatColor(styles.border)};
   --input: ${formatColor(styles.input)};
@@ -79,7 +79,7 @@ const generateShadowVariables = (
   shadowMap: Record<string, string>,
   themeObject: ThemeObject,
   mode: ThemeMode,
-  colorFormat: ColorFormat = "oklch",
+  colorFormat: ColorFormat = "oklch"
 ): string => {
   const formatColor = (color: string) =>
     colorFormatter(color, colorFormat, "4");
@@ -107,7 +107,7 @@ export function generateThemeVariables(
   mode: ThemeMode,
   colorFormat: ColorFormat = "oklch",
   tailwindVersion: TailwindVersion = "4",
-  themeVarsSettings: ThemeVarsOptions,
+  themeVarsSettings: ThemeVarsOptions
 ): string {
   const radiusVar = `\n  --radius: ${themeConfig.radius};`;
 
@@ -115,11 +115,11 @@ export function generateThemeVariables(
     themeConfig.themeObject,
     mode,
     colorFormat,
-    tailwindVersion,
+    tailwindVersion
   );
   const fontVars = themeVarsSettings.fontVars
     ? generateFontVariables(themeConfig)
-    : ``;
+    : "";
 
   const shadowMap = getShadowMap(themeConfig.themeObject, mode, {
     varOutput: true,
@@ -130,9 +130,9 @@ export function generateThemeVariables(
         shadowMap,
         themeConfig.themeObject,
         mode,
-        colorFormat,
+        colorFormat
       )
-    : ``;
+    : "";
 
   if (mode === "light") {
     return `:root {${fontVars}${radiusVar}\n  ${colorVars}${shadowVars}\n}`;
@@ -148,7 +148,7 @@ export type ThemeVarsOptions = {
 
 function generateTailwindV4ThemeInline(
   themeConfig: ThemeConfig,
-  { fontVars = false, shadowVars = false }: ThemeVarsOptions,
+  { fontVars = false, shadowVars = false }: ThemeVarsOptions
 ): string {
   const colorVarsInline = `--color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -206,7 +206,7 @@ function generateTailwindV4ThemeInline(
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);`
-    : ``;
+    : "";
 
   return `@theme inline {${fontVarsInline}
   ${radiusVarsInline}
@@ -226,9 +226,11 @@ export function generateThemeCode({
   tailwindInlineOptions?: ThemeVarsOptions;
 }): string {
   if (
-    !themeConfig ||
-    !("light" in themeConfig.themeObject) ||
-    !("dark" in themeConfig.themeObject)
+    !(
+      themeConfig &&
+      "light" in themeConfig.themeObject &&
+      "dark" in themeConfig.themeObject
+    )
   ) {
     throw new Error("Invalid theme styles: missing light or dark mode");
   }
@@ -241,7 +243,7 @@ export function generateThemeCode({
     {
       fontVars: tailwindInlineOptions?.fontVars,
       shadowVars: tailwindInlineOptions?.shadowVars,
-    },
+    }
   );
   const darkTheme = generateThemeVariables(
     themeConfig,
@@ -251,7 +253,7 @@ export function generateThemeCode({
     {
       fontVars: tailwindInlineOptions?.fontVars,
       shadowVars: tailwindInlineOptions?.shadowVars,
-    },
+    }
   );
 
   let v4Options = {};

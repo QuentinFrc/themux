@@ -77,16 +77,16 @@ export function CardsTeamMembers() {
       <CardContent className="grid gap-6">
         {teamMembers.map((member) => (
           <div
-            key={member.name}
             className="flex items-center justify-between gap-4"
+            key={member.name}
           >
             <div className="flex items-center gap-4">
               <Avatar className="border">
-                <AvatarImage src={member.avatar} alt="Image" />
+                <AvatarImage alt="Image" src={member.avatar} />
                 <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col gap-0.5">
-                <p className="text-sm leading-none font-medium">
+                <p className="font-medium text-sm leading-none">
                   {member.name}
                 </p>
                 <p className="text-muted-foreground text-xs">{member.email}</p>
@@ -95,14 +95,14 @@ export function CardsTeamMembers() {
             <Popover>
               <PopoverTrigger asChild>
                 <Button
-                  variant="outline"
-                  size="sm"
                   className="ml-auto shadow-none"
+                  size="sm"
+                  variant="outline"
                 >
                   {member.role} <ChevronDown />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="p-0" align="end">
+              <PopoverContent align="end" className="p-0">
                 <Command>
                   <CommandInput placeholder="Select role..." />
                   <CommandList>
@@ -111,7 +111,7 @@ export function CardsTeamMembers() {
                       {roles.map((role) => (
                         <CommandItem key={role.name}>
                           <div className="flex flex-col">
-                            <p className="text-sm font-medium">{role.name}</p>
+                            <p className="font-medium text-sm">{role.name}</p>
                             <p className="text-muted-foreground">
                               {role.description}
                             </p>
