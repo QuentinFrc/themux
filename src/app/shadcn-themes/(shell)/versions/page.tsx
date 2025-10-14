@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { unstable_noStore as noStore } from "next/cache";
 
 import {
   PageHeader,
@@ -17,7 +18,11 @@ export const metadata: Metadata = {
   description: "Browse saved commits and restore previous theme configurations.",
 };
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function VersionsPage() {
+  noStore();
   const repository = createThemeVersionRepository(db);
   const versions = await repository.listThemeVersions();
 
