@@ -1,5 +1,15 @@
 "use client";
 
+import { Check, ChevronDown, ChevronUp, SendHorizontal } from "lucide-react";
+import { useTheme } from "next-themes";
+import {
+  type ChangeEvent,
+  type ComponentProps,
+  type FormEvent,
+  useEffect,
+  useState,
+} from "react";
+import { toast } from "sonner";
 import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
 import { useMounted } from "@/hooks/use-mounted";
 import { useSurfaceShades } from "@/hooks/use-surface-shades";
@@ -13,7 +23,7 @@ import {
 } from "@/lib/colors";
 import { otherPresetsArray } from "@/lib/presets";
 import { cn } from "@/lib/utils";
-import {
+import type {
   ColorProperty,
   SurfaceShades,
   SurfaceShadesPreset,
@@ -22,16 +32,6 @@ import {
 } from "@/types/theme";
 import { isValidColor } from "@/utils/colors";
 import { RADIUS_VALUES } from "@/utils/constants";
-import { Check, ChevronDown, ChevronUp, SendHorizontal } from "lucide-react";
-import { useTheme } from "next-themes";
-import {
-  ChangeEvent,
-  ComponentProps,
-  FormEvent,
-  useEffect,
-  useState,
-} from "react";
-import { toast } from "sonner";
 import { Button } from "../ui/button";
 import {
   Command,
@@ -95,18 +95,18 @@ export function PasteColorControl({
 
     const allowedStartWith = ["oklch", "hsl", "rgb", "#"];
     const colorStartsWithAnyAllowed = allowedStartWith.some((c) =>
-      normalizedColor.startsWith(c),
+      normalizedColor.startsWith(c)
     );
 
-    if (!colorStartsWithAnyAllowed || !isValidPastedColor) {
+    if (!(colorStartsWithAnyAllowed && isValidPastedColor)) {
       toast.error("Invalid color format.");
       return;
     }
 
     setColorTokens({
       color: normalizedColor,
-      property: property,
-      modesInSync: modesInSync,
+      property,
+      modesInSync,
     });
   };
 
@@ -122,26 +122,26 @@ export function PasteColorControl({
         onSubmit={handleSubmitColorPaste}
       >
         <Input
-          type="text"
+          className={cn(
+            "relative h-10 border-border bg-transparent px-0 py-2 pr-10 pl-2 font-mono lowercase shadow outline transition dark:bg-transparent",
+            !isValidColor && "outline-destructive"
+          )}
           id="pasted-color"
           onChange={handleInputChange}
-          className={cn(
-            "border-border relative h-10 bg-transparent px-0 py-2 pr-10 pl-2 font-mono lowercase shadow outline transition dark:bg-transparent",
-            !isValidColor && "outline-destructive",
-          )}
           placeholder={placeholder}
+          type="text"
           value={pastedColor}
         />
         <Button
-          variant="ghost"
-          size="sm"
           className={cn(
             "absolute right-2 size-6 rounded-lg transition",
-            isValidPastedColor ? "text-(--pasted-color)" : "",
+            isValidPastedColor ? "text-(--pasted-color)" : ""
           )}
+          size="sm"
           style={{
             "--pasted-color": isValidPastedColor ? pastedColor : "",
           }}
+          variant="ghost"
         >
           <SendHorizontal className="size-4" />
         </Button>
@@ -188,14 +188,14 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
 
               return (
                 <CommandItem
+                  className="flex items-center gap-2 py-2"
                   key={bgShadesThemeObject.name}
                   onSelect={() =>
                     setSurfaceShadesColorTokens({
-                      bgShadesThemeObject: bgShadesThemeObject,
+                      bgShadesThemeObject,
                       modesInSync: true,
                     })
                   }
-                  className="flex items-center gap-2 py-2"
                 >
                   <div className="flex items-center gap-4">
                     <div className="pointer-events-none flex">
@@ -207,7 +207,7 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
                   <Check
                     className={cn(
                       "ml-auto size-4 shrink-0 transition",
-                      isActive ? "opacity-100" : "opacity-0",
+                      isActive ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>
@@ -224,9 +224,9 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
               const isActive = name === currentSurfacePreset;
               return (
                 <CommandItem
+                  className="flex items-center gap-2 py-2"
                   key={bgShadesThemeObject.name}
                   onSelect={() => setSelectedBackgroundShadePreset(name)}
-                  className="flex items-center gap-2 py-2"
                 >
                   <div className="flex items-center gap-4">
                     <div className="pointer-events-none flex">
@@ -238,7 +238,7 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
                   <Check
                     className={cn(
                       "ml-auto size-4 shrink-0 transition",
-                      isActive ? "opacity-100" : "opacity-0",
+                      isActive ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>
@@ -254,14 +254,14 @@ export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
 function SurfaceColorTokens({ properties }: { properties: SurfaceShades }) {
   return (
     <>
-      <Color color={properties["background"]} className="pointer-events-none" />
-      <Color color={properties["foreground"]} className="pointer-events-none" />
-      <Color color={properties["card"]} className="pointer-events-none" />
-      <Color color={properties["popover"]} className="pointer-events-none" />
-      <Color color={properties["muted"]} className="pointer-events-none" />
-      <Color color={properties["accent"]} className="pointer-events-none" />
-      <Color color={properties["border"]} className="pointer-events-none" />
-      <Color color={properties["sidebar"]} className="pointer-events-none" />
+      <Color className="pointer-events-none" color={properties["background"]} />
+      <Color className="pointer-events-none" color={properties["foreground"]} />
+      <Color className="pointer-events-none" color={properties["card"]} />
+      <Color className="pointer-events-none" color={properties["popover"]} />
+      <Color className="pointer-events-none" color={properties["muted"]} />
+      <Color className="pointer-events-none" color={properties["accent"]} />
+      <Color className="pointer-events-none" color={properties["border"]} />
+      <Color className="pointer-events-none" color={properties["sidebar"]} />
     </>
   );
 }
@@ -279,18 +279,18 @@ export function RadiusControls({ className, ...props }: ComponentProps<"div">) {
         if (!isMounted) {
           return (
             <Button
-              variant={"ghost"}
-              size="sm"
-              key={value}
               className={cn(
-                "ring-border h-fit cursor-pointer rounded-lg p-1 text-xs shadow ring",
-                "w-full max-w-[75px] pr-1.5 @max-md:max-w-full",
+                "h-fit cursor-pointer rounded-lg p-1 text-xs shadow ring ring-border",
+                "w-full @max-md:max-w-full max-w-[75px] pr-1.5"
               )}
+              key={value}
+              size="sm"
               style={{
                 "--radius": `${value}`,
               }}
+              variant={"ghost"}
             >
-              <span className="hidden @lg:inline-flex">{value}</span>
+              <span className="@lg:inline-flex hidden">{value}</span>
               <span className="inline-flex @lg:hidden">{valueWithoutRem}</span>
             </Button>
           );
@@ -298,28 +298,26 @@ export function RadiusControls({ className, ...props }: ComponentProps<"div">) {
 
         return (
           <Button
-            variant={"ghost"}
-            size="sm"
+            className={cn(
+              "h-fit cursor-pointer rounded-lg p-1 text-xs shadow ring ring-border",
+              "w-full @max-md:max-w-full max-w-[75px] pr-1.5",
+              isActive &&
+                "border-primary/50 text-foreground ring-[2px] ring-primary/50"
+            )}
             key={value}
             onClick={() => {
-              setConfig((prev) => {
-                return {
-                  ...prev,
-                  radius: value,
-                };
-              });
+              setConfig((prev) => ({
+                ...prev,
+                radius: value,
+              }));
             }}
-            className={cn(
-              "ring-border h-fit cursor-pointer rounded-lg p-1 text-xs shadow ring",
-              "w-full max-w-[75px] pr-1.5 @max-md:max-w-full",
-              isActive &&
-                "text-foreground border-primary/50 ring-primary/50 ring-[2px]",
-            )}
+            size="sm"
             style={{
               "--radius": `${value}`,
             }}
+            variant={"ghost"}
           >
-            <span className="hidden @lg:inline-flex">{value}</span>
+            <span className="@lg:inline-flex hidden">{value}</span>
             <span className="inline-flex @lg:hidden">{valueWithoutRem}</span>
           </Button>
         );
@@ -331,7 +329,7 @@ export function RadiusControls({ className, ...props }: ComponentProps<"div">) {
 export function RadiusSliderControl() {
   const { currentRadius, setConfig } = useThemeConfig();
   const currentRadiusValue = Number.parseFloat(
-    currentRadius.replace("rem", ""),
+    currentRadius.replace("rem", "")
   );
 
   const handleChange = useDebouncedCallback((v: number) => {
@@ -340,14 +338,14 @@ export function RadiusSliderControl() {
 
   return (
     <SliderWithInput
-      value={currentRadiusValue}
+      className="font-mono"
       label="--radius"
-      unit="rem"
       max={2}
       min={0}
-      step={0.025}
       onValueChange={handleChange}
-      className="font-mono"
+      step={0.025}
+      unit="rem"
+      value={currentRadiusValue}
     />
   );
 }
@@ -373,17 +371,18 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
   ];
 
   const activeThemeInArray = allPresets.find(
-    (p) => p.name === activePresetName,
+    (p) => p.name === activePresetName
   );
 
   return (
     <Popover>
       <PopoverTrigger asChild className="rounded-lg border shadow">
-        <div className="group/control bg-background hover:bg-muted/40 flex h-10 w-full cursor-pointer items-center justify-between gap-4 p-2.5 transition-colors duration-300 ease-in-out *:shrink-0">
+        <div className="group/control flex h-10 w-full cursor-pointer items-center justify-between gap-4 bg-background p-2.5 transition-colors duration-300 ease-in-out *:shrink-0 hover:bg-muted/40">
           <div className="flex items-center gap-2">
             {activeThemeInArray ? (
               <div className="flex">
                 <Color
+                  className="pointer-events-none"
                   color={
                     isMounted
                       ? getActiveThemeColorToken({
@@ -392,9 +391,9 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                         })
                       : ""
                   }
-                  className="pointer-events-none"
                 />
                 <Color
+                  className="pointer-events-none"
                   color={
                     isMounted
                       ? getActiveThemeColorToken({
@@ -403,9 +402,9 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                         })
                       : ""
                   }
-                  className="pointer-events-none"
                 />
                 <Color
+                  className="pointer-events-none"
                   color={
                     isMounted
                       ? getActiveThemeColorToken({
@@ -414,9 +413,9 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                         })
                       : ""
                   }
-                  className="pointer-events-none"
                 />
                 <Color
+                  className="pointer-events-none"
                   color={
                     isMounted
                       ? getActiveThemeColorToken({
@@ -425,9 +424,9 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                         })
                       : ""
                   }
-                  className="pointer-events-none"
                 />
                 <Color
+                  className="pointer-events-none"
                   color={
                     isMounted
                       ? getActiveThemeColorToken({
@@ -436,37 +435,38 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                         })
                       : ""
                   }
-                  className="pointer-events-none"
                 />
               </div>
             ) : null}
 
             <h3
               className={cn(
-                "group-hover/control:text-foreground text-muted-foreground text-sm font-medium",
-                activeThemeInArray && "text-foreground",
+                "font-medium text-muted-foreground text-sm group-hover/control:text-foreground",
+                activeThemeInArray && "text-foreground"
               )}
             >
-              {!isMounted ? (
-                <Skeleton className="h-4 w-full" />
-              ) : activeThemeInArray ? (
-                activeThemeInArray.label
+              {isMounted ? (
+                activeThemeInArray ? (
+                  activeThemeInArray.label
+                ) : (
+                  "Select a preset"
+                )
               ) : (
-                "Select a preset"
+                <Skeleton className="h-4 w-full" />
               )}
             </h3>
           </div>
           <button
-            type="button"
-            className="text-muted-foreground group-hover/control:text-foreground transition-colors"
             aria-label="Expand section"
+            className="text-muted-foreground transition-colors group-hover/control:text-foreground"
+            type="button"
           >
             <ChevronDown className="h-4 w-4" />
           </button>
         </div>
       </PopoverTrigger>
 
-      <PopoverContent className="p-0" align="start">
+      <PopoverContent align="start" className="p-0">
         <Command className={cn(className)}>
           <CommandInput className="text-base" />
 
@@ -485,9 +485,9 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                     const isActive = name === activePresetName;
                     return (
                       <CommandItem
+                        className="flex items-center gap-4 py-2"
                         key={presetThemeObject.name}
                         onSelect={() => updateThemeConfig(presetThemeObject)}
-                        className="flex items-center gap-4 py-2"
                       >
                         <ThemePresetColors
                           label={label}
@@ -497,7 +497,7 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                         <Check
                           className={cn(
                             "ml-auto size-4 shrink-0 transition",
-                            isActive ? "opacity-100" : "opacity-0",
+                            isActive ? "opacity-100" : "opacity-0"
                           )}
                         />
                       </CommandItem>
@@ -514,9 +514,9 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                     const isActive = name === activePresetName;
                     return (
                       <CommandItem
+                        className="flex items-center gap-4 py-2"
                         key={presetThemeObject.name}
                         onSelect={() => updateThemeConfig(presetThemeObject)}
-                        className="flex items-center gap-4 py-2"
                       >
                         <ThemePresetColors
                           label={label}
@@ -526,7 +526,7 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                         <Check
                           className={cn(
                             "ml-auto size-4 shrink-0 transition",
-                            isActive ? "opacity-100" : "opacity-0",
+                            isActive ? "opacity-100" : "opacity-0"
                           )}
                         />
                       </CommandItem>
@@ -543,9 +543,9 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                     const isActive = name === activePresetName;
                     return (
                       <CommandItem
+                        className="flex items-center gap-4 py-2"
                         key={presetThemeObject.name}
                         onSelect={() => updateThemeConfig(presetThemeObject)}
-                        className="flex items-center gap-4 py-2"
                       >
                         <ThemePresetColors
                           label={label}
@@ -555,7 +555,7 @@ export function AllPresetsControl({ className }: AllPresetsControlProps) {
                         <Check
                           className={cn(
                             "ml-auto size-4 shrink-0 transition",
-                            isActive ? "opacity-100" : "opacity-0",
+                            isActive ? "opacity-100" : "opacity-0"
                           )}
                         />
                       </CommandItem>
@@ -581,17 +581,17 @@ function ThemePresetColors({
   return (
     <div className="flex items-center gap-4">
       <div className="pointer-events-none flex">
-        <Color color={properties["primary"]!} className="pointer-events-none" />
+        <Color className="pointer-events-none" color={properties["primary"]!} />
         <Color
+          className="pointer-events-none"
           color={properties["background"]!}
-          className="pointer-events-none"
         />
         <Color
-          color={properties["secondary"]!}
           className="pointer-events-none"
+          color={properties["secondary"]!}
         />
-        <Color color={properties["muted"]!} className="pointer-events-none" />
-        <Color color={properties["card"]!} className="pointer-events-none" />
+        <Color className="pointer-events-none" color={properties["muted"]!} />
+        <Color className="pointer-events-none" color={properties["card"]!} />
       </div>
       <span>{label}</span>
     </div>
@@ -613,28 +613,28 @@ export function ControlSection({
   const [isExpanded, setIsExpanded] = useState(expanded);
   return (
     <div
-      id={id}
       className={cn("overflow-hidden rounded-lg border shadow", className)}
+      id={id}
     >
       <div
         className={cn(
-          "group/control bg-background hover:bg-muted/40 flex h-10 w-full shrink-0 cursor-pointer items-center justify-between gap-4 border-b p-2.5 transition-colors duration-300 ease-in-out",
-          isExpanded ? "border-border" : "border-transparent",
+          "group/control flex h-10 w-full shrink-0 cursor-pointer items-center justify-between gap-4 border-b bg-background p-2.5 transition-colors duration-300 ease-in-out hover:bg-muted/40",
+          isExpanded ? "border-border" : "border-transparent"
         )}
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <h3
           className={cn(
-            "group-hover/control:text-foreground text-muted-foreground text-sm font-medium",
-            isExpanded && "text-foreground",
+            "font-medium text-muted-foreground text-sm group-hover/control:text-foreground",
+            isExpanded && "text-foreground"
           )}
         >
           {title}
         </h3>
         <button
-          type="button"
-          className="text-muted-foreground group-hover/control:text-foreground transition-colors"
           aria-label={isExpanded ? "Collapse section" : "Expand section"}
+          className="text-muted-foreground transition-colors group-hover/control:text-foreground"
+          type="button"
         >
           {isExpanded ? (
             <ChevronUp className="h-4 w-4" />
@@ -647,10 +647,10 @@ export function ControlSection({
       <div
         className={cn(
           "grid transition-all duration-300 ease-in-out",
-          isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+          isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         )}
       >
-        <div className="bg-background overflow-hidden">
+        <div className="overflow-hidden bg-background">
           <div className={cn("space-y-2 p-2.5", className)}>{children}</div>
         </div>
       </div>
@@ -662,10 +662,10 @@ export function ControlsSkeleton({ className }: ComponentProps<"div">) {
   return (
     <div className="space-y-3.5">
       <div className="flex items-center gap-1">
-        <Skeleton className="bg-muted size-4" />
-        <Skeleton className="bg-muted h-4 w-24" />
+        <Skeleton className="size-4 bg-muted" />
+        <Skeleton className="h-4 w-24 bg-muted" />
       </div>
-      <Skeleton className={cn("bg-muted h-48", className)} />
+      <Skeleton className={cn("h-48 bg-muted", className)} />
     </div>
   );
 }
@@ -676,26 +676,28 @@ export function ShadowsControl() {
   const shadowColor = getToken({
     property: "shadow-color",
   });
-  const shadowOpacity = parseFloat(getToken({ property: "shadow-opacity" }));
-  const shadowBlur = parseFloat(
-    getToken({ property: "shadow-blur" }).replace("px", ""),
+  const shadowOpacity = Number.parseFloat(
+    getToken({ property: "shadow-opacity" })
   );
-  const shadowSpread = parseFloat(
-    getToken({ property: "shadow-spread" }).replace("px", ""),
+  const shadowBlur = Number.parseFloat(
+    getToken({ property: "shadow-blur" }).replace("px", "")
   );
-  const shadowOffsetX = parseFloat(
-    getToken({ property: "shadow-offset-x" }).replace("px", ""),
+  const shadowSpread = Number.parseFloat(
+    getToken({ property: "shadow-spread" }).replace("px", "")
   );
-  const shadowOffsetY = parseFloat(
-    getToken({ property: "shadow-offset-y" }).replace("px", ""),
+  const shadowOffsetX = Number.parseFloat(
+    getToken({ property: "shadow-offset-x" }).replace("px", "")
+  );
+  const shadowOffsetY = Number.parseFloat(
+    getToken({ property: "shadow-offset-y" }).replace("px", "")
   );
 
   return (
     <div className="space-y-4 font-mono">
       <div>
         <TokenColorPicker
-          colorProperty="shadow-color"
           color={shadowColor}
+          colorProperty="shadow-color"
           setColorTokens={setColorToken}
           syncModes={false}
         />
@@ -703,7 +705,9 @@ export function ShadowsControl() {
 
       <div>
         <SliderWithInput
-          value={shadowOpacity}
+          label="--shadow-opacity"
+          max={1}
+          min={0}
           onValueChange={(value) =>
             setToken({
               property: "shadow-opacity",
@@ -711,17 +715,17 @@ export function ShadowsControl() {
               modesInSync: true,
             })
           }
-          min={0}
-          max={1}
           step={0.01}
           unit=""
-          label="--shadow-opacity"
+          value={shadowOpacity}
         />
       </div>
 
       <div>
         <SliderWithInput
-          value={shadowBlur}
+          label="--shadow-blur"
+          max={50}
+          min={0}
           onValueChange={(value) =>
             setToken({
               property: "shadow-blur",
@@ -729,17 +733,17 @@ export function ShadowsControl() {
               modesInSync: true,
             })
           }
-          min={0}
-          max={50}
           step={0.5}
           unit="px"
-          label="--shadow-blur"
+          value={shadowBlur}
         />
       </div>
 
       <div>
         <SliderWithInput
-          value={shadowSpread}
+          label="--shadow-spread"
+          max={50}
+          min={-50}
           onValueChange={(value) =>
             setToken({
               property: "shadow-spread",
@@ -747,17 +751,17 @@ export function ShadowsControl() {
               modesInSync: true,
             })
           }
-          min={-50}
-          max={50}
           step={0.5}
           unit="px"
-          label="--shadow-spread"
+          value={shadowSpread}
         />
       </div>
 
       <div>
         <SliderWithInput
-          value={shadowOffsetX}
+          label="--shadow-offset-x"
+          max={50}
+          min={-50}
           onValueChange={(value) =>
             setToken({
               property: "shadow-offset-x",
@@ -765,17 +769,17 @@ export function ShadowsControl() {
               modesInSync: true,
             })
           }
-          min={-50}
-          max={50}
           step={0.5}
           unit="px"
-          label="--shadow-offset-x"
+          value={shadowOffsetX}
         />
       </div>
 
       <div>
         <SliderWithInput
-          value={shadowOffsetY}
+          label="--shadow-offset-y"
+          max={50}
+          min={-50}
           onValueChange={(value) =>
             setToken({
               property: "shadow-offset-y",
@@ -783,11 +787,9 @@ export function ShadowsControl() {
               modesInSync: true,
             })
           }
-          min={-50}
-          max={50}
           step={0.5}
           unit="px"
-          label="--shadow-offset-y"
+          value={shadowOffsetY}
         />
       </div>
     </div>
@@ -827,40 +829,40 @@ function SliderWithInput({
     <div className={cn("space-y-2 pb-2", className)} {...props}>
       <div className="flex items-center justify-between">
         <Label
+          className="font-medium text-xs"
           htmlFor={`slider-${label.replace(/\s+/g, "-").toLowerCase()}`}
-          className="text-xs font-medium"
         >
           {label}
         </Label>
         <div className="flex items-center gap-1">
           <Input
+            className="h-6 w-18 px-2 pr-0 text-xs"
             id={`input-${label.replace(/\s+/g, "-").toLowerCase()}`}
-            type="number"
-            value={localValue}
+            max={max}
+            min={min}
             onChange={(e) => {
               const newValue = Number(e.target.value);
               setLocalValue(newValue);
               onValueChange(newValue);
             }}
-            min={min}
-            max={max}
             step={step}
-            className="h-6 w-18 px-2 pr-0 text-xs"
+            type="number"
+            value={localValue}
           />
           <span className="text-muted-foreground text-xs">{unit}</span>
         </div>
       </div>
       <Slider
+        className="py-1"
         id={`slider-${label.replace(/\s+/g, "-").toLowerCase()}`}
-        value={[localValue]}
-        min={min}
         max={max}
-        step={step}
+        min={min}
         onValueChange={(values) => {
           setLocalValue(values[0]);
           onValueChange(values[0]);
         }}
-        className="py-1"
+        step={step}
+        value={[localValue]}
       />
     </div>
   );

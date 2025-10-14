@@ -1,6 +1,8 @@
+import { useTheme } from "next-themes";
+import { useCallback } from "react";
 import { allPresetsArray, surfaceShadesPresets } from "@/lib/colors";
 import { initialThemeConfig } from "@/lib/themes";
-import {
+import type {
   ColorProperty,
   OklchValue,
   Preset,
@@ -9,8 +11,6 @@ import {
   ThemeProperty,
 } from "@/types/theme";
 import { getOptimalForegroundColor, isValidColor } from "@/utils/colors";
-import { useTheme } from "next-themes";
-import { useCallback } from "react";
 import { useThemeConfig } from "./use-theme-config";
 
 export function useTokens() {
@@ -40,7 +40,7 @@ export function useTokens() {
 
       return token;
     },
-    [mode, currentThemeObject[mode]],
+    [mode, currentThemeObject[mode]]
   );
 
   const setToken = ({
@@ -54,37 +54,33 @@ export function useTokens() {
   }) => {
     // Update both modes
     if (modesInSync) {
-      return setConfig((prev) => {
-        return {
-          ...prev,
-          themeObject: {
-            ...prev.themeObject,
-            light: {
-              ...prev.themeObject.light,
-              [property]: value,
-            },
-            dark: {
-              ...prev.themeObject.dark,
-              [property]: value,
-            },
-          },
-        };
-      });
-    }
-
-    // Only update the current mode
-    setConfig((prev) => {
-      return {
+      return setConfig((prev) => ({
         ...prev,
         themeObject: {
           ...prev.themeObject,
-          [mode]: {
-            ...prev.themeObject[mode],
+          light: {
+            ...prev.themeObject.light,
+            [property]: value,
+          },
+          dark: {
+            ...prev.themeObject.dark,
             [property]: value,
           },
         },
-      };
-    });
+      }));
+    }
+
+    // Only update the current mode
+    setConfig((prev) => ({
+      ...prev,
+      themeObject: {
+        ...prev.themeObject,
+        [mode]: {
+          ...prev.themeObject[mode],
+          [property]: value,
+        },
+      },
+    }));
   };
 
   const getColorToken = useCallback(
@@ -98,13 +94,13 @@ export function useTokens() {
 
       return color;
     },
-    [mode, currentThemeObject[mode]],
+    [mode, currentThemeObject[mode]]
   );
 
   const getActiveThemeColorToken = useCallback(
     ({ property, mode }: { property: ColorProperty; mode: ThemeMode }) => {
       const activeThemeObject = allPresetsArray.find(
-        (theme) => theme.name === currentThemeObject.name,
+        (theme) => theme.name === currentThemeObject.name
       );
 
       const themeObject = activeThemeObject ?? currentThemeObject;
@@ -116,12 +112,12 @@ export function useTokens() {
 
       return color;
     },
-    [currentThemeObject, mode],
+    [currentThemeObject, mode]
   );
 
   const createTokenGetterForPreset = useCallback((preset: Preset) => {
     const presetThemeObject = allPresetsArray.find(
-      (theme) => theme.name === preset,
+      (theme) => theme.name === preset
     );
 
     if (!presetThemeObject) {
@@ -159,37 +155,33 @@ export function useTokens() {
 
     // Update both modes
     if (modesInSync) {
-      return setConfig((prev) => {
-        return {
-          ...prev,
-          themeObject: {
-            ...prev.themeObject,
-            light: {
-              ...prev.themeObject.light,
-              [property]: color,
-            },
-            dark: {
-              ...prev.themeObject.dark,
-              [property]: color,
-            },
-          },
-        };
-      });
-    }
-
-    // Only update the current mode
-    setConfig((prev) => {
-      return {
+      return setConfig((prev) => ({
         ...prev,
         themeObject: {
           ...prev.themeObject,
-          [mode]: {
-            ...prev.themeObject[mode],
+          light: {
+            ...prev.themeObject.light,
+            [property]: color,
+          },
+          dark: {
+            ...prev.themeObject.dark,
             [property]: color,
           },
         },
-      };
-    });
+      }));
+    }
+
+    // Only update the current mode
+    setConfig((prev) => ({
+      ...prev,
+      themeObject: {
+        ...prev.themeObject,
+        [mode]: {
+          ...prev.themeObject[mode],
+          [property]: color,
+        },
+      },
+    }));
   };
 
   const setColorTokenWithForeground = ({
@@ -212,44 +204,40 @@ export function useTokens() {
 
     // Update both modes
     if (modesInSync) {
-      return setConfig((prev) => {
-        return {
-          ...prev,
-          themeObject: {
-            ...prev.themeObject,
-            light: {
-              ...prev.themeObject.light,
-              [property]: bgColor,
-              [propertyForeground]: optimalFgColor,
-            },
-            dark: {
-              ...prev.themeObject.dark,
-              [property]: bgColor,
-              [propertyForeground]: optimalFgColor,
-            },
-          },
-        };
-      });
-    }
-
-    // Only update the current mode
-    setConfig((prev) => {
-      return {
+      return setConfig((prev) => ({
         ...prev,
         themeObject: {
           ...prev.themeObject,
-          [mode]: {
-            ...prev.themeObject[mode],
+          light: {
+            ...prev.themeObject.light,
+            [property]: bgColor,
+            [propertyForeground]: optimalFgColor,
+          },
+          dark: {
+            ...prev.themeObject.dark,
             [property]: bgColor,
             [propertyForeground]: optimalFgColor,
           },
         },
-      };
-    });
+      }));
+    }
+
+    // Only update the current mode
+    setConfig((prev) => ({
+      ...prev,
+      themeObject: {
+        ...prev.themeObject,
+        [mode]: {
+          ...prev.themeObject[mode],
+          [property]: bgColor,
+          [propertyForeground]: optimalFgColor,
+        },
+      },
+    }));
   };
 
   const setPrimaryColorTokens = ({
-    color: color,
+    color,
     modesInSync = false,
   }: {
     color: string | OklchValue;
@@ -266,42 +254,21 @@ export function useTokens() {
 
     // Update both modes
     if (modesInSync) {
-      return setConfig((prev) => {
-        return {
-          ...prev,
-          themeObject: {
-            ...prev.themeObject,
-            light: {
-              ...prev.themeObject.light,
-              primary: color,
-              "primary-foreground": optimalFgColor,
-              ring: color,
-              "sidebar-primary": color,
-              "sidebar-primary-foreground": optimalFgColor,
-              "sidebar-ring": color,
-            },
-            dark: {
-              ...prev.themeObject.dark,
-              primary: color,
-              "primary-foreground": optimalFgColor,
-              ring: color,
-              "sidebar-primary": color,
-              "sidebar-primary-foreground": optimalFgColor,
-              "sidebar-ring": color,
-            },
-          },
-        };
-      });
-    }
-
-    // Only update the current mode
-    setConfig((prev) => {
-      return {
+      return setConfig((prev) => ({
         ...prev,
         themeObject: {
           ...prev.themeObject,
-          [mode]: {
-            ...prev.themeObject[mode],
+          light: {
+            ...prev.themeObject.light,
+            primary: color,
+            "primary-foreground": optimalFgColor,
+            ring: color,
+            "sidebar-primary": color,
+            "sidebar-primary-foreground": optimalFgColor,
+            "sidebar-ring": color,
+          },
+          dark: {
+            ...prev.themeObject.dark,
             primary: color,
             "primary-foreground": optimalFgColor,
             ring: color,
@@ -310,8 +277,25 @@ export function useTokens() {
             "sidebar-ring": color,
           },
         },
-      };
-    });
+      }));
+    }
+
+    // Only update the current mode
+    setConfig((prev) => ({
+      ...prev,
+      themeObject: {
+        ...prev.themeObject,
+        [mode]: {
+          ...prev.themeObject[mode],
+          primary: color,
+          "primary-foreground": optimalFgColor,
+          ring: color,
+          "sidebar-primary": color,
+          "sidebar-primary-foreground": optimalFgColor,
+          "sidebar-ring": color,
+        },
+      },
+    }));
   };
 
   const setSurfaceShadesColorTokens = ({
@@ -323,45 +307,41 @@ export function useTokens() {
   }) => {
     // Update both modes
     if (modesInSync) {
-      return setConfig((prev) => {
-        return {
-          ...prev,
-          surface: bgShadesThemeObject.name,
-          themeObject: {
-            ...prev.themeObject,
-            light: {
-              ...prev.themeObject.light,
-              ...bgShadesThemeObject.light,
-            },
-            dark: {
-              ...prev.themeObject.dark,
-              ...bgShadesThemeObject.dark,
-            },
-          },
-        };
-      });
-    }
-
-    // Only update the current mode
-    setConfig((prev) => {
-      return {
+      return setConfig((prev) => ({
         ...prev,
         surface: bgShadesThemeObject.name,
         themeObject: {
           ...prev.themeObject,
-          [mode]: {
-            ...prev.themeObject[mode],
-            ...bgShadesThemeObject[mode],
+          light: {
+            ...prev.themeObject.light,
+            ...bgShadesThemeObject.light,
+          },
+          dark: {
+            ...prev.themeObject.dark,
+            ...bgShadesThemeObject.dark,
           },
         },
-      };
-    });
+      }));
+    }
+
+    // Only update the current mode
+    setConfig((prev) => ({
+      ...prev,
+      surface: bgShadesThemeObject.name,
+      themeObject: {
+        ...prev.themeObject,
+        [mode]: {
+          ...prev.themeObject[mode],
+          ...bgShadesThemeObject[mode],
+        },
+      },
+    }));
   };
 
   const getActiveSurfaceShades = useCallback(() => {
     const surface = config?.surface ?? "default";
     const surfaceShadesThemeObject = Object.values(surfaceShadesPresets).find(
-      (theme) => theme.name === surface,
+      (theme) => theme.name === surface
     );
     return surfaceShadesThemeObject;
   }, [config.surface]);

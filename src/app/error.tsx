@@ -1,11 +1,11 @@
 "use client";
 
+import { MoveLeft } from "lucide-react";
+import { useEffect } from "react";
 import { FrameHighlight } from "@/components/frame-highlight";
 import { GoBackButton } from "@/components/go-back-button";
 import { Button } from "@/components/ui/button";
 import { ContainerWrapper } from "@/components/wrappers";
-import { MoveLeft } from "lucide-react";
-import { useEffect } from "react";
 
 export default function Error({
   error,
@@ -25,7 +25,7 @@ export default function Error({
 
       <ContainerWrapper className="flex-1">
         <div className="grid size-full place-content-center gap-4 font-mono max-sm:place-items-start sm:text-center">
-          <p className="text-2xl font-bold sm:text-4xl">
+          <p className="font-bold text-2xl sm:text-4xl">
             <FrameHighlight>Error</FrameHighlight>
           </p>
           <p className="text-muted-foreground">An error occurred.</p>
@@ -38,7 +38,7 @@ export default function Error({
             Go back
           </GoBackButton>
 
-          <Button variant={"link"} onClick={() => reset()}>
+          <Button onClick={() => reset()} variant={"link"}>
             Try again
           </Button>
         </div>

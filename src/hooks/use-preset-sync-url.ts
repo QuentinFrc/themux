@@ -1,8 +1,8 @@
-import { allPresetsArray } from "@/lib/colors";
-import { Preset } from "@/types/theme";
-import { QUERY_PARAMS_KEYS } from "@/utils/constants";
 import { useQueryState } from "nuqs";
 import React from "react";
+import { allPresetsArray } from "@/lib/colors";
+import type { Preset } from "@/types/theme";
+import { QUERY_PARAMS_KEYS } from "@/utils/constants";
 import { useThemeConfig } from "./use-theme-config";
 
 export const usePresetSyncUrl = () => {
@@ -18,7 +18,7 @@ export const usePresetSyncUrl = () => {
     if (preset) {
       const normalizedPresetFromUrl = preset.trim().toLowerCase() as Preset;
       const presetThemeObject = allPresetsArray.find(
-        (p) => p.name === normalizedPresetFromUrl,
+        (p) => p.name === normalizedPresetFromUrl
       );
 
       if (presetThemeObject) {

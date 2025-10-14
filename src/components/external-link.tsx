@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
+import { cn } from "@/lib/utils";
 
 interface ExternalLinkProps extends ComponentProps<"a"> {
   showIcon?: boolean;
@@ -18,21 +18,21 @@ export function ExternalLink({
 
   return (
     <a
-      title={title}
-      href={href}
       className={cn(
         "group/link inline-flex w-fit items-center justify-between",
-        className,
+        className
       )}
+      href={href}
       rel="noopener noreferrer"
       target="_blank"
+      title={title}
       {...rest}
     >
       <span className="group-hover/link:underline">{children}</span>
       {showIcon && (
         <ArrowUpRight
-          size={12}
           className="transition group-hover/link:rotate-45"
+          size={12}
         />
       )}
     </a>

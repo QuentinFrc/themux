@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 import {
   PageHeader,
@@ -30,12 +30,12 @@ export default function FontsPage() {
 
       <ContainerWrapper withCane>
         <SectionWrapper>
-          <p className="text-6xl font-bold">this is a 6xl text</p>
-          <p className="text-5xl font-bold">this is a 5xl text</p>
-          <p className="text-4xl font-bold">this is a 4xl text</p>
-          <p className="text-3xl font-bold">this is a 3xl text</p>
-          <p className="text-2xl font-semibold">this is a semibold 2xl text</p>
-          <p className="text-xl font-semibold">this is a semibold xl text</p>
+          <p className="font-bold text-6xl">this is a 6xl text</p>
+          <p className="font-bold text-5xl">this is a 5xl text</p>
+          <p className="font-bold text-4xl">this is a 4xl text</p>
+          <p className="font-bold text-3xl">this is a 3xl text</p>
+          <p className="font-semibold text-2xl">this is a semibold 2xl text</p>
+          <p className="font-semibold text-xl">this is a semibold xl text</p>
           <p className="text-lg">this is lg text</p>
           <p className="text-md">this is a md text</p>
           <p className="text-sm">this is a sm text</p>
@@ -51,7 +51,7 @@ export default function FontsPage() {
           <p className="font-sans font-semibold">
             this is a semibold sans font text
           </p>
-          <p className="font-sans font-bold">this is a bold sans font text</p>
+          <p className="font-bold font-sans">this is a bold sans font text</p>
         </SectionWrapper>
       </ContainerWrapper>
 
@@ -63,7 +63,7 @@ export default function FontsPage() {
           <p className="font-mono font-semibold">
             this is a semibold mono font text
           </p>
-          <p className="font-mono font-bold">this is a bold mono font text</p>
+          <p className="font-bold font-mono">this is a bold mono font text</p>
         </SectionWrapper>
       </ContainerWrapper>
     </>

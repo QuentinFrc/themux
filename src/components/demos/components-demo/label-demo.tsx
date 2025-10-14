@@ -16,7 +16,7 @@ export function LabelDemo() {
       </div>
       <div className="group grid gap-3" data-disabled={true}>
         <Label htmlFor="label-demo-disabled">Disabled</Label>
-        <Input id="label-demo-disabled" placeholder="Disabled" disabled />
+        <Input disabled id="label-demo-disabled" placeholder="Disabled" />
       </div>
       <div className="grid gap-3">
         <Label htmlFor="label-demo-message">Message</Label>

@@ -1,5 +1,9 @@
 "use client";
 
+import { CircleAlert } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useCallback, useEffect, useState } from "react";
+import { HexColorPicker } from "react-colorful";
 import { ComponentErrorBoundary } from "@/components/error-boundary";
 import {
   Popover,
@@ -9,16 +13,12 @@ import {
 import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { useColorFormat, useModesInSync } from "@/store/preferences-store";
-import { ColorProperty, ThemeMode } from "@/types/theme";
+import type { ColorProperty, ThemeMode } from "@/types/theme";
 import {
   colorFormatter,
   convertToHex,
   convertToOklch,
 } from "@/utils/color-converter";
-import { CircleAlert } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useCallback, useEffect, useState } from "react";
-import { HexColorPicker } from "react-colorful";
 import { PasteColorControl } from "./customizer-controls";
 import { TokenDisplay, TokenInfo } from "./token";
 
@@ -123,12 +123,12 @@ export function TokenColorPicker({
       currentThemeObject,
       resolvedTheme,
       setColorTokens,
-    ],
+    ]
   );
 
   const debouncedHandleColorChange = useDebouncedCallback(
     handleColorChange,
-    100,
+    100
   );
 
   // Create a wrapper for PasteColorControl that always expects single color format
@@ -140,23 +140,23 @@ export function TokenColorPicker({
     }) => {
       handleColorChange(obj.color);
     },
-    [handleColorChange],
+    [handleColorChange]
   );
 
   return (
     <ComponentErrorBoundary
-      name="TokenColorPicker"
       fallback={<ColorPickerErrorFallback />}
+      name="TokenColorPicker"
     >
       <Popover>
         <div className="flex items-center gap-2">
           <PopoverTrigger className="relative cursor-pointer">
             <TokenDisplay color={color} />
           </PopoverTrigger>
-          <TokenInfo colorProperty={colorProperty} color={color} />
+          <TokenInfo color={color} colorProperty={colorProperty} />
         </div>
 
-        <PopoverContent className="flex h-fit w-60 gap-6 p-4" align="start">
+        <PopoverContent align="start" className="flex h-fit w-60 gap-6 p-4">
           <div className="w-full space-y-2">
             <div className="mx-auto w-fit">
               <HexColorPicker
@@ -168,10 +168,10 @@ export function TokenColorPicker({
               <ColorOklchValue currentColor={currentColor} />
             </div>
             <PasteColorControl
-              modesInSync={resolvedModesInSync}
-              setColorTokens={handlePasteColorChange}
-              property={colorProperty}
               className="w-50"
+              modesInSync={resolvedModesInSync}
+              property={colorProperty}
+              setColorTokens={handlePasteColorChange}
             />
           </div>
         </PopoverContent>
@@ -185,7 +185,7 @@ function ColorOklchValue({ currentColor }: { currentColor: string }) {
   const colorValue = colorFormatter(currentColor, colorFormat, "4");
 
   return (
-    <p className="text-muted-foreground font-mono text-xs">{colorValue}</p>
+    <p className="font-mono text-muted-foreground text-xs">{colorValue}</p>
   );
 }
 
@@ -204,10 +204,10 @@ function ColorPickerErrorFallback() {
       </div>
 
       <div>
-        <p className="text-destructive font-mono text-xs font-semibold">
+        <p className="font-mono font-semibold text-destructive text-xs">
           Error occurred. I'm sorry :/
         </p>
-        <p className="text-destructive/70 truncate font-mono text-xs">
+        <p className="truncate font-mono text-destructive/70 text-xs">
           For now, refresh the page.
         </p>
       </div>

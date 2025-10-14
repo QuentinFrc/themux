@@ -1,14 +1,12 @@
 "use client";
 
-import * as React from "react";
 import {
   CheckIcon,
   ChevronDownIcon,
   ChevronsUpDown,
   PlusCircleIcon,
 } from "lucide-react";
-
-import { cn } from "@/lib/utils";
+import * as React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,6 +23,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 const frameworks = [
   {
@@ -108,12 +107,12 @@ type Timezone = (typeof timezones)[number];
 
 export function ComboboxDemo() {
   return (
-    <div className="flex w-full flex-wrap items-start justify-center gap-4 @max-3xl:justify-start">
+    <div className="flex w-full flex-wrap items-start @max-3xl:justify-start justify-center gap-4">
       <FrameworkCombobox frameworks={[...frameworks]} />
-      <UserCombobox users={[...users]} selectedUserId={users[0].id} />
+      <UserCombobox selectedUserId={users[0].id} users={[...users]} />
       <TimezoneCombobox
-        timezones={[...timezones]}
         selectedTimezone={timezones[0].timezones[0]}
+        timezones={[...timezones]}
       />
       <ComboboxWithCheckbox frameworks={[...frameworks]} />
     </div>
@@ -125,13 +124,13 @@ function FrameworkCombobox({ frameworks }: { frameworks: Framework[] }) {
   const [value, setValue] = React.useState("");
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover onOpenChange={setOpen} open={open}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
-          role="combobox"
           aria-expanded={open}
           className="w-full justify-between md:max-w-[200px]"
+          role="combobox"
+          variant="outline"
         >
           {value
             ? frameworks.find((framework) => framework.value === value)?.label
@@ -148,17 +147,17 @@ function FrameworkCombobox({ frameworks }: { frameworks: Framework[] }) {
               {frameworks.map((framework) => (
                 <CommandItem
                   key={framework.value}
-                  value={framework.value}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue);
                     setOpen(false);
                   }}
+                  value={framework.value}
                 >
                   {framework.label}
                   <CheckIcon
                     className={cn(
                       "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0",
+                      value === framework.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>
@@ -183,17 +182,17 @@ function UserCombobox({
 
   const selectedUser = React.useMemo(
     () => users.find((user) => user.id === value),
-    [value, users],
+    [value, users]
   );
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover onOpenChange={setOpen} open={open}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
-          role="combobox"
           aria-expanded={open}
           className="w-full justify-between px-2 md:max-w-[200px]"
+          role="combobox"
+          variant="outline"
         >
           {selectedUser ? (
             <div className="flex items-center gap-2">
@@ -220,11 +219,11 @@ function UserCombobox({
               {users.map((user) => (
                 <CommandItem
                   key={user.id}
-                  value={user.id}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue);
                     setOpen(false);
                   }}
+                  value={user.id}
                 >
                   <Avatar className="size-5">
                     <AvatarImage
@@ -236,7 +235,7 @@ function UserCombobox({
                   <CheckIcon
                     className={cn(
                       "ml-auto",
-                      value === user.id ? "opacity-100" : "opacity-0",
+                      value === user.id ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>
@@ -269,26 +268,26 @@ function TimezoneCombobox({
   const selectedGroup = React.useMemo(
     () =>
       timezones.find((group) =>
-        group.timezones.find((tz) => tz.value === value),
+        group.timezones.find((tz) => tz.value === value)
       ),
-    [value, timezones],
+    [value, timezones]
   );
 
   const selectedTimezoneLabel = React.useMemo(
     () => selectedGroup?.timezones.find((tz) => tz.value === value)?.label,
-    [value, selectedGroup],
+    [value, selectedGroup]
   );
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover onOpenChange={setOpen} open={open}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
           className="h-12 w-full justify-between px-2.5 md:max-w-[200px]"
+          variant="outline"
         >
           {selectedTimezone ? (
             <div className="flex flex-col items-start gap-0.5">
-              <span className="text-muted-foreground text-xs font-normal">
+              <span className="font-normal text-muted-foreground text-xs">
                 {selectedGroup?.label}
               </span>
               <span>{selectedTimezoneLabel}</span>
@@ -299,23 +298,23 @@ function TimezoneCombobox({
           <ChevronDownIcon className="text-muted-foreground" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0" align="start">
+      <PopoverContent align="start" className="p-0">
         <Command>
           <CommandInput placeholder="Search timezone..." />
           <CommandList className="scroll-pb-12">
             <CommandEmpty>No timezone found.</CommandEmpty>
             {timezones.map((region) => (
-              <CommandGroup key={region.label} heading={region.label}>
+              <CommandGroup heading={region.label} key={region.label}>
                 {region.timezones.map((timezone) => (
                   <CommandItem
                     key={timezone.value}
-                    value={timezone.value}
                     onSelect={(currentValue) => {
                       setValue(
-                        currentValue as Timezone["timezones"][number]["value"],
+                        currentValue as Timezone["timezones"][number]["value"]
                       );
                       setOpen(false);
                     }}
+                    value={timezone.value}
                   >
                     {timezone.label}
                     <CheckIcon
@@ -327,7 +326,7 @@ function TimezoneCombobox({
               </CommandGroup>
             ))}
             <CommandSeparator className="sticky bottom-10" />
-            <CommandGroup className="bg-popover sticky bottom-0">
+            <CommandGroup className="sticky bottom-0 bg-popover">
               <CommandItem>
                 <PlusCircleIcon />
                 Create timezone
@@ -347,13 +346,13 @@ function ComboboxWithCheckbox({ frameworks }: { frameworks: Framework[] }) {
   >([]);
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover onOpenChange={setOpen} open={open}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
-          role="combobox"
           aria-expanded={open}
           className="w-fit min-w-[280px] justify-between"
+          role="combobox"
+          variant="outline"
         >
           {selectedFrameworks.length > 0
             ? selectedFrameworks.map((framework) => framework.label).join(", ")
@@ -361,7 +360,7 @@ function ComboboxWithCheckbox({ frameworks }: { frameworks: Framework[] }) {
           <ChevronsUpDown className="text-muted-foreground" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0" align="start">
+      <PopoverContent align="start" className="w-[300px] p-0">
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandList>
@@ -370,21 +369,21 @@ function ComboboxWithCheckbox({ frameworks }: { frameworks: Framework[] }) {
               {frameworks.map((framework) => (
                 <CommandItem
                   key={framework.value}
-                  value={framework.value}
                   onSelect={(currentValue) => {
                     setSelectedFrameworks(
                       selectedFrameworks.some((f) => f.value === currentValue)
                         ? selectedFrameworks.filter(
-                            (f) => f.value !== currentValue,
+                            (f) => f.value !== currentValue
                           )
-                        : [...selectedFrameworks, framework],
+                        : [...selectedFrameworks, framework]
                     );
                   }}
+                  value={framework.value}
                 >
                   <div
-                    className="border-input data-[selected=true]:border-primary data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground pointer-events-none size-4 shrink-0 rounded-[4px] border transition-all select-none *:[svg]:opacity-0 data-[selected=true]:*:[svg]:opacity-100"
+                    className="pointer-events-none size-4 shrink-0 select-none rounded-[4px] border border-input transition-all data-[selected=true]:border-primary data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground *:[svg]:opacity-0 data-[selected=true]:*:[svg]:opacity-100"
                     data-selected={selectedFrameworks.some(
-                      (f) => f.value === framework.value,
+                      (f) => f.value === framework.value
                     )}
                   >
                     <CheckIcon className="size-3.5 text-current" />

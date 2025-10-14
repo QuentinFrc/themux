@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowUpIcon, CheckIcon, PlusIcon } from "lucide-react";
 import * as React from "react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -34,7 +34,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { ArrowUpIcon, CheckIcon, PlusIcon } from "lucide-react";
 
 const users = [
   {
@@ -97,11 +96,11 @@ export function CardsChat() {
         <CardHeader className="flex flex-row items-center">
           <div className="flex items-center gap-4">
             <Avatar className="border">
-              <AvatarImage src="/avatars/01.png" alt="Image" />
+              <AvatarImage alt="Image" src="/avatars/01.png" />
               <AvatarFallback>S</AvatarFallback>
             </Avatar>
             <div className="flex flex-col gap-0.5">
-              <p className="text-sm leading-none font-medium">Sofia Davis</p>
+              <p className="font-medium text-sm leading-none">Sofia Davis</p>
               <p className="text-muted-foreground text-xs">m@example.com</p>
             </div>
           </div>
@@ -109,10 +108,10 @@ export function CardsChat() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  size="icon"
-                  variant="secondary"
                   className="ml-auto size-8 rounded-full"
                   onClick={() => setOpen(true)}
+                  size="icon"
+                  variant="secondary"
                 >
                   <PlusIcon />
                   <span className="sr-only">New message</span>
@@ -126,13 +125,13 @@ export function CardsChat() {
           <div className="flex flex-col gap-4">
             {messages.map((message, index) => (
               <div
-                key={index}
                 className={cn(
                   "flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm",
                   message.role === "user"
-                    ? "bg-primary text-primary-foreground ml-auto"
-                    : "bg-muted",
+                    ? "ml-auto bg-primary text-primary-foreground"
+                    : "bg-muted"
                 )}
+                key={index}
               >
                 {message.content}
               </div>
@@ -141,6 +140,7 @@ export function CardsChat() {
         </CardContent>
         <CardFooter>
           <form
+            className="relative w-full"
             onSubmit={(event) => {
               event.preventDefault();
               if (inputLength === 0) return;
@@ -153,21 +153,20 @@ export function CardsChat() {
               ]);
               setInput("");
             }}
-            className="relative w-full"
           >
             <Input
-              id="message"
-              placeholder="Type your message..."
-              className="flex-1 pr-10"
               autoComplete="off"
-              value={input}
+              className="flex-1 pr-10"
+              id="message"
               onChange={(event) => setInput(event.target.value)}
+              placeholder="Type your message..."
+              value={input}
             />
             <Button
-              type="submit"
-              size="icon"
-              className="absolute top-1/2 right-2 size-6 -translate-y-1/2 rounded-full"
+              className="-translate-y-1/2 absolute top-1/2 right-2 size-6 rounded-full"
               disabled={inputLength === 0}
+              size="icon"
+              type="submit"
             >
               <ArrowUpIcon className="size-3.5" />
               <span className="sr-only">Send</span>
@@ -175,7 +174,7 @@ export function CardsChat() {
           </form>
         </CardFooter>
       </Card>
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog onOpenChange={setOpen} open={open}>
         <DialogContent className="gap-0 p-0 outline-none">
           <DialogHeader className="px-4 pt-5 pb-4">
             <DialogTitle>New message</DialogTitle>
@@ -191,31 +190,31 @@ export function CardsChat() {
               <CommandGroup>
                 {users.map((user) => (
                   <CommandItem
-                    key={user.email}
-                    data-active={selectedUsers.includes(user)}
                     className="data-[active=true]:opacity-50"
+                    data-active={selectedUsers.includes(user)}
+                    key={user.email}
                     onSelect={() => {
                       if (selectedUsers.includes(user)) {
                         return setSelectedUsers(
                           selectedUsers.filter(
-                            (selectedUser) => selectedUser !== user,
-                          ),
+                            (selectedUser) => selectedUser !== user
+                          )
                         );
                       }
 
                       return setSelectedUsers(
                         [...users].filter((u) =>
-                          [...selectedUsers, user].includes(u),
-                        ),
+                          [...selectedUsers, user].includes(u)
+                        )
                       );
                     }}
                   >
                     <Avatar className="border">
-                      <AvatarImage src={user.avatar} alt="Image" />
+                      <AvatarImage alt="Image" src={user.avatar} />
                       <AvatarFallback>{user.name[0]}</AvatarFallback>
                     </Avatar>
                     <div className="ml-2">
-                      <p className="text-sm leading-none font-medium">
+                      <p className="font-medium text-sm leading-none">
                         {user.name}
                       </p>
                       <p className="text-muted-foreground text-sm">
@@ -223,18 +222,18 @@ export function CardsChat() {
                       </p>
                     </div>
                     {selectedUsers.includes(user) ? (
-                      <CheckIcon className="text-primary ml-auto flex size-4" />
+                      <CheckIcon className="ml-auto flex size-4 text-primary" />
                     ) : null}
                   </CommandItem>
                 ))}
               </CommandGroup>
             </CommandList>
           </Command>
-          <DialogFooter className="flex items-center border-t p-4 @2xl:justify-between">
+          <DialogFooter className="flex items-center @2xl:justify-between border-t p-4">
             {selectedUsers.length > 0 ? (
-              <div className="flex -space-x-2 overflow-hidden">
+              <div className="-space-x-2 flex overflow-hidden">
                 {selectedUsers.map((user) => (
-                  <Avatar key={user.email} className="inline-block border">
+                  <Avatar className="inline-block border" key={user.email}>
                     <AvatarImage src={user.avatar} />
                     <AvatarFallback>{user.name[0]}</AvatarFallback>
                   </Avatar>
@@ -247,10 +246,10 @@ export function CardsChat() {
             )}
             <Button
               disabled={selectedUsers.length < 2}
-              size="sm"
               onClick={() => {
                 setOpen(false);
               }}
+              size="sm"
             >
               Continue
             </Button>

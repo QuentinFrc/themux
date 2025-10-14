@@ -1,3 +1,5 @@
+import { isEqual } from "lodash";
+import React from "react";
 import { allPresetsArray } from "@/lib/colors";
 import {
   DEFAULT_FONTS,
@@ -5,13 +7,11 @@ import {
   DEFAULT_SURFACE,
   initialThemeConfig,
 } from "@/lib/themes";
-import { ThemeObject } from "@/types/theme";
+import type { ThemeObject } from "@/types/theme";
 import {
   mergeThemeObjects,
   mergeThemeObjectWithInitial,
 } from "@/utils/theme-config";
-import { isEqual } from "lodash";
-import React from "react";
 import { useConfig } from "./use-config";
 
 export function useThemeConfig() {
@@ -30,7 +30,7 @@ export function useThemeConfig() {
   const currentFonts = config.fonts;
   const currentPresetName = config.themeObject.name;
   const currentPresetThemeObject = allPresetsArray.find(
-    (preset) => preset.name === currentPresetName,
+    (preset) => preset.name === currentPresetName
   );
 
   const updateThemeConfig = (themeObject: ThemeObject) => {
@@ -55,7 +55,7 @@ export function useThemeConfig() {
     setConfig((prev) => {
       const themeObject = mergeThemeObjects(
         prev.themeObject,
-        currentPresetThemeObject,
+        currentPresetThemeObject
       );
       const mergedThemeObject = mergeThemeObjectWithInitial(themeObject);
 
@@ -86,17 +86,17 @@ export function useThemeConfig() {
     const isRadiusEqual = currentRadius === initialThemeRadius;
     const areFontsEqual = isEqual(currentFonts, initialThemeFonts);
 
-    return !isThemeObjectEqual || !isRadiusEqual || !areFontsEqual;
+    return !(isThemeObjectEqual && isRadiusEqual && areFontsEqual);
   };
 
   const hasCurrentPresetChanged = () => {
     const mergedThemeObjectWithDefaults = mergeThemeObjectWithInitial(
-      currentPresetThemeObject!,
+      currentPresetThemeObject!
     );
 
     const isThemeObjectEqual = isEqual(
       mergedThemeObjectWithDefaults,
-      currentThemeObject,
+      currentThemeObject
     );
 
     const isRadiusEqual =
@@ -113,7 +113,7 @@ export function useThemeConfig() {
       ? isEqual(presetFonts, currentFonts)
       : true;
 
-    return !isThemeObjectEqual || !isRadiusEqual || !areFontsEqual;
+    return !(isThemeObjectEqual && isRadiusEqual && areFontsEqual);
   };
 
   return {

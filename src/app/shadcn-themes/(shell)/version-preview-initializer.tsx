@@ -36,7 +36,7 @@ export function VersionPreviewInitializer({
     const themeObject = version.config.theme.themeObject;
     const themeLabel = themeObject.label ?? themeObject.name ?? "Theme";
 
-    toast.success(`Loaded ${themeLabel} v${version.version}`);
+    toast.success(`Loaded ${themeLabel} v${version.commit.hash.slice(0, 7)}`);
   }, [
     setConfig,
     setTailwindVersion,

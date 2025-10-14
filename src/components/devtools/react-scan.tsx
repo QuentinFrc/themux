@@ -1,7 +1,7 @@
 "use client";
 
-import { scan, Options } from "react-scan";
 import { useEffect } from "react";
+import { type Options, scan } from "react-scan";
 
 interface ReactScanProps {
   options?: Options;

@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  ChartConfig,
+  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -59,26 +59,26 @@ export function ChartLineDemo() {
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
-              tickLine={false}
               axisLine={false}
-              tickMargin={8}
+              dataKey="month"
               tickFormatter={(value) => value.slice(0, 3)}
+              tickLine={false}
+              tickMargin={8}
             />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <ChartTooltip content={<ChartTooltipContent />} cursor={false} />
             <Line
               dataKey="desktop"
-              type="monotone"
+              dot={false}
               stroke="var(--color-desktop)"
               strokeWidth={2}
-              dot={false}
+              type="monotone"
             />
             <Line
               dataKey="mobile"
-              type="monotone"
+              dot={false}
               stroke="var(--color-mobile)"
               strokeWidth={2}
-              dot={false}
+              type="monotone"
             />
           </LineChart>
         </ChartContainer>
@@ -86,10 +86,10 @@ export function ChartLineDemo() {
       <CardFooter>
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
-            <div className="flex items-center gap-2 leading-none font-medium">
+            <div className="flex items-center gap-2 font-medium leading-none">
               Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
             </div>
-            <div className="text-muted-foreground flex items-center gap-2 leading-none">
+            <div className="flex items-center gap-2 text-muted-foreground leading-none">
               Showing total visitors for the last 6 months
             </div>
           </div>

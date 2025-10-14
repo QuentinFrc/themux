@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useDebouncedCallback } from "./use-debounced-callback";
+import { useEffect, useState } from "react";
 import { getContrastRatio } from "@/utils/contrast-checker";
+import { useDebouncedCallback } from "./use-debounced-callback";
 
 type ColorPair = {
   id: string;
@@ -29,8 +29,8 @@ export function useContrastChecker(colorPairs: ColorPair[]) {
 
     try {
       const results = pairs.map((pair) => {
-        const ratio = parseFloat(
-          getContrastRatio(pair.foreground, pair.background),
+        const ratio = Number.parseFloat(
+          getContrastRatio(pair.foreground, pair.background)
         );
         return {
           id: pair.id,

@@ -12,8 +12,8 @@ export function SliderDemo() {
       <Slider defaultValue={[25, 50]} max={100} step={1} />
       <Slider defaultValue={[10, 20]} max={100} step={10} />
       <div className="flex w-full items-center gap-6">
-        <Slider defaultValue={[50]} max={100} step={1} orientation="vertical" />
-        <Slider defaultValue={[25]} max={100} step={1} orientation="vertical" />
+        <Slider defaultValue={[50]} max={100} orientation="vertical" step={1} />
+        <Slider defaultValue={[25]} max={100} orientation="vertical" step={1} />
       </div>
       <SliderControlled />
     </div>
@@ -33,11 +33,11 @@ function SliderControlled() {
       </div>
       <Slider
         id="slider-demo-temperature"
-        value={value}
-        onValueChange={setValue}
-        min={0}
         max={1}
+        min={0}
+        onValueChange={setValue}
         step={0.1}
+        value={value}
       />
     </div>
   );

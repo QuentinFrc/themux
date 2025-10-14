@@ -15,8 +15,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function TabsDemo() {
   return (
-    <div className="flex flex-col items-center gap-6 @3xl:flex-row @3xl:items-start">
-      <Tabs defaultValue="account" className="max-w-[400px]">
+    <div className="flex @3xl:flex-row flex-col @3xl:items-start items-center gap-6">
+      <Tabs className="max-w-[400px]" defaultValue="account">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>
@@ -33,11 +33,11 @@ export function TabsDemo() {
             <CardContent className="grid gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="tabs-demo-name">Name</Label>
-                <Input id="tabs-demo-name" defaultValue="Pedro Duarte" />
+                <Input defaultValue="Pedro Duarte" id="tabs-demo-name" />
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="tabs-demo-username">Username</Label>
-                <Input id="tabs-demo-username" defaultValue="@peduarte" />
+                <Input defaultValue="@peduarte" id="tabs-demo-username" />
               </div>
             </CardContent>
             <CardFooter>
@@ -70,22 +70,22 @@ export function TabsDemo() {
           </Card>
         </TabsContent>
       </Tabs>
-      <div className="flex flex-col items-start gap-6 @max-3xl:w-full @3xl:justify-start">
-        <Tabs defaultValue="home" className="@max-3xl:w-full">
+      <div className="flex @max-3xl:w-full flex-col items-start @3xl:justify-start gap-6">
+        <Tabs className="@max-3xl:w-full" defaultValue="home">
           <TabsList className="@max-3xl:w-full">
             <TabsTrigger value="home">Home</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
         </Tabs>
-        <Tabs defaultValue="home" className="@max-3xl:w-full">
+        <Tabs className="@max-3xl:w-full" defaultValue="home">
           <TabsList className="@max-3xl:w-full">
             <TabsTrigger value="home">Home</TabsTrigger>
-            <TabsTrigger value="settings" disabled>
+            <TabsTrigger disabled value="settings">
               Disabled
             </TabsTrigger>
           </TabsList>
         </Tabs>
-        <Tabs defaultValue="preview" className="@max-3xl:w-full">
+        <Tabs className="@max-3xl:w-full" defaultValue="preview">
           <TabsList className="@max-3xl:w-full">
             <TabsTrigger value="preview">
               <AppWindowIcon />

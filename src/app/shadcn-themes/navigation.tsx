@@ -1,9 +1,9 @@
 "use client";
 
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-
 import { FrameHighlight } from "@/components/frame-highlight";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -12,17 +12,16 @@ import { useClickOutside } from "@/hooks/use-click-outside";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
 
 export function MainNavigation() {
   return (
     <nav className="flex items-center gap-4">
-      <Link href={"/"} className="font-base pr-4 font-bold">
+      <Link className="pr-4 font-base font-bold" href={"/"}>
         themux
       </Link>
       <div className="contents max-md:hidden">
         {NAV_LINKS.map(({ href, title }) => (
-          <NavLink href={href} title={title} key={href} />
+          <NavLink href={href} key={href} title={title} />
         ))}
       </div>
     </nav>
@@ -47,28 +46,28 @@ export function MobileNavigation() {
   return (
     <div ref={mobileMenuRef}>
       <Button
-        variant="ghost"
-        size="icon"
         className="inline-flex md:hidden"
         onClick={() => setIsOpen((prev) => !prev)}
+        size="icon"
+        variant="ghost"
       >
         <Menu
           className={cn(
             "size-4 transition duration-200",
-            isOpen ? "absolute scale-0" : "scale-100",
+            isOpen ? "absolute scale-0" : "scale-100"
           )}
         />
         <X
           className={cn(
             "size-4 transition duration-200",
-            !isOpen ? "absolute scale-0" : "scale-100",
+            isOpen ? "scale-100" : "absolute scale-0"
           )}
         />
       </Button>
       <div
         className={cn(
-          "bg-background absolute inset-x-0 top-full z-40 grid grid-rows-[0fr] gap-2 overflow-hidden transition-all duration-200 ease-out md:grid-rows-[0fr]",
-          isOpen && isMobile ? "grid-rows-[1fr] border-b" : "",
+          "absolute inset-x-0 top-full z-40 grid grid-rows-[0fr] gap-2 overflow-hidden bg-background transition-all duration-200 ease-out md:grid-rows-[0fr]",
+          isOpen && isMobile ? "grid-rows-[1fr] border-b" : ""
         )}
       >
         <ContainerWrapper className="overflow-hidden">
@@ -78,8 +77,8 @@ export function MobileNavigation() {
               const isSamePathname = pathname === href;
               return (
                 <button
-                  key={href}
                   className="m-0 h-fit p-0 text-left"
+                  key={href}
                   onClick={() => {
                     if (isSamePathname) return;
                     // Only close the mobile menu if the link clicked has a different pathname
@@ -103,12 +102,12 @@ function NavLink({ href, title }: { href: string; title: string }) {
 
   return (
     <Link
-      key={href}
-      href={href}
       className={cn(
-        "text-muted-foreground hover:text-accent-foreground relative text-sm transition-all ease-out",
-        isActive && "text-foreground hover:text-foreground",
+        "relative text-muted-foreground text-sm transition-all ease-out hover:text-accent-foreground",
+        isActive && "text-foreground hover:text-foreground"
       )}
+      href={href}
+      key={href}
       onNavigate={(e) => {
         if (isActive) e.preventDefault();
       }}

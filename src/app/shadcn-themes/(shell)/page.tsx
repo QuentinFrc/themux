@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { unstable_noStore as noStore } from "next/cache";
 
 import { ActionButtons } from "@/components/customizer/action-buttons";
 import { QuickCustomizer } from "@/components/customizer/quick-customizer";
@@ -21,11 +22,15 @@ export const metadata: Metadata = {
   title: "Theme Customizer",
 };
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function ShadcnThemesPage({
   searchParams,
 }: {
   searchParams?: Promise<PageSearchParams>;
 }) {
+  noStore();
   const resolvedSearchParams = searchParams
     ? await searchParams
     : undefined;
@@ -50,22 +55,22 @@ export default async function ShadcnThemesPage({
       <Separator />
 
       <Tabs
-        defaultValue="cards-demo"
         className="pointer-events-none relative gap-0"
+        defaultValue="cards-demo"
       >
         <ContainerWrapper withCane>
           <div className="absolute inset-0 z-[-1] size-full bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px]" />
 
           <TabsList className="pointer-events-auto my-4 bg-transparent">
-            <TabsTrigger value="cards-demo" className="px-4">
+            <TabsTrigger className="px-4" value="cards-demo">
               Cards
             </TabsTrigger>
-            <TabsTrigger value="dashboard-demo" className="px-4">
+            <TabsTrigger className="px-4" value="dashboard-demo">
               Dashboard
             </TabsTrigger>
             <TabsTrigger
-              value="mail-demo"
               className="hidden px-4 lg:inline-flex"
+              value="mail-demo"
             >
               Mail
             </TabsTrigger>
@@ -78,10 +83,10 @@ export default async function ShadcnThemesPage({
         <Separator />
 
         <ContainerWrapper
-          withCane
           className="pointer-events-auto relative isolate py-8"
+          withCane
         >
-          <TabsContent value="cards-demo" className="@container">
+          <TabsContent className="@container" value="cards-demo">
             <CardsDemo />
           </TabsContent>
 

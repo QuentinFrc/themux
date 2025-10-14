@@ -14,22 +14,22 @@ export function FontLoader() {
     ...monoFontsArray,
   ].find((font) => font.value === currentFonts?.sans)?.href;
   const serifFontHref = serifFontsArray.find(
-    (font) => font.value === currentFonts?.serif,
+    (font) => font.value === currentFonts?.serif
   )?.href;
   const monoFontHref = monoFontsArray.find(
-    (font) => font.value === currentFonts?.mono,
+    (font) => font.value === currentFonts?.mono
   )?.href;
 
   return (
     <>
       {sansFontHref && (
-        <link href={sansFontHref} rel="stylesheet" precedence="high" />
+        <link href={sansFontHref} precedence="high" rel="stylesheet" />
       )}
       {serifFontHref && (
-        <link href={serifFontHref} rel="stylesheet" precedence="high" />
+        <link href={serifFontHref} precedence="high" rel="stylesheet" />
       )}
       {monoFontHref && (
-        <link href={monoFontHref} rel="stylesheet" precedence="high" />
+        <link href={monoFontHref} precedence="high" rel="stylesheet" />
       )}
     </>
   );

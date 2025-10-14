@@ -1,9 +1,9 @@
 "use client";
 
+import { RotateCcw, Undo } from "lucide-react";
+import type { ComponentProps } from "react";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { cn } from "@/lib/utils";
-import { RotateCcw, Undo } from "lucide-react";
-import { ComponentProps } from "react";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -26,25 +26,25 @@ export function ResetButton({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className={cn("", className)} {...props}>
+        <Button className={cn("", className)} variant="ghost" {...props}>
           <RotateCcw />
-          <span className="hidden @xl:inline-flex">Reset</span>
+          <span className="@xl:inline-flex hidden">Reset</span>
           <span className="sr-only">Reset</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-fit" align="start">
+      <DropdownMenuContent align="start" className="w-fit">
         <DropdownMenuItem
           className={cn(hasDefaultThemeChanged() && "cursor-pointer")}
-          onClick={resetToDefault}
           disabled={!hasDefaultThemeChanged()}
+          onClick={resetToDefault}
         >
           <RotateCcw />
           To default
         </DropdownMenuItem>
         <DropdownMenuItem
           className={cn(hasCurrentPresetChanged() && "cursor-pointer")}
-          onClick={resetToLatestThemePreset}
           disabled={!hasCurrentPresetChanged()}
+          onClick={resetToLatestThemePreset}
         >
           <Undo />
           To latest preset

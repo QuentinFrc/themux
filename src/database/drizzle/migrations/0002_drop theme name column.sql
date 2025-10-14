@@ -1,1 +1,0 @@
-ALTER TABLE "theme" DROP COLUMN "name";

@@ -84,11 +84,9 @@ toast.promise(promise, {
           }),
         {
           loading: "Loading...",
-          success: (data) => {
-            return `${data.name} toast has been added`;
-          },
+          success: (data) => `${data.name} toast has been added`,
           error: "Error",
-        },
+        }
       ),
   },
 ];
@@ -101,7 +99,6 @@ export function SonnerDemo() {
         Give me a toast
       </Button>
       <Button
-        variant="outline"
         onClick={() =>
           toast("Event has been created", {
             description: "Sunday, December 03, 2023 at 9:00 AM",
@@ -111,18 +108,19 @@ export function SonnerDemo() {
             },
           })
         }
+        variant="outline"
       >
         Show Toast
       </Button>
       {allTypes.map((type) => (
         <Button
-          variant="ghost"
           data-active={activeType.name === type.name}
+          key={type.name}
           onClick={() => {
             type.action();
             setActiveType(type);
           }}
-          key={type.name}
+          variant="ghost"
         >
           {type.name}
         </Button>

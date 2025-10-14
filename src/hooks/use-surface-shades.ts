@@ -1,4 +1,8 @@
-import { Preset, SurfaceShades, SurfaceShadesThemeObject } from "@/types/theme";
+import type {
+  Preset,
+  SurfaceShades,
+  SurfaceShadesThemeObject,
+} from "@/types/theme";
 import { useThemeConfig } from "./use-theme-config";
 import { useTokens } from "./use-tokens";
 
@@ -7,7 +11,7 @@ export function useSurfaceShades() {
   const { currentPresetName } = useThemeConfig();
 
   const getDefaultSurfaceShades = (
-    preset?: Preset,
+    preset?: Preset
   ): SurfaceShadesThemeObject => {
     const getPresetToken = preset
       ? createTokenGetterForPreset(preset)
@@ -182,7 +186,7 @@ export function useSurfaceShades() {
   };
 
   const getInvertedSurfaceShades = (
-    preset?: Preset,
+    preset?: Preset
   ): SurfaceShadesThemeObject => {
     const getColorToken = preset
       ? createTokenGetterForPreset(preset)

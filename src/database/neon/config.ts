@@ -3,7 +3,7 @@ export function getNeonDatabaseUrl(): string {
 
   if (!databaseUrl) {
     throw new Error(
-      "NEON_DATABASE_URL is not defined in the environment variables.",
+      "NEON_DATABASE_URL is not defined in the environment variables."
     );
   }
 
