@@ -5,7 +5,6 @@ import { Label } from "@/components/ui/label";
 import { useTokens } from "@/hooks/use-tokens";
 import { cn } from "@/lib/utils";
 import { colorTokenGroups } from "@/config/color-tokens";
-import { Palette } from "lucide-react";
 import { ControlSection } from "./customizer-controls";
 import { TokenColorPicker } from "./token-color-picker";
 
