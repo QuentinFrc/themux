@@ -1,11 +1,11 @@
-import { useContrastChecker } from "@/hooks/use-contrast-checker";
-import { useThemeConfig } from "@/hooks/use-theme-config";
-import { cn } from "@/lib/utils";
-import { ThemeMode, ThemeProperties } from "@/types/theme";
-import { getOptimalForegroundColor } from "@/utils/colors";
 import { AlertTriangle, Check, Contrast } from "lucide-react";
 import { useTheme } from "next-themes";
 import React, { useState } from "react";
+import { useContrastChecker } from "@/hooks/use-contrast-checker";
+import { useThemeConfig } from "@/hooks/use-theme-config";
+import { cn } from "@/lib/utils";
+import type { ThemeMode, ThemeProperties } from "@/types/theme";
+import { getOptimalForegroundColor } from "@/utils/colors";
 import { ExternalLink } from "../external-link";
 import { ModeSwitcher } from "../mode-switcher";
 import { Badge } from "../ui/badge";
@@ -166,21 +166,20 @@ export function ContrastChecker({
         category: "functional",
       },
     ],
-    [currentStyles],
+    [currentStyles]
   );
   const validColorPairsToCheck = colorPairsToCheck.filter(
     (pair): pair is ColorPair & { foreground: string; background: string } =>
-      !!pair.foreground && !!pair.background,
+      !!pair.foreground && !!pair.background
   );
 
   const contrastResults = useContrastChecker(validColorPairsToCheck);
 
-  const getContrastResult = (pairId: string) => {
-    return contrastResults?.find((res) => res.id === pairId);
-  };
+  const getContrastResult = (pairId: string) =>
+    contrastResults?.find((res) => res.id === pairId);
 
   const totalIssues = contrastResults?.filter(
-    (result) => result.contrastRatio < MIN_CONTRAST_RATIO,
+    (result) => result.contrastRatio < MIN_CONTRAST_RATIO
   ).length;
 
   const filteredPairs =
@@ -213,19 +212,19 @@ export function ContrastChecker({
       <Drawer>
         <DrawerTrigger asChild>
           <Button
+            className={cn("flex cursor-pointer md:hidden", className)}
             size="sm"
             variant="ghost"
-            className={cn("flex cursor-pointer md:hidden", className)}
             {...props}
           >
             <Contrast />
-            <span className="hidden @xl:inline-flex">Contrast</span>
+            <span className="@xl:inline-flex hidden">Contrast</span>
             <span className="sr-only">Check constrast</span>
           </Button>
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
-            <DrawerTitle className="leading-none font-semibold tracking-tight">
+            <DrawerTitle className="font-semibold leading-none tracking-tight">
               Contrast checker
             </DrawerTitle>
 
@@ -233,9 +232,9 @@ export function ContrastChecker({
               WCAG 2.0 AA requires a contrast ratio of at least{" "}
               {MIN_CONTRAST_RATIO}:1{" • "}
               <ExternalLink
-                showIcon
-                href="https://www.w3.org/TR/WCAG21/"
                 className="text-primary"
+                href="https://www.w3.org/TR/WCAG21/"
+                showIcon
               >
                 Learn more
               </ExternalLink>
@@ -250,9 +249,9 @@ export function ContrastChecker({
           </div>
 
           <ContrastCheckerResults
-            groupedPairs={groupedPairs}
-            getContrastResult={getContrastResult}
             className="max-h-[450px]"
+            getContrastResult={getContrastResult}
+            groupedPairs={groupedPairs}
           />
         </DrawerContent>
       </Drawer>
@@ -261,29 +260,29 @@ export function ContrastChecker({
       <Dialog>
         <DialogTrigger asChild>
           <Button
+            className={cn("hidden cursor-pointer md:flex", className)}
             size="sm"
             variant="ghost"
-            className={cn("hidden cursor-pointer md:flex", className)}
             {...props}
           >
             <Contrast />
-            <span className="hidden @xl:inline-flex">Contrast</span>
+            <span className="@xl:inline-flex hidden">Contrast</span>
             <span className="sr-only">Check constrast</span>
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="bg-background min-h-[400px] space-y-2 overflow-hidden rounded-lg outline-none sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl">
+        <DialogContent className="min-h-[400px] space-y-2 overflow-hidden rounded-lg bg-background outline-none sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl">
           <DialogHeader>
-            <DialogTitle className="leading-none font-semibold tracking-tight">
+            <DialogTitle className="font-semibold leading-none tracking-tight">
               Contrast checker
             </DialogTitle>
             <DialogDescription className="text-muted-foreground text-xs">
               WCAG 2.0 AA requires a contrast ratio of at least{" "}
               {MIN_CONTRAST_RATIO}:1{" • "}
               <ExternalLink
-                showIcon
-                href="https://www.w3.org/TR/WCAG21/"
                 className="text-primary"
+                href="https://www.w3.org/TR/WCAG21/"
+                showIcon
               >
                 Learn more
               </ExternalLink>
@@ -297,8 +296,8 @@ export function ContrastChecker({
           />
 
           <ContrastCheckerResults
-            groupedPairs={groupedPairs}
             getContrastResult={getContrastResult}
+            groupedPairs={groupedPairs}
           />
         </DialogContent>
       </Dialog>
@@ -318,29 +317,29 @@ function ActionButtons({
   return (
     <div className="flex flex-wrap items-center gap-2">
       <Button
-        size="sm"
-        onClick={() => setFilter("all")}
-        variant={filter === "all" ? "default" : "ghost"}
         className={cn(
           "ring transition-colors",
           filter === "all"
             ? "ring-transparent"
-            : "ring-muted-foreground text-muted-foreground",
+            : "text-muted-foreground ring-muted-foreground"
         )}
+        onClick={() => setFilter("all")}
+        size="sm"
+        variant={filter === "all" ? "default" : "ghost"}
       >
         All
       </Button>
       <Button
-        size="sm"
-        onClick={() => setFilter("issues")}
-        variant={filter === "issues" ? "default" : "ghost"}
         className={cn(
           "ring transition-colors",
           filter === "issues"
             ? "ring-transparent"
-            : "ring-muted-foreground text-muted-foreground",
+            : "text-muted-foreground ring-muted-foreground"
         )}
         disabled={totalIssues === 0}
+        onClick={() => setFilter("issues")}
+        size="sm"
+        variant={filter === "issues" ? "default" : "ghost"}
       >
         <AlertTriangle className={cn("mr-1 h-3 w-3")} />
         Issues ({totalIssues})
@@ -364,16 +363,16 @@ function ContrastCheckerResults({
   return (
     <div
       className={cn(
-        "bg-card relative h-[500px] w-full overflow-hidden rounded-lg border shadow",
-        className,
+        "relative h-[500px] w-full overflow-hidden rounded-lg border bg-card shadow",
+        className
       )}
     >
       <ScrollArea className="h-full">
         <div className="space-y-6 p-4">
           {groupedPairs.map((group) => (
-            <div key={group.category} className="space-y-4">
+            <div className="space-y-4" key={group.category}>
               <div className="flex items-center gap-2">
-                <h2 className="text-md font-semibold">{group.label}</h2>
+                <h2 className="font-semibold text-md">{group.label}</h2>
                 <Separator className="flex-1" />
               </div>
 
@@ -388,18 +387,18 @@ function ContrastCheckerResults({
 
                   return (
                     <Card
-                      key={pair.id}
                       className={cn(
                         "overflow-hidden p-0 transition-all duration-200",
-                        !isValid && "border-dashed",
+                        !isValid && "border-dashed"
                       )}
+                      key={pair.id}
                     >
                       <CardContent className="p-0">
-                        <div className="bg-background flex items-center justify-between p-4 py-2">
+                        <div className="flex items-center justify-between bg-background p-4 py-2">
                           <h3
                             className={cn(
-                              "flex items-center text-sm font-medium",
-                              !isValid && "text-destructive",
+                              "flex items-center font-medium text-sm",
+                              !isValid && "text-destructive"
                             )}
                           >
                             {pair.label}
@@ -408,13 +407,13 @@ function ContrastCheckerResults({
                             )}
                           </h3>
                           <Badge
-                            variant={isValid ? "default" : "destructive"}
                             className={cn(
                               "flex items-center gap-1 text-xs",
                               isValid
                                 ? "bg-muted text-muted-foreground"
-                                : "bg-destructive text-white",
+                                : "bg-destructive text-white"
                             )}
+                            variant={isValid ? "default" : "destructive"}
                           >
                             {isValid ? (
                               <>
@@ -436,16 +435,16 @@ function ContrastCheckerResults({
                           <div className="flex w-full flex-1 flex-col gap-3">
                             <div className="flex w-full items-center gap-3">
                               <div
+                                className="h-10 w-10 flex-shrink-0 rounded-md border"
                                 style={{
                                   backgroundColor: pair.background ?? "#000000",
                                 }}
-                                className="h-10 w-10 flex-shrink-0 rounded-md border"
                               />
                               <div className="flex flex-col">
-                                <span className="text-xs font-medium">
+                                <span className="font-medium text-xs">
                                   Background
                                 </span>
-                                <span className="text-muted-foreground line-clamp-1 font-mono text-xs">
+                                <span className="line-clamp-1 font-mono text-muted-foreground text-xs">
                                   {pair.background}
                                 </span>
                               </div>
@@ -453,16 +452,16 @@ function ContrastCheckerResults({
 
                             <div className="flex w-full items-center gap-3">
                               <div
+                                className="h-10 w-10 flex-shrink-0 rounded-md border"
                                 style={{
                                   backgroundColor: pair.foreground ?? "#ffffff",
                                 }}
-                                className="h-10 w-10 flex-shrink-0 rounded-md border"
                               />
                               <div className="flex flex-col">
-                                <span className="text-xs font-medium">
+                                <span className="font-medium text-xs">
                                   Foreground
                                 </span>
-                                <span className="text-muted-foreground line-clamp-1 font-mono text-xs">
+                                <span className="line-clamp-1 font-mono text-muted-foreground text-xs">
                                   {pair.foreground}
                                 </span>
                               </div>
@@ -470,22 +469,22 @@ function ContrastCheckerResults({
                           </div>
 
                           <div
+                            className="flex h-full min-h-[100px] flex-1 items-center justify-center overflow-hidden rounded-lg border"
                             style={{
                               backgroundColor: pair.background ?? "transparent",
                             }}
-                            className="flex h-full min-h-[100px] flex-1 items-center justify-center overflow-hidden rounded-lg border"
                           >
                             {pair.foreground && pair.background ? (
                               <div className="flex h-full flex-col items-center gap-2 p-2 text-center">
                                 <p
+                                  className="font-bold text-4xl tracking-wider"
                                   style={{ color: pair.foreground }}
-                                  className="text-4xl font-bold tracking-wider"
                                 >
                                   Aa
                                 </p>
                                 <p
+                                  className="font-medium text-sm"
                                   style={{ color: pair.foreground }}
-                                  className="text-sm font-medium"
                                 >
                                   Sample Text
                                 </p>
@@ -496,7 +495,7 @@ function ContrastCheckerResults({
                                 style={{
                                   "--foreground": getOptimalForegroundColor(
                                     pair.background ?? "#000000",
-                                    pair.foreground ?? "#ffffff",
+                                    pair.foreground ?? "#ffffff"
                                   ),
                                 }}
                               >

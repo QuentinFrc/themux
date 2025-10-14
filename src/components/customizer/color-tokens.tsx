@@ -1,9 +1,9 @@
 "use client";
 
+import { Palette } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { useTokens } from "@/hooks/use-tokens";
 import { cn } from "@/lib/utils";
-import { Palette } from "lucide-react";
 import { ControlSection } from "./customizer-controls";
 import { TokenColorPicker } from "./token-color-picker";
 
@@ -25,143 +25,143 @@ function TokensList({ className }: React.ComponentProps<"div">) {
 
   return (
     <div className={cn("space-y-2", className)}>
-      <ControlSection title="Base colors" id="base-colors" expanded>
+      <ControlSection expanded id="base-colors" title="Base colors">
         <TokenColorPicker
-          colorProperty="background"
           color={getColorToken({
             property: "background",
           })}
+          colorProperty="background"
           setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
         <TokenColorPicker
-          colorProperty="foreground"
           color={getColorToken({
             property: "foreground",
           })}
+          colorProperty="foreground"
           setColorTokens={setColorToken}
           syncModes={false}
         />
       </ControlSection>
 
-      <ControlSection title="Primary colors" id="primary-colors" expanded>
+      <ControlSection expanded id="primary-colors" title="Primary colors">
         <TokenColorPicker
-          colorProperty="primary"
           color={getColorToken({
             property: "primary",
           })}
+          colorProperty="primary"
           setColorTokens={setColorTokenWithForeground}
         />
         <TokenColorPicker
-          colorProperty="primary-foreground"
           color={getColorToken({
             property: "primary-foreground",
           })}
+          colorProperty="primary-foreground"
           setColorTokens={setColorToken}
           syncModes={false}
         />
       </ControlSection>
 
-      <ControlSection title="Secondary colors" id="secondary-colors">
+      <ControlSection id="secondary-colors" title="Secondary colors">
         <TokenColorPicker
-          colorProperty="secondary"
           color={getColorToken({
             property: "secondary",
           })}
+          colorProperty="secondary"
           setColorTokens={setColorTokenWithForeground}
         />
         <TokenColorPicker
-          colorProperty="secondary-foreground"
           color={getColorToken({
             property: "secondary-foreground",
           })}
+          colorProperty="secondary-foreground"
           setColorTokens={setColorToken}
           syncModes={false}
         />
       </ControlSection>
 
-      <ControlSection title="Card colors" id="card-colors">
+      <ControlSection id="card-colors" title="Card colors">
         <TokenColorPicker
-          colorProperty="card"
           color={getColorToken({
             property: "card",
           })}
+          colorProperty="card"
           setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
         <TokenColorPicker
-          colorProperty="card-foreground"
           color={getColorToken({
             property: "card-foreground",
           })}
+          colorProperty="card-foreground"
           setColorTokens={setColorToken}
           syncModes={false}
         />
       </ControlSection>
 
-      <ControlSection title="Popover colors" id="popover-colors">
+      <ControlSection id="popover-colors" title="Popover colors">
         <TokenColorPicker
-          colorProperty="popover"
           color={getColorToken({
             property: "popover",
           })}
+          colorProperty="popover"
           setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
         <TokenColorPicker
-          colorProperty="popover-foreground"
           color={getColorToken({
             property: "popover-foreground",
           })}
+          colorProperty="popover-foreground"
           setColorTokens={setColorToken}
           syncModes={false}
         />
       </ControlSection>
 
-      <ControlSection title="Muted colors" id="muted-colors">
+      <ControlSection id="muted-colors" title="Muted colors">
         <TokenColorPicker
-          colorProperty="muted"
           color={getColorToken({
             property: "muted",
           })}
+          colorProperty="muted"
           setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
         <TokenColorPicker
-          colorProperty="muted-foreground"
           color={getColorToken({
             property: "muted-foreground",
           })}
+          colorProperty="muted-foreground"
           setColorTokens={setColorToken}
           syncModes={false}
         />
       </ControlSection>
 
-      <ControlSection title="Accent colors" id="accent-colors">
+      <ControlSection id="accent-colors" title="Accent colors">
         <TokenColorPicker
-          colorProperty="accent"
           color={getColorToken({
             property: "accent",
           })}
+          colorProperty="accent"
           setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
         <TokenColorPicker
-          colorProperty="accent-foreground"
           color={getColorToken({
             property: "accent-foreground",
           })}
+          colorProperty="accent-foreground"
           setColorTokens={setColorToken}
           syncModes={false}
         />
       </ControlSection>
 
-      <ControlSection title="Destructive colors" id="destructive-colors">
+      <ControlSection id="destructive-colors" title="Destructive colors">
         <TokenColorPicker
-          colorProperty="destructive"
           color={getColorToken({
             property: "destructive",
           })}
+          colorProperty="destructive"
           setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
@@ -169,10 +169,10 @@ function TokensList({ className }: React.ComponentProps<"div">) {
           property: "destructive-foreground",
         }) && (
           <TokenColorPicker
-            colorProperty="destructive-foreground"
             color={getColorToken({
               property: "destructive-foreground",
             })}
+            colorProperty="destructive-foreground"
             setColorTokens={setColorToken}
             syncModes={false}
           />
@@ -180,133 +180,133 @@ function TokensList({ className }: React.ComponentProps<"div">) {
       </ControlSection>
 
       <ControlSection
-        title="Border/Input/Ring colors"
         id="border-input-ring-colors"
+        title="Border/Input/Ring colors"
       >
         <TokenColorPicker
-          colorProperty="border"
           color={getColorToken({
             property: "border",
           })}
+          colorProperty="border"
           setColorTokens={setColorToken}
           syncModes={false}
         />
         <TokenColorPicker
-          colorProperty="input"
           color={getColorToken({
             property: "input",
           })}
+          colorProperty="input"
           setColorTokens={setColorToken}
           syncModes={false}
         />
         <TokenColorPicker
-          colorProperty="ring"
           color={getColorToken({
             property: "ring",
           })}
+          colorProperty="ring"
           setColorTokens={setColorToken}
         />
       </ControlSection>
 
-      <ControlSection title="Chart colors" id="chart-colors">
+      <ControlSection id="chart-colors" title="Chart colors">
         <TokenColorPicker
-          colorProperty="chart-1"
           color={getColorToken({
             property: "chart-1",
           })}
+          colorProperty="chart-1"
           setColorTokens={setColorToken}
         />
         <TokenColorPicker
-          colorProperty="chart-2"
           color={getColorToken({
             property: "chart-2",
           })}
+          colorProperty="chart-2"
           setColorTokens={setColorToken}
         />
         <TokenColorPicker
-          colorProperty="chart-3"
           color={getColorToken({
             property: "chart-3",
           })}
+          colorProperty="chart-3"
           setColorTokens={setColorToken}
         />
         <TokenColorPicker
-          colorProperty="chart-4"
           color={getColorToken({
             property: "chart-4",
           })}
+          colorProperty="chart-4"
           setColorTokens={setColorToken}
         />
         <TokenColorPicker
-          colorProperty="chart-5"
           color={getColorToken({
             property: "chart-5",
           })}
+          colorProperty="chart-5"
           setColorTokens={setColorToken}
         />
       </ControlSection>
 
-      <ControlSection title="Sidebar colors" id="sidebar-colors">
+      <ControlSection id="sidebar-colors" title="Sidebar colors">
         <TokenColorPicker
-          colorProperty="sidebar"
           color={getColorToken({
             property: "sidebar",
           })}
+          colorProperty="sidebar"
           setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
         <TokenColorPicker
-          colorProperty="sidebar-foreground"
           color={getColorToken({
             property: "sidebar-foreground",
           })}
+          colorProperty="sidebar-foreground"
           setColorTokens={setColorToken}
           syncModes={false}
         />
         <TokenColorPicker
-          colorProperty="sidebar-primary"
           color={getColorToken({
             property: "sidebar-primary",
           })}
+          colorProperty="sidebar-primary"
           setColorTokens={setColorTokenWithForeground}
         />
         <TokenColorPicker
-          colorProperty="sidebar-primary-foreground"
           color={getColorToken({
             property: "sidebar-primary-foreground",
           })}
+          colorProperty="sidebar-primary-foreground"
           setColorTokens={setColorToken}
           syncModes={false}
         />
         <TokenColorPicker
-          colorProperty="sidebar-accent"
           color={getColorToken({
             property: "sidebar-accent",
           })}
+          colorProperty="sidebar-accent"
           setColorTokens={setColorTokenWithForeground}
           syncModes={false}
         />
         <TokenColorPicker
-          colorProperty="sidebar-accent-foreground"
           color={getColorToken({
             property: "sidebar-accent-foreground",
           })}
+          colorProperty="sidebar-accent-foreground"
           setColorTokens={setColorToken}
           syncModes={false}
         />
         <TokenColorPicker
-          colorProperty="sidebar-border"
           color={getColorToken({
             property: "sidebar-border",
           })}
+          colorProperty="sidebar-border"
           setColorTokens={setColorToken}
           syncModes={false}
         />
         <TokenColorPicker
-          colorProperty="sidebar-ring"
           color={getColorToken({
             property: "sidebar-ring",
           })}
+          colorProperty="sidebar-ring"
           setColorTokens={setColorToken}
         />
       </ControlSection>

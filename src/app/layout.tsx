@@ -60,7 +60,7 @@ export default async function RootLayout({
       </head>
       <ReactScan options={{ enabled: true }} />
 
-      <body className={cn(`antialiased`)}>
+      <body className={cn("antialiased")}>
         <Providers>
           <Suspense>
             {children}

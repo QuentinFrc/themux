@@ -1,15 +1,15 @@
 "use client";
 
+import React, { type ComponentProps } from "react";
 import { useTokens } from "@/hooks/use-tokens";
-import { TAILWIND_PALETTE_V4, TailwindShadeKey } from "@/lib/palettes";
+import { TAILWIND_PALETTE_V4, type TailwindShadeKey } from "@/lib/palettes";
 import { cn } from "@/lib/utils";
 import { convertToOklch } from "@/utils/color-converter";
-import React, { ComponentProps } from "react";
 import { TooltipWrapper } from "../tooltip-wrapper";
 import { Color } from "./color";
 
 export const MemoizedTailwindV4ColorPalette = React.memo(
-  TailwindV4ColorPalette,
+  TailwindV4ColorPalette
 );
 function TailwindV4ColorPalette({
   currentColor,
@@ -33,7 +33,7 @@ function TailwindV4ColorPalette({
     <div
       className={cn(
         "flex flex-wrap content-start items-start gap-2",
-        className,
+        className
       )}
       {...props}
     >
@@ -42,12 +42,12 @@ function TailwindV4ColorPalette({
         const isActive = currentColor === color;
 
         return (
-          <TooltipWrapper label={`${key}-${shade}`} key={key} asChild>
+          <TooltipWrapper asChild key={key} label={`${key}-${shade}`}>
             <Color
+              className="ring ring-border"
               color={color}
               isActive={isActive}
               onClick={() => handleColorChange(color)}
-              className="ring-border ring"
             />
           </TooltipWrapper>
         );

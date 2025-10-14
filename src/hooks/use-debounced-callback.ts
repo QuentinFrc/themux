@@ -1,8 +1,8 @@
-import { useRef, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 export function useDebouncedCallback<A extends unknown[]>(
   callback: (...args: A) => void,
-  wait: number,
+  wait: number
 ) {
   // Use a ref to store the latest callback.
   const callbackRef = useRef(callback);
@@ -34,7 +34,7 @@ export function useDebouncedCallback<A extends unknown[]>(
         callbackRef.current(...args);
       }, wait);
     },
-    [wait], // Dependency is only the wait time
+    [wait] // Dependency is only the wait time
   );
 
   return debouncedCallback;

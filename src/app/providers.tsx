@@ -1,6 +1,6 @@
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { ThemeProvider } from "@/components/theme-provider";
-import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -9,8 +9,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
-          enableSystem
           disableTransitionOnChange
+          enableSystem
         >
           {children}
         </ThemeProvider>

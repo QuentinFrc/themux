@@ -1,11 +1,9 @@
 "use client";
 
-import * as React from "react";
 import { addDays, format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { DateRange } from "react-day-picker";
-
-import { cn } from "@/lib/utils";
+import * as React from "react";
+import type { DateRange } from "react-day-picker";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -13,6 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 export function DatePickerDemo() {
   return (
@@ -30,22 +29,22 @@ function DatePickerSimple() {
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant={"outline"}
           className={cn(
             "min-w-[200px] justify-start px-2 font-normal",
-            !date && "text-muted-foreground",
+            !date && "text-muted-foreground"
           )}
+          variant={"outline"}
         >
           <CalendarIcon className="text-muted-foreground" />
           {date ? format(date, "PPP") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent align="start" className="w-auto p-0">
         <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
           initialFocus
+          mode="single"
+          onSelect={setDate}
+          selected={date}
         />
       </PopoverContent>
     </Popover>
@@ -62,12 +61,12 @@ function DatePickerWithRange() {
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          id="date"
-          variant={"outline"}
           className={cn(
             "w-fit justify-start px-2 font-normal",
-            !date && "text-muted-foreground",
+            !date && "text-muted-foreground"
           )}
+          id="date"
+          variant={"outline"}
         >
           <CalendarIcon className="text-muted-foreground" />
           {date?.from ? (
@@ -84,14 +83,14 @@ function DatePickerWithRange() {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent align="start" className="w-auto p-0">
         <Calendar
+          defaultMonth={date?.from}
           initialFocus
           mode="range"
-          defaultMonth={date?.from}
-          selected={date}
-          onSelect={setDate}
           numberOfMonths={2}
+          onSelect={setDate}
+          selected={date}
         />
       </PopoverContent>
     </Popover>

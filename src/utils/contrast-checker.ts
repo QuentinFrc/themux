@@ -38,7 +38,7 @@ export function getContrastRatio(color1: string, color2: string): string {
   } catch (error) {
     console.error(
       `Error calculating contrast between ${color1} and ${color2}:`,
-      error,
+      error
     );
     return "1.00"; // Fallback value indicating low contrast
   }

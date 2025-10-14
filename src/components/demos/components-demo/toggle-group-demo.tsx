@@ -6,64 +6,64 @@ export function ToggleGroupDemo() {
   return (
     <div className="flex flex-wrap items-start justify-center gap-4">
       <ToggleGroup type="multiple">
-        <ToggleGroupItem value="bold" aria-label="Toggle bold">
+        <ToggleGroupItem aria-label="Toggle bold" value="bold">
           <BoldIcon />
         </ToggleGroupItem>
-        <ToggleGroupItem value="italic" aria-label="Toggle italic">
+        <ToggleGroupItem aria-label="Toggle italic" value="italic">
           <ItalicIcon />
         </ToggleGroupItem>
         <ToggleGroupItem
-          value="strikethrough"
           aria-label="Toggle strikethrough"
+          value="strikethrough"
         >
           <UnderlineIcon />
         </ToggleGroupItem>
       </ToggleGroup>
       <ToggleGroup
-        variant="outline"
-        type="single"
-        defaultValue="all"
         className="*:data-[slot=toggle-group-item]:w-20"
+        defaultValue="all"
+        type="single"
+        variant="outline"
       >
-        <ToggleGroupItem value="all" aria-label="Toggle all">
+        <ToggleGroupItem aria-label="Toggle all" value="all">
           All
         </ToggleGroupItem>
-        <ToggleGroupItem value="missed" aria-label="Toggle missed">
+        <ToggleGroupItem aria-label="Toggle missed" value="missed">
           Missed
         </ToggleGroupItem>
       </ToggleGroup>
 
       <ToggleGroup
-        variant="outline"
-        type="single"
-        size="sm"
-        defaultValue="last-24-hours"
         className="*:data-[slot=toggle-group-item]:px-3"
+        defaultValue="last-24-hours"
+        size="sm"
+        type="single"
+        variant="outline"
       >
         <ToggleGroupItem
-          value="last-24-hours"
           aria-label="Toggle last 24 hours"
+          value="last-24-hours"
         >
           Last 24 hours
         </ToggleGroupItem>
-        <ToggleGroupItem value="last-7-days" aria-label="Toggle last 7 days">
+        <ToggleGroupItem aria-label="Toggle last 7 days" value="last-7-days">
           Last 7 days
         </ToggleGroupItem>
       </ToggleGroup>
 
       <ToggleGroup
-        type="single"
-        size="sm"
-        defaultValue="last-24-hours"
         className="*:data-[slot=toggle-group-item]:px-3"
+        defaultValue="last-24-hours"
+        size="sm"
+        type="single"
       >
         <ToggleGroupItem
-          value="last-24-hours"
           aria-label="Toggle last 24 hours"
+          value="last-24-hours"
         >
           Last 24 hours
         </ToggleGroupItem>
-        <ToggleGroupItem value="last-7-days" aria-label="Toggle last 7 days">
+        <ToggleGroupItem aria-label="Toggle last 7 days" value="last-7-days">
           Last 7 days
         </ToggleGroupItem>
       </ToggleGroup>

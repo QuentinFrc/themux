@@ -9,15 +9,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ChartConfig, ChartContainer } from "@/components/ui/chart";
+import { type ChartConfig, ChartContainer } from "@/components/ui/chart";
 
 const data = [
   {
-    revenue: 10400,
+    revenue: 10_400,
     subscription: 40,
   },
   {
-    revenue: 14405,
+    revenue: 14_405,
     subscription: 90,
   },
   {
@@ -37,11 +37,11 @@ const data = [
     subscription: 239,
   },
   {
-    revenue: 11244,
+    revenue: 11_244,
     subscription: 78,
   },
   {
-    revenue: 26475,
+    revenue: 26_475,
     subscription: 89,
   },
 ];
@@ -59,7 +59,7 @@ const chartConfig = {
 
 export function CardsStats() {
   return (
-    <div className="grid gap-4 @xl:grid-cols-2 @5xl:grid-cols-1 @7xl:grid-cols-2">
+    <div className="grid @5xl:grid-cols-1 @7xl:grid-cols-2 @xl:grid-cols-2 gap-4">
       <Card>
         <CardHeader>
           <CardDescription>Total Revenue</CardDescription>
@@ -67,7 +67,7 @@ export function CardsStats() {
           <CardDescription>+20.1% from last month</CardDescription>
         </CardHeader>
         <CardContent className="pb-0">
-          <ChartContainer config={chartConfig} className="h-[120px] w-full">
+          <ChartContainer className="h-[120px] w-full" config={chartConfig}>
             <LineChart
               data={data}
               margin={{
@@ -78,19 +78,19 @@ export function CardsStats() {
               }}
             >
               <Line
-                type="monotone"
-                strokeWidth={2}
-                dataKey="revenue"
-                stroke="var(--color-revenue)"
                 activeDot={{
                   r: 6,
                 }}
+                dataKey="revenue"
+                stroke="var(--color-revenue)"
+                strokeWidth={2}
+                type="monotone"
               />
             </LineChart>
           </ChartContainer>
         </CardContent>
       </Card>
-      <Card className="relative flex flex-col pb-0 @5xl:hidden @7xl:flex">
+      <Card className="relative @7xl:flex flex @5xl:hidden flex-col pb-0">
         <CardHeader>
           <CardDescription>Subscriptions</CardDescription>
           <CardTitle className="text-3xl">+2,350</CardTitle>
@@ -98,16 +98,16 @@ export function CardsStats() {
         </CardHeader>
         <CardContent className="relative flex flex-1 items-end p-0">
           <ChartContainer
-            config={chartConfig}
             className="relative size-full h-[120px]"
+            config={chartConfig}
           >
             <AreaChart
+              className="mt-auto size-fit"
               data={data}
               margin={{
                 left: 0,
                 right: 0,
               }}
-              className="mt-auto size-fit"
             >
               <Area
                 dataKey="subscription"

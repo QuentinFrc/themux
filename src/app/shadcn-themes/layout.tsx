@@ -1,5 +1,5 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Metadata } from "next";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 

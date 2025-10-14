@@ -1,7 +1,7 @@
 "use client";
 
+import type React from "react";
 import { useMounted } from "@/hooks/use-mounted";
-import React from "react";
 
 export function ClientOnly({
   children,

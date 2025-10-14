@@ -19,7 +19,7 @@ import { AccountSwitcher } from "@/components/demos/mail-demo/components/account
 import { MailDisplay } from "@/components/demos/mail-demo/components/mail-display";
 import { MailList } from "@/components/demos/mail-demo/components/mail-list";
 import { Nav } from "@/components/demos/mail-demo/components/nav";
-import { type Mail } from "@/components/demos/mail-demo/data";
+import type { Mail } from "@/components/demos/mail-demo/data";
 import { useMail } from "@/components/demos/mail-demo/use-mail";
 import { Input } from "@/components/ui/input";
 import {
@@ -58,44 +58,44 @@ export function Mail({
   return (
     <TooltipProvider delayDuration={0}>
       <ResizablePanelGroup
+        className="h-full max-h-[94svh] items-stretch"
         direction="horizontal"
         onLayout={(sizes: number[]) => {
           document.cookie = `react-resizable-panels:layout:mail=${JSON.stringify(
-            sizes,
+            sizes
           )}`;
         }}
-        className="h-full max-h-[94svh] items-stretch"
       >
         <ResizablePanel
-          defaultSize={defaultLayout[0]}
+          className={cn(
+            isCollapsed &&
+              "min-w-[50px] transition-all duration-300 ease-in-out"
+          )}
           collapsedSize={navCollapsedSize}
           collapsible={true}
-          minSize={15}
+          defaultSize={defaultLayout[0]}
           maxSize={20}
+          minSize={15}
           onCollapse={() => {
             setIsCollapsed(true);
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              true,
+              true
             )}`;
           }}
           onResize={() => {
             setIsCollapsed(false);
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              false,
+              false
             )}`;
           }}
-          className={cn(
-            isCollapsed &&
-              "min-w-[50px] transition-all duration-300 ease-in-out",
-          )}
         >
           <div
             className={cn(
               "flex h-[52px] items-center justify-center",
-              isCollapsed ? "h-[52px]" : "px-2",
+              isCollapsed ? "h-[52px]" : "px-2"
             )}
           >
-            <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
+            <AccountSwitcher accounts={accounts} isCollapsed={isCollapsed} />
           </div>
           <Separator />
           <Nav
@@ -178,38 +178,38 @@ export function Mail({
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel
+          className="flex flex-1 flex-col"
           defaultSize={defaultLayout[1]}
           minSize={30}
-          className="flex flex-1 flex-col"
         >
           <Tabs
-            defaultValue="all"
             className="flex flex-1 flex-col overflow-hidden"
+            defaultValue="all"
           >
             <div className="mt-2 flex items-center px-4">
-              <h1 className="text-xl font-bold">Inbox</h1>
+              <h1 className="font-bold text-xl">Inbox</h1>
               <TabsList className="ml-auto">
                 <TabsTrigger value="all">All mail</TabsTrigger>
                 <TabsTrigger value="unread">Unread</TabsTrigger>
               </TabsList>
             </div>
             <Separator />
-            <div className="bg-background/95 supports-[backdrop-filter]:bg-background/60 p-4 backdrop-blur">
+            <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <form>
                 <div className="relative">
-                  <Search className="text-muted-foreground absolute top-2.5 left-2 h-4 w-4" />
-                  <Input placeholder="Search" className="pl-8" />
+                  <Search className="absolute top-2.5 left-2 h-4 w-4 text-muted-foreground" />
+                  <Input className="pl-8" placeholder="Search" />
                 </div>
               </form>
             </div>
 
             <ScrollArea className="flex flex-col overflow-hidden">
               <div className="flex h-full flex-col gap-2 p-4 pt-0">
-                <TabsContent value="all" className="m-0 space-y-2">
+                <TabsContent className="m-0 space-y-2" value="all">
                   <MailList items={mails} />
                 </TabsContent>
 
-                <TabsContent value="unread" className="m-0 space-y-2">
+                <TabsContent className="m-0 space-y-2" value="unread">
                   <MailList items={mails.filter((item) => !item.read)} />
                 </TabsContent>
               </div>
@@ -218,9 +218,9 @@ export function Mail({
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel
+          className="flex flex-col"
           defaultSize={defaultLayout[2]}
           minSize={30}
-          className="flex flex-col"
         >
           <MailDisplay
             mail={mails.find((item) => item.id === mail.selected) || null}

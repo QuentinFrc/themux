@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { BathIcon, BedIcon, LandPlotIcon } from "lucide-react";
+import Image from "next/image";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -32,36 +32,36 @@ export function CardDemo() {
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
-                  type="email"
                   placeholder="m@example.com"
                   required
+                  type="email"
                 />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                   <a
-                    href="#"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    href="#"
                   >
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input id="password" required type="password" />
               </div>
             </div>
           </form>
         </CardContent>
         <CardFooter className="flex-col gap-2">
-          <Button type="submit" className="w-full">
+          <Button className="w-full" type="submit">
             Login
           </Button>
-          <Button variant="outline" className="w-full">
+          <Button className="w-full" variant="outline">
             Login with Google
           </Button>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}
-            <a href="#" className="underline underline-offset-4">
+            <a className="underline underline-offset-4" href="#">
               Sign up
             </a>
           </div>
@@ -88,19 +88,19 @@ export function CardDemo() {
           </ol>
         </CardContent>
         <CardFooter>
-          <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+          <div className="-space-x-2 flex *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background *:data-[slot=avatar]:grayscale">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarImage alt="@shadcn" src="https://github.com/shadcn.png" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <Avatar>
-              <AvatarImage src="https://github.com/leerob.png" alt="@leerob" />
+              <AvatarImage alt="@leerob" src="https://github.com/leerob.png" />
               <AvatarFallback>LR</AvatarFallback>
             </Avatar>
             <Avatar>
               <AvatarImage
-                src="https://github.com/evilrabbit.png"
                 alt="@evilrabbit"
+                src="https://github.com/evilrabbit.png"
               />
               <AvatarFallback>ER</AvatarFallback>
             </Avatar>
@@ -114,11 +114,11 @@ export function CardDemo() {
         </CardHeader>
         <CardContent className="px-0">
           <Image
-            src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
             alt="Photo by Drew Beamer"
             className="aspect-video size-full object-cover"
-            width={500}
             height={500}
+            src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+            width={500}
           />
         </CardContent>
         <CardFooter className="flex items-center gap-2">

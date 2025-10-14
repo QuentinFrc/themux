@@ -1,5 +1,7 @@
 "use client";
 
+import { RotateCcw, Settings } from "lucide-react";
+import type { ComponentProps } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -18,8 +20,6 @@ import {
   useShowTooltips,
   useTailwindVersion,
 } from "@/store/preferences-store";
-import { RotateCcw, Settings } from "lucide-react";
-import { ComponentProps } from "react";
 import { ScrollArea } from "../ui/scroll-area";
 import {
   Select,
@@ -53,19 +53,19 @@ export function CustomizerSettings({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="sm" className={className} {...props}>
-          <Settings /> <span className="hidden @xl:inline-flex">Settings</span>
+        <Button className={className} size="sm" variant="ghost" {...props}>
+          <Settings /> <span className="@xl:inline-flex hidden">Settings</span>
           <span className="sr-only">Settings</span>
         </Button>
       </PopoverTrigger>
 
       <PopoverContent
-        className="isolate w-72 max-w-full p-0 sm:w-auto"
         align="end"
+        className="isolate w-72 max-w-full p-0 sm:w-auto"
       >
-        <header className="text-muted-foreground/80 flex items-center justify-between px-4 py-1 text-sm font-semibold">
+        <header className="flex items-center justify-between px-4 py-1 font-semibold text-muted-foreground/80 text-sm">
           <span>Customizer settings</span>
-          <Button variant="ghost" onClick={resetSettings}>
+          <Button onClick={resetSettings} variant="ghost">
             <RotateCcw />
             <span className="sr-only">Reset</span>
           </Button>
@@ -75,29 +75,29 @@ export function CustomizerSettings({
 
         <ScrollArea className="flex max-h-84 flex-col">
           <section className="grid px-4 pt-2 pb-4">
-            <Label className="text-muted-foreground/80 py-1 text-xs">
+            <Label className="py-1 text-muted-foreground/80 text-xs">
               Preferences
             </Label>
             <div className="space-y-4">
               <div className="flex items-center justify-between gap-4 rounded-lg">
                 <div className="flex flex-col gap-1">
                   <span className="text-sm">Tailwind version</span>
-                  <span className="text-muted-foreground/80 hidden w-[32ch] text-xs sm:inline-flex">
+                  <span className="hidden w-[32ch] text-muted-foreground/80 text-xs sm:inline-flex">
                     For the generated CSS. Supports v3 and v4.
                   </span>
                 </div>
                 <Select
-                  value={tailwindVersion}
                   onValueChange={setTailwindVersion}
+                  value={tailwindVersion}
                 >
                   <SelectTrigger className="h-fit min-w-18 px-2 text-xs">
-                    <SelectValue placeholder="Version" className="h-fit p-0" />
+                    <SelectValue className="h-fit p-0" placeholder="Version" />
                   </SelectTrigger>
                   <SelectContent className="p-0">
-                    <SelectItem value="4" className="text-xs">
+                    <SelectItem className="text-xs" value="4">
                       v4
                     </SelectItem>
-                    <SelectItem value="3" className="text-xs">
+                    <SelectItem className="text-xs" value="3">
                       v3
                     </SelectItem>
                   </SelectContent>
@@ -107,25 +107,25 @@ export function CustomizerSettings({
               <div className="flex items-center justify-between gap-4 rounded-lg">
                 <div className="flex flex-col gap-1">
                   <span className="text-sm">Color format</span>
-                  <span className="text-muted-foreground/80 hidden w-[32ch] text-xs sm:inline-flex">
+                  <span className="hidden w-[32ch] text-muted-foreground/80 text-xs sm:inline-flex">
                     For the generated CSS. Supports oklch, hsl, rbg and hex.
                   </span>
                 </div>
-                <Select value={colorFormat} onValueChange={setColorFormat}>
+                <Select onValueChange={setColorFormat} value={colorFormat}>
                   <SelectTrigger className="h-fit min-w-18 px-2 text-xs">
-                    <SelectValue placeholder="Format" className="h-fit p-0" />
+                    <SelectValue className="h-fit p-0" placeholder="Format" />
                   </SelectTrigger>
                   <SelectContent className="p-0">
-                    <SelectItem value={"oklch"} className="text-xs">
+                    <SelectItem className="text-xs" value={"oklch"}>
                       oklch
                     </SelectItem>
-                    <SelectItem value={"hsl"} className="text-xs">
+                    <SelectItem className="text-xs" value={"hsl"}>
                       hsl
                     </SelectItem>
-                    <SelectItem value={"rgb"} className="text-xs">
+                    <SelectItem className="text-xs" value={"rgb"}>
                       rgb
                     </SelectItem>
-                    <SelectItem value={"hex"} className="text-xs">
+                    <SelectItem className="text-xs" value={"hex"}>
                       hex
                     </SelectItem>
                   </SelectContent>
@@ -135,13 +135,13 @@ export function CustomizerSettings({
               <div className="flex items-center justify-between gap-4 rounded-lg">
                 <div className="flex flex-col gap-1">
                   <span className="text-sm">Show tooltips</span>
-                  <span className="text-muted-foreground/80 hidden w-[32ch] text-xs sm:inline-flex">
+                  <span className="hidden w-[32ch] text-muted-foreground/80 text-xs sm:inline-flex">
                     Enable or disable tooltips throughout the app.
                   </span>
                 </div>
                 <Switch
-                  className="ml-auto"
                   checked={showTootips}
+                  className="ml-auto"
                   onCheckedChange={setShowTooltips}
                 />
               </div>
@@ -149,47 +149,47 @@ export function CustomizerSettings({
           </section>
 
           <section className="grid px-4 pb-4">
-            <Label className="text-muted-foreground/80 py-1 text-xs">
+            <Label className="py-1 text-muted-foreground/80 text-xs">
               Tokens
             </Label>
             <div className="space-y-4">
               <div className="flex items-center rounded-lg">
                 <div className="flex flex-col gap-1">
                   <span className="text-sm">Sync both modes</span>
-                  <span className="text-muted-foreground/80 hidden w-[32ch] text-xs sm:inline-flex">
+                  <span className="hidden w-[32ch] text-muted-foreground/80 text-xs sm:inline-flex">
                     Brand tokens will be in sync in light and dark modes.
                     Presets are always synced.
                   </span>
                 </div>
                 <Switch
-                  className="ml-auto"
                   checked={modesInSync}
+                  className="ml-auto"
                   onCheckedChange={setModesInSync}
                 />
               </div>
               <div className="flex items-center justify-between gap-4 rounded-lg">
                 <div className="flex flex-col gap-1">
                   <span className="text-sm">Show font variables</span>
-                  <span className="text-muted-foreground/80 hidden w-[32ch] text-xs sm:inline-flex">
+                  <span className="hidden w-[32ch] text-muted-foreground/80 text-xs sm:inline-flex">
                     Keep this OFF if you handle fonts separately.
                   </span>
                 </div>
                 <Switch
-                  className="ml-auto"
                   checked={showFontVars}
+                  className="ml-auto"
                   onCheckedChange={setShowFontVars}
                 />
               </div>
               <div className="flex items-center justify-between gap-4 rounded-lg">
                 <div className="flex flex-col gap-1">
                   <span className="text-sm">Show shadow variables</span>
-                  <span className="text-muted-foreground/80 hidden w-[32ch] text-xs sm:inline-flex">
+                  <span className="hidden w-[32ch] text-muted-foreground/80 text-xs sm:inline-flex">
                     Show shadow variables in the generated CSS.
                   </span>
                 </div>
                 <Switch
-                  className="ml-auto"
                   checked={showShadowVars}
+                  className="ml-auto"
                   onCheckedChange={setShowShadowsVars}
                 />
               </div>

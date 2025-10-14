@@ -1,9 +1,9 @@
-import { createThemeSnapshot } from "@/utils/theme-snapshot";
-import {
+import type {
   ThemeUpdateHandler,
   ThemeUpdatePayload,
   ThemeVersionRepository,
 } from "@/types/theme-update";
+import { createThemeSnapshot } from "@/utils/theme-snapshot";
 
 export type ThemeUpdateHandlerDependencies = {
   repository: ThemeVersionRepository;
@@ -16,13 +16,12 @@ export function createThemeUpdateHandler({
 }: ThemeUpdateHandlerDependencies): ThemeUpdateHandler {
   return async () => {
     try {
-      const snapshot = createThemeSnapshot(payload);
-      const latestVersion = await repository.getLatestThemeVersion();
-      const nextVersion = (latestVersion?.version ?? 0) + 1;
+      const snapshot =
+        payload.snapshot ?? createThemeSnapshot(payload);
 
       const record = await repository.createThemeVersion({
-        version: nextVersion,
         snapshot,
+        commit: payload.commit,
       });
 
       return {

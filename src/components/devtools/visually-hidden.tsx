@@ -1,6 +1,6 @@
 "use client";
 
-import { HTMLAttributes, useEffect, useState } from "react";
+import { type HTMLAttributes, useEffect, useState } from "react";
 
 type VisuallyHiddenProps = HTMLAttributes<HTMLSpanElement>;
 
@@ -35,7 +35,7 @@ export function VisuallyHidden({ children, ...props }: VisuallyHiddenProps) {
 
   if (forceShow) {
     return (
-      <span className="text-muted-foreground pointer-events-none">
+      <span className="pointer-events-none text-muted-foreground">
         {children}
       </span>
     );

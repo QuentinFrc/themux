@@ -13,7 +13,7 @@ export function SkeletonDemo() {
       </div>
       <div className="flex w-full flex-wrap justify-center gap-4">
         {Array.from({ length: 3 }).map((_, index) => (
-          <Card key={index} className="w-full @md:w-auto @md:min-w-sm">
+          <Card className="@md:w-auto w-full @md:min-w-sm" key={index}>
             <CardHeader>
               <Skeleton className="h-4 w-2/3" />
               <Skeleton className="h-4 w-1/2" />

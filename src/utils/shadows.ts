@@ -1,5 +1,5 @@
 import { initialThemeConfig } from "@/lib/themes";
-import {
+import type {
   ThemeMode,
   ThemeObject,
   ThemeProperties,
@@ -11,7 +11,7 @@ import { setStyleProperty } from "./set-attribute-to-element";
 export function getShadowProperty(
   themeObject: ThemeObject,
   property: ThemeProperty,
-  mode: ThemeMode,
+  mode: ThemeMode
 ) {
   return (
     themeObject[mode][property] ||
@@ -24,7 +24,7 @@ export function getShadowProperty(
 export function getShadowMap(
   themeObject: ThemeObject,
   mode: ThemeMode,
-  { varOutput } = { varOutput: false },
+  { varOutput } = { varOutput: false }
 ) {
   const styles: Partial<ThemeProperties> = {
     ...initialThemeConfig.themeObject[mode],
@@ -43,7 +43,7 @@ export function getShadowMap(
   const offsetY = styles["shadow-offset-y"];
   const blur = styles["shadow-blur"];
   const spread = styles["shadow-spread"];
-  const opacity = parseFloat(styles["shadow-opacity"]!);
+  const opacity = Number.parseFloat(styles["shadow-opacity"]!);
 
   const colorConvertedToHsl = (opacityMultiplier: number) => {
     // This is the default implementation, where the color gets embedded in the shadow
@@ -66,7 +66,8 @@ export function getShadowMap(
     const blur2 = fixedBlur; // Use the fixed blur specific to the shadow size
     // Calculate spread relative to the first layer's spread variable
     const spread2 =
-      (parseFloat(spread?.replace("px", "") ?? "0") - 1).toString() + "px";
+      (Number.parseFloat(spread?.replace("px", "") ?? "0") - 1).toString() +
+      "px";
     // Use the same color function (opacity can still be overridden by --shadow-opacity)
     const color2 = color(1.0); // Default opacity for second layer is 0.1 in examples
 
@@ -82,23 +83,23 @@ export function getShadowMap(
 
     // Two layer shadows - use base vars for layer 1, mix fixed/calculated for layer 2
     "shadow-sm": `${offsetX} ${offsetY} ${blur} ${spread} ${color(
-      1.0,
+      1.0
     )}, ${secondLayer("1px", "2px")}`,
     shadow: `${offsetX} ${offsetY} ${blur} ${spread} ${color(1.0)}, ${secondLayer(
       "1px",
-      "2px",
+      "2px"
     )}`, // Alias for the 'shadow:' example line
 
     "shadow-md": `${offsetX} ${offsetY} ${blur} ${spread} ${color(
-      1.0,
+      1.0
     )}, ${secondLayer("2px", "4px")}`,
 
     "shadow-lg": `${offsetX} ${offsetY} ${blur} ${spread} ${color(
-      1.0,
+      1.0
     )}, ${secondLayer("4px", "6px")}`,
 
     "shadow-xl": `${offsetX} ${offsetY} ${blur} ${spread} ${color(
-      1.0,
+      1.0
     )}, ${secondLayer("8px", "10px")}`,
   };
 
@@ -109,7 +110,7 @@ export function getShadowMap(
 export function setShadowVariables(
   element: HTMLElement,
   themeObject: ThemeObject,
-  mode: ThemeMode,
+  mode: ThemeMode
 ) {
   // I'll leave the 'varOutput' set to true for now. In case this brings issues to
   // browser compatibility, we can always change it to false o remove the 3rd argument.

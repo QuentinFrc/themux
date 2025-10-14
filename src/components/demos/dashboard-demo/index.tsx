@@ -1,3 +1,4 @@
+import { BlockViewer } from "@/components/block-viewer";
 import { AppSidebar } from "@/components/demos/dashboard-demo/components/app-sidebar";
 import { ChartAreaInteractive } from "@/components/demos/dashboard-demo/components/chart-area-interactive";
 import { DataTable } from "@/components/demos/dashboard-demo/components/data-table";
@@ -5,9 +6,7 @@ import { SectionCards } from "@/components/demos/dashboard-demo/components/secti
 import { SiteHeader } from "@/components/demos/dashboard-demo/components/site-header";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-
-import { BlockViewer } from "@/components/block-viewer";
-import data from "./data.json";
+import data from "./data.json" with { type: "json" };
 
 export function DashboardPage() {
   return (
@@ -42,10 +41,10 @@ export function DashboardPage() {
 
 export function DashboardDemo() {
   return (
-    <BlockViewer name="dashboard-01" internalUrl={`/dashboard`}>
+    <BlockViewer internalUrl={"/dashboard"} name="dashboard-01">
       <iframe
-        src={`/dashboard`}
-        className="bg-background relative z-1 h-full min-h-[750px] w-full"
+        className="relative z-1 h-full min-h-[750px] w-full bg-background"
+        src={"/dashboard"}
       />
     </BlockViewer>
   );
