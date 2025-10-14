@@ -56,14 +56,7 @@ import { TextareaDemo } from "@/components/demos/components-demo/textarea-demo";
 import { ToggleDemo } from "@/components/demos/components-demo/toggle-demo";
 import { ToggleGroupDemo } from "@/components/demos/components-demo/toggle-group-demo";
 import { TooltipDemo } from "@/components/demos/components-demo/tooltip-demo";
-import { ExternalLink } from "@/components/external-link";
-import {
-  PageHeader,
-  PageHeaderDescription,
-  PageHeaderHeading,
-} from "@/components/page-header";
-import { Separator } from "@/components/ui/separator";
-import { ContainerWrapper, SectionWrapper } from "@/components/wrappers";
+import { SectionWrapper } from "@/components/wrappers";
 import { getComponentName } from "@/lib/utils";
 
 type WrapperProps = Omit<
@@ -149,57 +142,29 @@ const componentSections: ComponentSection[] = [
 export function ComponentsShowcase() {
   return (
     <>
-      <ContainerWrapper className="@container" withCane>
-        <SectionWrapper>
-          <PageHeader>
-            <PageHeaderHeading>Components dump</PageHeaderHeading>
-            <PageHeaderDescription>
-              <span>
-                The <span className="italic">totality</span> of{" "}
-                <ExternalLink
-                  href="https://ui.shadcn.com/docs/components/accordion"
-                  showIcon
-                >
-                  shadcn/ui
-                </ExternalLink>{" "}
-                components.
-              </span>
-            </PageHeaderDescription>
-          </PageHeader>
-        </SectionWrapper>
-      </ContainerWrapper>
+      <nav className="scrollbar-thin -mx-4 sticky top-0 z-10 overflow-x-auto border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/75 md:mx-0 md:rounded-t-xl">
+        <div className="flex items-center gap-2">
+          {componentSections.map((section) => (
+            <a
+              className="whitespace-nowrap rounded-md px-3 py-1 font-medium text-muted-foreground text-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              href={`#${section.name}`}
+              key={section.name}
+            >
+              {getComponentName(section.name)}
+            </a>
+          ))}
+        </div>
+      </nav>
 
-      <Separator />
-
-      <ContainerWrapper withCane>
-        <nav className="scrollbar-thin -mx-4 overflow-x-auto border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/75 md:mx-0 md:rounded-t-xl">
-          <div className="flex items-center gap-2">
-            {componentSections.map((section) => (
-              <a
-                className="whitespace-nowrap rounded-md px-3 py-1 font-medium text-muted-foreground text-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                href={`#${section.name}`}
-                key={section.name}
-              >
-                {getComponentName(section.name)}
-              </a>
-            ))}
-          </div>
-        </nav>
-      </ContainerWrapper>
-
-      <Separator />
-
-      <ContainerWrapper withCane>
-        <SectionWrapper>
-          <div className="@container grid flex-1 gap-4 space-y-8">
-            {componentSections.map(({ name, element, wrapperProps }) => (
-              <ComponentWrapper key={name} name={name} {...wrapperProps}>
-                {element}
-              </ComponentWrapper>
-            ))}
-          </div>
-        </SectionWrapper>
-      </ContainerWrapper>
+      <SectionWrapper>
+        <div className="@container grid flex-1 gap-4 space-y-8">
+          {componentSections.map(({ name, element, wrapperProps }) => (
+            <ComponentWrapper key={name} name={name} {...wrapperProps}>
+              {element}
+            </ComponentWrapper>
+          ))}
+        </div>
+      </SectionWrapper>
     </>
   );
 }

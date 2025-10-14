@@ -60,7 +60,7 @@ function ViewDiffDialog({
           Diff
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-5xl space-y-4">
+      <DialogContent className="sm:max-w-5xl space-y-4">
         <DialogHeader>
           <DialogTitle>
             Compare v{record.commit.hash.slice(0, 7)}
