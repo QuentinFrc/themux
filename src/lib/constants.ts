@@ -1,4 +1,4 @@
-import { Component, History, type LucideIcon, Palette, ScrollText } from "lucide-react";
+import { History, type LucideIcon, Palette, ScrollText } from "lucide-react";
 
 export const ACTIVE_THEME_NAME_COOKIE = "active_theme_name";
 export const ACTIVE_THEME_RADIUS_COOKIE = "active_theme_radius";
@@ -15,7 +15,6 @@ export type NavLink = {
 
 export const NAV_LINKS: NavLink[] = [
   { href: "/shadcn-themes", title: "Theme customizer", icon: Palette },
-  { href: "/shadcn-themes/components", title: "Components", icon: Component },
   { href: "/shadcn-themes/versions", title: "History", icon: History },
   { href: "/shadcn-themes/changelog", title: "Changelog", icon: ScrollText },
   // {
