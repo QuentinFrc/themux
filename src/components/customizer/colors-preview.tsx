@@ -10,7 +10,6 @@ import {
   type TailwindColorName,
 } from "@/lib/palettes";
 
-import { ControlSection } from "./customizer-controls";
 import { BaseColorPicker } from "./base-color-picker";
 import { TokenColorPicker } from "./token-color-picker";
 
@@ -49,7 +48,7 @@ function BaseColorsSection() {
         </p>
       </header>
 
-      <div className="space-y-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {TAILWIND_COLOR_NAMES.map((colorName) => (
           <div
             className="space-y-3 rounded-lg border border-border/60 bg-background/60 p-4 shadow-sm"
@@ -63,7 +62,7 @@ function BaseColorsSection() {
                 {`--color-${colorName}`}
               </p>
             </header>
-            <div className="grid grid-cols-5 gap-2 sm:grid-cols-7 lg:grid-cols-11">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-6">
               {TAILWIND_SHADES.map((shade) => (
                 <BaseColorPicker
                   color={getBaseColor({ colorName, shade })}
@@ -102,7 +101,7 @@ function TokenColorsSection() {
       </header>
 
       <div className="space-y-6">
-        {colorTokenGroups.map(({ id, title, expanded, tokens }) => {
+        {colorTokenGroups.map(({ id, title, tokens }) => {
           const renderedTokens = tokens
             .map(({ property, setter = "single", syncModes, optional }) => {
               const rawColor = getColorToken({ property });
@@ -134,9 +133,16 @@ function TokenColorsSection() {
           if (renderedTokens.length === 0) return null;
 
           return (
-            <ControlSection expanded={expanded} id={id} key={id} title={title}>
-              {renderedTokens}
-            </ControlSection>
+            <div className="space-y-2" key={id} id={id}>
+              <div className="space-y-1">
+                <h3 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">
+                  {title}
+                </h3>
+              </div>
+              <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+                {renderedTokens}
+              </div>
+            </div>
           );
         })}
       </div>

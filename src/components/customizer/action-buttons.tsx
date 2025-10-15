@@ -9,6 +9,7 @@ import { ContrastChecker } from "./contrast-checker";
 import { CustomizerSettings } from "./customizer-settings";
 import { ResetButton } from "./reset-button";
 import { UpdateThemeButton } from "./update-theme-button";
+import { VersionHistoryDialog } from "./version-history-dialog";
 
 interface ActionButtonsProps extends ComponentProps<"section"> {
   className?: string;
@@ -22,10 +23,11 @@ export function ActionButtons({ className }: ActionButtonsProps) {
         className
       )}
     >
-      <section className="flex grow items-center">
+      <section className="flex grow flex-wrap items-center gap-2">
         <TooltipWrapper asChild label="Persist the current theme">
           <UpdateThemeButton className="flex-1" size="sm" variant="default" />
         </TooltipWrapper>
+        <VersionHistoryDialog className="@md:w-auto flex-1" />
       </section>
 
       <Separator

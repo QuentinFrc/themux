@@ -27,22 +27,34 @@ const formatAlphaForHex = (alpha: number | undefined): string | null => {
   return alphaHex;
 };
 
+const normalizeColorInput = (value?: string | null) => {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  return trimmed.length ? trimmed : null;
+};
+
 export const colorFormatter = (
-  colorValue: string, // Expected "oklch(L C H)" or "oklch(L C H / A)"
+  colorValue: string | null | undefined, // Expected "oklch(L C H)" or "oklch(L C H / A)"
   format: ColorFormat,
   tailwindVersion: TailwindVersion
 ): string => {
-  if (colorValue.trim().startsWith("var(")) {
-    return colorValue;
+  const normalizedColor = normalizeColorInput(colorValue);
+
+  if (!normalizedColor) {
+    return colorValue ?? "";
+  }
+
+  if (normalizedColor.startsWith("var(")) {
+    return normalizedColor;
   }
 
   try {
-    const parsedColor = culori.parse(colorValue);
+    const parsedColor = culori.parse(normalizedColor);
     if (!parsedColor) throw new Error("Invalid color input");
 
     switch (format) {
       case "oklch": {
-        const colorInOklch = convertToOklch(colorValue);
+        const colorInOklch = convertToOklch(normalizedColor);
         return colorInOklch;
       }
       case "hsl": {
@@ -81,21 +93,29 @@ export const colorFormatter = (
         return alphaPart ? `${hex}${alphaPart}` : hex;
       }
       default:
-        return colorValue;
+        return normalizedColor;
     }
   } catch {
-    return colorValue;
+    return normalizedColor;
   }
 };
 
-export const convertToOklch = (colorToConvert: string): OklchValue => {
-  const parsedColor = culori.parse(colorToConvert);
-  if (!parsedColor) throw new Error("Invalid color input");
+export const convertToOklch = (
+  colorToConvert: string | null | undefined
+): OklchValue => {
+  const normalizedColor = normalizeColorInput(colorToConvert);
+
+  if (!normalizedColor) {
+    return "oklch(0 0 0)";
+  }
+
+  const parsedColor = culori.parse(normalizedColor);
+  if (!parsedColor) return "oklch(0 0 0)";
 
   const colorInOklch = culori.oklch(parsedColor);
 
   if (!colorInOklch) {
-    throw new Error("Color not found");
+    return "oklch(0 0 0)";
   }
 
   const l = formatNumber(colorInOklch.l);
@@ -110,9 +130,17 @@ export const convertToOklch = (colorToConvert: string): OklchValue => {
   return `oklch(${l} ${c} ${h})`;
 };
 
-export function convertToHex(colorToConvert: string): string {
-  const parsedColor = culori.parse(colorToConvert);
-  if (!parsedColor) throw new Error("Invalid color input");
+export function convertToHex(colorToConvert: string | null | undefined): string {
+  const normalizedColor = normalizeColorInput(colorToConvert);
+
+  if (!normalizedColor) {
+    return "#000000";
+  }
+
+  const parsedColor = culori.parse(normalizedColor);
+  if (!parsedColor) {
+    return "#000000";
+  }
 
   const hex = culori.formatHex(parsedColor);
 
