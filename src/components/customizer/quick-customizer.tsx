@@ -5,7 +5,7 @@ import { SquareRoundCorner } from "lucide-react";
 import { Label } from "../ui/label";
 import { RadiusControls } from "./customizer-controls";
 
-export function QuickCustomizer() {
+export function MiscControls() {
   return (
     <div className="space-y-6">
       <section className="space-y-1.5">
@@ -17,3 +17,5 @@ export function QuickCustomizer() {
     </div>
   );
 }
+
+export { MiscControls as QuickCustomizer };

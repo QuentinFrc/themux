@@ -18,7 +18,6 @@ import {
 import { Skeleton } from "../ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { ActionButtons } from "./action-buttons";
-import { ColorTokens } from "./color-tokens";
 import { ComingSoon } from "./coming-soon";
 import {
   ControlSection,
@@ -27,7 +26,6 @@ import {
   ShadowsControl,
   SurfaceShadesControl,
 } from "./customizer-controls";
-import { BaseColorMaps } from "./base-color-maps";
 import { Typography } from "./typography";
 
 export function CustomizerSidebar({
@@ -66,13 +64,10 @@ export function CustomizerSidebar({
     <Sidebar className="overflow-hidden" {...props}>
       <Tabs
         className="flex flex-1 flex-col gap-0 overflow-hidden"
-        defaultValue="palette"
+        defaultValue="tokens"
       >
         <SidebarHeader className="px-2 pr-3 max-md:pt-4">
           <TabsList className="w-full p-1">
-            <TabsTrigger className="text-xs" value="palette">
-              Palette
-            </TabsTrigger>
             <TabsTrigger className="text-xs" value="tokens">
               Tokens
             </TabsTrigger>
@@ -84,15 +79,6 @@ export function CustomizerSidebar({
 
         <SidebarContent className="@container relative my-0 max-h-svh pt-2 pb-0 group-data-[collapsible=icon]:invisible [&>button]:hidden">
           <ScrollArea className="flex flex-col overflow-hidden px-2 pr-1">
-            <TabsContent
-              className="mr-2 mb-2 flex flex-col space-y-4"
-              value="palette"
-            >
-              <BaseColorMaps className="space-y-1.5" />
-
-              <ColorTokens />
-            </TabsContent>
-
             <TabsContent className="mr-2 mb-2" value="tokens">
               <section className="space-y-1.5">
                 <Label className="flex items-center gap-1 pb-2">

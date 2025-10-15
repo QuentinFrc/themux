@@ -4,14 +4,19 @@ import { startCase } from "lodash";
 
 import { colorTokenGroups } from "@/config/color-tokens";
 import { useTokens } from "@/hooks/use-tokens";
-import { TAILWIND_COLOR_NAMES, TAILWIND_SHADES } from "@/lib/palettes";
-import type { ColorProperty } from "@/types/theme";
+import {
+  TAILWIND_COLOR_NAMES,
+  TAILWIND_SHADES,
+  type TailwindColorName,
+} from "@/lib/palettes";
 
-import { Token } from "./token";
+import { ControlSection } from "./customizer-controls";
+import { BaseColorPicker } from "./base-color-picker";
+import { TokenColorPicker } from "./token-color-picker";
 
 export function ColorsPreview() {
   return (
-    <div className="space-y-8 rounded-3xl border border-border/60 bg-background/80 p-6 shadow-sm backdrop-blur">
+    <div className="space-y-10 rounded-3xl border border-border/60 bg-background/80 p-6 shadow-sm backdrop-blur">
       <BaseColorsSection />
       <TokenColorsSection />
     </div>
@@ -19,7 +24,15 @@ export function ColorsPreview() {
 }
 
 function BaseColorsSection() {
-  const { getBaseColor } = useTokens();
+  const { getBaseColor, setBaseColor } = useTokens();
+
+  const handleChange = (
+    colorName: TailwindColorName,
+    shade: (typeof TAILWIND_SHADES)[number],
+    value: string
+  ) => {
+    setBaseColor({ colorName, shade, color: value });
+  };
 
   return (
     <section className="space-y-4">
@@ -32,29 +45,26 @@ function BaseColorsSection() {
         </p>
       </header>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {TAILWIND_COLOR_NAMES.map((colorName) => (
-          <div className="space-y-2" key={colorName}>
-            <p className="font-medium text-sm">{startCase(colorName)}</p>
-            <div className="grid grid-cols-5 gap-2 sm:grid-cols-7 lg:grid-cols-11">
-              {TAILWIND_SHADES.map((shade) => {
-                const shadeValue = getBaseColor({ colorName, shade });
-
-                return (
-                  <div
-                    className="space-y-1 text-center"
-                    key={`${colorName}-${shade}`}
-                  >
-                    <div
-                      className="h-10 w-full rounded border"
-                      style={{ backgroundColor: shadeValue }}
-                    />
-                    <p className="font-mono text-muted-foreground text-xs">{shade}</p>
-                  </div>
-                );
-              })}
+          <ControlSection
+            expanded={colorName === "neutral"}
+            id={`base-color-${colorName}`}
+            key={colorName}
+            title={startCase(colorName)}
+          >
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              {TAILWIND_SHADES.map((shade) => (
+                <BaseColorPicker
+                  color={getBaseColor({ colorName, shade })}
+                  colorName={colorName}
+                  key={`${colorName}-${shade}`}
+                  onChange={(value) => handleChange(colorName, shade, value)}
+                  shade={shade}
+                />
+              ))}
             </div>
-          </div>
+          </ControlSection>
         ))}
       </div>
     </section>
@@ -62,7 +72,13 @@ function BaseColorsSection() {
 }
 
 function TokenColorsSection() {
-  const { getColorToken, getResolvedColorToken } = useTokens();
+  const {
+    getColorToken,
+    getResolvedColorToken,
+    getColorTokenReference,
+    setColorToken,
+    setColorTokenWithForeground,
+  } = useTokens();
 
   return (
     <section className="space-y-4">
@@ -75,40 +91,42 @@ function TokenColorsSection() {
         </p>
       </header>
 
-      <div className="space-y-4">
-        {colorTokenGroups.map(({ id, title, tokens }) => {
-          const previewTokens = tokens
-            .map(({ property, optional }) => {
+      <div className="space-y-6">
+        {colorTokenGroups.map(({ id, title, expanded, tokens }) => {
+          const renderedTokens = tokens
+            .map(({ property, setter = "single", syncModes, optional }) => {
               const rawColor = getColorToken({ property });
-              if (optional && !rawColor) return null;
+
+              if (optional && !rawColor) {
+                return null;
+              }
 
               const resolvedColor = getResolvedColorToken({ property });
-              if (!rawColor && !resolvedColor) return null;
+              const reference = getColorTokenReference({ property });
 
-              return { property, rawColor, resolvedColor };
+              const setterFn =
+                setter === "paired" ? setColorTokenWithForeground : setColorToken;
+
+              return (
+                <TokenColorPicker
+                  key={property}
+                  color={resolvedColor}
+                  colorProperty={property}
+                  rawColor={rawColor}
+                  reference={reference ?? undefined}
+                  setColorTokens={setterFn}
+                  {...(syncModes !== undefined ? { syncModes } : {})}
+                />
+              );
             })
-            .filter(Boolean) as Array<{
-            property: ColorProperty;
-            rawColor: string;
-            resolvedColor: string;
-          }>;
+            .filter(Boolean);
 
-          if (previewTokens.length === 0) return null;
+          if (renderedTokens.length === 0) return null;
 
           return (
-            <div className="space-y-2" key={id}>
-              <p className="font-medium text-sm">{title}</p>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {previewTokens.map(({ property, rawColor, resolvedColor }) => (
-                  <Token
-                    key={property}
-                    color={resolvedColor}
-                    colorProperty={property}
-                    rawColor={rawColor}
-                  />
-                ))}
-              </div>
-            </div>
+            <ControlSection expanded={expanded} id={id} key={id} title={title}>
+              {renderedTokens}
+            </ControlSection>
           );
         })}
       </div>

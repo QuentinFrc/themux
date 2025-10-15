@@ -76,20 +76,21 @@ export function TokenInfo({
           {`--${colorProperty}`}
         </p>
         {isReference && referenceToken ? (
-          <div className="flex flex-wrap items-center gap-1">
-            <Badge
-              className="inline-flex items-center gap-1 border-dashed px-2 py-0.5 font-mono text-[10px] uppercase tracking-wide text-muted-foreground"
-              variant="outline"
-            >
-              <Link2 className="size-3" />
-              {referenceToken}
-            </Badge>
-            <span className="text-muted-foreground text-[10px] uppercase tracking-wide">
-              Linked to base color
-            </span>
-          </div>
+          <Badge
+            className="inline-flex items-center gap-1 border-dashed px-2 py-0.5 font-mono text-[10px] uppercase tracking-wide text-muted-foreground"
+            title={formattedColor}
+            variant="outline"
+          >
+            <Link2 className="size-3" />
+            {referenceToken}
+          </Badge>
         ) : null}
-        <p className="font-mono text-muted-foreground text-xs">{formattedColor}</p>
+        <p
+          className="font-mono text-muted-foreground text-xs"
+          {...(isReference ? { title: formattedColor } : {})}
+        >
+          {displayValue}
+        </p>
       </div>
 
       <button

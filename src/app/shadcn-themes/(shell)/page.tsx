@@ -3,11 +3,8 @@ import { unstable_noStore as noStore } from "next/cache";
 
 import { ActionButtons } from "@/components/customizer/action-buttons";
 import { ColorsPreview } from "@/components/customizer/colors-preview";
-import { QuickCustomizer } from "@/components/customizer/quick-customizer";
-import { CardsDemo } from "@/components/demos/cards-demo";
+import { MiscControls } from "@/components/customizer/quick-customizer";
 import { ComponentsShowcase } from "@/components/demos/components-demo/components-showcase";
-import { DashboardDemo } from "@/components/demos/dashboard-demo";
-import { MailDemo } from "@/components/demos/mail-demo";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ContainerWrapper } from "@/components/wrappers";
@@ -50,7 +47,6 @@ export default async function ShadcnThemesPage({
       ) : null}
       <ContainerWrapper withCane className="@container py-4">
         <ActionButtons className="pb-4" />
-        <QuickCustomizer />
       </ContainerWrapper>
 
       <Separator />
@@ -63,17 +59,8 @@ export default async function ShadcnThemesPage({
             <TabsTrigger className="px-4" value="colors">
               Colors
             </TabsTrigger>
-            <TabsTrigger className="px-4" value="cards-demo">
-              Cards
-            </TabsTrigger>
-            <TabsTrigger className="px-4" value="dashboard-demo">
-              Dashboard
-            </TabsTrigger>
-            <TabsTrigger
-              className="hidden px-4 lg:inline-flex"
-              value="mail-demo"
-            >
-              Mail
+            <TabsTrigger className="px-4" value="misc">
+              Misc
             </TabsTrigger>
             <TabsTrigger value="components" className="px-4">
               Components
@@ -91,16 +78,10 @@ export default async function ShadcnThemesPage({
             <ColorsPreview />
           </TabsContent>
 
-          <TabsContent className="@container" value="cards-demo">
-            <CardsDemo />
-          </TabsContent>
-
-          <TabsContent value="dashboard-demo">
-            <DashboardDemo />
-          </TabsContent>
-
-          <TabsContent value="mail-demo">
-            <MailDemo />
+          <TabsContent className="@container" value="misc">
+            <div className="space-y-6 rounded-3xl border border-border/60 bg-background/80 p-6 shadow-sm backdrop-blur">
+              <MiscControls />
+            </div>
           </TabsContent>
 
           <TabsContent value="components">
