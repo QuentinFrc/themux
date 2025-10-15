@@ -1,5 +1,15 @@
-import type { ThemeConfig, ThemeProperties } from "@/types/theme";
+import type { BaseColorMap, ThemeConfig, ThemeProperties } from "@/types/theme";
 import { basePresetsV4 } from "./colors";
+import { TAILWIND_PALETTE_V4 } from "./palettes";
+
+function createInitialBaseColors(): BaseColorMap {
+  return Object.fromEntries(
+    Object.entries(TAILWIND_PALETTE_V4).map(([name, shades]) => [
+      name,
+      { ...shades },
+    ])
+  ) as BaseColorMap;
+}
 
 export function getCssVarsFromThemeObject(
   themeProperties: Partial<ThemeProperties>
@@ -56,4 +66,5 @@ export const initialThemeConfig: ThemeConfig = {
       "shadow-color": DEFAULT_SHADOWS["shadow-color"],
     },
   },
+  baseColors: createInitialBaseColors(),
 };

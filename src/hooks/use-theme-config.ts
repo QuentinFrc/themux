@@ -29,6 +29,7 @@ export function useThemeConfig() {
   const currentRadius = config.radius;
   const currentFonts = config.fonts;
   const currentPresetName = config.themeObject.name;
+  const currentBaseColors = config.baseColors;
   const currentPresetThemeObject = allPresetsArray.find(
     (preset) => preset.name === currentPresetName
   );
@@ -119,6 +120,7 @@ export function useThemeConfig() {
   return {
     hasLoaded,
     currentThemeObject,
+    currentBaseColors,
     currentSurfacePreset,
     currentRadius,
     currentFonts,

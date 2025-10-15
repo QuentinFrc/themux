@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { allPresetsArray, surfaceShadesPresets } from "@/lib/colors";
 import { initialThemeConfig } from "@/lib/themes";
 import type {
+  BaseColorReference,
   ColorProperty,
   OklchValue,
   Preset,
@@ -10,13 +11,63 @@ import type {
   ThemeMode,
   ThemeProperty,
 } from "@/types/theme";
+import { type TailwindColorName, type TailwindShadeKey } from "@/lib/palettes";
+import { convertToOklch } from "@/utils/color-converter";
 import { getOptimalForegroundColor, isValidColor } from "@/utils/colors";
 import { useThemeConfig } from "./use-theme-config";
+
+const BASE_COLOR_VAR_REGEX =
+  /^var\(--color-([a-z-]+)-(50|100|200|300|400|500|600|700|800|900|950)\)$/;
+
+const createBaseColorVariable = (reference: BaseColorReference) =>
+  `var(--color-${reference.colorName}-${reference.shade})`;
+
+const parseBaseColorReference = (value: string): BaseColorReference | null => {
+  const match = value.trim().match(BASE_COLOR_VAR_REGEX);
+
+  if (!match) return null;
+
+  const [, colorName, shade] = match;
+
+  return {
+    colorName: colorName as TailwindColorName,
+    shade: shade as TailwindShadeKey,
+  };
+};
 
 export function useTokens() {
   const { resolvedTheme } = useTheme();
   const mode: ThemeMode = resolvedTheme === "dark" ? "dark" : "light";
-  const { config, setConfig, currentThemeObject } = useThemeConfig();
+  const { config, setConfig, currentThemeObject, currentBaseColors } =
+    useThemeConfig();
+  const baseColors = currentBaseColors;
+
+  const resolveBaseColorReference = useCallback(
+    (reference: BaseColorReference) => {
+      const color =
+        baseColors[reference.colorName]?.[reference.shade] ??
+        initialThemeConfig.baseColors[reference.colorName][reference.shade];
+
+      return color;
+    },
+    [baseColors]
+  );
+
+  const resolveColorValue = useCallback(
+    (value: string) => {
+      const reference = parseBaseColorReference(value);
+
+      if (!reference) return value;
+
+      return resolveBaseColorReference(reference);
+    },
+    [resolveBaseColorReference]
+  );
+
+  const getBaseColorReferenceFromValue = useCallback(
+    (value: string) => parseBaseColorReference(value),
+    []
+  );
 
   const getToken = useCallback(
     ({ property }: { property: ThemeProperty }) => {
@@ -87,14 +138,31 @@ export function useTokens() {
     ({ property }: { property: ColorProperty }) => {
       const color = currentThemeObject[mode][property];
 
-      if (!color) {
-        console.error(`Color token "${property}" not found in theme object`);
-        return "";
-      }
-
-      return color;
+      return color ?? "";
     },
     [mode, currentThemeObject[mode]]
+  );
+
+  const getResolvedColorToken = useCallback(
+    ({ property }: { property: ColorProperty }) => {
+      const rawColor = getColorToken({ property });
+
+      if (!rawColor) return "";
+
+      return resolveColorValue(rawColor);
+    },
+    [getColorToken, resolveColorValue]
+  );
+
+  const getColorTokenReference = useCallback(
+    ({ property }: { property: ColorProperty }) => {
+      const rawColor = getColorToken({ property });
+
+      if (!rawColor) return null;
+
+      return getBaseColorReferenceFromValue(rawColor);
+    },
+    [getBaseColorReferenceFromValue, getColorToken]
   );
 
   const getActiveThemeColorToken = useCallback(
@@ -114,6 +182,48 @@ export function useTokens() {
     },
     [currentThemeObject, mode]
   );
+
+  const getBaseColor = useCallback(
+    ({
+      colorName,
+      shade,
+    }: {
+      colorName: TailwindColorName;
+      shade: TailwindShadeKey;
+    }) => resolveBaseColorReference({ colorName, shade }),
+    [resolveBaseColorReference]
+  );
+
+  const setBaseColor = ({
+    colorName,
+    shade,
+    color,
+  }: {
+    colorName: TailwindColorName;
+    shade: TailwindShadeKey;
+    color: string;
+  }) => {
+    if (!isValidColor(color)) return;
+
+    const normalizedColor = convertToOklch(color);
+
+    setConfig((prev) => {
+      const previousShades =
+        prev.baseColors[colorName] ??
+        initialThemeConfig.baseColors[colorName];
+
+      return {
+        ...prev,
+        baseColors: {
+          ...prev.baseColors,
+          [colorName]: {
+            ...previousShades,
+            [shade]: normalizedColor,
+          },
+        },
+      };
+    });
+  };
 
   const createTokenGetterForPreset = useCallback((preset: Preset) => {
     const presetThemeObject = allPresetsArray.find(
@@ -150,8 +260,12 @@ export function useTokens() {
     color: string;
     modesInSync?: boolean;
   }) => {
-    const isValidPastedColor = isValidColor(color);
-    if (!isValidPastedColor) return;
+    const reference = getBaseColorReferenceFromValue(color);
+    const isReference = Boolean(reference);
+
+    if (!isReference && !isValidColor(color)) return;
+
+    const normalizedColor = isReference ? color : convertToOklch(color);
 
     // Update both modes
     if (modesInSync) {
@@ -161,11 +275,11 @@ export function useTokens() {
           ...prev.themeObject,
           light: {
             ...prev.themeObject.light,
-            [property]: color,
+            [property]: normalizedColor,
           },
           dark: {
             ...prev.themeObject.dark,
-            [property]: color,
+            [property]: normalizedColor,
           },
         },
       }));
@@ -178,7 +292,7 @@ export function useTokens() {
         ...prev.themeObject,
         [mode]: {
           ...prev.themeObject[mode],
-          [property]: color,
+          [property]: normalizedColor,
         },
       },
     }));
@@ -195,10 +309,29 @@ export function useTokens() {
     fgColor: OklchValue | string;
     modesInSync?: boolean;
   }) => {
-    const isValidPastedColor = isValidColor(bgColor);
-    if (!isValidPastedColor) return;
+    const backgroundValue = String(bgColor);
+    const foregroundValue = String(fgColor);
+    const reference = getBaseColorReferenceFromValue(backgroundValue);
+    const isReference = Boolean(reference);
 
-    const optimalFgColor = getOptimalForegroundColor(fgColor, bgColor);
+    if (!isReference && !isValidColor(backgroundValue)) return;
+
+    const normalizedBgColor = isReference
+      ? backgroundValue
+      : convertToOklch(backgroundValue);
+
+    const resolvedBgColor = reference
+      ? resolveBaseColorReference(reference)
+      : normalizedBgColor;
+
+    if (!resolvedBgColor) return;
+
+    const resolvedFgColor = resolveColorValue(foregroundValue);
+
+    const optimalFgColor = getOptimalForegroundColor(
+      resolvedFgColor,
+      resolvedBgColor
+    );
     const propertyForeground =
       property === "background" ? "foreground" : property + "-foreground";
 
@@ -210,12 +343,12 @@ export function useTokens() {
           ...prev.themeObject,
           light: {
             ...prev.themeObject.light,
-            [property]: bgColor,
+            [property]: normalizedBgColor,
             [propertyForeground]: optimalFgColor,
           },
           dark: {
             ...prev.themeObject.dark,
-            [property]: bgColor,
+            [property]: normalizedBgColor,
             [propertyForeground]: optimalFgColor,
           },
         },
@@ -229,7 +362,7 @@ export function useTokens() {
         ...prev.themeObject,
         [mode]: {
           ...prev.themeObject[mode],
-          [property]: bgColor,
+          [property]: normalizedBgColor,
           [propertyForeground]: optimalFgColor,
         },
       },
@@ -243,14 +376,32 @@ export function useTokens() {
     color: string | OklchValue;
     modesInSync?: boolean;
   }) => {
-    const isValidPastedColor = isValidColor(color);
-    if (!isValidPastedColor) return;
+    const colorValue = String(color);
+    const reference = getBaseColorReferenceFromValue(colorValue);
+    const isReference = Boolean(reference);
+
+    if (!isReference && !isValidColor(colorValue)) return;
+
+    const normalizedColor = isReference
+      ? colorValue
+      : convertToOklch(colorValue);
+
+    const resolvedPrimaryColor = reference
+      ? resolveBaseColorReference(reference)
+      : normalizedColor;
+
+    if (!resolvedPrimaryColor) return;
 
     const primaryFgColor = getColorToken({
       property: "primary-foreground",
     });
 
-    const optimalFgColor = getOptimalForegroundColor(primaryFgColor, color);
+    const resolvedPrimaryFgColor = resolveColorValue(primaryFgColor);
+
+    const optimalFgColor = getOptimalForegroundColor(
+      resolvedPrimaryFgColor,
+      resolvedPrimaryColor
+    );
 
     // Update both modes
     if (modesInSync) {
@@ -260,21 +411,21 @@ export function useTokens() {
           ...prev.themeObject,
           light: {
             ...prev.themeObject.light,
-            primary: color,
+            primary: normalizedColor,
             "primary-foreground": optimalFgColor,
-            ring: color,
-            "sidebar-primary": color,
+            ring: normalizedColor,
+            "sidebar-primary": normalizedColor,
             "sidebar-primary-foreground": optimalFgColor,
-            "sidebar-ring": color,
+            "sidebar-ring": normalizedColor,
           },
           dark: {
             ...prev.themeObject.dark,
-            primary: color,
+            primary: normalizedColor,
             "primary-foreground": optimalFgColor,
-            ring: color,
-            "sidebar-primary": color,
+            ring: normalizedColor,
+            "sidebar-primary": normalizedColor,
             "sidebar-primary-foreground": optimalFgColor,
-            "sidebar-ring": color,
+            "sidebar-ring": normalizedColor,
           },
         },
       }));
@@ -287,12 +438,12 @@ export function useTokens() {
         ...prev.themeObject,
         [mode]: {
           ...prev.themeObject[mode],
-          primary: color,
+          primary: normalizedColor,
           "primary-foreground": optimalFgColor,
-          ring: color,
-          "sidebar-primary": color,
+          ring: normalizedColor,
+          "sidebar-primary": normalizedColor,
           "sidebar-primary-foreground": optimalFgColor,
-          "sidebar-ring": color,
+          "sidebar-ring": normalizedColor,
         },
       },
     }));
@@ -350,12 +501,19 @@ export function useTokens() {
     getToken,
     setToken,
     getColorToken,
+    getResolvedColorToken,
+    getColorTokenReference,
     setColorToken,
     setColorTokenWithForeground,
     setPrimaryColorTokens,
+    getBaseColor,
+    setBaseColor,
     setSurfaceShadesColorTokens,
     getActiveSurfaceShades,
     getActiveThemeColorToken,
     createTokenGetterForPreset,
+    resolveColorValue,
+    createBaseColorVar: createBaseColorVariable,
+    getBaseColorReferenceFromValue,
   };
 }

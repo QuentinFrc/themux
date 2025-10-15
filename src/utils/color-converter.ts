@@ -32,6 +32,10 @@ export const colorFormatter = (
   format: ColorFormat,
   tailwindVersion: TailwindVersion
 ): string => {
+  if (colorValue.trim().startsWith("var(")) {
+    return colorValue;
+  }
+
   try {
     const parsedColor = culori.parse(colorValue);
     if (!parsedColor) throw new Error("Invalid color input");
@@ -59,11 +63,6 @@ export const colorFormatter = (
             : `hsl(${h} ${s}% ${l}%)`;
         }
         // Tailwind v3 expects direct values "H S% L%" (alpha is omitted)
-        if (alphaPart) {
-          console.warn(
-            `Alpha channel ignored converting to HSL for Tailwind v3: ${colorValue}`
-          );
-        }
         return `${h} ${s}% ${l}%`;
       }
       case "rgb": {
@@ -84,8 +83,7 @@ export const colorFormatter = (
       default:
         return colorValue;
     }
-  } catch (error) {
-    console.error(`Failed to convert color: ${colorValue}`, error);
+  } catch {
     return colorValue;
   }
 };

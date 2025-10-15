@@ -21,19 +21,27 @@ export function ColorTokens({ className }: React.ComponentProps<"div">) {
 }
 
 function TokensList({ className }: React.ComponentProps<"div">) {
-  const { getColorToken, setColorToken, setColorTokenWithForeground } =
-    useTokens();
+  const {
+    getColorToken,
+    getResolvedColorToken,
+    getColorTokenReference,
+    setColorToken,
+    setColorTokenWithForeground,
+  } = useTokens();
 
   return (
     <div className={cn("space-y-2", className)}>
       {colorTokenGroups.map(({ id, title, expanded, tokens }) => {
         const renderedTokens = tokens
           .map(({ property, setter = "single", syncModes, optional }) => {
-            const color = getColorToken({ property });
+            const rawColor = getColorToken({ property });
 
-            if (optional && !color) {
+            if (optional && !rawColor) {
               return null;
             }
+
+            const resolvedColor = getResolvedColorToken({ property });
+            const reference = getColorTokenReference({ property });
 
             const setterFn =
               setter === "paired" ? setColorTokenWithForeground : setColorToken;
@@ -42,7 +50,9 @@ function TokensList({ className }: React.ComponentProps<"div">) {
               <TokenColorPicker
                 key={property}
                 colorProperty={property}
-                color={color}
+                color={resolvedColor}
+                rawColor={rawColor}
+                reference={reference ?? undefined}
                 setColorTokens={setterFn}
                 {...(syncModes !== undefined ? { syncModes } : {})}
               />

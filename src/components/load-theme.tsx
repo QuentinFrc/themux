@@ -20,6 +20,7 @@ export function LoadTheme() {
     )};
     const defaultRadius = ${JSON.stringify(initialThemeConfig.radius)};
     const defaultFonts = ${JSON.stringify(initialThemeConfig.fonts)};
+    const defaultBaseColors = ${JSON.stringify(initialThemeConfig.baseColors)};
 
     let themeConfig = null;
     try {
@@ -28,11 +29,8 @@ export function LoadTheme() {
         const parsedThemeConfig = JSON.parse(persistedThemeConfig);
         themeConfig = parsedThemeConfig;
       }
-    } catch (e) {
-      console.warn(
-        "Theme initialization: Failed to read/parse localStorage:",
-        e,
-      );
+    } catch {
+      themeConfig = null;
     }
 
     const prefersDark = window.matchMedia(
@@ -60,6 +58,8 @@ export function LoadTheme() {
       serif: themeConfig?.fonts?.serif ?? defaultFonts.serif,
       mono: themeConfig?.fonts?.mono ?? defaultFonts.mono,
     };
+
+    const activeBaseColors = themeConfig?.baseColors || defaultBaseColors;
 
     // Function to fetch fonts up-front for the initial load
     const loadFont = (href) => {
@@ -100,8 +100,13 @@ export function LoadTheme() {
       cssVars[\`--\${key}\`] = value;
     }
 
+    for (const [colorName, shades] of Object.entries(activeBaseColors)) {
+      for (const [shade, value] of Object.entries(shades)) {
+        cssVars[\`--color-\${colorName}-\${shade}\`] = value;
+      }
+    }
+
     // Set the CSS variables on the root element
-    console.log("Theme initialization. CSS variables set:", cssVars);
     for (const [key, value] of Object.entries(cssVars)) {
       root.style.setProperty(key, value);
     }
