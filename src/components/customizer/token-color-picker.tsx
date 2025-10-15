@@ -1,37 +1,23 @@
 "use client";
 
-import { Check, CircleAlert, Link2 } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { HexColorPicker } from "react-colorful";
-import { ComponentErrorBoundary } from "@/components/error-boundary";
-import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  CommandDialog,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
-import { useTokens } from "@/hooks/use-tokens";
-import { useThemeConfig } from "@/hooks/use-theme-config";
-import { useColorFormat, useModesInSync } from "@/store/preferences-store";
-import type { BaseColorReference, ColorProperty, ThemeMode } from "@/types/theme";
-import { TAILWIND_COLOR_NAMES, TAILWIND_SHADES } from "@/lib/palettes";
-import { startCase } from "lodash";
-import {
-  colorFormatter,
-  convertToHex,
-  convertToOklch,
-} from "@/utils/color-converter";
-import { PasteColorControl } from "./customizer-controls";
-import { TokenDisplay, TokenInfo } from "./token";
+import {Check, CircleAlert, Link2} from "lucide-react";
+import {useTheme} from "next-themes";
+import {useCallback, useEffect, useMemo, useState} from "react";
+import {HexColorPicker} from "react-colorful";
+import {ComponentErrorBoundary} from "@/components/error-boundary";
+import {Button} from "@/components/ui/button";
+import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover";
+import {CommandDialog, CommandGroup, CommandInput, CommandItem, CommandList,} from "@/components/ui/command";
+import {useDebouncedCallback} from "@/hooks/use-debounced-callback";
+import {useTokens} from "@/hooks/use-tokens";
+import {useThemeConfig} from "@/hooks/use-theme-config";
+import {useColorFormat, useModesInSync} from "@/store/preferences-store";
+import type {BaseColorReference, ColorProperty, ThemeMode} from "@/types/theme";
+import {TAILWIND_COLOR_NAMES, TAILWIND_SHADES} from "@/lib/palettes";
+import {startCase} from "lodash";
+import {colorFormatter, convertToHex, convertToOklch,} from "@/utils/color-converter";
+import {PasteColorControl} from "./customizer-controls";
+import {TokenDisplay, TokenInfo} from "./token";
 
 type SingleColorSetter = (obj: {
   property: ColorProperty;
@@ -114,20 +100,17 @@ export function TokenColorPicker({
 
   // Check if this is a paired color setter (expects bgColor and fgColor)
   const isPairedColorSetter = (): boolean => {
-    const hasCorrespondingForeground =
-      colorProperty === "background" ||
-      colorProperty === "primary" ||
-      colorProperty === "secondary" ||
-      colorProperty === "card" ||
-      colorProperty === "popover" ||
-      colorProperty === "muted" ||
-      colorProperty === "accent" ||
-      colorProperty === "destructive" ||
-      colorProperty === "sidebar" ||
-      colorProperty === "sidebar-primary" ||
-      colorProperty === "sidebar-accent";
-
-    return hasCorrespondingForeground;
+    return colorProperty === "background" ||
+        colorProperty === "primary" ||
+        colorProperty === "secondary" ||
+        colorProperty === "card" ||
+        colorProperty === "popover" ||
+        colorProperty === "muted" ||
+        colorProperty === "accent" ||
+        colorProperty === "destructive" ||
+        colorProperty === "sidebar" ||
+        colorProperty === "sidebar-primary" ||
+        colorProperty === "sidebar-accent";
   };
 
   const handleReferenceSelect = useCallback(

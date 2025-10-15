@@ -1,7 +1,7 @@
-import { useTheme } from "next-themes";
-import { useCallback } from "react";
-import { allPresetsArray, surfaceShadesPresets } from "@/lib/colors";
-import { initialThemeConfig } from "@/lib/themes";
+import {useTheme} from "next-themes";
+import {useCallback} from "react";
+import {allPresetsArray, surfaceShadesPresets} from "@/lib/colors";
+import {initialThemeConfig} from "@/lib/themes";
 import type {
   BaseColorReference,
   ColorProperty,
@@ -11,10 +11,10 @@ import type {
   ThemeMode,
   ThemeProperty,
 } from "@/types/theme";
-import { type TailwindColorName, type TailwindShadeKey } from "@/lib/palettes";
-import { convertToOklch } from "@/utils/color-converter";
-import { getOptimalForegroundColor, isValidColor } from "@/utils/colors";
-import { useThemeConfig } from "./use-theme-config";
+import {type TailwindColorName, type TailwindShadeKey} from "@/lib/palettes";
+import {convertToOklch} from "@/utils/color-converter";
+import {getOptimalForegroundColor, isValidColor} from "@/utils/colors";
+import {useThemeConfig} from "./use-theme-config";
 
 const BASE_COLOR_VAR_REGEX =
   /^var\(--color-([a-z-]+)-(50|100|200|300|400|500|600|700|800|900|950)\)$/;
@@ -44,11 +44,8 @@ export function useTokens() {
 
   const resolveBaseColorReference = useCallback(
     (reference: BaseColorReference) => {
-      const color =
-        baseColors[reference.colorName]?.[reference.shade] ??
-        initialThemeConfig.baseColors[reference.colorName][reference.shade];
-
-      return color;
+      return baseColors[reference.colorName]?.[reference.shade] ??
+          initialThemeConfig.baseColors[reference.colorName][reference.shade];
     },
     [baseColors]
   );
