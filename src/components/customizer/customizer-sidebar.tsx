@@ -1,6 +1,6 @@
 "use client";
 
-import { PaintBucket, Palette, SlidersHorizontal, X } from "lucide-react";
+import { Palette, SlidersHorizontal, X } from "lucide-react";
 import type * as React from "react";
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
@@ -21,13 +21,13 @@ import { ActionButtons } from "./action-buttons";
 import { ColorTokens } from "./color-tokens";
 import { ComingSoon } from "./coming-soon";
 import {
-  AllPresetsControl,
   ControlSection,
   ControlsSkeleton,
   RadiusSliderControl,
   ShadowsControl,
   SurfaceShadesControl,
 } from "./customizer-controls";
+import { BaseColorMaps } from "./base-color-maps";
 import { Typography } from "./typography";
 
 export function CustomizerSidebar({
@@ -88,12 +88,7 @@ export function CustomizerSidebar({
               className="mr-2 mb-2 flex flex-col space-y-4"
               value="palette"
             >
-              <section className="flex-1 space-y-1.5 max-sm:w-full max-sm:max-w-full">
-                <Label className="flex items-center gap-1 pb-2">
-                  <PaintBucket className="size-4" /> Theme presets
-                </Label>
-                <AllPresetsControl />
-              </section>
+              <BaseColorMaps className="space-y-1.5" />
 
               <ColorTokens />
             </TabsContent>

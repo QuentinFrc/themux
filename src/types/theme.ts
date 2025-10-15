@@ -1,3 +1,5 @@
+import type { TailwindColorName, TailwindShadeKey } from "@/lib/palettes";
+
 export type ThemeMode = "light" | "dark";
 
 export type ColorFormat = "hex" | "rgb" | "hsl" | "oklch";
@@ -103,6 +105,16 @@ export type Fonts = {
 
 export type ColorProperty = keyof ColorProperties;
 
+export type BaseColorReference = {
+  colorName: TailwindColorName;
+  shade: TailwindShadeKey;
+};
+
+export type BaseColorMap = Record<
+  TailwindColorName,
+  Record<TailwindShadeKey, string>
+>;
+
 export type PresetV4 = "stone" | "zinc" | "neutral" | "gray" | "slate";
 
 export type ColorfulPreset =
@@ -139,6 +151,7 @@ export type ThemeConfig = {
   surface?: SurfaceShadesPreset;
   fonts?: Fonts;
   themeObject: ThemeObject;
+  baseColors: BaseColorMap;
 };
 
 // Surface shades

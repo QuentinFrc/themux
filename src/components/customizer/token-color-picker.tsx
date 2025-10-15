@@ -1,19 +1,30 @@
 "use client";
 
-import { CircleAlert } from "lucide-react";
+import { Check, CircleAlert, Link2 } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { ComponentErrorBoundary } from "@/components/error-boundary";
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  CommandDialog,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
+import { useTokens } from "@/hooks/use-tokens";
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { useColorFormat, useModesInSync } from "@/store/preferences-store";
-import type { ColorProperty, ThemeMode } from "@/types/theme";
+import type { BaseColorReference, ColorProperty, ThemeMode } from "@/types/theme";
+import { TAILWIND_COLOR_NAMES, TAILWIND_SHADES } from "@/lib/palettes";
+import { startCase } from "lodash";
 import {
   colorFormatter,
   convertToHex,
@@ -38,6 +49,8 @@ type PairedColorSetter = (obj: {
 interface TokenColorPickerProps {
   colorProperty: ColorProperty;
   color: string;
+  rawColor?: string;
+  reference?: BaseColorReference;
   syncModes?: boolean;
   setColorTokens: SingleColorSetter | PairedColorSetter;
 }
@@ -45,20 +58,46 @@ interface TokenColorPickerProps {
 export function TokenColorPicker({
   colorProperty,
   color,
+  rawColor,
+  reference,
   syncModes,
   setColorTokens,
 }: TokenColorPickerProps) {
+  const {
+    resolveColorValue,
+    createBaseColorVar,
+    getBaseColorReferenceFromValue,
+    getBaseColor,
+  } = useTokens();
   const [currentColor, setCurrentColor] = useState(color);
+  const [isReferenceDialogOpen, setReferenceDialogOpen] = useState(false);
   const hexColor = convertToHex(color);
   const modesInSync = useModesInSync();
   const { currentThemeObject } = useThemeConfig();
   const { resolvedTheme } = useTheme();
 
   const resolvedModesInSync = syncModes !== undefined ? syncModes : modesInSync;
+  const displayColor = rawColor ?? color;
+  const currentReference =
+    reference ?? getBaseColorReferenceFromValue(displayColor ?? "");
+  const currentReferenceLabel = currentReference
+    ? `--color-${currentReference.colorName}-${currentReference.shade}`
+    : null;
+  const baseColorOptions = useMemo(
+    () =>
+      TAILWIND_COLOR_NAMES.map((colorName) => ({
+        colorName,
+        shades: TAILWIND_SHADES.map((shade) => ({
+          shade,
+          value: getBaseColor({ colorName, shade }),
+        })),
+      })),
+    [getBaseColor]
+  );
 
   useEffect(() => {
     if (currentColor !== color) setCurrentColor(color);
-  }, [color]);
+  }, [color, currentColor]);
 
   // Helper to get the corresponding foreground color for a background property
   const getForegroundProperty = (bgProperty: ColorProperty): ColorProperty => {
@@ -90,6 +129,46 @@ export function TokenColorPicker({
 
     return hasCorrespondingForeground;
   };
+
+  const handleReferenceSelect = useCallback(
+    ({ colorName, shade }: BaseColorReference) => {
+      const baseColorVar = createBaseColorVar({ colorName, shade });
+      const resolvedBaseColor = resolveColorValue(baseColorVar);
+
+      if (isPairedColorSetter()) {
+        const currentFgColor = getCurrentForegroundColor(colorProperty);
+        const pairedSetter = setColorTokens as PairedColorSetter;
+        pairedSetter({
+          property: colorProperty,
+          bgColor: baseColorVar,
+          fgColor: currentFgColor,
+          modesInSync: resolvedModesInSync,
+        });
+      } else {
+        const singleSetter = setColorTokens as SingleColorSetter;
+        singleSetter({
+          property: colorProperty,
+          color: baseColorVar,
+          modesInSync: resolvedModesInSync,
+        });
+      }
+
+      if (resolvedBaseColor) {
+        setCurrentColor(resolvedBaseColor);
+      }
+
+      setReferenceDialogOpen(false);
+    },
+    [
+      colorProperty,
+      createBaseColorVar,
+      getCurrentForegroundColor,
+      isPairedColorSetter,
+      resolveColorValue,
+      resolvedModesInSync,
+      setColorTokens,
+    ]
+  );
 
   const handleColorChange = useCallback(
     (color: string) => {
@@ -148,12 +227,56 @@ export function TokenColorPicker({
       fallback={<ColorPickerErrorFallback />}
       name="TokenColorPicker"
     >
+      <CommandDialog
+        onOpenChange={setReferenceDialogOpen}
+        open={isReferenceDialogOpen}
+      >
+        <CommandInput placeholder="Search base colors..." />
+        <CommandList>
+          {baseColorOptions.map(({ colorName, shades }) => (
+            <CommandGroup
+              heading={startCase(colorName)}
+              key={colorName}
+            >
+              {shades.map(({ shade, value }) => {
+                const isActive =
+                  currentReference?.colorName === colorName &&
+                  currentReference?.shade === shade;
+
+                return (
+                  <CommandItem
+                    key={`${colorName}-${shade}`}
+                    onSelect={() =>
+                      handleReferenceSelect({ colorName, shade })
+                    }
+                    value={`${colorName}-${shade}`}
+                  >
+                    <span
+                      className="mr-2 inline-flex size-4 items-center justify-center rounded border"
+                      style={{ backgroundColor: value }}
+                    />
+                    <span className="flex-1 font-mono text-xs">
+                      {`--color-${colorName}-${shade}`}
+                    </span>
+                    {isActive ? <Check className="size-4" /> : null}
+                  </CommandItem>
+                );
+              })}
+            </CommandGroup>
+          ))}
+        </CommandList>
+      </CommandDialog>
+
       <Popover>
         <div className="flex items-center gap-2">
           <PopoverTrigger className="relative cursor-pointer">
-            <TokenDisplay color={color} />
+            <TokenDisplay color={displayColor} />
           </PopoverTrigger>
-          <TokenInfo color={color} colorProperty={colorProperty} />
+          <TokenInfo
+            color={currentColor}
+            colorProperty={colorProperty}
+            rawColor={displayColor}
+          />
         </div>
 
         <PopoverContent align="start" className="flex h-fit w-60 gap-6 p-4">
@@ -166,6 +289,22 @@ export function TokenColorPicker({
             </div>
             <div className="w-fit">
               <ColorOklchValue currentColor={currentColor} />
+            </div>
+            <div className="space-y-1">
+              <Button
+                className="w-full justify-start gap-2"
+                onClick={() => setReferenceDialogOpen(true)}
+                size="sm"
+                type="button"
+                variant="outline"
+              >
+                <Link2 className="size-4" /> Link to base color
+              </Button>
+              {currentReferenceLabel ? (
+                <p className="text-muted-foreground text-xs">
+                  Linked to {currentReferenceLabel}
+                </p>
+              ) : null}
             </div>
             <PasteColorControl
               className="w-50"

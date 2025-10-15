@@ -1,127 +1,122 @@
 "use client";
 
-import {
-  ClipboardPaste,
-  PaintBucket,
-  Paintbrush,
-  SquareRoundCorner,
-} from "lucide-react";
-import { useState } from "react";
-import { useMounted } from "@/hooks/use-mounted";
+import { SquareRoundCorner } from "lucide-react";
+import { startCase } from "lodash";
 import { useTokens } from "@/hooks/use-tokens";
-import { TAILWIND_SHADES, type TailwindShadeKey } from "@/lib/palettes";
-import { useModesInSync } from "@/store/preferences-store";
+import { colorTokenGroups } from "@/config/color-tokens";
+import { TAILWIND_COLOR_NAMES, TAILWIND_SHADES } from "@/lib/palettes";
+import type { ColorProperty } from "@/types/theme";
 import { Label } from "../ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
-import { Skeleton } from "../ui/skeleton";
-import {
-  AllPresetsControl,
-  PasteColorControl,
-  RadiusControls,
-} from "./customizer-controls";
-import { MemoizedTailwindV4ColorPalette } from "./tailwind-v4-palette";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { RadiusControls } from "./customizer-controls";
+import { Token } from "./token";
 
 export function QuickCustomizer() {
-  const [shade, setShade] = useState<TailwindShadeKey>("500");
-  const isMounted = useMounted();
+  return (
+    <div className="space-y-6">
+      <ColorsPreviewTabs />
 
-  const { getColorToken, setPrimaryColorTokens } = useTokens();
-  const modesInSync = useModesInSync();
+      <section className="space-y-1.5">
+        <Label className="flex items-center gap-1 pb-2">
+          <SquareRoundCorner className="size-4" /> Radius
+        </Label>
+        <RadiusControls className="flex flex-wrap gap-2 @max-lg:[&>*]:flex-1" />
+      </section>
+    </div>
+  );
+}
+
+function ColorsPreviewTabs() {
+  return (
+    <Tabs className="space-y-4" defaultValue="base">
+      <TabsList className="w-full justify-start">
+        <TabsTrigger value="base">Base colors</TabsTrigger>
+        <TabsTrigger value="tokens">Token colors</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="base">
+        <BaseColorsPreview />
+      </TabsContent>
+
+      <TabsContent value="tokens">
+        <TokenColorsPreview />
+      </TabsContent>
+    </Tabs>
+  );
+}
+
+function BaseColorsPreview() {
+  const { getBaseColor } = useTokens();
 
   return (
     <div className="space-y-4">
-      <div className="@container flex flex-wrap items-start gap-x-6 gap-y-4 sm:flex-row">
-        <section className="min-w-72 max-w-80 flex-1 space-y-1.5 max-sm:w-full max-sm:max-w-full">
-          <Label className="flex items-center gap-1 pb-2">
-            <PaintBucket className="size-4" /> Theme presets
-          </Label>
-          <AllPresetsControl />
-          <span className="truncate text-muted-foreground text-xs">
-            {"Complete theme presets"}
-          </span>
-        </section>
+      {TAILWIND_COLOR_NAMES.map((colorName) => (
+        <div className="space-y-2" key={colorName}>
+          <p className="font-medium text-sm">{startCase(colorName)}</p>
+          <div className="grid grid-cols-5 gap-2 sm:grid-cols-7 lg:grid-cols-11">
+            {TAILWIND_SHADES.map((shade) => {
+              const shadeValue = getBaseColor({ colorName, shade });
 
-        {/* Paste your primary color */}
-        <section className="min-w-62 max-w-66 space-y-1.5 max-sm:w-full max-sm:max-w-full sm:flex-1">
-          <Label className="flex items-center gap-1 pb-2">
-            <ClipboardPaste className="size-4" /> Paste your primary color
-          </Label>
-          <PasteColorControl
-            modesInSync={modesInSync}
-            property={"primary"}
-            setColorTokens={setPrimaryColorTokens}
-          />
-          <span className="text-muted-foreground text-xs">
-            {"oklch(), hsl(), rbg() and #hex"}
-          </span>
-        </section>
-
-        {/* Primary color */}
-        <section className="min-w-72 max-w-80 flex-2 space-y-1.5 max-sm:w-full max-sm:max-w-full">
-          <div className="flex items-start justify-between gap-2 pb-1">
-            <Label className="flex items-center gap-1">
-              <Paintbrush className="size-4" /> Primary color
-            </Label>
-            <Label className="flex gap-1 text-muted-foreground">
-              Shade
-              <Select
-                onValueChange={(v: TailwindShadeKey) => setShade(v)}
-                value={shade}
-              >
-                <SelectTrigger
-                  className="data-[size=sm]:h-5 data-[size=sm]:px-2 data-[size=sm]:text-xs"
-                  size="sm"
+              return (
+                <div
+                  className="space-y-1 text-center"
+                  key={`${colorName}-${shade}`}
                 >
-                  {isMounted ? (
-                    <SelectValue defaultValue={shade} />
-                  ) : (
-                    <Skeleton className="h-[1ch] w-[3ch]" />
-                  )}
-                </SelectTrigger>
-                <SelectContent className="w-fit min-w-0">
-                  <SelectGroup>
-                    <SelectLabel>Shade</SelectLabel>
-                    {TAILWIND_SHADES.map((shade) => (
-                      <SelectItem key={shade} value={shade}>
-                        {shade}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </Label>
+                  <div
+                    className="h-10 w-full rounded border"
+                    style={{ backgroundColor: shadeValue }}
+                  />
+                  <p className="font-mono text-muted-foreground text-xs">{shade}</p>
+                </div>
+              );
+            })}
           </div>
-          <div className="grid grid-cols-11 gap-1.5">
-            <MemoizedTailwindV4ColorPalette
-              className="contents"
-              currentColor={getColorToken({
-                property: "primary",
-              })}
-              modesInSync={modesInSync}
-              shade={shade}
-            />
-          </div>
-          <span className="truncate text-muted-foreground text-xs">
-            Tailwind v4 color palette
-          </span>
-        </section>
+        </div>
+      ))}
+    </div>
+  );
+}
 
-        {/* Radius */}
-        <section className="min-w-62 space-y-1.5 max-sm:w-full max-sm:max-w-full sm:flex-1">
-          <Label className="flex items-center gap-1 pb-2">
-            <SquareRoundCorner className="size-4" /> Radius
-          </Label>
-          <RadiusControls className="flex flex-wrap gap-2 @max-lg:[&>*]:flex-1" />
-        </section>
-      </div>
+function TokenColorsPreview() {
+  const { getColorToken, getResolvedColorToken } = useTokens();
+
+  return (
+    <div className="space-y-4">
+      {colorTokenGroups.map(({ id, title, tokens }) => {
+        const previewTokens = tokens
+          .map(({ property, optional }) => {
+            const rawColor = getColorToken({ property });
+            if (optional && !rawColor) return null;
+
+            const resolvedColor = getResolvedColorToken({ property });
+            if (!rawColor && !resolvedColor) return null;
+
+            return { property, rawColor, resolvedColor };
+          })
+          .filter(Boolean) as Array<{
+          property: ColorProperty;
+          rawColor: string;
+          resolvedColor: string;
+        }>;
+
+        if (previewTokens.length === 0) return null;
+
+        return (
+          <div className="space-y-2" key={id}>
+            <p className="font-medium text-sm">{title}</p>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {previewTokens.map(({ property, rawColor, resolvedColor }) => (
+                <Token
+                  key={property}
+                  color={resolvedColor}
+                  colorProperty={property}
+                  rawColor={rawColor}
+                />
+              ))}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
