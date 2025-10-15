@@ -1,11 +1,10 @@
 "use client";
 
-import { PaintBucket, Palette, SlidersHorizontal, X } from "lucide-react";
+import { Palette, X } from "lucide-react";
 import type * as React from "react";
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
-import { Label } from "../ui/label";
 import { ScrollArea } from "../ui/scroll-area";
 import {
   Sidebar,
@@ -16,18 +15,7 @@ import {
   useSidebar,
 } from "../ui/sidebar";
 import { Skeleton } from "../ui/skeleton";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { ActionButtons } from "./action-buttons";
-import { ColorTokens } from "./color-tokens";
-import { ComingSoon } from "./coming-soon";
-import {
-  AllPresetsControl,
-  ControlSection,
-  ControlsSkeleton,
-  RadiusSliderControl,
-  ShadowsControl,
-  SurfaceShadesControl,
-} from "./customizer-controls";
 import { Typography } from "./typography";
 
 export function CustomizerSidebar({
@@ -38,17 +26,17 @@ export function CustomizerSidebar({
 
   if (!isMounted) {
     return (
-      <Sidebar className="overflow-hidden" {...props}>
+      <Sidebar className={cn("overflow-hidden", className)} {...props}>
         <SidebarHeader className="px-2 pr-3 max-md:pt-4">
-          <Skeleton className="h-9 bg-muted" />
+          <Skeleton className="h-6 w-28 bg-muted" />
         </SidebarHeader>
 
         <SidebarContent className="scrollbar-thin @container relative flex max-h-svh flex-col py-2 group-data-[collapsible=icon]:invisible [&>button]:hidden">
           <div className="flex grow flex-col space-y-4 overflow-hidden px-2 pr-3">
-            <ControlsSkeleton className="h-10" />
+            <Skeleton className="h-10 bg-muted" />
 
             <div className="grow overflow-hidden">
-              <ControlsSkeleton className="h-200" />
+              <Skeleton className="h-full bg-muted" />
             </div>
           </div>
         </SidebarContent>
@@ -63,74 +51,22 @@ export function CustomizerSidebar({
   }
 
   return (
-    <Sidebar className="overflow-hidden" {...props}>
-      <Tabs
-        className="flex flex-1 flex-col gap-0 overflow-hidden"
-        defaultValue="palette"
-      >
-        <SidebarHeader className="px-2 pr-3 max-md:pt-4">
-          <TabsList className="w-full p-1">
-            <TabsTrigger className="text-xs" value="palette">
-              Palette
-            </TabsTrigger>
-            <TabsTrigger className="text-xs" value="tokens">
-              Tokens
-            </TabsTrigger>
-            <TabsTrigger className="text-xs" value="typography">
-              Typography
-            </TabsTrigger>
-          </TabsList>
-        </SidebarHeader>
+    <Sidebar className={cn("overflow-hidden", className)} {...props}>
+      <SidebarHeader className="px-2 pr-3 max-md:pt-4">
+        <div className="px-2">
+          <p className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">
+            Typography
+          </p>
+        </div>
+      </SidebarHeader>
 
-        <SidebarContent className="@container relative my-0 max-h-svh pt-2 pb-0 group-data-[collapsible=icon]:invisible [&>button]:hidden">
-          <ScrollArea className="flex flex-col overflow-hidden px-2 pr-1">
-            <TabsContent
-              className="mr-2 mb-2 flex flex-col space-y-4"
-              value="palette"
-            >
-              <section className="flex-1 space-y-1.5 max-sm:w-full max-sm:max-w-full">
-                <Label className="flex items-center gap-1 pb-2">
-                  <PaintBucket className="size-4" /> Theme presets
-                </Label>
-                <AllPresetsControl />
-              </section>
-
-              <ColorTokens />
-            </TabsContent>
-
-            <TabsContent className="mr-2 mb-2" value="tokens">
-              <section className="space-y-1.5">
-                <Label className="flex items-center gap-1 pb-2">
-                  <SlidersHorizontal className="size-4" /> Other tokens
-                </Label>
-
-                <ControlSection className="p-0" expanded title="Surface">
-                  <SurfaceShadesControl className="bg-transparent" />
-                  <div className="mb-3 truncate px-3 text-muted-foreground text-xs">
-                    For background, card, popover, muted, accent...
-                  </div>
-                </ControlSection>
-
-                <ControlSection expanded title="Radius">
-                  <RadiusSliderControl />
-                </ControlSection>
-
-                <ControlSection title="Shadows">
-                  <ShadowsControl />
-                </ControlSection>
-
-                <ControlSection title="Spacing">
-                  <ComingSoon />
-                </ControlSection>
-              </section>
-            </TabsContent>
-
-            <TabsContent className="mr-2 mb-2" value="typography">
-              <Typography />
-            </TabsContent>
-          </ScrollArea>
-        </SidebarContent>
-      </Tabs>
+      <SidebarContent className="@container relative my-0 max-h-svh pt-2 pb-0 group-data-[collapsible=icon]:invisible [&>button]:hidden">
+        <ScrollArea className="flex flex-col overflow-hidden px-2 pr-1">
+          <div className="mr-2 mb-2">
+            <Typography />
+          </div>
+        </ScrollArea>
+      </SidebarContent>
 
       <SidebarFooter className="px-2 pr-3">
         <ActionButtons />

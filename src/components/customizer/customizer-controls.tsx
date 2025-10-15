@@ -698,6 +698,7 @@ export function ShadowsControl() {
         <TokenColorPicker
           color={shadowColor}
           colorProperty="shadow-color"
+          rawColor={shadowColor}
           setColorTokens={setColorToken}
           syncModes={false}
         />

@@ -17,13 +17,11 @@ function buildThemeCss(
   tailwindVersion: TailwindVersion,
   options: ThemeVarsOptions
 ) {
-  return generateThemeVariables(
-    themeConfig,
-    mode,
+  return generateThemeVariables(themeConfig, mode, {
     colorFormat,
     tailwindVersion,
-    options
-  );
+    themeVarsSettings: options,
+  });
 }
 
 export function createThemeSnapshot(

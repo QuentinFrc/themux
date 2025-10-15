@@ -65,6 +65,25 @@ function generateColorVariables(
   return colorVars.trimStart();
 }
 
+function generateBaseColorVariables(
+  baseColors: ThemeConfig["baseColors"],
+  colorFormat: ColorFormat,
+  tailwindVersion: TailwindVersion
+) {
+  const formatColor = (color: string) =>
+    colorFormatter(color, colorFormat, tailwindVersion);
+
+  const lines: string[] = [];
+
+  for (const [colorName, shades] of Object.entries(baseColors)) {
+    for (const [shade, value] of Object.entries(shades)) {
+      lines.push(`--color-${colorName}-${shade}: ${formatColor(value)};`);
+    }
+  }
+
+  return lines.join("\n  ");
+}
+
 const generateFontVariables = (themeConfig: ThemeConfig): string => {
   const fonts = themeConfig.fonts;
 
@@ -92,7 +111,7 @@ const generateShadowVariables = (
   --shadow-2xs: ${shadowMap["shadow-2xs"]};
   --shadow-xs: ${shadowMap["shadow-xs"]};
   --shadow-sm: ${shadowMap["shadow-sm"]};
-  --shadow: ${shadowMap["shadow"]};
+  --shadow: ${shadowMap.shadow};
   --shadow-md: ${shadowMap["shadow-md"]};
   --shadow-lg: ${shadowMap["shadow-lg"]};
   --shadow-xl: ${shadowMap["shadow-xl"]};
@@ -105,15 +124,27 @@ const generateShadowVariables = (
 export function generateThemeVariables(
   themeConfig: ThemeConfig,
   mode: ThemeMode,
-  colorFormat: ColorFormat = "oklch",
-  tailwindVersion: TailwindVersion = "4",
-  themeVarsSettings: ThemeVarsOptions
+  options: {
+    colorFormat?: ColorFormat;
+    tailwindVersion?: TailwindVersion;
+    themeVarsSettings?: ThemeVarsOptions;
+  } = {}
 ): string {
+  const {
+    colorFormat = "oklch",
+    tailwindVersion = "4",
+    themeVarsSettings = {},
+  } = options;
   const radiusVar = `\n  --radius: ${themeConfig.radius};`;
 
   const colorVars = generateColorVariables(
     themeConfig.themeObject,
     mode,
+    colorFormat,
+    tailwindVersion
+  );
+  const baseColorVars = generateBaseColorVariables(
+    themeConfig.baseColors,
     colorFormat,
     tailwindVersion
   );
@@ -135,7 +166,8 @@ export function generateThemeVariables(
     : "";
 
   if (mode === "light") {
-    return `:root {${fontVars}${radiusVar}\n  ${colorVars}${shadowVars}\n}`;
+    const baseColorSection = baseColorVars ? `\n  ${baseColorVars}` : "";
+    return `:root {${baseColorSection}${fontVars}${radiusVar}\n  ${colorVars}${shadowVars}\n}`;
   }
 
   return `.dark {\n  ${colorVars}${shadowVars}\n}`;
@@ -187,6 +219,12 @@ function generateTailwindV4ThemeInline(
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);`;
 
+  const baseColorVarsInline = generateBaseColorVariables(
+    themeConfig.baseColors,
+    "oklch",
+    "4"
+  );
+
   // Embeds the themeConfig font vars in the @theme inline{}
   // this is where you'd do --font-sans: var(--font-custom-name) if you wanted to
   const fontVarsFromTheme = generateFontVariables(themeConfig);
@@ -208,8 +246,12 @@ function generateTailwindV4ThemeInline(
   --shadow-2xl: var(--shadow-2xl);`
     : "";
 
+  const baseColorInlineSection = baseColorVarsInline
+    ? `\n  ${baseColorVarsInline}`
+    : "";
+
   return `@theme inline {${fontVarsInline}
-  ${radiusVarsInline}
+  ${radiusVarsInline}${baseColorInlineSection}
   ${colorVarsInline}${shadowVarsInline}
 }`;
 }
@@ -235,26 +277,22 @@ export function generateThemeCode({
     throw new Error("Invalid theme styles: missing light or dark mode");
   }
 
-  const lightTheme = generateThemeVariables(
-    themeConfig,
-    "light",
+  const lightTheme = generateThemeVariables(themeConfig, "light", {
     colorFormat,
     tailwindVersion,
-    {
+    themeVarsSettings: {
       fontVars: tailwindInlineOptions?.fontVars,
       shadowVars: tailwindInlineOptions?.shadowVars,
-    }
-  );
-  const darkTheme = generateThemeVariables(
-    themeConfig,
-    "dark",
+    },
+  });
+  const darkTheme = generateThemeVariables(themeConfig, "dark", {
     colorFormat,
     tailwindVersion,
-    {
+    themeVarsSettings: {
       fontVars: tailwindInlineOptions?.fontVars,
       shadowVars: tailwindInlineOptions?.shadowVars,
-    }
-  );
+    },
+  });
 
   let v4Options = {};
 

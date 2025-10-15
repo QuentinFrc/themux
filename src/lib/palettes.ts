@@ -302,3 +302,9 @@ export const TAILWIND_SHADES = [
 ] as const;
 
 export type TailwindShadeKey = (typeof TAILWIND_SHADES)[number];
+
+export type TailwindColorName = keyof typeof TAILWIND_PALETTE_V4;
+
+export const TAILWIND_COLOR_NAMES = Object.keys(
+  TAILWIND_PALETTE_V4
+) as TailwindColorName[];
