@@ -2,11 +2,9 @@ import type { Metadata } from "next";
 import { unstable_noStore as noStore } from "next/cache";
 
 import { ActionButtons } from "@/components/customizer/action-buttons";
-import { QuickCustomizer } from "@/components/customizer/quick-customizer";
-import { CardsDemo } from "@/components/demos/cards-demo";
+import { ColorsPreview } from "@/components/customizer/colors-preview";
+import { MiscControls } from "@/components/customizer/quick-customizer";
 import { ComponentsShowcase } from "@/components/demos/components-demo/components-showcase";
-import { DashboardDemo } from "@/components/demos/dashboard-demo";
-import { MailDemo } from "@/components/demos/mail-demo";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ContainerWrapper } from "@/components/wrappers";
@@ -49,30 +47,20 @@ export default async function ShadcnThemesPage({
       ) : null}
       <ContainerWrapper withCane className="@container py-4">
         <ActionButtons className="pb-4" />
-        <QuickCustomizer />
       </ContainerWrapper>
 
       <Separator />
 
-      <Tabs
-        className="pointer-events-none relative gap-0"
-        defaultValue="cards-demo"
-      >
+      <Tabs className="pointer-events-none relative gap-0" defaultValue="colors">
         <ContainerWrapper withCane>
           <div className="absolute inset-0 z-[-1] size-full bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px]" />
 
           <TabsList className="pointer-events-auto my-4 bg-transparent">
-            <TabsTrigger className="px-4" value="cards-demo">
-              Cards
+            <TabsTrigger className="px-4" value="colors">
+              Colors
             </TabsTrigger>
-            <TabsTrigger className="px-4" value="dashboard-demo">
-              Dashboard
-            </TabsTrigger>
-            <TabsTrigger
-              className="hidden px-4 lg:inline-flex"
-              value="mail-demo"
-            >
-              Mail
+            <TabsTrigger className="px-4" value="misc">
+              Misc
             </TabsTrigger>
             <TabsTrigger value="components" className="px-4">
               Components
@@ -86,16 +74,14 @@ export default async function ShadcnThemesPage({
           className="pointer-events-auto relative isolate py-8"
           withCane
         >
-          <TabsContent className="@container" value="cards-demo">
-            <CardsDemo />
+          <TabsContent className="@container" value="colors">
+            <ColorsPreview />
           </TabsContent>
 
-          <TabsContent value="dashboard-demo">
-            <DashboardDemo />
-          </TabsContent>
-
-          <TabsContent value="mail-demo">
-            <MailDemo />
+          <TabsContent className="@container" value="misc">
+            <div className="space-y-6 rounded-3xl border border-border/60 bg-background/80 p-6 shadow-sm backdrop-blur">
+              <MiscControls />
+            </div>
           </TabsContent>
 
           <TabsContent value="components">
