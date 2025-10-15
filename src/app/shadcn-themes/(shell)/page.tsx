@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { unstable_noStore as noStore } from "next/cache";
 
 import { ActionButtons } from "@/components/customizer/action-buttons";
+import { ColorsPreview } from "@/components/customizer/colors-preview";
 import { QuickCustomizer } from "@/components/customizer/quick-customizer";
 import { CardsDemo } from "@/components/demos/cards-demo";
 import { ComponentsShowcase } from "@/components/demos/components-demo/components-showcase";
@@ -54,14 +55,14 @@ export default async function ShadcnThemesPage({
 
       <Separator />
 
-      <Tabs
-        className="pointer-events-none relative gap-0"
-        defaultValue="cards-demo"
-      >
+      <Tabs className="pointer-events-none relative gap-0" defaultValue="colors">
         <ContainerWrapper withCane>
           <div className="absolute inset-0 z-[-1] size-full bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px]" />
 
           <TabsList className="pointer-events-auto my-4 bg-transparent">
+            <TabsTrigger className="px-4" value="colors">
+              Colors
+            </TabsTrigger>
             <TabsTrigger className="px-4" value="cards-demo">
               Cards
             </TabsTrigger>
@@ -86,6 +87,10 @@ export default async function ShadcnThemesPage({
           className="pointer-events-auto relative isolate py-8"
           withCane
         >
+          <TabsContent className="@container" value="colors">
+            <ColorsPreview />
+          </TabsContent>
+
           <TabsContent className="@container" value="cards-demo">
             <CardsDemo />
           </TabsContent>

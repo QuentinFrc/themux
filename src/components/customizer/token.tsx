@@ -1,11 +1,12 @@
 "use client";
 
-import { Check, Clipboard } from "lucide-react";
+import { Check, Clipboard, Link2 } from "lucide-react";
 import type { ComponentProps } from "react";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { cn } from "@/lib/utils";
 import { useColorFormat } from "@/store/preferences-store";
 import { colorFormatter } from "@/utils/color-converter";
+import { Badge } from "../ui/badge";
 
 export function Token({
   colorProperty,
@@ -59,6 +60,9 @@ export function TokenInfo({
   const colorFormat = useColorFormat();
   const formattedColor = colorFormatter(color, colorFormat, "4");
   const isReference = rawColor?.startsWith("var(") ?? false;
+  const referenceToken = isReference
+    ? rawColor!.slice("var(".length, rawColor!.length - 1)
+    : null;
   const displayValue = isReference ? rawColor! : formattedColor;
 
   const handleCopyColor = () => {
@@ -67,11 +71,25 @@ export function TokenInfo({
 
   return (
     <div className="flex w-full items-center justify-between gap-2">
-      <div>
+      <div className="space-y-1">
         <p className="font-mono font-semibold text-xs">
           {`--${colorProperty}`}
         </p>
-        <p className="font-mono text-muted-foreground text-xs">{displayValue}</p>
+        {isReference && referenceToken ? (
+          <div className="flex flex-wrap items-center gap-1">
+            <Badge
+              className="inline-flex items-center gap-1 border-dashed px-2 py-0.5 font-mono text-[10px] uppercase tracking-wide text-muted-foreground"
+              variant="outline"
+            >
+              <Link2 className="size-3" />
+              {referenceToken}
+            </Badge>
+            <span className="text-muted-foreground text-[10px] uppercase tracking-wide">
+              Linked to base color
+            </span>
+          </div>
+        ) : null}
+        <p className="font-mono text-muted-foreground text-xs">{formattedColor}</p>
       </div>
 
       <button
