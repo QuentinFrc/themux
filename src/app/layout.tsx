@@ -2,10 +2,13 @@ import { ReactScan } from "@/components/devtools/react-scan";
 
 import { ScreenDevTools } from "@/components/devtools/screen-devtools";
 import { FontLoader } from "@/components/font-loader";
-import { LoadTheme } from "@/components/load-theme";
 import { ThemeSync } from "@/components/theme-sync";
 import { Toaster } from "@/components/ui/sonner";
+import { db } from "@/database/drizzle/client";
+import { createThemeVersionRepository } from "@/database/repositories/theme-repository";
+import { initialThemeConfig } from "@/lib/themes";
 import { cn } from "@/lib/utils";
+import { generateThemeVariables } from "@/utils/theme-style-generator";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Suspense } from "react";
@@ -51,15 +54,33 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const repository = createThemeVersionRepository(db);
+  const latestThemeVersion = await repository.getLatestThemeVersion();
+
+  const activeThemeConfig = latestThemeVersion?.config.theme ?? initialThemeConfig;
+
+  const themeCss = latestThemeVersion
+    ? `${latestThemeVersion.config.css.root}\n${latestThemeVersion.config.css.dark}`
+    : [
+        generateThemeVariables(initialThemeConfig, "light", {
+          themeVarsSettings: { fontVars: true, shadowVars: true },
+        }),
+        generateThemeVariables(initialThemeConfig, "dark", {
+          themeVarsSettings: { fontVars: true, shadowVars: true },
+        }),
+      ].join("\n");
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <LoadTheme />
+        <link crossOrigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect" />
+        <link crossOrigin="anonymous" href="https://fonts.googleapis.com" rel="preconnect" />
+        <style id="theme-variables">{themeCss}</style>
       </head>
       <ReactScan options={{ enabled: true }} />
 
       <body className={cn("antialiased")}>
-        <Providers>
+        <Providers initialThemeConfig={activeThemeConfig}>
           <Suspense>
             {children}
             <ThemeSync />

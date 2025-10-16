@@ -1,5 +1,4 @@
 import { isEqual } from "lodash";
-import React from "react";
 import { allPresetsArray } from "@/lib/colors";
 import {
   DEFAULT_FONTS,
@@ -16,13 +15,6 @@ import { useConfig } from "./use-config";
 
 export function useThemeConfig() {
   const [config, setConfig] = useConfig();
-  const [hasLoaded, setHasLoaded] = React.useState(false);
-
-  React.useEffect(() => {
-    // This prevents the theme from being set with the default values
-    // since the theme config from localStorage was applied in a script in the <head>
-    setHasLoaded(true);
-  }, []);
 
   const currentThemeObject = config.themeObject;
   const currentSurfacePreset = config.surface;
@@ -31,7 +23,7 @@ export function useThemeConfig() {
   const currentPresetName = config.themeObject.name;
   const currentBaseColors = config.baseColors;
   const currentPresetThemeObject = allPresetsArray.find(
-    (preset) => preset.name === currentPresetName
+    (preset) => preset.name === currentPresetName,
   );
 
   const updateThemeConfig = (themeObject: ThemeObject) => {
@@ -51,12 +43,14 @@ export function useThemeConfig() {
   };
 
   const resetToLatestThemePreset = () => {
-    if (!currentPresetThemeObject) return;
+    if (!currentPresetThemeObject) {
+      return;
+    }
 
     setConfig((prev) => {
       const themeObject = mergeThemeObjects(
         prev.themeObject,
-        currentPresetThemeObject
+        currentPresetThemeObject,
       );
       const mergedThemeObject = mergeThemeObjectWithInitial(themeObject);
 
@@ -91,26 +85,30 @@ export function useThemeConfig() {
   };
 
   const hasCurrentPresetChanged = () => {
+    if (!currentPresetThemeObject) {
+      return false;
+    }
+
     const mergedThemeObjectWithDefaults = mergeThemeObjectWithInitial(
-      currentPresetThemeObject!
+      currentPresetThemeObject,
     );
 
     const isThemeObjectEqual = isEqual(
       mergedThemeObjectWithDefaults,
-      currentThemeObject
+      currentThemeObject,
     );
 
     const isRadiusEqual =
-      (currentPresetThemeObject?.radius ?? initialThemeConfig.radius) ===
+      (currentPresetThemeObject.radius ?? initialThemeConfig.radius) ===
       currentRadius;
 
     const presetFonts = {
-      sans: currentPresetThemeObject?.fonts?.sans ?? DEFAULT_FONTS["font-sans"],
+      sans: currentPresetThemeObject.fonts?.sans ?? DEFAULT_FONTS["font-sans"],
       serif:
-        currentPresetThemeObject?.fonts?.serif ?? DEFAULT_FONTS["font-serif"],
-      mono: currentPresetThemeObject?.fonts?.mono ?? DEFAULT_FONTS["font-mono"],
+        currentPresetThemeObject.fonts?.serif ?? DEFAULT_FONTS["font-serif"],
+      mono: currentPresetThemeObject.fonts?.mono ?? DEFAULT_FONTS["font-mono"],
     };
-    const areFontsEqual = currentPresetThemeObject?.fonts
+    const areFontsEqual = currentPresetThemeObject.fonts
       ? isEqual(presetFonts, currentFonts)
       : true;
 
@@ -118,7 +116,6 @@ export function useThemeConfig() {
   };
 
   return {
-    hasLoaded,
     currentThemeObject,
     currentBaseColors,
     currentSurfacePreset,

@@ -5,14 +5,18 @@ import { toast } from "sonner";
 
 import { useThemeConfig } from "@/hooks/use-theme-config";
 import { usePreferencesActions } from "@/store/preferences-store";
-import { ThemeVersionRecord } from "@/types/theme-update";
+import type { ThemeVersionRecord } from "@/types/theme-update";
+
+const COMMIT_HASH_LENGTH = 7;
 
 type VersionPreviewInitializerProps = {
   version: ThemeVersionRecord;
+  shouldNotify?: boolean;
 };
 
 export function VersionPreviewInitializer({
   version,
+  shouldNotify = true,
 }: VersionPreviewInitializerProps) {
   const { setConfig } = useThemeConfig();
   const {
@@ -24,7 +28,9 @@ export function VersionPreviewInitializer({
   const hasInitializedRef = useRef(false);
 
   useEffect(() => {
-    if (hasInitializedRef.current) return;
+    if (hasInitializedRef.current) {
+      return;
+    }
     hasInitializedRef.current = true;
 
     setConfig(version.config.theme);
@@ -33,10 +39,14 @@ export function VersionPreviewInitializer({
     setShowFontVars(version.config.options.fontVars);
     setShowShadowsVars(version.config.options.shadowVars);
 
-    const themeObject = version.config.theme.themeObject;
-    const themeLabel = themeObject.label ?? themeObject.name ?? "Theme";
+    if (shouldNotify) {
+      const themeObject = version.config.theme.themeObject;
+      const themeLabel = themeObject.label ?? themeObject.name ?? "Theme";
 
-    toast.success(`Loaded ${themeLabel} v${version.commit.hash.slice(0, 7)}`);
+      toast.success(
+        `Loaded ${themeLabel} v${version.commit.hash.slice(0, COMMIT_HASH_LENGTH)}`,
+      );
+    }
   }, [
     setConfig,
     setTailwindVersion,
@@ -44,6 +54,7 @@ export function VersionPreviewInitializer({
     setShowFontVars,
     setShowShadowsVars,
     version,
+    shouldNotify,
   ]);
 
   return null;

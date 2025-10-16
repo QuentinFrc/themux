@@ -10,8 +10,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ContainerWrapper } from "@/components/wrappers";
 import { db } from "@/database/drizzle/client";
 import { createThemeVersionRepository } from "@/database/repositories/theme-repository";
-import { ThemeVersionRecord } from "@/types/theme-update";
-
 import { VersionPreviewInitializer } from "./version-preview-initializer";
 
 type PageSearchParams = { versionId?: string };
@@ -33,17 +31,21 @@ export default async function ShadcnThemesPage({
     ? await searchParams
     : undefined;
   const versionId = resolvedSearchParams?.versionId;
-  let initialVersion: ThemeVersionRecord | null = null;
-
-  if (versionId) {
-    const repository = createThemeVersionRepository(db);
-    initialVersion = await repository.getThemeVersionById(versionId);
-  }
+  const repository = createThemeVersionRepository(db);
+  const latestVersion = await repository.getLatestThemeVersion();
+  const initialVersion = versionId
+    ? await repository.getThemeVersionById(versionId)
+    : null;
+  const activeVersion = initialVersion ?? latestVersion;
 
   return (
     <>
-      {initialVersion ? (
-        <VersionPreviewInitializer key={initialVersion.id} version={initialVersion} />
+      {activeVersion ? (
+        <VersionPreviewInitializer
+          key={activeVersion.id}
+          shouldNotify={Boolean(initialVersion)}
+          version={activeVersion}
+        />
       ) : null}
       <ContainerWrapper withCane className="@container py-4">
         <ActionButtons className="pb-4" />

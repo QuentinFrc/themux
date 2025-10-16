@@ -6,7 +6,6 @@ export const QUERY_PARAMS_KEYS = {
 
 export const LOCAL_STORAGE_KEYS = {
   nextThemesMode: "theme",
-  themeConfig: "theme-config",
 };
 
 export const RADIUS_VALUES: RemValue[] = [

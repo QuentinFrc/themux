@@ -4,9 +4,9 @@ import { useThemeConfig } from "@/hooks/use-theme-config";
 import { monoFontsArray, sansFontsArray, serifFontsArray } from "@/utils/fonts";
 
 export function FontLoader() {
-  const { hasLoaded, currentFonts } = useThemeConfig();
+  const { currentFonts } = useThemeConfig();
 
-  if (!hasLoaded) return null;
+  if (!currentFonts) return null;
 
   const sansFontHref = [
     ...sansFontsArray,

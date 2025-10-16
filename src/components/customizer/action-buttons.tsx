@@ -7,7 +7,6 @@ import { TooltipWrapper } from "../tooltip-wrapper";
 import { Separator } from "../ui/separator";
 import { ContrastChecker } from "./contrast-checker";
 import { CustomizerSettings } from "./customizer-settings";
-import { ResetButton } from "./reset-button";
 import { UpdateThemeButton } from "./update-theme-button";
 import { VersionHistoryDialog } from "./version-history-dialog";
 
@@ -36,10 +35,6 @@ export function ActionButtons({ className }: ActionButtonsProps) {
       />
 
       <section className="flex @max-[375px]:w-full items-center justify-between gap-2">
-        <TooltipWrapper asChild label="Options to reset tokens">
-          <ResetButton size="sm" variant="ghost" />
-        </TooltipWrapper>
-
         <div className="@md:hidden">
           <TooltipWrapper asChild label="Toggle light/dark">
             <ModeSwitcher />

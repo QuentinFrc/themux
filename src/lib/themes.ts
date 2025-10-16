@@ -69,9 +69,3 @@ export const initialThemeConfig: ThemeConfig = {
     },
     baseColors: createInitialBaseColors(),
 };
-
-export const themeConfigSchema = z.object({
-    radius: z.string().optional().default(DEFAULT_RADIUS),
-    surface: z.string().optional().default(DEFAULT_SURFACE),
-    baseColors: z.record(z.enum(Object.keys(TAILWIND_PALETTE_V4)), z.record(z.number(), z.enum(Object.values(TAILWIND_PALETTE_V4.neutral)))).default(createInitialBaseColors())
-})
