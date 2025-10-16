@@ -8,7 +8,7 @@ import { useTokens } from "./use-tokens";
 
 export function useSurfaceShades() {
   const { createTokenGetterForPreset } = useTokens();
-  const { currentPresetName } = useThemeConfig();
+  const currentPresetName = "neutral" //FIXME
 
   const getDefaultSurfaceShades = (
     preset?: Preset

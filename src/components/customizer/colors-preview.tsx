@@ -1,83 +1,22 @@
 "use client";
 
-import { startCase } from "lodash";
 
 import { colorTokenGroups } from "@/config/color-tokens";
 import { useTokens } from "@/hooks/use-tokens";
-import {
-  TAILWIND_COLOR_NAMES,
-  TAILWIND_SHADES,
-  type TailwindColorName,
-} from "@/lib/palettes";
 
-import { ControlSection } from "./customizer-controls";
-import { BaseColorPicker } from "./base-color-picker";
 import { TokenColorPicker } from "./token-color-picker";
+import {BaseColorMaps} from "@/components/customizer/base-color-maps";
 
 export function ColorsPreview() {
   return (
     <div className="space-y-6">
-      <div className="space-y-6 rounded-lg border border-border/60 bg-background/80 p-6 shadow-sm backdrop-blur">
-        <BaseColorsSection />
+      <div className="rounded-lg border border-border/60 bg-background/80 p-6 shadow-sm backdrop-blur">
+        <BaseColorMaps />
       </div>
       <div className="space-y-6 rounded-lg border border-border/60 bg-background/80 p-6 shadow-sm backdrop-blur">
         <TokenColorsSection />
       </div>
     </div>
-  );
-}
-
-function BaseColorsSection() {
-  const { getBaseColor, setBaseColor } = useTokens();
-
-  const handleChange = (
-    colorName: TailwindColorName,
-    shade: (typeof TAILWIND_SHADES)[number],
-    value: string
-  ) => {
-    setBaseColor({ colorName, shade, color: value });
-  };
-
-  return (
-    <section className="space-y-4">
-      <header className="space-y-1">
-        <h2 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">
-          Base colors
-        </h2>
-        <p className="text-muted-foreground text-xs">
-          Tailwind-inspired palette shared across light and dark modes.
-        </p>
-      </header>
-
-      <div className="space-y-4">
-        {TAILWIND_COLOR_NAMES.map((colorName) => (
-          <div
-            className="space-y-3 rounded-lg border border-border/60 bg-background/60 p-4 shadow-sm"
-            key={colorName}
-          >
-            <header className="space-y-1">
-              <h3 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">
-                {startCase(colorName)}
-              </h3>
-              <p className="text-muted-foreground text-xs">
-                {`--color-${colorName}`}
-              </p>
-            </header>
-            <div className="grid grid-cols-5 gap-2 sm:grid-cols-7 lg:grid-cols-11">
-              {TAILWIND_SHADES.map((shade) => (
-                <BaseColorPicker
-                  color={getBaseColor({ colorName, shade })}
-                  colorName={colorName}
-                  key={`${colorName}-${shade}`}
-                  onChange={(value) => handleChange(colorName, shade, value)}
-                  shade={shade}
-                />
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
   );
 }
 
@@ -101,8 +40,8 @@ function TokenColorsSection() {
         </p>
       </header>
 
-      <div className="space-y-6">
-        {colorTokenGroups.map(({ id, title, expanded, tokens }) => {
+      <div className="grid grid-cols-[max-content_minmax(auto,54rem)] gap-y-8 gap-x-4">
+        {colorTokenGroups.map(({ id, title, tokens }) => {
           const renderedTokens = tokens
             .map(({ property, setter = "single", syncModes, optional }) => {
               const rawColor = getColorToken({ property });
@@ -134,9 +73,16 @@ function TokenColorsSection() {
           if (renderedTokens.length === 0) return null;
 
           return (
-            <ControlSection expanded={expanded} id={id} key={id} title={title}>
-              {renderedTokens}
-            </ControlSection>
+            <div className="grid grid-cols-subgrid col-span-full items-center" key={id} id={id}>
+                  <div className="space-y-1">
+                      <h3 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">
+                          {title}
+                      </h3>
+                  </div>
+                  <div className="grid gap-6 sm:grid-cols-2 2xl:grid-cols-3">
+                      {renderedTokens}
+                  </div>
+              </div>
           );
         })}
       </div>

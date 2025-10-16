@@ -7,8 +7,8 @@ import { TooltipWrapper } from "../tooltip-wrapper";
 import { Separator } from "../ui/separator";
 import { ContrastChecker } from "./contrast-checker";
 import { CustomizerSettings } from "./customizer-settings";
-import { ResetButton } from "./reset-button";
 import { UpdateThemeButton } from "./update-theme-button";
+import { VersionHistoryDialog } from "./version-history-dialog";
 
 interface ActionButtonsProps extends ComponentProps<"section"> {
   className?: string;
@@ -22,10 +22,11 @@ export function ActionButtons({ className }: ActionButtonsProps) {
         className
       )}
     >
-      <section className="flex grow items-center">
+      <section className="flex grow flex-wrap items-center gap-2">
         <TooltipWrapper asChild label="Persist the current theme">
           <UpdateThemeButton className="flex-1" size="sm" variant="default" />
         </TooltipWrapper>
+        <VersionHistoryDialog className="@md:w-auto flex-1" />
       </section>
 
       <Separator
@@ -34,10 +35,6 @@ export function ActionButtons({ className }: ActionButtonsProps) {
       />
 
       <section className="flex @max-[375px]:w-full items-center justify-between gap-2">
-        <TooltipWrapper asChild label="Options to reset tokens">
-          <ResetButton size="sm" variant="ghost" />
-        </TooltipWrapper>
-
         <div className="@md:hidden">
           <TooltipWrapper asChild label="Toggle light/dark">
             <ModeSwitcher />

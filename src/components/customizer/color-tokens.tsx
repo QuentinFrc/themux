@@ -5,7 +5,6 @@ import { Label } from "@/components/ui/label";
 import { useTokens } from "@/hooks/use-tokens";
 import { cn } from "@/lib/utils";
 import { colorTokenGroups } from "@/config/color-tokens";
-import { ControlSection } from "./customizer-controls";
 import { TokenColorPicker } from "./token-color-picker";
 
 export function ColorTokens({ className }: React.ComponentProps<"div">) {
@@ -30,8 +29,8 @@ function TokensList({ className }: React.ComponentProps<"div">) {
   } = useTokens();
 
   return (
-    <div className={cn("space-y-2", className)}>
-      {colorTokenGroups.map(({ id, title, expanded, tokens }) => {
+    <div className={cn("space-y-4", className)}>
+      {colorTokenGroups.map(({ id, title, tokens }) => {
         const renderedTokens = tokens
           .map(({ property, setter = "single", syncModes, optional }) => {
             const rawColor = getColorToken({ property });
@@ -63,9 +62,16 @@ function TokensList({ className }: React.ComponentProps<"div">) {
         if (renderedTokens.length === 0) return null;
 
         return (
-          <ControlSection key={id} title={title} id={id} expanded={expanded}>
-            {renderedTokens}
-          </ControlSection>
+          <div className="space-y-2" key={id} id={id}>
+            <div className="space-y-1">
+              <h3 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">
+                {title}
+              </h3>
+            </div>
+            <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+              {renderedTokens}
+            </div>
+          </div>
         );
       })}
     </div>

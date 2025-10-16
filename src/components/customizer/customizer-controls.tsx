@@ -152,7 +152,7 @@ export function PasteColorControl({
 
 export function SurfaceShadesControl({ className }: ComponentProps<"div">) {
   const { setSurfaceShadesColorTokens } = useTokens();
-  const { currentSurfacePreset } = useThemeConfig();
+  const currentSurfacePreset = "neutral";
 
   const isMounted = useMounted();
   const resolvedTheme = useTheme().resolvedTheme as ThemeMode;

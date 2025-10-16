@@ -1,14 +1,22 @@
-import { useAtom } from "jotai/react";
-import { atomWithStorage } from "jotai/utils";
-import { initialThemeConfig } from "@/lib/themes";
-import type { ThemeConfig } from "@/types/theme";
-import { LOCAL_STORAGE_KEYS } from "@/utils/constants";
+import { createContext, type Dispatch, type SetStateAction, useContext } from "react";
 
-const initialConfigAtom = atomWithStorage<ThemeConfig>(
-  LOCAL_STORAGE_KEYS.themeConfig,
-  initialThemeConfig
-);
+import type { ThemeConfig } from "@/types/theme";
+
+type ThemeConfigContextValue = {
+  config: ThemeConfig;
+  setConfig: Dispatch<SetStateAction<ThemeConfig>>;
+};
+
+export const ThemeConfigContext = createContext<
+  ThemeConfigContextValue | undefined
+>(undefined);
 
 export function useConfig() {
-  return useAtom(initialConfigAtom);
+  const context = useContext(ThemeConfigContext);
+
+  if (!context) {
+    throw new Error("useConfig must be used within a ThemeConfigProvider");
+  }
+
+  return [context.config, context.setConfig] as const;
 }
